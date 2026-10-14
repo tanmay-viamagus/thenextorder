@@ -39,3 +39,13 @@ All five slots already exist in `src/content/event.ts`. Fill them in and the inv
 - **Product claims:** every one is quoted from the official sites (velocity-ai, synthia-ai, viamagusselect.ai), with the source sentence noted in `src/content/story.ts`.
 - **Research:** both figures are verified against the original publisher pages (`docs/next-order-research.md`).
 - **Brand:** colours and fonts come from the live ViaMagus stylesheets (`docs/brand-audit.md`).
+
+## Draft 3: feedback round
+
+| Feedback | Change |
+| --- | --- |
+| "The film is in a corner; how will anyone get to it?" | Added a *Watch the film* button on the first screen, a dedicated black frame (02) with the ViaMagus mark and a large play button, and a header button. All three open the film fullscreen over the page. |
+| "Animations take too long to load and aren't smooth" | The title sort is now pure CSS and starts on first paint instead of waiting for JavaScript; the full sort takes about 1.5 s. The shift re-orders after 0.8 s with shorter transitions, and cells use transform-only motion. |
+| "The film should be separate, direct, creative, a climax" | Rebuilt the film as its own 30 s crescendo: tension, fast cuts, a word rush, one second of silence, the logo slam on black, then the title. It has a live WebGL light field (the background image), flashes and camera shake on hits, and an optional synthesised score. |
+| "ViaMagus logo looks best on black" | The film's climax is the mark assembling on pure black; the film frame on the site is black with the mark. |
+| Three-forces cards "can be much better" | Replaced the three cards with one stage: *Build. Operate. Scale.* is the tab bar. One force owns the frame at a time in its own colours, advancing automatically. Visuals never show a blank or broken mid-state. |

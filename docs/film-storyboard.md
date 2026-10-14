@@ -1,31 +1,33 @@
-# The NEXT Order — 30-second event film
+# The NEXT Order — the film (30 s)
 
-**Format:** 30.0 s · 16:9 · silent · loops · composed on a fixed 1920×1080 frame and scaled to any screen.
+**What it is:** a 30-second crescendo, built separately from the site's animations. It starts with tension, speeds up through fast cuts, rushes to a peak, goes silent for one second, then the ViaMagus logo slams in on black. It plays on a fixed 1920×1080 stage scaled to any screen, over a live WebGL light field in ViaMagus colours. The light intensifies with the story, flashes on every cut, and the camera shakes on every hit.
 
-**Status:** *implemented* as a live, browser-rendered loop at **`/film`**, using the same components as the site. *No video file has been rendered.* See "Rendering to a file" below. Timings live in `src/content/film.ts`.
+**Where it plays:**
+- On the site: the *Watch the film* button on the first screen, the black film frame (02), or the header button. All three open it fullscreen over the page; Esc closes it.
+- On event screens: `/film`.
 
-## Frame by frame
+**Sound:** off by default. *Sound on* (or **M**) plays a score synthesised in the browser with no audio files: a pulse, hats, a riser, a kick on every rush word, a sub-bass boom under the logo, and a pad under the title. The film never depends on sound.
 
-| Time | Beat | On screen | Exact copy | Motion | Site frame |
-| --- | --- | --- | --- | --- | --- |
-| 00.0–04.5 | The Next Order | ViaMagus purple. Huge white letters, scrambled. | **THE NEXT ORDER** + magenta cell full stop. From 2.6 s: *The operating model that built your GCC won't run it next.* | Letters hold 0.65 s, then each travels vertically then horizontally into place (1.15 s, staggered). The cell full stop appears when sorting completes. | 01 Hook |
-| 04.5–12.0 | The shift | White. Left: label and headline. Right: 100 cells in a four-layer pyramid. | *The shift* · **Built to scale people.** then, at 07.6 s, **Built to scale capability.** | At 07.6 s every cell travels (1.25 s, staggered) into three 7×6 blocks in the force colours. AI-agent outlines appear inside each block; dashed links and labels fade in. | 02 The shift |
-| 12.0–16.0 | Build | `#0A0A12`. | *01 · Build* · **Velocity AI** (gradient) · **A shippable release every Friday.** | Two 12-week rows: one release at week 12 versus a block every week, filling left to right. | 03 Forces |
-| 16.0–20.0 | Operate | `#1D0031`. | *02 · Operate* · Synthia AI logo · **AI that follows your SOP — and stops for your sign-off.** | A token runs Input → Extract → Check SOP, stops at Sign-off while the gate fills, then continues to Act. Log lines appear step by step. | 03 Forces |
-| 20.0–24.0 | Scale | Select paper `#F4F2EC`. | *03 · Scale* · Viamagus select wordmark · **Not 50 CVs. 3–5 people you can hire.** · *50 CVs → 3–5 to hire · 48h* | 50 CV sheets; 47 fade and 3 turn amber and grow. | 03 Forces |
-| 24.0–27.0 | The signal | Black. | **8%** (8 in magenta) · **of GCCs are top performers.** · *BCG · GCC Survey 2024 · June 2025* | 0.6 s cross-dissolve, then hold. | 04 Signal |
-| 27.0–30.0 | The reveal | Purple, the same composition as 00.0. | **THE NEXT ORDER** + cell · *Everything an enterprise needs to become AI-native.* · viamagus logo | Holds. The loop returns to the scrambled title at 00.0. The re-ordering *is* the loop. | 05 Invitation |
+**Status:** implemented and running live. No video file has been rendered. Timings are in `src/content/film.ts`.
 
-All beats change with a 0.6 s cross-dissolve.
+| Time | Scene | On screen | Motion and light | Sound |
+| --- | --- | --- | --- | --- |
+| 0.0–2.2 | Cursor | A magenta cell blinks on black. *Every enterprise runs on an order.* types out. | Light field off. | — |
+| 2.2–4.4 | The old order | 96 navy cells pop into a rigid grid. **THE OLD ORDER.** wipes in as outline type. | Desaturated, low light, small flash on the cut. | Kick and snap; the pulse begins |
+| 4.4–6.2 | The crack | The grid breaks; each cell falls and spins away. **Built to scale people.** punches in. | Colour starts to return. | Hit |
+| 6.2–8.0 | The rules | **AI CHANGED THE RULES.** slams in with cyan/magenta channel split. | Full purple burst and big flash. | Hit |
+| 8.0–10.0 | The signal | **8%** (magenta) slams in from blur. *of GCCs are top performers.* · BCG · GCC Survey 2024, N = 150 · June 2025 | Pulled back. | Hit |
+| 10.0–12.5 | Build | Velocity AI wordmark · **A shippable release every Friday.** · 12 gradient bars strobe up (12 weeks, 12 releases). Ghost word BUILD drifts behind. | Mid energy. | Hats begin |
+| 12.5–15.0 | Operate | Synthia AI logo · **AI that follows your SOP — and stops for your sign-off.** A run stops at the human gate and **SIGNED OFF ✓** stamps in. | Mid energy. | — |
+| 15.0–17.5 | Scale | Select's paper. **Not 50 CVs. 3–5 people you can hire.** 50 CV tiles flood in; 47 vanish, 3 turn amber. *Shortlisted in 48 hours.* | A paper flash cut. | — |
+| 17.5–21.0 | The rush | *Build. Operate. Scale. Engineering. Intelligence. Talent. Three forces.* one word every 0.4 s, then **ONE ORDER.** holds. | Full energy, flash on every word. | Kick per word over a rising noise sweep |
+| 21.0–22.0 | Silence | Black. One magenta cell pulses once. | Light cut to zero. | Nothing |
+| 22.0–25.2 | The logo | The two halves of the ViaMagus mark fly in, spinning, and lock. Two shockwave rings. *viamagus* resolves from blur and wide tracking. | Black with a faint purple halo. | Sub-bass boom |
+| 25.2–28.4 | The title | **THE NEXT ORDER.** sorts itself (fast). *Everything an enterprise needs to become AI-native.* | Light field at its brightest. | Pad chord |
+| 28.4–30.0 | The invitation | *An invitation from ViaMagus* · *For GCC leaders* (plus date and venue once set in `event.ts`). Fades to the single cell, which is also the first frame of the loop. | Down to embers. | Pad releases |
 
-## System
+All claims are the same verified ones used on the site (see `src/content/story.ts` and `docs/next-order-research.md`).
 
-The film reuses `TitleSort`, `ShiftGrid` and `ForceVisuals` from the site, with the same palette (`docs/brand-audit.md`) and the same type (Outfit; Archivo in the Select beat). Copy is 84–120 px headlines and at least 22 px labels on the 1080 p frame, scaling to about 2× on 4K walls. Nothing depends on sound.
+**Event screens:** open `/film` and press F11. Controls and the cursor hide after 2.2 s. **Space** pauses, **M** toggles sound. `?t=22` opens paused at a given second. With *Reduce motion* on, it opens paused on the logo.
 
-## Playing it at the event
-
-Open `/film` fullscreen (F11). Controls and the cursor hide after 2.5 s; **Space** pauses. `?t=12` opens paused at a second, and `?debug` shows the timecode. With *Reduce motion* on, it opens paused on the reveal.
-
-## Rendering to a file (not yet done)
-
-Screen-record `/film` fullscreen at 3840×2160, 60 fps, for exactly 30.0 s from a fresh load. Trim the result and export to H.264 or ProRes.
+**Rendering a file (not done):** screen-record `/film` at 3840×2160, 60 fps, for 30.0 s from a fresh load, with *Sound on* if you want the score. Then trim the recording to exactly 30.0 s.

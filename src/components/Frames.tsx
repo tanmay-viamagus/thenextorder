@@ -1,14 +1,16 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { event, interestUrl, knownFacts, officialLinks, pending, recap, whenWhere } from "@/content/event";
-import { forces, forcesHeadline, forcesLede, hook, invite, signal, title } from "@/content/story";
-import { SelectWordmark, SynthiaLogo, VelocityWordmark, ViaMagusLogo, ViaMagusMark } from "./Brand";
-import { SelectVisual, SynthiaVisual, VelocityVisual } from "./ForceVisuals";
+import { hook, invite, signal, title } from "@/content/story";
+import { ViaMagusLogo, ViaMagusMark } from "./Brand";
+import { FilmButton } from "./film/FilmOverlay";
+import { ForcesStage } from "./ForcesStage";
 import { ShiftFrame } from "./ShiftFrame";
 import { TitleSort } from "./TitleSort";
 
 export const FRAMES = [
   { id: "hook", label: "The Next Order" },
+  { id: "film", label: "The film" },
   { id: "shift", label: "The shift" },
   { id: "forces", label: "Three forces" },
   { id: "signal", label: "The signal" },
@@ -34,12 +36,12 @@ export function Header() {
             ))}
           </ol>
           <span className="hdr__count" aria-hidden="true">
-            <span id="frame-no">01</span> / 05
+            <span id="frame-no">01</span> / 06
           </span>
-          <Link className="hdr__film" href="/film">
+          <FilmButton className="hdr__film">
             <span className="play" aria-hidden="true" />
-            Film
-          </Link>
+            Watch the film
+          </FilmButton>
         </nav>
       </header>
     </>
@@ -54,6 +56,12 @@ export function Hook() {
       <div className="hook">
         <TitleSort lines={title} className="hook__title" showReplay />
         <p className="hook__line">{hook}</p>
+        <FilmButton className="hook__cta">
+          <span className="hook__cta-play" aria-hidden="true">
+            <span className="play" />
+          </span>
+          Watch the film <span className="hook__cta-len">30 sec</span>
+        </FilmButton>
       </div>
       <div className="frame__foot">
         <p>
@@ -61,7 +69,7 @@ export function Hook() {
           <span className="sep" aria-hidden="true" />
           {line ?? "For GCC leaders · By invitation"}
         </p>
-        <a className="cue" href="#shift" aria-label="Next: the shift">
+        <a className="cue" href="#film" aria-label="Next: the film">
           <i aria-hidden="true" />
         </a>
       </div>
@@ -78,44 +86,33 @@ export function Shift() {
   );
 }
 
-/* 03 — three forces */
-const MARKS = {
-  velocity: <VelocityWordmark />,
-  synthia: <SynthiaLogo height={34} />,
-  select: <SelectWordmark />,
-};
-const VISUALS = { velocity: <VelocityVisual />, synthia: <SynthiaVisual />, select: <SelectVisual /> };
+/* 02 — the film, on black: where the ViaMagus mark looks best */
+export function FilmFrame() {
+  return (
+    <section id="film" className="frame frame--film" data-frame="" data-tone="dark" aria-labelledby="film-h">
+      <div className="filmf">
+        <ViaMagusMark className="filmf__mark" />
+        <h2 id="film-h" className="filmf__h">
+          The film
+        </h2>
+        <p className="filmf__sub">Thirty seconds. Sound optional.</p>
+        <FilmButton className="filmf__play">
+          <span className="sr-only">Play the film</span>
+          <span className="play" aria-hidden="true" />
+        </FilmButton>
+      </div>
+      <p className="filmf__note">
+        On the event screens? Open <Link href="/film">/film</Link> fullscreen.
+      </p>
+    </section>
+  );
+}
 
+/* 04 — three forces */
 export function Forces() {
   return (
-    <section id="forces" className="frame frame--forces" data-frame="" data-tone="dark" aria-labelledby="forces-h">
-      <header className="forces__head">
-        <h2 id="forces-h" className="h-xl">
-          {forcesHeadline}
-        </h2>
-        <p className="forces__lede">{forcesLede}</p>
-      </header>
-      <ol className="forces">
-        {forces.map((f, i) => (
-          <li key={f.key} className={`force force--${f.key}`} style={{ "--i": i } as CSSProperties}>
-            <div className="force__top">
-              <span className="force__verb">
-                <span className="force__no">0{i + 1}</span> {f.verb}
-              </span>
-              <span className="force__mark">{MARKS[f.key]}</span>
-            </div>
-            <div className="force__visual">{VISUALS[f.key]}</div>
-            <div className="force__copy">
-              <h3 className="force__claim">{f.claim}</h3>
-              <p className="force__detail">{f.detail}</p>
-              <a className="force__link" href={f.href} target="_blank" rel="noopener noreferrer">
-                {f.source} <span aria-hidden="true">↗</span>
-                <span className="sr-only"> (opens in a new tab)</span>
-              </a>
-            </div>
-          </li>
-        ))}
-      </ol>
+    <section id="forces" className="frame frame--forces" data-frame="" data-tone="dark" aria-label="Build. Operate. Scale.">
+      <ForcesStage />
     </section>
   );
 }

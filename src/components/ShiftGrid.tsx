@@ -125,7 +125,7 @@ export function ShiftGrid({
           timer = window.setTimeout(() => {
             setInner("next");
             onState?.("next");
-          }, 1500);
+          }, 800);
           io.disconnect();
         }
       },
@@ -166,7 +166,7 @@ export function ShiftGrid({
                     width: L.size,
                     height: L.size,
                     transform: `translate(${c.x}px, ${c.y}px)`,
-                    "--d": `${((i * 37) % 23) * 22}ms`,
+                    "--d": `${((i * 37) % 23) * 14}ms`,
                     "--tone": L.next[i].tone,
                   } as CSSProperties
                 }
