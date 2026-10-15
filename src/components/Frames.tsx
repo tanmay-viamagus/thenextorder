@@ -4,7 +4,7 @@ import { event, interestUrl, knownFacts, officialLinks, pending, recap, whenWher
 import { hook, invite, signal, title } from "@/content/story";
 import { ViaMagusLogo, ViaMagusMark } from "./Brand";
 import { FilmButton } from "./film/FilmOverlay";
-import { ForcesStage } from "./ForcesStage";
+import { ForcesShutters } from "./ForcesShutters";
 import { ShiftFrame } from "./ShiftFrame";
 import { TitleSort } from "./TitleSort";
 
@@ -112,7 +112,7 @@ export function FilmFrame() {
 export function Forces() {
   return (
     <section id="forces" className="frame frame--forces" data-frame="" data-tone="dark" aria-label="Build. Operate. Scale.">
-      <ForcesStage />
+      <ForcesShutters />
     </section>
   );
 }

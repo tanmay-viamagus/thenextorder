@@ -639,199 +639,6 @@ html[data-tone="light"] .hdr__film:hover {
   }
 }
 
-/* ==========================================================================
-   03 — Three forces: the headline is the control
-   ========================================================================== */
-.frame--forces {
-  padding: 0;
-  background: var(--black);
-}
-
-.fs {
-  --bg: var(--vel-bg);
-  --fg: var(--white);
-  --accent: var(--vel-cyan);
-  --dim: rgba(252, 253, 255, 0.22);
-  --tab-dim: rgba(252, 253, 255, 0.45);
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(20px, 4vh, 56px);
-  padding: calc(var(--hdr) + 2vh) var(--gutter) clamp(28px, 6vh, 72px);
-  background: var(--bg);
-  color: var(--fg);
-  transition: background-color 0.6s var(--ease), color 0.6s var(--ease);
-}
-
-.fs--synthia {
-  --bg: var(--purple-darker);
-  --accent: var(--syn-bright);
-}
-
-.fs--select {
-  --bg: var(--sel-paper);
-  --fg: var(--sel-ink);
-  --accent: var(--purple);
-  --dim: rgba(14, 13, 18, 0.2);
-  --tab-dim: rgba(14, 13, 18, 0.5);
-}
-
-.fs__tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0 0.28em;
-  font-size: clamp(3rem, 8.4vw, 11rem);
-  line-height: 0.95;
-  letter-spacing: -0.05em;
-}
-
-.fs__tab {
-  position: relative;
-  padding: 0 0 0.12em;
-  border: 0;
-  background: none;
-  font: inherit;
-  letter-spacing: inherit;
-  color: var(--tab-dim);
-  cursor: pointer;
-  transition: color 0.45s var(--ease);
-}
-
-.fs__tab:hover {
-  color: color-mix(in srgb, var(--fg) 60%, transparent);
-}
-
-.fs__tab[aria-selected="true"] {
-  color: var(--fg);
-}
-
-.fs--velocity .fs__tab[aria-selected="true"] {
-  background: var(--vel-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.fs__progress {
-  position: absolute;
-  left: 0.04em;
-  right: 0.3em;
-  bottom: 0;
-  height: 4px;
-  background: var(--dim);
-  opacity: 0;
-}
-
-.fs__tab[aria-selected="true"] .fs__progress {
-  opacity: 1;
-}
-
-.fs__progress i {
-  display: block;
-  height: 100%;
-  width: 100%;
-  background: var(--accent);
-  transform-origin: left;
-}
-
-.fs.is-auto .fs__tab[aria-selected="true"] .fs__progress i {
-  animation: progress 6.5s linear both;
-}
-
-@keyframes progress {
-  from {
-    transform: scaleX(0);
-  }
-}
-
-.fs__panel {
-  flex: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-  gap: clamp(28px, 6vw, 120px);
-  align-items: center;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .fs__copy > * {
-    animation: rise 0.6s var(--ease-out) both;
-  }
-  .fs__copy > :nth-child(2) {
-    animation-delay: 0.06s;
-  }
-  .fs__copy > :nth-child(3) {
-    animation-delay: 0.12s;
-  }
-  .fs__copy > :nth-child(4) {
-    animation-delay: 0.16s;
-  }
-  .fs__visual {
-    animation: rise 0.7s var(--ease-out) 0.1s both;
-  }
-}
-
-.fs__copy {
-  display: grid;
-  gap: clamp(14px, 2.4vh, 26px);
-  align-content: center;
-}
-
-.fs__mark .wm-velocity,
-.fs__mark .wm-select {
-  font-size: clamp(1.5rem, 2vw, 2.4rem);
-}
-
-.fs__mark .wm-synthia {
-  height: clamp(1.6rem, 2.1vw, 2.6rem);
-  width: auto;
-}
-
-.fs__claim {
-  font-size: clamp(2.2rem, 4.4vw, 5.6rem);
-  line-height: 1;
-  letter-spacing: -0.045em;
-  font-weight: 500;
-}
-
-.fs--select .fs__claim {
-  font-family: var(--font-archivo), var(--font);
-  font-weight: 600;
-}
-
-.fs__detail {
-  font-size: clamp(1.05rem, 1.3vw, 1.6rem);
-  opacity: 0.75;
-  max-width: 28em;
-}
-
-.fs__link {
-  justify-self: start;
-  display: inline-flex;
-  align-items: center;
-  min-height: 40px;
-  font-size: 0.95rem;
-  color: var(--accent);
-  text-underline-offset: 4px;
-}
-
-.fs--velocity .fs__link {
-  color: var(--vel-lilac);
-}
-
-.fs__visual {
-  font-size: clamp(0.85rem, 1vw, 1.15rem);
-}
-
-@media (max-width: 899px) {
-  .fs__panel {
-    grid-template-columns: 1fr;
-    align-content: start;
-  }
-  .fs__tabs {
-    font-size: clamp(2.4rem, 13vw, 4rem);
-  }
-}
-
 /* wordmarks (also used by the film) */
 .wm-velocity {
   font-size: 1.55rem;
@@ -921,7 +728,7 @@ html[data-tone="light"] .hdr__film:hover {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .is-live .wk--ship {
+  .is-playing .wk--ship {
     animation: ship 3.6s var(--ease) infinite both;
     animation-delay: calc(var(--w) * 0.12s);
   }
@@ -1040,28 +847,28 @@ html[data-tone="light"] .hdr__film:hover {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .is-live .fv-token {
+  .is-playing .fv-token {
     animation: token 7s var(--ease) infinite both;
   }
-  .is-live .fv-step--gate .fv-node {
+  .is-playing .fv-step--gate .fv-node {
     animation: gate 7s var(--ease) infinite both;
   }
-  .is-live .fv-log li {
+  .is-playing .fv-log li {
     animation: 7s var(--ease) infinite both;
   }
-  .is-live .fv-log li:nth-child(1) {
+  .is-playing .fv-log li:nth-child(1) {
     animation-name: log0;
   }
-  .is-live .fv-log li:nth-child(2) {
+  .is-playing .fv-log li:nth-child(2) {
     animation-name: log1;
   }
-  .is-live .fv-log li:nth-child(3) {
+  .is-playing .fv-log li:nth-child(3) {
     animation-name: log2;
   }
-  .is-live .fv-log li:nth-child(4) {
+  .is-playing .fv-log li:nth-child(4) {
     animation-name: log3;
   }
-  .is-live .fv-log li:nth-child(5) {
+  .is-playing .fv-log li:nth-child(5) {
     animation-name: log4;
   }
 }
@@ -1233,11 +1040,11 @@ html[data-tone="light"] .hdr__film:hover {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .is-live .cv:not(.cv--pick) {
+  .is-playing .cv:not(.cv--pick) {
     animation: cv-out 5s var(--ease) infinite both;
     animation-delay: calc(var(--c) * 8ms);
   }
-  .is-live .cv--pick {
+  .is-playing .cv--pick {
     animation: cv-pick 5s var(--ease) infinite both;
   }
 }

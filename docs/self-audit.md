@@ -49,3 +49,18 @@ All five slots already exist in `src/content/event.ts`. Fill them in and the inv
 | "The film should be separate, direct, creative, a climax" | Rebuilt the film as its own 30 s crescendo: tension, fast cuts, a word rush, one second of silence, the logo slam on black, then the title. It has a live WebGL light field (the background image), flashes and camera shake on hits, and an optional synthesised score. |
 | "ViaMagus logo looks best on black" | The film's climax is the mark assembling on pure black; the film frame on the site is black with the mark. |
 | Three-forces cards "can be much better" | Replaced the three cards with one stage: *Build. Operate. Scale.* is the tab bar. One force owns the frame at a time in its own colours, advancing automatically. Visuals never show a blank or broken mid-state. |
+
+## Draft 4: the thread and the shutters, audited as a GCC head
+
+**What now works:**
+- **The opening.** The first five seconds earn attention: the self-sorting title, the provocation, and a film button that invites a click.
+- **The film is the strongest asset.** It has a cold open, the old order collapsing, a word rush, real silence, then the ViaMagus mark locking on black under a light sweep. It feels like a launch, not a brochure. I would forward it.
+- **Three forces, one system.** Pulling the thread drops all three shutters side by side, and the thread lights when the set is complete. That makes "one operating model" visible instead of claimed. The demos only start once the set is complete, so the payoff is earned.
+- **Credibility.** Every number has a named source, and every product claim is ViaMagus's own published wording.
+
+**What would still stop me committing a date:**
+1. **No date, venue, format or host names.** This is still the deciding gap (see draft 2), and only ViaMagus can fill it.
+2. **It can read as three product pitches.** A GCC head attends for peers and insight, not for a vendor's portfolio. One line on what I leave with ("a working session on X", "the benchmark") would rebalance it. That line has to come from the event plan; I haven't invented one.
+3. **Proof.** "A release every Friday" is ViaMagus's own claim. A single linked case study would make it land; the official site has them, so link one once you choose which can be named.
+
+**Verdict:** I'd watch the film to the end, scroll to the invitation, and register interest. I'd book the date once items 1 and 2 exist.

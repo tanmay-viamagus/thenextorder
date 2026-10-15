@@ -10,9 +10,7 @@ export type SceneId =
   | "crack"
   | "rules"
   | "eight"
-  | "build"
-  | "operate"
-  | "scale"
+  | "forces"
   | "rush"
   | "silence"
   | "logo"
@@ -39,15 +37,20 @@ export const scenes: Scene[] = [
   { id: "crack", start: 4.4, end: 6.2, energy: 0.28, mono: 0.7, flash: 0.6 },
   { id: "rules", start: 6.2, end: 8, energy: 0.7, flash: 1 },
   { id: "eight", start: 8, end: 10, energy: 0.42, flash: 0.8 },
-  { id: "build", start: 10, end: 12.5, energy: 0.62, flash: 0.7 },
-  { id: "operate", start: 12.5, end: 15, energy: 0.66, flash: 0.7 },
-  { id: "scale", start: 15, end: 17.5, energy: 0.7, flash: 0.7 },
+  { id: "forces", start: 10, end: 17.5, energy: 0.62, flash: 0.7 },
   { id: "rush", start: 17.5, end: 21, energy: 1, flash: 1 },
   { id: "silence", start: 21, end: 22, energy: 0 },
   { id: "logo", start: 22, end: 25.2, energy: 0.22, flash: 1 },
   { id: "title", start: 25.2, end: 28.4, energy: 0.85, flash: 0.6 },
   { id: "invite", start: 28.4, end: 30, energy: 0.18 },
 ];
+
+/** Inside the forces scene: the thread pulls the shutters (0–1.1 s), then the camera pushes into each. */
+export const FORCES_DROP = 1.1;
+/** Extra beats inside a scene: each fires a flash (and a kick when the score is on). */
+export const hits = [10.37, 10.74, 12.1, 14.0, 15.9];
+/** Scenes framed by cinematic letterbox bars, which burst open at "AI changed the rules". */
+export const letterboxed: SceneId[] = ["cursor", "grid", "crack"];
 
 /** The rush: one word every 0.4 s, each with its own flash and beat. */
 export const RUSH_STEP = 0.4;

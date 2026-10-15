@@ -3,15 +3,16 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { whenWhere as eventLine } from "@/content/event";
-import { FILM_DURATION, RUSH_STEP, rushWords, sceneAt, scenes, type SceneId } from "@/content/film";
+import { FILM_DURATION, FORCES_DROP, hits, letterboxed, RUSH_STEP, rushWords, sceneAt, scenes, type SceneId } from "@/content/film";
 import { invite, title } from "@/content/story";
-import { SelectWordmark, SynthiaLogo, VelocityWordmark } from "../Brand";
 import { TitleSort } from "../TitleSort";
+import { Triptych } from "../Triptych";
 import { Score } from "./score";
 import { createLightField } from "./shader";
 
 const v = (o: Record<string, string | number>) => o as CSSProperties;
 const RUSH_START = scenes.find((s) => s.id === "rush")!.start;
+const FORCES_START = scenes.find((s) => s.id === "forces")!.start;
 
 function readStart() {
   const q = new URLSearchParams(window.location.search);
@@ -30,7 +31,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
   const root = useRef<HTMLDivElement | null>(null);
   const canvas = useRef<HTMLCanvasElement | null>(null);
   const sceneEls = useRef(new Map<SceneId, HTMLDivElement>());
-  const clock = useRef({ t: 0, last: 0, scene: "" as SceneId | "", word: -1, energy: 0, mono: 0, flash: 0 });
+  const clock = useRef({ t: 0, prev: 0, last: 0, scene: "" as SceneId | "", word: -1, energy: 0, mono: 0, flash: 0 });
   const field = useRef<ReturnType<typeof createLightField>>(null);
   const score = useRef<Score | null>(null);
   const [playing, setPlaying] = useState(false);
@@ -56,6 +57,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
       }
       if (s.flash) c.flash = Math.max(c.flash, s.flash);
       if (s.id === "title") setTitleKey((k) => k + 1);
+      root.current?.classList.toggle("is-boxed", letterboxed.includes(s.id));
       c.scene = s.id;
       c.word = -1;
     }
@@ -66,6 +68,17 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
         c.flash = Math.max(c.flash, 0.55 + (w / rushWords.length) * 0.45);
       }
     }
+    if (s.id === "forces") {
+      const tri = sceneEls.current.get("forces")?.querySelector<HTMLElement>(".tri");
+      if (tri) {
+        const p = Math.min(1, Math.max(0, (t - FORCES_START) / FORCES_DROP));
+        tri.style.setProperty("--p", p.toFixed(3));
+        tri.classList.toggle("is-complete", p >= 1);
+        tri.classList.toggle("is-playing", p >= 1);
+      }
+    }
+    for (const h of hits) if (c.prev < h && t >= h) c.flash = Math.max(c.flash, 0.75);
+    c.prev = t;
     c.energy += (s.energy - c.energy) * Math.min(1, dt * (s.id === "silence" ? 30 : 5));
     c.mono += ((s.mono ?? 0) - c.mono) * Math.min(1, dt * 4);
     c.flash *= Math.exp(-dt * 6.5);
@@ -148,6 +161,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
 
   const restart = useCallback(() => {
     clock.current.t = 0;
+    clock.current.prev = 0;
     clock.current.scene = "";
     if (score.current) {
       score.current.stopAll();
@@ -193,14 +207,11 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
     </div>
   );
 
-  const weeks = Array.from({ length: 12 }, (_, i) => i);
-  const tiles = Array.from({ length: 50 }, (_, i) => i);
-  const picks = new Set([13, 26, 38]);
-
   return (
     <div className={`fp fp--${mode}${idle ? " is-idle" : ""}`} ref={root}>
       <canvas className="fp__bg" ref={canvas} aria-hidden="true" />
       <div className="fp__flash" aria-hidden="true" />
+      <div className="fp__bars" aria-hidden="true" />
       <div
         className="fp__stage"
         aria-hidden="true"
@@ -275,74 +286,10 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
             </>,
           )}
           {sc(
-            "build",
-            <>
-              <span className="fx-ghost">Build</span>
-              <div className="fx-force">
-                <p className="fx-kicker">01 · Build</p>
-                <div className="fx-mark">
-                  <VelocityWordmark />
-                </div>
-                <p className="fx-claim">
-                  A shippable release
-                  <br />
-                  every Friday.
-                </p>
-              </div>
-              <div className="fx-weeks">
-                {weeks.map((w) => (
-                  <i key={w} style={v({ "--w": w })} />
-                ))}
-                <span>12 weeks · 12 releases</span>
-              </div>
-            </>,
-          )}
-          {sc(
-            "operate",
-            <>
-              <span className="fx-ghost">Operate</span>
-              <div className="fx-force">
-                <p className="fx-kicker">02 · Operate</p>
-                <div className="fx-mark">
-                  <SynthiaLogo height={60} />
-                </div>
-                <p className="fx-claim">AI that follows your SOP — and stops for your sign-off.</p>
-              </div>
-              <div className="fx-flow">
-                <span className="fx-flow__line" />
-                <span className="fx-flow__dot" />
-                <span className="fx-flow__gate">
-                  <svg viewBox="0 0 24 24">
-                    <circle cx="12" cy="8.5" r="3.6" />
-                    <path d="M5.5 19.5c.8-3.6 3.4-5.3 6.5-5.3s5.7 1.7 6.5 5.3" />
-                  </svg>
-                </span>
-                <span className="fx-stamp">Signed off ✓</span>
-              </div>
-            </>,
-          )}
-          {sc(
-            "scale",
-            <>
-              <span className="fx-ghost">Scale</span>
-              <div className="fx-force">
-                <p className="fx-kicker">03 · Scale</p>
-                <div className="fx-mark">
-                  <SelectWordmark />
-                </div>
-                <p className="fx-claim">
-                  Not 50 CVs.
-                  <br />
-                  3–5 people you can hire.
-                </p>
-              </div>
-              <div className="fx-tiles">
-                {tiles.map((i) => (
-                  <i key={i} className={picks.has(i) ? "is-pick" : ""} style={v({ "--i": i, "--r": (i * 23) % 50 })} />
-                ))}
-                <span>Shortlisted in 48 hours</span>
-              </div>
-            </>,
+            "forces",
+            <div className="fx-cam">
+              <Triptych mode="film" />
+            </div>,
           )}
           {sc(
             "rush",
@@ -362,6 +309,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
                 <path className="fx-logo__l" d="M0,0l6.7765,11.8958l6.7764,-11.8958z" />
                 <path className="fx-logo__r" d="M23.7177,0l-3.3881,5.9479l-3.3882,-5.9479l-6.7764,11.8955h20.3291z" />
               </svg>
+              <span className="fx-sweep" />
               <p className="fx-word">viamagus</p>
             </>,
           )}
@@ -406,8 +354,8 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
       </div>
       <p className="sr-only">
         A 30-second film. A single cell on black; the old order — a rigid grid — falls apart; AI changed the rules;
-        only 8% of GCCs are top performers; Velocity AI, a shippable release every Friday; Synthia AI, AI that stops
-        for your sign-off; ViaMagus Select, 3–5 people you can hire; a rush of words — build, operate, scale, one
+        only 8% of GCCs are top performers; a thread pulls down three shutters — Velocity AI, a shippable release every
+        Friday; Synthia AI, AI that stops for your sign-off; ViaMagus Select, 3–5 people you can hire; a rush of words — build, operate, scale, one
         order; silence; the ViaMagus logo; The Next Order — everything an enterprise needs to become AI-native.
       </p>
     </div>

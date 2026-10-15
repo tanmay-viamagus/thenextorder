@@ -12,17 +12,16 @@
 
 | Time | Scene | On screen | Motion and light | Sound |
 | --- | --- | --- | --- | --- |
-| 0.0–2.2 | Cursor | A magenta cell blinks on black. *Every enterprise runs on an order.* types out. | Light field off. | — |
+| 0.0–2.2 | Cursor | Letterboxed. A magenta cell blinks on black. *Every enterprise runs on an order.* types out. | Light field off; letterbox bars closed through the old order. | — |
 | 2.2–4.4 | The old order | 96 navy cells pop into a rigid grid. **THE OLD ORDER.** wipes in as outline type. | Desaturated, low light, small flash on the cut. | Kick and snap; the pulse begins |
 | 4.4–6.2 | The crack | The grid breaks; each cell falls and spins away. **Built to scale people.** punches in. | Colour starts to return. | Hit |
-| 6.2–8.0 | The rules | **AI CHANGED THE RULES.** slams in with cyan/magenta channel split. | Full purple burst and big flash. | Hit |
+| 6.2–8.0 | The rules | The letterbox bursts open. **AI CHANGED THE RULES.** slams in with cyan/magenta channel split. | Full purple burst and big flash. | Hit |
 | 8.0–10.0 | The signal | **8%** (magenta) slams in from blur. *of GCCs are top performers.* · BCG · GCC Survey 2024, N = 150 · June 2025 | Pulled back. | Hit |
-| 10.0–12.5 | Build | Velocity AI wordmark · **A shippable release every Friday.** · 12 gradient bars strobe up (12 weeks, 12 releases). Ghost word BUILD drifts behind. | Mid energy. | Hats begin |
-| 12.5–15.0 | Operate | Synthia AI logo · **AI that follows your SOP — and stops for your sign-off.** A run stops at the human gate and **SIGNED OFF ✓** stamps in. | Mid energy. | — |
-| 15.0–17.5 | Scale | Select's paper. **Not 50 CVs. 3–5 people you can hire.** 50 CV tiles flood in; 47 vanish, 3 turn amber. *Shortlisted in 48 hours.* | A paper flash cut. | — |
+| 10.0–11.1 | The thread | A magenta thread runs across the top. Three shutters drop on it in turn (Build, Operate, Scale), each with its cord and cell handle, until all three hang side by side and the thread lights. | Flash on each drop. | Kick on each drop |
+| 11.1–17.5 | The push | The camera pushes into each shutter in turn (Velocity: *A shippable release every Friday.* · Synthia: *AI that follows your SOP — and stops for your sign-off.* · Select: *Not 50 CVs. 3–5 people you can hire.*) while the other two dim. Each demo plays live. | Hit at 12.1, 14.0 and 15.9 s. | Kick on each push; hats run underneath |
 | 17.5–21.0 | The rush | *Build. Operate. Scale. Engineering. Intelligence. Talent. Three forces.* one word every 0.4 s, then **ONE ORDER.** holds. | Full energy, flash on every word. | Kick per word over a rising noise sweep |
 | 21.0–22.0 | Silence | Black. One magenta cell pulses once. | Light cut to zero. | Nothing |
-| 22.0–25.2 | The logo | The two halves of the ViaMagus mark fly in, spinning, and lock. Two shockwave rings. *viamagus* resolves from blur and wide tracking. | Black with a faint purple halo. | Sub-bass boom |
+| 22.0–25.2 | The logo | The two halves of the ViaMagus mark fly in, spinning, and lock. Two shockwave rings, then a magenta light sweeps across the mark. *viamagus* resolves from blur and wide tracking. | Black with a faint purple halo. | Sub-bass boom |
 | 25.2–28.4 | The title | **THE NEXT ORDER.** sorts itself (fast). *Everything an enterprise needs to become AI-native.* | Light field at its brightest. | Pad chord |
 | 28.4–30.0 | The invitation | *An invitation from ViaMagus* · *For GCC leaders* (plus date and venue once set in `event.ts`). Fades to the single cell, which is also the first frame of the loop. | Down to embers. | Pad releases |
 

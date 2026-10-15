@@ -1,4 +1,4 @@
-import { FILM_DURATION, RUSH_STEP, rushWords, scenes } from "@/content/film";
+import { FILM_DURATION, hits, RUSH_STEP, rushWords, scenes } from "@/content/film";
 
 /**
  * An optional score, synthesised live with Web Audio — no audio files.
@@ -118,6 +118,7 @@ export class Score {
       this.kick(at(s.start), 0.8);
       this.noiseHit(at(s.start), 0.35, 2500, "highpass", 0.12);
     }
+    for (const t of hits) if (ok(t)) this.kick(at(t), 0.85);
     for (let t = 2.2; t < 17.5; t += 0.5) if (ok(t)) this.kick(at(t), t < 10 ? 0.35 : 0.55);
     for (let t = 10; t < 17.5; t += 0.25) if (ok(t)) this.noiseHit(at(t), 0.12, 8000, "highpass", 0.04);
     const rushStart = scenes.find((s) => s.id === "rush")!.start;

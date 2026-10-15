@@ -1,4 +1,5 @@
 @import "../styles/frames.css";
+@import "../styles/shutters.css";
 @import "../styles/film.css";
 @import "../styles/film-player.css";
 
@@ -57,7 +58,7 @@ html {
 /* a short deck: each frame snaps into place on larger screens */
 @media (min-width: 900px) and (min-height: 620px) {
   html {
-    scroll-snap-type: y mandatory;
+    scroll-snap-type: y proximity;
   }
 }
 
