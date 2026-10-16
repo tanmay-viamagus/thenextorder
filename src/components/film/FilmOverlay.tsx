@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { FilmPlayer } from "./FilmPlayer";
 
 export const OPEN_FILM = "nxo:open-film";
+export const CLOSE_FILM = "nxo:close-film";
 
 /** Any element can open the film: dispatch `OPEN_FILM` on window. */
 export function FilmButton({ className = "", children }: { className?: string; children: React.ReactNode }) {
@@ -49,6 +50,7 @@ export function FilmOverlay() {
         mode="overlay"
         onClose={() => {
           setOpen(false);
+          window.dispatchEvent(new Event(CLOSE_FILM));
           if (document.fullscreenElement) void document.exitFullscreen().catch(() => {});
         }}
       />

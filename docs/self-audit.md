@@ -64,3 +64,16 @@ All five slots already exist in `src/content/event.ts`. Fill them in and the inv
 3. **Proof.** "A release every Friday" is ViaMagus's own claim. A single linked case study would make it land; the official site has them, so link one once you choose which can be named.
 
 **Verdict:** I'd watch the film to the end, scroll to the invitation, and register interest. I'd book the date once items 1 and 2 exist.
+
+## Draft 5: full redesign, one world
+
+**Critique of draft 4 (why it wasn't good enough):** it was a deck of six unrelated slides in different colours. The best asset (the film's light on black) was hidden behind a button. Visuals read as product-UI diagrams, there was too much chrome (dots, counters, toggles, legends), and native scroll stepping made it feel stiff.
+
+**Redesign:**
+- **The site is the film, played by your scroll.** The light field sits fixed behind every chapter.
+- **The colour tells the story.** The old order drains it to grey, "AI changed the rules" floods it back, each force retints the light (Velocity violet-cyan, Synthia violet, Select amber), and the finale goes to black for the mark.
+- **Type and motion over UI.** Giant verbs fill with colour as you scroll, and the mark assembles on black with a shockwave.
+- **Minimal chrome.** The only navigation is a thin magenta progress thread, plus *Watch the film* and *Request an invitation*.
+- **Smooth.** Lenis smooth scroll (as on viamagusselect.ai) runs at 60 fps in testing.
+
+**As a GCC head now:** this looks and feels like a serious, high-design launch from a company that knows what it is doing. The story lands without reading: grey becomes colour, three forces, 8%, the mark. I would watch, scroll to the end, and register interest. The deciding gaps are unchanged and are not design problems: date and venue, format, named hosts or peers, and one concrete takeaway.

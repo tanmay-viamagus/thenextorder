@@ -18,6 +18,8 @@ uniform float u_time;
 uniform float u_energy;
 uniform float u_flash;
 uniform float u_mono;
+uniform vec3 u_c1;
+uniform vec3 u_c2;
 
 float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
 float noise(vec2 p) {
@@ -38,9 +40,9 @@ void main() {
   vec2 r = vec2(fbm(p * 2.1 + q * 2.2 + vec2(1.7, 9.2) + t * 1.3), fbm(p * 2.1 + q * 2.2 + vec2(8.3, 2.8) - t));
   float f = fbm(p * 1.3 + r * 1.9);
 
-  vec3 purple = vec3(0.40, 0.03, 0.66);
-  vec3 deep = vec3(0.11, 0.0, 0.19);
-  vec3 magenta = vec3(0.99, 0.38, 0.86);
+  vec3 purple = u_c1;
+  vec3 deep = u_c1 * 0.28;
+  vec3 magenta = u_c2;
   vec3 lilac = vec3(0.95, 0.82, 1.0);
 
   float e = u_energy;
@@ -63,7 +65,11 @@ void main() {
 }
 `;
 
-export type Uniforms = { time: number; energy: number; flash: number; mono: number };
+export type RGB = [number, number, number];
+export type Uniforms = { time: number; energy: number; flash: number; mono: number; c1?: RGB; c2?: RGB };
+
+/** ViaMagus primary #6608a9 and secondary #fc60db, linear-ish 0–1 */
+export const BRAND: { c1: RGB; c2: RGB } = { c1: [0.4, 0.03, 0.66], c2: [0.99, 0.38, 0.86] };
 
 export function createLightField(canvas: HTMLCanvasElement, scale = 0.5) {
   const gl = canvas.getContext("webgl", { antialias: false, premultipliedAlpha: false, powerPreference: "high-performance" });
@@ -96,6 +102,8 @@ export function createLightField(canvas: HTMLCanvasElement, scale = 0.5) {
     energy: gl.getUniformLocation(prog, "u_energy"),
     flash: gl.getUniformLocation(prog, "u_flash"),
     mono: gl.getUniformLocation(prog, "u_mono"),
+    c1: gl.getUniformLocation(prog, "u_c1"),
+    c2: gl.getUniformLocation(prog, "u_c2"),
   };
 
   const resize = () => {
@@ -116,6 +124,8 @@ export function createLightField(canvas: HTMLCanvasElement, scale = 0.5) {
       gl.uniform1f(u.energy, v.energy);
       gl.uniform1f(u.flash, v.flash);
       gl.uniform1f(u.mono, v.mono);
+      gl.uniform3fv(u.c1, v.c1 ?? BRAND.c1);
+      gl.uniform3fv(u.c2, v.c2 ?? BRAND.c2);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     },
     dispose() {

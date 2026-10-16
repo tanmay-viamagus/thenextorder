@@ -2,7 +2,7 @@
 .og {
   width: 1200px;
   height: 630px;
-  background: var(--purple);
+  background: #000 url("/film-poster.jpg") center / cover no-repeat;
   color: var(--white);
   padding: 72px 80px;
   display: flex;

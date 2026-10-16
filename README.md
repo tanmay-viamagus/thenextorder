@@ -1,6 +1,6 @@
 # The NEXT Order — ViaMagus event microsite
 
-Six screens, one idea each, about 40 seconds end to end, plus a 30-second crescendo film. The film plays fullscreen from the site and loops at `/film` for the event screens. Built with Next.js 16 (App Router), React 19 and plain CSS. There are no animation libraries.
+One continuous scene on black: the film's live light field sits behind the whole site and your scroll plays the story — the hero, the old order breaking, three forces (the light turns each force's colour), the 8%, the ViaMagus mark assembling, the invitation. Plus a 30-second crescendo film, fullscreen from the site and at `/film` for event screens. Built with Next.js 16 (App Router), React 19 and plain CSS. There are no animation libraries.
 
 ```bash
 npm install
@@ -11,7 +11,7 @@ npm run lint
 
 | Route | What it is |
 | --- | --- |
-| `/` | 01 Hook (the title sorts itself; Watch the film) · 02 The film (logo on black) · 03 The shift (pyramid → three forces) · 04 Build / Operate / Scale (scroll pulls a thread that drops three shutters) · 05 The 8% signal · 06 The invitation |
+| `/` | Hero · The old order → AI changed the rules · Build / Operate / Scale · 8% · the mark · the invitation |
 | `/film` | The 30 s film for event screens: WebGL light field, optional synthesised score (M). `?t=22` pauses on a second |
 | `/film-poster` | Internal: renders the light-field still saved as `public/film-poster.jpg` (noindex) |
 | `/og-card` | Internal 1200×630 card, screenshotted to `public/og-image.png` (noindex) |
@@ -26,9 +26,9 @@ npm run lint
 
 ```
 src/content/      story.ts (all copy + claim sources), event.ts (verified facts only), film.ts (timeline)
-src/components/   TitleSort, ShiftGrid, Triptych + ForcesShutters (the thread), ForceVisuals, Frames, Director
+src/components/   world/World (light field + Lenis smooth scroll + scrubbing), world/Chapters, TitleSort, ForceVisuals, Triptych (film)
 src/components/film/  FilmPlayer, FilmOverlay, shader.ts (light field), score.ts (Web Audio)
-src/styles/       frames.css (site), shutters.css (the thread), film-player.css (film), film.css (OG card)
+src/styles/       world.css (site), shared.css (title, logos, demos), shutters.css + film-player.css (film), film.css (OG card)
 docs/             self-audit.md, brand-audit.md, next-order-research.md, film-storyboard.md
 ```
 

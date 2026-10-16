@@ -1,22 +1,21 @@
-import { Director } from "@/components/Director";
 import { FilmOverlay } from "@/components/film/FilmOverlay";
-import { FilmFrame, Forces, Header, Hook, Invite, Recap, Shift, Signal } from "@/components/Frames";
+import { Finale, Forces, Header, Hero, Invite, Order, Signal } from "@/components/world/Chapters";
+import { World } from "@/components/world/World";
 
 export default function Home() {
   return (
     <>
+      <World />
       <Header />
       <main>
-        <Hook />
-        <FilmFrame />
-        <Shift />
+        <Hero />
+        <Order />
         <Forces />
         <Signal />
-        <Recap />
+        <Finale />
         <Invite />
       </main>
       <FilmOverlay />
-      <Director />
     </>
   );
 }
