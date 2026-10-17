@@ -1,32 +1,48 @@
-# The NEXT Order — the film (30 s)
+# The NEXT Order — 30-second event-screen film
 
-**What it is:** a 30-second crescendo, built separately from the site's animations. It starts with tension, speeds up through fast cuts, rushes to a peak, goes silent for one second, then the ViaMagus logo slams in on black. It plays on a fixed 1920×1080 stage scaled to any screen, over a live WebGL light field in ViaMagus colours. The light intensifies with the story, flashes on every cut, and the camera shakes on every hit.
+**Purpose:** a silent loop on the venue screen, in a room with ambient light, watched in glances. Every beat carries one short message in large, high-contrast type. There are no statistics, footnotes or small print, and the three offerings get equal screen time.
 
-**Where it plays:**
-- On the site: the *Watch the film* button on the first screen, the black film frame (02), or the header button. All three open it fullscreen over the page; Esc closes it.
-- On event screens: `/film`.
+**Status:**
+- **Implemented:** a live, browser-rendered loop at `/film` (also opens fullscreen from the site). It is composed on a fixed 1920×1080 stage and scaled to fit any screen.
+- **Not done:** a rendered video file. None exists; see "Before export" below.
 
-**Sound:** off by default. *Sound on* (or **M**) plays a score synthesised in the browser with no audio files: a pulse, hats, a riser, a kick on every rush word, a sub-bass boom under the logo, and a pad under the title. The film never depends on sound.
+Timings are defined in `src/content/film.ts`.
 
-**Status:** implemented and running live. No video file has been rendered. Timings are in `src/content/film.ts`.
+## Design rules for the venue screen
 
-| Time | Scene | On screen | Motion and light | Sound |
+- **Type size:** minimum 64 px on the 1080 p stage for any line meant to be read; headlines are 120–330 px. On a 4K wall that doubles.
+- **Pacing:** one message per beat, held for at least 1.5 s after it lands, so a guest looking up mid-loop can read it.
+- **Contrast:** white, lilac `#F2D0FF`, magenta `#FC60DB`, the Velocity gradient or Select amber, on near-black. The light field sits behind and never behind small text.
+- **No dependency on sound.** The optional score adds energy but carries no information.
+- **Equal weight:** Build, Operate and Scale drop together as three equal shutters, then each gets an equal camera push.
+- **Seamless loop:** the last frame (one magenta cell on black) is the first frame.
+
+## Storyboard
+
+| Time | Beat | On screen (exact copy) | Visual direction | Transition out |
 | --- | --- | --- | --- | --- |
-| 0.0–2.2 | Cursor | Letterboxed. A magenta cell blinks on black. *Every enterprise runs on an order.* types out. | Light field off; letterbox bars closed through the old order. | — |
-| 2.2–4.4 | The old order | 96 navy cells pop into a rigid grid. **THE OLD ORDER.** wipes in as outline type. | Desaturated, low light, small flash on the cut. | Kick and snap; the pulse begins |
-| 4.4–6.2 | The crack | The grid breaks; each cell falls and spins away. **Built to scale people.** punches in. | Colour starts to return. | Hit |
-| 6.2–8.0 | The rules | The letterbox bursts open. **AI CHANGED THE RULES.** slams in with cyan/magenta channel split. | Full purple burst and big flash. | Hit |
-| 8.0–10.0 | The signal | **8%** (magenta) slams in from blur. *of GCCs are top performers.* · BCG · GCC Survey 2024, N = 150 · June 2025 | Pulled back. | Hit |
-| 10.0–11.1 | The thread | A magenta thread runs across the top. Three shutters drop on it in turn (Build, Operate, Scale), each with its cord and cell handle, until all three hang side by side and the thread lights. | Flash on each drop. | Kick on each drop |
-| 11.1–17.5 | The push | The camera pushes into each shutter in turn (Velocity: *A shippable release every Friday.* · Synthia: *AI that follows your SOP — and stops for your sign-off.* · Select: *Not 50 CVs. 3–5 people you can hire.*) while the other two dim. Each demo plays live. | Hit at 12.1, 14.0 and 15.9 s. | Kick on each push; hats run underneath |
-| 17.5–21.0 | The rush | *Build. Operate. Scale. Engineering. Intelligence. Talent. Three forces.* one word every 0.4 s, then **ONE ORDER.** holds. | Full energy, flash on every word. | Kick per word over a rising noise sweep |
-| 21.0–22.0 | Silence | Black. One magenta cell pulses once. | Light cut to zero. | Nothing |
-| 22.0–25.2 | The logo | The two halves of the ViaMagus mark fly in, spinning, and lock. Two shockwave rings, then a magenta light sweeps across the mark. *viamagus* resolves from blur and wide tracking. | Black with a faint purple halo. | Sub-bass boom |
-| 25.2–28.4 | The title | **THE NEXT ORDER.** sorts itself (fast). *Everything an enterprise needs to become AI-native.* | Light field at its brightest. | Pad chord |
-| 28.4–30.0 | The invitation | *An invitation from ViaMagus* · *For GCC leaders* (plus date and venue once set in `event.ts`). Fades to the single cell, which is also the first frame of the loop. | Down to embers. | Pad releases |
+| 0.0–2.2 | Arrival | **Every enterprise runs on an order.** | Letterboxed black. A magenta cell blinks; the line types across in lilac at 92 px. | Hard cut with a small flash |
+| 2.2–4.4 | The old order | **THE OLD ORDER.** | 96 navy cells pop into a rigid grid; the title wipes in as large outline type. The light is drained to grey. | The grid begins to crack |
+| 4.4–6.2 | The crack | **Built to scale people.** | The grid falls and spins away; the line punches in from blur. | The letterbox bursts open |
+| 6.2–8.0 | The inflection | **AI CHANGED THE RULES.** | Full purple light floods in; cyan/magenta channel split on the type; big flash. | Cut on flash |
+| 8.0–10.0 | Catch up | **Now everything else must catch up.** | Two lines punch in; "catch up." in magenta. | Thread draws across the top |
+| 10.0–11.1 | Three forces | **Build. · Operate. · Scale.** with the *Velocity AI*, *Synthia AI* and *ViaMagus Select* marks | Three equal shutters drop on a magenta thread, one beat each; the thread lights when all three hang together. | Camera push |
+| 11.1–17.5 | The push | **A shippable release every Friday.** · **AI that follows your SOP — and stops for your sign-off.** · **Talent built ahead of demand.** | The camera pushes into each shutter in turn (about 2 s each) while the others dim; each live demo plays (weekly releases, the human sign-off gate, the shortlist). | Flash cut |
+| 17.5–21.0 | The rush | **Build. Operate. Scale. Engineering. Intelligence. Talent. Three forces. One order.** | One word every 0.4 s at 250 px, each on a flash; "ONE ORDER." holds. | Cut to black |
+| 21.0–22.0 | Silence | *(one magenta cell)* | Total black; the cell pulses once. | — |
+| 22.0–25.2 | The mark | **viamagus** logo | The two halves of the ViaMagus mark fly in and lock on black; shockwave rings; a magenta light sweeps across the mark; the wordmark resolves. | Flash |
+| 25.2–28.4 | The name | **THE NEXT ORDER.** · **Everything an enterprise needs to become AI-native.** | The title sorts itself into order; the closing line rises at 68 px; the brightest light of the loop. | Fade |
+| 28.4–30.0 | The invitation | **An invitation from ViaMagus** · **For GCC leaders** *(+ date and venue once confirmed)* | Two lines at 120 px and 64 px, then fade to the single cell, which is frame one. | Loop |
 
-All claims are the same verified ones used on the site (see `src/content/story.ts` and `docs/next-order-research.md`).
+The claims match the verified wording on the site (`src/content/story.ts`). The Select claim, "Talent built ahead of demand", comes from viamagusselect.ai's description of its trained, vetted bench.
 
-**Event screens:** open `/film` and press F11. Controls and the cursor hide after 2.2 s. **Space** pauses, **M** toggles sound. `?t=22` opens paused at a given second. With *Reduce motion* on, it opens paused on the logo.
+## Before export (needs confirmation from the venue)
 
-**Rendering a file (not done):** screen-record `/film` at 3840×2160, 60 fps, for 30.0 s from a fresh load, with *Sound on* if you want the score. Then trim the recording to exactly 30.0 s.
+The display hasn't been tested. Before producing a file, confirm:
+
+1. **Native resolution and aspect ratio** of the screen (for example 3840×2160 16:9, or an LED wall with a non-standard pixel map). The stage is 16:9; another ratio needs a re-composed export.
+2. **Playback method:** a browser on a connected machine (use `/film` fullscreen), or a media player that needs a file (H.264/HEVC MP4 or ProRes, frame rate).
+3. **Brightness and viewing distance:** the light field is tuned for a dark-to-dim room. In bright ambient light, raise the minimum text size and consider a solid background.
+4. **Loop behaviour on the player:** confirm it loops without a black gap between plays.
+
+To render a file once those are known, screen-record `/film` at the confirmed resolution and 60 fps for exactly 30.0 s from a fresh load. Then check that the first and last frames match.

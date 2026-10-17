@@ -11,10 +11,10 @@ npm run lint
 
 | Route | What it is |
 | --- | --- |
-| `/` | Hero · The old order → AI changed the rules · Build / Operate / Scale · 8% · the mark · the invitation |
+| `/` | Act I arrival · Era 01 the old order · Era 02 the inflection point (four signals) · Era 03 the next order (Build / Operate / Scale + convergence) · the ViaMagus mark and the closing line · the invitation |
 | `/film` | The 30 s film for event screens: WebGL light field, optional synthesised score (M). `?t=22` pauses on a second |
 | `/film-poster` | Internal: renders the light-field still saved as `public/film-poster.jpg` (noindex) |
-| `/og-card` | Internal 1200×630 card, screenshotted to `public/og-image.png` (noindex) |
+| `/og-card` | Internal 1200×630 card, screenshotted to `public/og-image.jpg` (noindex) |
 
 ## Before sharing
 
@@ -26,10 +26,10 @@ npm run lint
 
 ```
 src/content/      story.ts (all copy + claim sources), event.ts (verified facts only), film.ts (timeline)
-src/components/   world/World (light field + Lenis smooth scroll + scrubbing), world/Chapters, TitleSort, ForceVisuals, Triptych (film)
+src/components/   world/World (light field, native-scroll scrubbing, flow layout, focus handling, cursor), world/Chapters, TitleSort, ForceVisuals, Triptych (film)
 src/components/film/  FilmPlayer, FilmOverlay, shader.ts (light field), score.ts (Web Audio)
 src/styles/       world.css (site), shared.css (title, logos, demos), shutters.css + film-player.css (film), film.css (OG card)
-docs/             self-audit.md, brand-audit.md, next-order-research.md, film-storyboard.md
+docs/             audit.md (issues found and fixed), self-audit.md, brand-audit.md, next-order-research.md, film-storyboard.md
 ```
 
 Accessibility: semantic sections, keyboard-operable toggle and links, `prefers-reduced-motion` shows every frame in its final state, and without JavaScript the title renders in order.

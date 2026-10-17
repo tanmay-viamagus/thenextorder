@@ -9,7 +9,7 @@ export type SceneId =
   | "grid"
   | "crack"
   | "rules"
-  | "eight"
+  | "catch"
   | "forces"
   | "rush"
   | "silence"
@@ -36,7 +36,7 @@ export const scenes: Scene[] = [
   { id: "grid", start: 2.2, end: 4.4, energy: 0.12, mono: 1, flash: 0.35 },
   { id: "crack", start: 4.4, end: 6.2, energy: 0.28, mono: 0.7, flash: 0.6 },
   { id: "rules", start: 6.2, end: 8, energy: 0.7, flash: 1 },
-  { id: "eight", start: 8, end: 10, energy: 0.42, flash: 0.8 },
+  { id: "catch", start: 8, end: 10, energy: 0.5, flash: 0.8 },
   { id: "forces", start: 10, end: 17.5, energy: 0.62, flash: 0.7 },
   { id: "rush", start: 17.5, end: 21, energy: 1, flash: 1 },
   { id: "silence", start: 21, end: 22, energy: 0 },

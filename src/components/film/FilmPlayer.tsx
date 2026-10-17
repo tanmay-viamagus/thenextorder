@@ -274,16 +274,13 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
             </p>,
           )}
           {sc(
-            "eight",
-            <>
-              <p className="fx-eight">
-                <b>8</b>%
-              </p>
-              <div className="fx-eight__copy">
-                <p className="fx-eight__line">of GCCs are top performers.</p>
-                <p className="fx-src">BCG · GCC Survey 2024, N = 150 · June 2025</p>
-              </div>
-            </>,
+            "catch",
+            <p className="fx-catch">
+              <span>Now everything</span>
+              <span>
+                else must <b>catch up.</b>
+              </span>
+            </p>,
           )}
           {sc(
             "forces",
@@ -354,7 +351,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
       </div>
       <p className="sr-only">
         A 30-second film. A single cell on black; the old order — a rigid grid — falls apart; AI changed the rules;
-        only 8% of GCCs are top performers; a thread pulls down three shutters — Velocity AI, a shippable release every
+        now everything else must catch up; a thread pulls down three shutters — Velocity AI, a shippable release every
         Friday; Synthia AI, AI that stops for your sign-off; ViaMagus Select, 3–5 people you can hire; a rush of words — build, operate, scale, one
         order; silence; the ViaMagus logo; The Next Order — everything an enterprise needs to become AI-native.
       </p>

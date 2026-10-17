@@ -36,9 +36,9 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "The NEXT Order · ViaMagus",
     locale: "en_IN",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "The NEXT Order — an invitation from ViaMagus" }],
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "The NEXT Order — an invitation from ViaMagus" }],
   },
-  twitter: { card: "summary_large_image", title, description, images: ["/og-image.png"] },
+  twitter: { card: "summary_large_image", title, description, images: ["/og-image.jpg"] },
 };
 
 export const viewport: Viewport = {

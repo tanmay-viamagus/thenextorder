@@ -1,5 +1,5 @@
 import { FilmOverlay } from "@/components/film/FilmOverlay";
-import { Finale, Forces, Header, Hero, Invite, Order, Signal } from "@/components/world/Chapters";
+import { Finale, Header, Hero, Inflection, Invite, NextOrder, OldOrder } from "@/components/world/Chapters";
 import { World } from "@/components/world/World";
 
 export default function Home() {
@@ -9,9 +9,9 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <Order />
-        <Forces />
-        <Signal />
+        <OldOrder />
+        <Inflection />
+        <NextOrder />
         <Finale />
         <Invite />
       </main>

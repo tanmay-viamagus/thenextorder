@@ -1,37 +1,113 @@
 import type { CSSProperties, ReactNode } from "react";
 import { event, interestUrl, knownFacts, officialLinks, pending, whenWhere } from "@/content/event";
-import { forces, hook, invite, signal, title } from "@/content/story";
+import { eras, forces, hook, inflection, invite, nextOrder, oldOrder, title, type Signal } from "@/content/story";
 import { SelectWordmark, SynthiaLogo, VelocityWordmark, ViaMagusLogo, ViaMagusMark } from "../Brand";
 import { FilmButton } from "../film/FilmOverlay";
 import { SelectVisual, SynthiaVisual, VelocityVisual } from "../ForceVisuals";
 import { TitleSort } from "../TitleSort";
 
-/** Scroll-scrubbed reveal: in over [a, b] of the chapter's --p, out over [c, d]. */
-function S({
+/* ------------------------------------------------------------------ */
+/* primitives                                                          */
+/* ------------------------------------------------------------------ */
+
+/** A beat inside a chapter: active while the chapter's --p is in [a, b). */
+function Seg({
   a,
   b,
-  c = 2,
-  d = 3,
-  as: Tag = "div",
+  look,
+  hold = false,
   className = "",
   children,
-  style,
+  label,
 }: {
   a: number;
   b: number;
-  c?: number;
-  d?: number;
+  look: string;
+  hold?: boolean;
+  className?: string;
+  children: ReactNode;
+  label?: string;
+}) {
+  return (
+    <div
+      className={`seg${hold ? " seg--hold" : ""} ${className}`}
+      data-seg={`${a} ${b}`}
+      data-look={look}
+      role={label ? "group" : undefined}
+      aria-label={label}
+    >
+      {children}
+    </div>
+  );
+}
+
+/** Reveals with its beat; `s` staggers it. */
+function X({
+  s = 0,
+  as: Tag = "div",
+  className = "",
+  children,
+  id,
+  glitch,
+}: {
+  s?: number;
   as?: "div" | "p" | "h2" | "h3" | "span";
   className?: string;
   children: ReactNode;
-  style?: CSSProperties;
+  id?: string;
+  /** text for the cyan/magenta channel-split copies */
+  glitch?: string;
 }) {
   return (
-    <Tag className={`sx ${className}`} style={{ "--a": a, "--b": b, "--c": c, "--d": d, ...style } as CSSProperties}>
+    <Tag
+      id={id}
+      className={`sx ${glitch ? "glitch " : ""}${className}`}
+      style={{ "--s": s } as CSSProperties}
+    >
       {children}
+      {glitch ? (
+        <>
+          <span className="glitch__a" aria-hidden="true">
+            {glitch}
+          </span>
+          <span className="glitch__b" aria-hidden="true">
+            {glitch}
+          </span>
+        </>
+      ) : null}
     </Tag>
   );
 }
+
+function Source({ sig }: { sig: Signal }) {
+  return (
+    <p className="src">
+      <span className={`src__kind${sig.kind === "Forecast" ? " src__kind--forecast" : ""}`}>{sig.kind}</span>
+      <a href={sig.url} target="_blank" rel="noopener noreferrer">
+        {sig.source}, {sig.date}
+        <span className="sr-only"> (opens in a new tab)</span>
+      </a>
+      <span className="src__pop">{sig.population}</span>
+    </p>
+  );
+}
+
+/** A figure that counts up as its beat reveals ("58%" → 0…58 + "%"). */
+function Count({ figure }: { figure: string }) {
+  const m = figure.match(/^([\d,]+)(.*)$/);
+  if (!m) return <>{figure}</>;
+  const to = Number(m[1].replace(/,/g, ""));
+  return (
+    <>
+      <span className="sr-only">{figure}</span>
+      <span className="count" aria-hidden="true" data-suffix={m[2]} data-full={figure} style={{ "--to": to } as CSSProperties} />
+    </>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* header                                                              */
+/* ------------------------------------------------------------------ */
 
 export function Header() {
   return (
@@ -54,17 +130,27 @@ export function Header() {
   );
 }
 
-/* 01 — the hero */
+/* ------------------------------------------------------------------ */
+/* Act I — arrival                                                     */
+/* ------------------------------------------------------------------ */
+
 export function Hero() {
   const line = whenWhere();
   return (
-    <section className="ch ch--hero" data-ch="hero" aria-label="The Next Order">
+    <section className="ch ch--hero" data-ch="hero" data-look="hero" aria-label="The Next Order">
       <div className="hero">
         <p className="kicker hero__kicker">
           {invite.from} <span aria-hidden="true">·</span> For GCC leaders{line ? ` · ${line}` : ""}
         </p>
-        <TitleSort lines={title} className="hero__title" showReplay />
+        <TitleSort lines={title} className="hero__title" />
         <p className="hero__line">{hook}</p>
+        <ol className="hero__eras" aria-label="The story in three eras">
+          {eras.map((e, i) => (
+            <li key={e}>
+              <span>0{i + 1}</span> {e}
+            </li>
+          ))}
+        </ol>
         <div className="hero__actions">
           <FilmButton className="btn btn--film">
             <span className="btn__play" aria-hidden="true">
@@ -84,183 +170,243 @@ export function Hero() {
   );
 }
 
-/* 02 — the old order breaks */
-export function Order() {
+/* ------------------------------------------------------------------ */
+/* Act II — the old order                                              */
+/* ------------------------------------------------------------------ */
+
+export function OldOrder() {
   const cells = Array.from({ length: 12 * 7 }, (_, i) => i);
+  const ev = oldOrder.evidence;
   return (
-    <section className="ch ch--order" data-ch="order" aria-labelledby="order-a">
+    <section className="ch ch--old" data-ch="old" data-look="old" aria-labelledby="old-h">
       <div className="stage">
-        <div className="grid" aria-hidden="true">
-          {cells.map((i) => (
-            <i
-              key={i}
-              style={
-                {
-                  "--i": i,
-                  "--r": (i * 37) % 84,
-                  "--fx": (((i * 53) % 21) - 10) * 4,
-                  "--fr": (((i * 71) % 17) - 8) * 9,
-                } as CSSProperties
-              }
-            />
-          ))}
-        </div>
-        <div className="order">
-          <S a={0.02} b={0.1} c={0.44} d={0.52} as="p" className="kicker">
-            The last order
-          </S>
-          <S a={0.04} b={0.16} c={0.45} d={0.53} as="h2" className="mega">
-            <span id="order-a">Built to scale people.</span>
-          </S>
-          <S a={0.1} b={0.22} c={0.43} d={0.51} as="p" className="sub">
-            Layers of functions. Work handed down. Growth meant more of everything.
-          </S>
-        </div>
-        <div className="order order--b">
-          <S a={0.6} b={0.68} as="p" className="kicker kicker--hot">
-            The shift
-          </S>
-          <S a={0.58} b={0.72} as="h2" className="mega">
-            AI changed the rules.
-          </S>
-          <S a={0.72} b={0.84} as="p" className="sub">
-            Now the operating model has to change — engineering, operations and talent, together.
-          </S>
-        </div>
+        <Seg a={0} b={1} look="old" className="seg--old">
+          <div className="grid" aria-hidden="true">
+            {cells.map((i) => (
+              <i
+                key={i}
+                style={
+                  {
+                    "--r": (i * 37) % 84,
+                    "--fx": (((i * 53) % 21) - 10) * 4,
+                    "--fr": (((i * 71) % 17) - 8) * 9,
+                  } as CSSProperties
+                }
+              />
+            ))}
+          </div>
+          <div className="old">
+            <X s={0} as="p" className="kicker">
+              {oldOrder.kicker}
+            </X>
+            <X s={1} as="h2" className="mega" id="old-h">
+              {oldOrder.headline}
+            </X>
+            <div className="old__row">
+              <X s={2} as="p" className="sub">
+                {oldOrder.body}
+              </X>
+              <X s={3} className="evidence">
+                <p className="evidence__fig">{ev.figure}</p>
+                <p className="evidence__txt">{ev.finding}</p>
+                <Source sig={ev} />
+              </X>
+            </div>
+          </div>
+        </Seg>
       </div>
     </section>
   );
 }
 
-/* 03 — three forces: the light turns each force's colour */
+/* ------------------------------------------------------------------ */
+/* Act III — the inflection point                                      */
+/* ------------------------------------------------------------------ */
+
+const SIG_A = 0.16;
+const SIG_W = 0.17;
+
+export function Inflection() {
+  const n = inflection.signals.length;
+  const end = SIG_A + n * SIG_W;
+  return (
+    <section className="ch ch--inflection" data-ch="inflection" data-look="rules" aria-labelledby="inf-h">
+      <div className="stage">
+        <Seg a={0} b={SIG_A} look="rules" className="seg--center">
+          <X s={0} as="p" className="kicker kicker--hot">
+            {inflection.kicker}
+          </X>
+          <X s={1} as="h2" className="mega" id="inf-h" glitch={inflection.headline}>
+            {inflection.headline}
+          </X>
+          <X s={2} as="p" className="sub">
+            {inflection.body}
+          </X>
+        </Seg>
+
+        {inflection.signals.map((sig, i) => (
+          <Seg
+            key={sig.source}
+            a={SIG_A + i * SIG_W}
+            b={SIG_A + (i + 1) * SIG_W}
+            look="signal"
+            className="seg--signal"
+            label={`Signal ${i + 1} of ${n}`}
+          >
+            <X s={0} as="p" className="sig__count">
+              Era 02 · Signal <b>0{i + 1}</b> / 0{n}
+            </X>
+            <X s={0} className="sig__fig">
+              <Count figure={sig.figure} />
+            </X>
+            <div className="sig__side">
+              <X s={1} as="h3" className="sig__head">
+                {sig.headline}
+              </X>
+              <X s={2} as="p" className="sig__txt">
+                {sig.finding}
+              </X>
+              <X s={3}>
+                <Source sig={sig} />
+              </X>
+            </div>
+          </Seg>
+        ))}
+
+        <Seg a={end} b={1} look="closing" hold className="seg--center">
+          <X s={0} as="p" className="closer">
+            {inflection.closing}
+          </X>
+        </Seg>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Act IV — the next order: three forces, equal weight                */
+/* ------------------------------------------------------------------ */
+
 const MARK = { velocity: <VelocityWordmark />, synthia: <SynthiaLogo height={34} />, select: <SelectWordmark /> };
 const DEMO = { velocity: <VelocityVisual />, synthia: <SynthiaVisual />, select: <SelectVisual /> };
+const F_A = 0.1;
+const F_W = 0.22;
 
-export function Forces() {
+export function NextOrder() {
+  const conv = F_A + forces.length * F_W;
   return (
-    <section className="ch ch--forces" data-ch="forces" aria-label="Build. Operate. Scale.">
+    <section className="ch ch--next" data-ch="next" data-look="next-intro" aria-labelledby="next-h">
       <div className="stage">
-        <p className="forces__tag kicker">
-          Three forces. One operating model.
-          <span className="forces__count" aria-hidden="true">
-            <b /> / 03
-          </span>
-        </p>
-        {forces.map((f, k) => {
-          const a = k / 3;
-          const z = (k + 1) / 3;
-          const last = k === forces.length - 1;
-          return (
-            <article
-              key={f.key}
-              className={`force force--${f.key}`}
-              style={{ "--k": k, "--k0": a } as CSSProperties}
-              aria-labelledby={`force-${f.key}`}
-            >
-              <S a={a} b={a + 0.06} c={last ? 2 : z - 0.05} d={last ? 3 : z - 0.005} className="force__verb" as="p">
-                <span aria-hidden="true">{f.verb}.</span>
-              </S>
-              <div className="force__body">
-                <S a={a + 0.02} b={a + 0.08} c={last ? 2 : z - 0.06} d={last ? 3 : z - 0.01} as="p" className="kicker">
-                  0{k + 1} — {f.verb}
-                </S>
-                <S a={a + 0.03} b={a + 0.09} c={last ? 2 : z - 0.06} d={last ? 3 : z - 0.01} className="force__mark">
-                  {MARK[f.key]}
-                </S>
-                <S a={a + 0.04} b={a + 0.1} c={last ? 2 : z - 0.055} d={last ? 3 : z - 0.008} as="h3" className="force__claim">
-                  <span id={`force-${f.key}`}>{f.claim}</span>
-                </S>
-                <S a={a + 0.06} b={a + 0.12} c={last ? 2 : z - 0.05} d={last ? 3 : z - 0.006} as="p" className="force__detail">
-                  {f.detail}
-                </S>
-                <S a={a + 0.08} b={a + 0.14} c={last ? 2 : z - 0.05} d={last ? 3 : z - 0.005} className="force__demo">
-                  {DEMO[f.key]}
-                </S>
-                <S a={a + 0.1} b={a + 0.15} c={last ? 2 : z - 0.05} d={last ? 3 : z - 0.005} className="force__link-wrap">
-                  <a className="force__link" href={f.href} target="_blank" rel="noopener noreferrer">
-                    {f.source} <span aria-hidden="true">↗</span>
-                    <span className="sr-only"> (opens in a new tab)</span>
-                  </a>
-                </S>
-              </div>
-            </article>
-          );
-        })}
-      </div>
-    </section>
-  );
-}
+        <Seg a={0} b={F_A} look="next-intro" className="seg--center">
+          <X s={0} as="p" className="kicker kicker--hot">
+            {nextOrder.kicker}
+          </X>
+          <X s={1} as="h2" className="mega" id="next-h">
+            {nextOrder.headline}
+          </X>
+        </Seg>
 
-/* 04 — the signal */
-export function Signal() {
-  const lit = [7, 22, 34, 46, 58, 63, 79, 91];
-  return (
-    <section className="ch ch--signal" data-ch="signal" aria-labelledby="signal-h">
-      <div className="stage">
-        <div className="signal">
-          <S a={0} b={0.22} c={0.6} d={0.68} className="signal__num" as="h2">
-            <span id="signal-h">
-              <b>{signal.figure}</b>%
-            </span>
-          </S>
-          <S a={0} b={0.01} c={0.6} d={0.68} className="signal__side">
-            <S a={0.16} b={0.3} as="p" className="signal__finding">
-              {signal.finding}
-            </S>
-            <S a={0.2} b={0.32} as="p" className="signal__src">
-              <a href={signal.sourceUrl} target="_blank" rel="noopener noreferrer">
-                {signal.source}
-              </a>
-            </S>
-            <div className="dots" aria-hidden="true">
-              {Array.from({ length: 100 }, (_, i) => (
-                <i key={i} className={lit.includes(i) ? "is-lit" : ""} style={{ "--t": 0.28 + lit.indexOf(i) * 0.03 } as CSSProperties} />
-              ))}
+        {forces.map((f, k) => (
+          <Seg
+            key={f.key}
+            a={F_A + k * F_W}
+            b={F_A + (k + 1) * F_W}
+            look={f.key}
+            className={`seg--force force force--${f.key}`}
+          >
+            <p className="force__verb" aria-hidden="true">
+              {f.verb}.
+            </p>
+            <div className="force__body">
+              <X s={0} as="p" className="kicker">
+                0{k + 1} · {f.role}
+              </X>
+              <X s={0} className="force__mark">
+                {MARK[f.key]}
+              </X>
+              <X s={1} as="h3" className="force__claim">
+                {f.claim}
+              </X>
+              <X s={2} as="p" className="force__detail">
+                {f.detail}
+              </X>
+              <X s={3} as="p" className="force__why">
+                {f.why}
+              </X>
+              <X s={2} className="force__demo">
+                {DEMO[f.key]}
+              </X>
+              <X s={4} className="force__link-wrap">
+                <a className="force__link" href={f.href} target="_blank" rel="noopener noreferrer">
+                  {f.source} <span aria-hidden="true">↗</span>
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              </X>
             </div>
-            <S a={0.5} b={0.62} as="p" className="signal__src signal__counter">
-              {signal.counter}{" "}
-              <a href={signal.counterUrl} target="_blank" rel="noopener noreferrer">
-                {signal.counterSource}
-              </a>
-            </S>
-          </S>
-        </div>
-        <S a={0.68} b={0.82} as="p" className="signal__closing">
-          {signal.closing}
-        </S>
+          </Seg>
+        ))}
+
+        <Seg a={conv} b={1} look="converge" hold className="seg--converge">
+          <X s={0} as="p" className="kicker kicker--hot conv__kicker">
+            Three forces. One operating model.
+          </X>
+          <ul className="conv">
+            {forces.map((f, k) => (
+              <li key={f.key} className={`conv__col conv__col--${f.key}`}>
+                <X s={k + 1} as="p" className="conv__verb">
+                  {f.verb}.
+                </X>
+                <X s={k + 1.5} className="conv__mark">
+                  {MARK[f.key]}
+                </X>
+                <X s={k + 2} as="p" className="conv__role">
+                  {f.role}
+                </X>
+              </li>
+            ))}
+          </ul>
+        </Seg>
       </div>
     </section>
   );
 }
 
-/* 05 — the finale: the mark on black, then the name */
+/* ------------------------------------------------------------------ */
+/* the conclusion: the mark on black, then the name and the line       */
+/* ------------------------------------------------------------------ */
+
 export function Finale() {
   return (
-    <section className="ch ch--finale" data-ch="finale" aria-label="ViaMagus — The Next Order">
+    <section className="ch ch--finale" data-ch="finale" data-look="mark" aria-label="ViaMagus — The Next Order">
       <div className="stage">
-        <div className="mark" aria-hidden="true">
-          <span className="mark__ring" />
-          <svg className="mark__svg" viewBox="0 0 30.4941 11.8959">
-            <path className="mark__l" d="M0,0l6.7765,11.8958l6.7764,-11.8958z" />
-            <path className="mark__r" d="M23.7177,0l-3.3881,5.9479l-3.3882,-5.9479l-6.7764,11.8955h20.3291z" />
-          </svg>
-          <p className="mark__word">viamagus</p>
-        </div>
-        <div className="finale">
-          <S a={0.56} b={0.7} className="finale__title" as="p">
+        <Seg a={0} b={0.5} look="mark" className="seg--mark">
+          <div className="mark" aria-hidden="true">
+            <span className="mark__ring" />
+            <svg className="mark__svg" viewBox="0 0 30.4941 11.8959">
+              <path className="mark__l" d="M0,0l6.7765,11.8958l6.7764,-11.8958z" />
+              <path className="mark__r" d="M23.7177,0l-3.3881,5.9479l-3.3882,-5.9479l-6.7764,11.8955h20.3291z" />
+            </svg>
+            <p className="mark__word">viamagus</p>
+          </div>
+        </Seg>
+        <Seg a={0.5} b={1} look="title" hold className="seg--title">
+          <X s={0} as="p" className="finale__title">
             <span className="ts-line">The Next</span>
             <span className="ts-line">Order</span>
-          </S>
-          <S a={0.68} b={0.8} as="p" className="finale__pos">
-            {invite.positioning}
-          </S>
-        </div>
+          </X>
+          <X s={2} as="p" className="finale__pos">
+            {nextOrder.closing}
+          </X>
+        </Seg>
       </div>
     </section>
   );
 }
 
-/* 06 — the invitation */
+/* ------------------------------------------------------------------ */
+/* the invitation (practical information, kept separate)              */
+/* ------------------------------------------------------------------ */
+
 export function Invite() {
   const rows = [
     { k: "For", v: knownFacts.audience },
@@ -270,7 +416,7 @@ export function Invite() {
     { k: "Hosted by", v: knownFacts.host },
   ];
   return (
-    <section id="invite" className="ch ch--invite" data-ch="invite" aria-labelledby="invite-h">
+    <section id="invite" className="ch ch--invite" data-ch="invite" data-look="invite" aria-labelledby="invite-h">
       <div className="invite">
         <div className="invite__lead">
           <p className="kicker kicker--hot">Your next move</p>
@@ -298,6 +444,7 @@ export function Invite() {
               rel="noopener noreferrer"
             >
               {event.registrationUrl ? "Request your invitation" : "Register your interest"} <span aria-hidden="true">→</span>
+              {event.registrationUrl ? null : <span className="sr-only"> (opens viamagus.com in a new tab)</span>}
             </a>
             <FilmButton className="btn btn--ghost">
               <span className="play" aria-hidden="true" /> Watch the film
@@ -308,21 +455,13 @@ export function Invite() {
       <footer className="foot">
         <ViaMagusLogo />
         <ul>
-          <li>
-            <a href={officialLinks.velocity} target="_blank" rel="noopener noreferrer">
-              Velocity AI
-            </a>
-          </li>
-          <li>
-            <a href={officialLinks.synthia} target="_blank" rel="noopener noreferrer">
-              Synthia AI
-            </a>
-          </li>
-          <li>
-            <a href={officialLinks.select} target="_blank" rel="noopener noreferrer">
-              ViaMagus Select
-            </a>
-          </li>
+          {forces.map((f) => (
+            <li key={f.key}>
+              <a href={f.href} target="_blank" rel="noopener noreferrer">
+                {f.name}
+              </a>
+            </li>
+          ))}
         </ul>
         <p>© {new Date().getFullYear()} ViaMagus Technologies Pvt. Ltd.</p>
       </footer>

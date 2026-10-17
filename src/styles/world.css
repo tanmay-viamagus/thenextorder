@@ -1,28 +1,17 @@
 /* ==========================================================================
    The world: one continuous scene on black. The light field (canvas) is
-   fixed behind everything; each chapter is a sticky stage whose `--p`
-   (0 → 1, set by World.tsx) scrubs its type in and out.
+   fixed behind everything. On larger screens each chapter is a sticky stage
+   of beats (`.seg`), revealed by the beat's local progress `--q`.
+   On small screens, with reduced motion, and without JavaScript, the same
+   beats simply stack in normal flow (see "flow layout" at the end).
    ========================================================================== */
-html {
+html,
+body {
   background: #000;
 }
 
 body {
-  background: #000;
   color: var(--white);
-}
-
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
 }
 
 .world {
@@ -49,7 +38,7 @@ main {
   z-index: 1;
 }
 
-/* the progress thread: the only navigation chrome */
+/* the progress thread: the only navigation chrome besides the header */
 .thread {
   position: fixed;
   right: clamp(12px, 1.6vw, 28px);
@@ -90,7 +79,7 @@ main {
   align-items: center;
   justify-content: space-between;
   color: var(--white);
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), transparent);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), transparent);
 }
 
 .hdr__nav {
@@ -106,7 +95,7 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 0.55em;
-  min-height: 40px;
+  min-height: 44px;
   padding: 0;
   border: 0;
   background: none;
@@ -130,6 +119,13 @@ main {
 @media (max-width: 599px) {
   .hdr__invite {
     display: none;
+  }
+}
+
+@media (max-width: 899px) {
+  .hdr {
+    background: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(8px);
   }
 }
 
@@ -157,19 +153,52 @@ main {
 }
 
 .mega {
-  font-size: clamp(3rem, 9.4vw, 13.5rem);
+  font-size: clamp(2.9rem, 9vw, 13rem);
   line-height: 0.9;
   letter-spacing: -0.055em;
   font-weight: 500;
-  max-width: 10.5em;
+  max-width: 11em;
 }
 
 .sub {
-  font-size: clamp(1.1rem, 1.75vw, 2.1rem);
-  line-height: 1.25;
-  letter-spacing: -0.015em;
-  color: rgba(252, 253, 255, 0.78);
-  max-width: 24em;
+  font-size: clamp(1.1rem, 1.6vw, 2rem);
+  line-height: 1.3;
+  letter-spacing: -0.012em;
+  color: rgba(252, 253, 255, 0.82);
+  max-width: 26em;
+}
+
+/* sources: always visible, always dated */
+.src {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  font-size: 0.86rem;
+  color: rgba(252, 253, 255, 0.7);
+}
+
+.src a {
+  color: var(--white);
+  text-underline-offset: 3px;
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.src__kind {
+  padding: 4px 8px 3px;
+  border: 1px solid rgba(242, 208, 255, 0.55);
+  color: var(--lilac);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.src__kind--forecast {
+  border-color: var(--magenta);
+  color: var(--magenta);
 }
 
 /* --- buttons --- */
@@ -184,7 +213,7 @@ main {
   font: 500 1.02rem/1 var(--font);
   text-decoration: none;
   cursor: pointer;
-  transition: transform 0.3s var(--ease-out), background-color 0.3s, color 0.3s;
+  transition: transform 0.3s var(--ease-out), background-color 0.3s, color 0.3s, box-shadow 0.3s;
 }
 
 .btn:hover {
@@ -215,14 +244,14 @@ main {
 }
 
 .btn__dim {
-  opacity: 0.55;
+  opacity: 0.6;
   font-weight: 400;
 }
 
 .btn--ghost {
   background: transparent;
   color: var(--white);
-  box-shadow: inset 0 0 0 1.5px rgba(252, 253, 255, 0.45);
+  box-shadow: inset 0 0 0 1.5px rgba(252, 253, 255, 0.5);
 }
 
 .btn--ghost:hover {
@@ -236,50 +265,13 @@ main {
   font-weight: 600;
 }
 
-/* --- scroll-scrubbed reveal (in over [a,b], out over [c,d] of --p) --- */
-html.js .sx {
-  --in: clamp(0, (var(--p, 0) - var(--a)) / (var(--b) - var(--a)), 1);
-  --out: clamp(0, (var(--p, 0) - var(--c)) / (var(--d) - var(--c)), 1);
-  opacity: calc(var(--in) - var(--out));
-  transform: translateY(calc((1 - var(--in)) * 0.5em - var(--out) * 0.35em));
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html.js .sx {
-    transform: none;
-  }
-}
-
-/* --- chapters --- */
+/* ==========================================================================
+   Act I — arrival
+   ========================================================================== */
 .ch {
   position: relative;
 }
 
-.stage {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  height: 100svh;
-  overflow: hidden;
-}
-
-.ch--order {
-  height: 270vh;
-}
-
-.ch--forces {
-  height: 430vh;
-}
-
-.ch--signal {
-  height: 230vh;
-}
-
-.ch--finale {
-  height: 240vh;
-}
-
-/* 01 hero */
 .ch--hero {
   min-height: 100vh;
   min-height: 100svh;
@@ -292,17 +284,12 @@ html.js .sx {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: clamp(18px, 3.6vh, 40px);
-  padding: calc(var(--hdr) + 3vh) var(--gutter) 10vh;
-}
-
-html.js .ch--hero .hero {
-  transform: translateY(calc(var(--p, 0) * -14vh));
-  opacity: calc(1 - var(--p, 0) * 1.25);
+  gap: clamp(16px, 3vh, 36px);
+  padding: calc(var(--hdr) + 3vh) var(--gutter) 9vh;
 }
 
 .hero__title .ts {
-  font-size: clamp(4.4rem, 16.2vw, 24rem);
+  font-size: clamp(4.4rem, 15.6vw, 23rem);
 }
 
 .hero__line {
@@ -313,6 +300,35 @@ html.js .ch--hero .hero {
   color: var(--lilac);
 }
 
+/* the premise at a glance: three eras */
+.hero__eras {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 0;
+  font-size: clamp(0.88rem, 1vw, 1.15rem);
+  color: rgba(252, 253, 255, 0.82);
+}
+
+.hero__eras li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+}
+
+.hero__eras li + li::before {
+  content: "";
+  width: clamp(18px, 3vw, 56px);
+  height: 1px;
+  margin: 0 0.9em;
+  background: linear-gradient(90deg, rgba(252, 253, 255, 0.2), var(--magenta));
+}
+
+.hero__eras span {
+  font-variant-numeric: tabular-nums;
+  color: var(--magenta);
+  font-weight: 600;
+}
+
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
@@ -321,13 +337,17 @@ html.js .ch--hero .hero {
 
 @media (prefers-reduced-motion: no-preference) {
   .hero__line,
+  .hero__eras,
   .hero__actions,
   .hero__kicker,
   .scrollcue {
-    animation: rise 0.8s var(--ease-out) both 1.35s;
+    animation: rise 0.8s var(--ease-out) both 1.3s;
+  }
+  .hero__eras {
+    animation-delay: 1.42s;
   }
   .hero__actions {
-    animation-delay: 1.5s;
+    animation-delay: 1.55s;
   }
   .hero__kicker {
     animation-delay: 0.2s;
@@ -340,12 +360,12 @@ html.js .ch--hero .hero {
 .scrollcue {
   position: absolute;
   left: var(--gutter);
-  bottom: 4vh;
+  bottom: 3vh;
   display: flex;
   align-items: center;
   gap: 12px;
   font-size: 0.85rem;
-  color: rgba(252, 253, 255, 0.6);
+  color: rgba(252, 253, 255, 0.65);
 }
 
 .scrollcue i {
@@ -354,72 +374,188 @@ html.js .ch--hero .hero {
   background: linear-gradient(var(--magenta), transparent);
 }
 
-/* 02 the old order — an architectural grid draws in, then breaks */
+/* ==========================================================================
+   Sticky stages and beats (larger screens with motion)
+   ========================================================================== */
+.ch--old {
+  height: 210vh;
+}
+
+.ch--inflection {
+  height: 560vh;
+}
+
+.ch--next {
+  height: 580vh;
+}
+
+.ch--finale {
+  height: 230vh;
+}
+
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.seg {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: clamp(14px, 2.4vh, 28px);
+  padding: calc(var(--hdr) + 3vh) calc(var(--gutter) + 2vw) 10vh var(--gutter);
+  pointer-events: none;
+}
+
+.seg.is-active {
+  pointer-events: auto;
+}
+
+/* reveal by the beat's own progress; `--s` staggers */
+html.js .sx {
+  --in: clamp(0, (var(--q, 0) - var(--s, 0) * 0.04) / 0.18, 1);
+  --out: clamp(0, (var(--q, 0) - 0.88) / 0.1, 1);
+  opacity: calc(var(--in) - var(--out));
+  transform: translateY(calc((1 - var(--in)) * 0.45em - var(--out) * 0.3em));
+}
+
+html.js .seg--hold .sx {
+  --out: 0;
+}
+
+/* ==========================================================================
+   Act II — the old order
+   ========================================================================== */
 .grid {
   position: absolute;
   inset: calc(var(--hdr) + 2vh) var(--gutter) 4vh;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(7, 1fr);
+  pointer-events: none;
 }
 
 .grid i {
-  --g: clamp(0, (var(--p, 0) - var(--r) * 0.0016) / 0.1, 1);
-  --f: clamp(0, (var(--p, 0) - 0.5 - var(--r) * 0.0022) / 0.22, 1);
-  border: 1px solid rgba(242, 208, 255, 0.18);
+  --g: clamp(0, (var(--q, 0) - var(--r) * 0.002) / 0.12, 1);
+  --f: clamp(0, (var(--q, 0) - 0.62 - var(--r) * 0.0025) / 0.2, 1);
+  border: 1px solid rgba(242, 208, 255, 0.13);
   margin: -0.5px;
   opacity: calc(var(--g) * (1 - var(--f)));
   transform: translate(calc(var(--fx) * var(--f) * 1vw), calc(var(--f) * 85vh)) rotate(calc(var(--fr) * var(--f) * 1deg));
 }
 
-.order {
-  position: absolute;
-  left: var(--gutter);
-  right: var(--gutter);
-  bottom: 11vh;
+.old {
+  position: relative;
   display: grid;
-  gap: clamp(14px, 2.6vh, 28px);
+  gap: clamp(14px, 2.4vh, 26px);
 }
 
-/* 03 three forces */
-.forces__tag {
-  position: absolute;
-  left: var(--gutter);
-  top: calc(var(--hdr) + 2vh);
-  z-index: 2;
-  gap: 0.65em;
+.old__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px 56px;
 }
 
-.forces__count {
-  margin-left: 1.2em;
-  color: rgba(252, 253, 255, 0.55);
+.evidence {
+  display: grid;
+  gap: 8px;
+  max-width: 26rem;
+  padding-left: 18px;
+  border-left: 2px solid rgba(252, 253, 255, 0.35);
+}
+
+.evidence__fig {
+  font-size: clamp(2.4rem, 4vw, 5rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  font-weight: 500;
+}
+
+.evidence__txt {
+  font-size: clamp(1rem, 1.2vw, 1.4rem);
+  line-height: 1.3;
+}
+
+/* ==========================================================================
+   Act III — the inflection point
+   ========================================================================== */
+.seg--signal {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  grid-template-areas:
+    "count count"
+    "fig side";
+  grid-template-rows: auto 1fr;
+  align-items: center;
+  column-gap: clamp(24px, 5vw, 96px);
+}
+
+.sig__count {
+  grid-area: count;
+  align-self: start;
+  font-size: 0.95rem;
+  color: rgba(252, 253, 255, 0.65);
   font-variant-numeric: tabular-nums;
 }
 
-.forces__count b {
+.sig__count b {
   color: var(--white);
   font-weight: 500;
 }
 
-.forces__count b::before {
-  content: "01";
+.sig__fig {
+  grid-area: fig;
+  font-size: clamp(6rem, 16.5vw, 25rem);
+  line-height: 0.8;
+  letter-spacing: -0.07em;
+  font-weight: 500;
+  color: var(--magenta);
+  white-space: nowrap;
 }
 
-[data-k="1"] .forces__count b::before {
-  content: "02";
+.sig__side {
+  grid-area: side;
+  display: grid;
+  gap: clamp(12px, 2vh, 22px);
 }
 
-[data-k="2"] .forces__count b::before {
-  content: "03";
+.sig__head {
+  font-size: clamp(2rem, 4vw, 5.4rem);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  font-weight: 500;
 }
 
-.force {
-  --q: clamp(0, (var(--p, 0) - var(--k0)) * 3, 1);
-  position: absolute;
-  inset: 0;
+.sig__txt {
+  font-size: clamp(1.1rem, 1.6vw, 2rem);
+  line-height: 1.25;
+  letter-spacing: -0.012em;
+  max-width: 22em;
 }
 
-/* the giant verb fills with the force's colour as you scroll through it */
+.closer {
+  font-size: clamp(2.6rem, 7vw, 10rem);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  font-weight: 500;
+  max-width: 13em;
+}
+
+/* ==========================================================================
+   Act IV — the next order: three forces
+   ========================================================================== */
+.seg--force {
+  justify-content: flex-start;
+}
+
+/* the giant verb fills with the force's colour as its beat plays */
 .force__verb {
   position: absolute;
   left: calc(var(--gutter) - 0.04em);
@@ -433,21 +569,22 @@ html.js .ch--hero .hero {
   color: transparent;
   background: var(--fill);
   background-size: 200% 100%;
-  background-position: calc(100% - var(--q) * 100%) 0;
+  background-position: calc(100% - clamp(0, var(--q, 0) * 1.6, 1) * 100%) 0;
   -webkit-background-clip: text;
   background-clip: text;
+  opacity: calc(clamp(0, var(--q, 0) / 0.06, 1) - clamp(0, (var(--q, 0) - 0.9) / 0.08, 1));
 }
 
 .force--velocity {
-  --fill: linear-gradient(90deg, #9500ff 0%, #00c7ce 50%, rgba(252, 253, 255, 0.09) 50%);
+  --fill: linear-gradient(90deg, #9500ff 0%, #00c7ce 50%, rgba(252, 253, 255, 0.1) 50%);
 }
 
 .force--synthia {
-  --fill: linear-gradient(90deg, #6608a9 0%, #be65ff 50%, rgba(252, 253, 255, 0.09) 50%);
+  --fill: linear-gradient(90deg, #6608a9 0%, #be65ff 50%, rgba(252, 253, 255, 0.1) 50%);
 }
 
 .force--select {
-  --fill: linear-gradient(90deg, #f5b83d 0%, #f5b83d 50%, rgba(252, 253, 255, 0.09) 50%);
+  --fill: linear-gradient(90deg, #f5b83d 0%, #f5b83d 50%, rgba(252, 253, 255, 0.1) 50%);
 }
 
 .force--select .force__verb {
@@ -456,10 +593,7 @@ html.js .ch--hero .hero {
 }
 
 .force__body {
-  position: absolute;
-  left: var(--gutter);
-  right: calc(var(--gutter) + 2vw);
-  top: calc(var(--hdr) + 9vh);
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
   grid-template-areas:
@@ -467,11 +601,13 @@ html.js .ch--hero .hero {
     "mark demo"
     "claim demo"
     "detail demo"
+    "why demo"
     "link demo";
-  grid-template-rows: auto auto auto auto 1fr;
+  grid-template-rows: auto auto auto auto auto 1fr;
   column-gap: clamp(28px, 6vw, 120px);
-  row-gap: clamp(10px, 1.8vh, 20px);
+  row-gap: clamp(10px, 1.7vh, 18px);
   align-items: start;
+  padding-top: 4vh;
 }
 
 .force__body > .kicker {
@@ -484,7 +620,7 @@ html.js .ch--hero .hero {
 
 .force__claim {
   grid-area: claim;
-  font-size: clamp(1.9rem, 3.5vw, 4.8rem);
+  font-size: clamp(1.9rem, 3.4vw, 4.6rem);
   line-height: 1.02;
   letter-spacing: -0.04em;
   font-weight: 500;
@@ -499,9 +635,18 @@ html.js .ch--hero .hero {
 
 .force__detail {
   grid-area: detail;
-  font-size: clamp(1rem, 1.25vw, 1.5rem);
-  color: rgba(252, 253, 255, 0.75);
-  max-width: 26em;
+  font-size: clamp(1rem, 1.2vw, 1.45rem);
+  line-height: 1.35;
+  color: rgba(252, 253, 255, 0.82);
+  max-width: 28em;
+}
+
+.force__why {
+  grid-area: why;
+  font-size: clamp(1rem, 1.2vw, 1.45rem);
+  line-height: 1.35;
+  color: var(--lilac);
+  max-width: 28em;
 }
 
 .force__link-wrap {
@@ -511,9 +656,9 @@ html.js .ch--hero .hero {
 .force__link {
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
+  min-height: 40px;
   font-size: 0.92rem;
-  color: var(--lilac);
+  color: var(--white);
   text-underline-offset: 4px;
 }
 
@@ -522,9 +667,8 @@ html.js .ch--hero .hero {
   align-self: center;
   font-size: clamp(0.85rem, 1vw, 1.2rem);
   padding: clamp(18px, 2vw, 32px);
-  border: 1px solid rgba(252, 253, 255, 0.14);
-  background: rgba(0, 0, 0, 0.42);
-  backdrop-filter: blur(6px);
+  border: 1px solid rgba(252, 253, 255, 0.16);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .force__mark .wm-velocity,
@@ -536,7 +680,8 @@ html.js .ch--hero .hero {
   height: clamp(1.5rem, 1.9vw, 2.3rem);
 }
 
-.force--select .wm-select {
+.force .wm-select,
+.conv .wm-select {
   color: var(--white);
 }
 
@@ -574,102 +719,87 @@ html.js .ch--hero .hero {
   background: #12001f;
 }
 
-/* 04 the signal */
-.signal {
-  position: absolute;
-  left: var(--gutter);
-  right: calc(var(--gutter) + 2vw);
-  top: calc(var(--hdr) + 4vh);
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-  gap: clamp(24px, 5vw, 96px);
-  align-items: center;
-}
-
-.signal__num {
-  font-size: clamp(9rem, 30vw, 44rem);
-  line-height: 0.78;
-  letter-spacing: -0.07em;
-  font-weight: 500;
-}
-
-.signal__num b {
-  color: var(--magenta);
-  font-weight: 500;
-}
-
-html.js .signal__num {
-  transform: scale(calc(0.72 + var(--in) * 0.28));
-  transform-origin: 0 60%;
-}
-
-.signal__side {
-  display: grid;
-  gap: clamp(12px, 2vh, 22px);
-}
-
-.signal__finding {
-  font-size: clamp(1.4rem, 2.3vw, 3rem);
-  line-height: 1.12;
-  letter-spacing: -0.025em;
-}
-
-.signal__src {
-  font-size: 0.85rem;
+.fv-axis {
   color: rgba(252, 253, 255, 0.6);
 }
 
-.signal__src a {
-  color: inherit;
-  text-underline-offset: 3px;
+/* convergence: all three together, equal weight */
+.seg--converge {
+  justify-content: center;
 }
 
-.signal__counter {
-  font-size: clamp(0.95rem, 1.1vw, 1.3rem);
+.conv {
+  opacity: clamp(0, var(--q, 0) / 0.12, 1);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid rgba(252, 253, 255, 0.2);
+}
+
+.conv__col {
+  display: grid;
+  gap: clamp(10px, 1.8vh, 18px);
+  align-content: start;
+  padding: clamp(18px, 3vh, 36px) clamp(12px, 2vw, 32px) 0 0;
+}
+
+.conv__col + .conv__col {
+  padding-left: clamp(12px, 2vw, 32px);
+  border-left: 1px solid rgba(252, 253, 255, 0.2);
+}
+
+.conv__verb {
+  font-size: clamp(3rem, 6.6vw, 10rem);
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+  font-weight: 600;
+}
+
+.conv__col--velocity .conv__verb {
+  background: var(--vel-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.conv__col--synthia .conv__verb {
+  color: var(--syn-bright);
+}
+
+.conv__col--select .conv__verb {
+  color: var(--sel-amber);
+  font-family: var(--font-archivo), var(--font);
+  letter-spacing: -0.065em;
+}
+
+.conv__mark .wm-velocity,
+.conv__mark .wm-select {
+  font-size: clamp(1.2rem, 1.6vw, 2rem);
+}
+
+.conv__mark .wm-synthia {
+  height: clamp(1.3rem, 1.7vw, 2.1rem);
+}
+
+.conv__role {
+  font-size: clamp(1rem, 1.25vw, 1.5rem);
   color: rgba(252, 253, 255, 0.82);
 }
 
-.dots {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  gap: clamp(3px, 0.4vw, 7px);
-  width: min(100%, 380px);
-  margin-top: 6px;
+/* ==========================================================================
+   The conclusion: the mark on black, then the name and the line
+   ========================================================================== */
+.seg--mark {
+  justify-content: center;
+  align-items: center;
 }
 
-.dots i {
-  aspect-ratio: 1;
-  border: 1px solid rgba(252, 253, 255, 0.16);
-}
-
-.dots i.is-lit {
-  border-color: var(--magenta);
-  background: rgb(252 96 219 / clamp(0, calc((var(--p, 0) - var(--t)) * 30), 1));
-}
-
-.signal__closing {
-  position: absolute;
-  left: var(--gutter);
-  right: var(--gutter);
-  top: 50%;
-  margin-top: -0.95em;
-  font-size: clamp(2.4rem, 6.4vw, 9rem);
-  line-height: 0.98;
-  letter-spacing: -0.045em;
-  font-weight: 500;
-  max-width: 15em;
-}
-
-/* 05 the finale: the mark assembles on black, then the name */
 .mark {
-  --l: clamp(0, var(--p, 0) / 0.3, 1);
-  --r: clamp(0, (var(--p, 0) - 0.3) / 0.07, 1);
-  --x: clamp(0, (var(--p, 0) - 0.5) / 0.1, 1);
-  position: absolute;
-  left: 50%;
-  top: 46%;
+  --l: clamp(0, var(--q, 0) / 0.5, 1);
+  --r: clamp(0, (var(--q, 0) - 0.5) / 0.14, 1);
+  --x: clamp(0, (var(--q, 0) - 0.86) / 0.12, 1);
+  position: relative;
   width: clamp(220px, 32vw, 600px);
-  transform: translate(-50%, calc(-50% - var(--x) * 10vh)) scale(calc(1 - var(--x) * 0.25));
+  transform: translateY(calc(var(--x) * -8vh)) scale(calc(1 - var(--x) * 0.2));
   opacity: calc(1 - var(--x));
   display: grid;
   justify-items: center;
@@ -706,23 +836,18 @@ html.js .signal__num {
   border-radius: 99px;
   border: 2px solid var(--lilac);
   transform: translate(-50%, -50%) scale(calc(0.4 + var(--r) * 4.6));
-  opacity: calc((1 - var(--r)) * clamp(0, (var(--p, 0) - 0.3) * 100, 1));
+  opacity: calc((1 - var(--r)) * clamp(0, (var(--q, 0) - 0.5) * 100, 1));
+  pointer-events: none;
 }
 
 .mark__word {
   font: 500 clamp(2.4rem, 6vw, 7.5rem) / 1 var(--font-josefin), var(--font);
-  opacity: clamp(0, (var(--p, 0) - 0.3) / 0.12, 1);
-  letter-spacing: calc((1 - clamp(0, (var(--p, 0) - 0.3) / 0.1, 1)) * 0.5em);
+  opacity: clamp(0, (var(--q, 0) - 0.5) / 0.12, 1);
+  letter-spacing: calc((1 - clamp(0, (var(--q, 0) - 0.5) / 0.1, 1)) * 0.5em);
 }
 
-.finale {
-  position: absolute;
-  left: var(--gutter);
-  right: var(--gutter);
-  top: 50%;
-  transform: translateY(-50%);
-  display: grid;
-  gap: clamp(18px, 3vh, 36px);
+.seg--title {
+  justify-content: center;
 }
 
 .finale__title {
@@ -735,12 +860,17 @@ html.js .signal__num {
 }
 
 .finale__pos {
-  font-size: clamp(1.3rem, 2.4vw, 2.9rem);
+  text-wrap: balance;
+  font-size: clamp(1.4rem, 2.6vw, 3.2rem);
+  line-height: 1.12;
   letter-spacing: -0.02em;
   color: var(--lilac);
+  max-width: 20em;
 }
 
-/* 06 the invitation */
+/* ==========================================================================
+   The invitation — practical information, kept apart from the story
+   ========================================================================== */
 .ch--invite {
   min-height: 100vh;
   min-height: 100svh;
@@ -749,7 +879,7 @@ html.js .signal__num {
   justify-content: space-between;
   gap: 40px;
   padding: calc(var(--hdr) + 6vh) var(--gutter) 28px;
-  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.65) 30%);
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.7) 30%);
 }
 
 .invite {
@@ -781,9 +911,8 @@ html.js .signal__num {
   display: grid;
   gap: 22px;
   padding: clamp(22px, 2.6vw, 44px);
-  border: 1px solid rgba(252, 253, 255, 0.16);
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(8px);
+  border: 1px solid rgba(252, 253, 255, 0.18);
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .invite__from {
@@ -800,7 +929,7 @@ html.js .signal__num {
 
 .invite__rows {
   display: grid;
-  border-top: 1px solid rgba(252, 253, 255, 0.16);
+  border-top: 1px solid rgba(252, 253, 255, 0.18);
 }
 
 .invite__rows > div {
@@ -808,11 +937,11 @@ html.js .signal__num {
   grid-template-columns: 7.6em 1fr;
   gap: 12px;
   padding: 13px 0;
-  border-bottom: 1px solid rgba(252, 253, 255, 0.16);
+  border-bottom: 1px solid rgba(252, 253, 255, 0.18);
 }
 
 .invite__rows dt {
-  color: rgba(252, 253, 255, 0.6);
+  color: rgba(252, 253, 255, 0.7);
 }
 
 .invite__rows dd {
@@ -820,7 +949,7 @@ html.js .signal__num {
 }
 
 .invite__rows dd.is-pending {
-  color: rgba(252, 253, 255, 0.6);
+  color: rgba(252, 253, 255, 0.7);
   font-weight: 400;
 }
 
@@ -841,7 +970,7 @@ html.js .signal__num {
   align-items: center;
   gap: 12px 28px;
   padding-top: 18px;
-  border-top: 1px solid rgba(252, 253, 255, 0.16);
+  border-top: 1px solid rgba(252, 253, 255, 0.18);
   font-size: 0.86rem;
 }
 
@@ -854,55 +983,16 @@ html.js .signal__num {
 .foot a {
   display: inline-flex;
   align-items: center;
-  min-height: 32px;
+  min-height: 44px;
   text-underline-offset: 3px;
 }
 
 .foot p {
   margin-left: auto;
-  color: rgba(252, 253, 255, 0.6);
+  color: rgba(252, 253, 255, 0.7);
 }
 
-/* --- small screens --- */
 @media (max-width: 899px) {
-  .ch--order {
-    height: 240vh;
-  }
-  .ch--forces {
-    height: 390vh;
-  }
-  .grid {
-    grid-template-columns: repeat(6, 1fr);
-  }
-  .grid i:nth-child(n + 43) {
-    display: none;
-  }
-  .force__body {
-    top: calc(var(--hdr) + 6vh);
-    grid-template-columns: 1fr;
-    grid-template-areas: "kicker" "mark" "claim" "detail" "demo" "link";
-    grid-template-rows: none;
-  }
-  .force__demo {
-    font-size: 3vw;
-    padding: 14px;
-  }
-  .force__verb {
-    font-size: 24vw;
-  }
-  .signal {
-    grid-template-columns: 1fr;
-    top: calc(var(--hdr) + 2vh);
-  }
-  .signal__num {
-    font-size: 40vw;
-  }
-  .dots {
-    width: 60%;
-  }
-  .signal__closing {
-    font-size: 11vw;
-  }
   .invite {
     grid-template-columns: 1fr;
   }
@@ -914,22 +1004,280 @@ html.js .signal__num {
   }
 }
 
-/* --- without JavaScript: no sticky scrubbing, everything simply in flow --- */
-html:not(.js) .ch {
+/* ==========================================================================
+   Flow layout — small screens, reduced motion, no JavaScript.
+   Same content, same order, no pinning: the story simply reads top to bottom.
+   ========================================================================== */
+@media (max-width: 899px), (prefers-reduced-motion: reduce) {
+  .ch--old,
+  .ch--inflection,
+  .ch--next,
+  .ch--finale {
+    height: auto;
+  }
+  .stage {
+    position: relative;
+    height: auto;
+    overflow: visible;
+  }
+  .seg {
+    position: relative;
+    inset: auto;
+    min-height: 72vh;
+    min-height: 72svh;
+    justify-content: center;
+    padding: 9vh var(--gutter);
+    pointer-events: auto;
+  }
+  html.js .sx {
+    opacity: 1;
+    transform: none;
+  }
+  .grid {
+    display: none;
+  }
+  .seg--signal {
+    grid-template-columns: 1fr;
+    grid-template-areas: "count" "fig" "side";
+    grid-template-rows: none;
+    row-gap: 18px;
+  }
+  .sig__fig {
+    font-size: clamp(6rem, 34vw, 14rem);
+  }
+  .force__verb {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    order: -1;
+    font-size: clamp(4.2rem, 22vw, 12rem);
+    opacity: 1;
+  }
+  .force__body {
+    grid-template-columns: 1fr;
+    grid-template-areas: "kicker" "mark" "claim" "detail" "why" "demo" "link";
+    grid-template-rows: none;
+    padding-top: 0;
+  }
+  .force__demo {
+    font-size: clamp(0.8rem, 3vw, 1.1rem);
+    padding: 14px;
+  }
+  .conv {
+    grid-template-columns: 1fr;
+  }
+  .conv__col + .conv__col {
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid rgba(252, 253, 255, 0.2);
+  }
+  .conv__verb {
+    font-size: clamp(3rem, 16vw, 8rem);
+  }
+  .mark {
+    --l: 1;
+    --r: 1;
+    --x: 0;
+    margin: 0 auto;
+  }
+  .mark__word {
+    opacity: 1;
+    letter-spacing: 0;
+  }
+  .mark__ring {
+    display: none;
+  }
+}
+
+html:not(.js) .ch--old,
+html:not(.js) .ch--inflection,
+html:not(.js) .ch--next,
+html:not(.js) .ch--finale {
   height: auto;
 }
 
 html:not(.js) .stage {
   position: relative;
   height: auto;
-  min-height: 100vh;
+  overflow: visible;
 }
 
-html:not(.js) .force,
-html:not(.js) .order,
-html:not(.js) .finale,
-html:not(.js) .mark {
+html:not(.js) .seg {
   position: relative;
   inset: auto;
-  transform: none;
+  min-height: 72vh;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+html:not(.js) .grid {
+  display: none;
+}
+
+html:not(.js) .force__verb {
+  position: relative;
+  left: auto;
+  bottom: auto;
+  order: -1;
+  opacity: 1;
+  --q: 1;
+}
+
+html:not(.js) .mark {
+  --l: 1;
+  --x: 0;
+}
+
+html:not(.js) .mark__word {
+  opacity: 1;
+  letter-spacing: 0;
+}
+
+html:not(.js) .mark__ring {
+  display: none;
+}
+
+/* ==========================================================================
+   Going further: count-up figures, the glitch, the cell cursor
+   ========================================================================== */
+@property --n {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 0;
+}
+
+.count {
+  --n: calc(var(--to) * clamp(0, var(--q, 0) / 0.32, 1));
+  counter-reset: n var(--n);
+}
+
+.count::before {
+  content: counter(n) attr(data-suffix);
+}
+
+html:not(.js) .count::before {
+  content: attr(data-full);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .count::before {
+    content: attr(data-full);
+  }
+}
+
+/* "AI changed the rules." arrives with the film's channel split */
+.glitch {
+  position: relative;
+}
+
+.glitch__a,
+.glitch__b {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  clip-path: inset(0 0 100% 0);
+}
+
+.glitch__a {
+  color: var(--vel-cyan);
+}
+
+.glitch__b {
+  color: var(--magenta);
+}
+
+@media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+  .seg.is-active .glitch__a {
+    animation: g-a 1.1s steps(2) 0.15s both;
+  }
+  .seg.is-active .glitch__b {
+    animation: g-b 1.1s steps(2) 0.15s both;
+  }
+}
+
+@keyframes g-a {
+  0% {
+    transform: translate(-0.06em, 0.02em);
+    clip-path: inset(8% 0 58% 0);
+  }
+  25% {
+    transform: translate(0.05em, -0.015em);
+    clip-path: inset(52% 0 12% 0);
+  }
+  50% {
+    transform: translate(-0.03em, 0);
+    clip-path: inset(30% 0 42% 0);
+  }
+  75%,
+  100% {
+    transform: none;
+    clip-path: inset(0 0 100% 0);
+  }
+}
+
+@keyframes g-b {
+  0% {
+    transform: translate(0.06em, -0.02em);
+    clip-path: inset(60% 0 6% 0);
+  }
+  25% {
+    transform: translate(-0.045em, 0.015em);
+    clip-path: inset(6% 0 70% 0);
+  }
+  50% {
+    transform: translate(0.025em, 0);
+    clip-path: inset(40% 0 30% 0);
+  }
+  75%,
+  100% {
+    transform: none;
+    clip-path: inset(0 0 100% 0);
+  }
+}
+
+/* the cell cursor: a magenta cell trails the pointer; it opens into a ring over anything clickable.
+   The system cursor stays — this is an accent, not a replacement. */
+.cell-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.cell-cursor.is-on {
+  opacity: 1;
+}
+
+.cell-cursor i {
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  width: 9px;
+  height: 9px;
+  background: var(--magenta);
+  transition: width 0.3s var(--ease-out), height 0.3s var(--ease-out), left 0.3s var(--ease-out), top 0.3s var(--ease-out), background-color 0.3s, border-color 0.3s;
+  border: 1.5px solid var(--magenta);
+}
+
+.cell-cursor.is-hot i {
+  left: -22px;
+  top: -22px;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border-radius: 99px;
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cell-cursor {
+    display: none;
+  }
+}
+
+html:not(.js) .conv {
+  opacity: 1;
 }

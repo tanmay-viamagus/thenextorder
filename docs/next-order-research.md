@@ -101,11 +101,21 @@ Verified 14 October 2026. All six leads were checked against the publisher's own
 
 ---
 
-## On the site (`src/content/story.ts` → frame 04)
+## How the signals carry the narrative (on the site)
 
-The redesign uses one headline figure and one counterpoint, both specific to GCCs:
+Re-checked 17 October 2026. All six were verified against the original publisher pages; five are used on the site, each labelled with its kind, population, publisher and date.
 
-1. **BCG:** "8% of GCCs qualify as top performers across market advantage, innovation and efficiency." Survey, N = 150, global.
-2. **EY:** "Meanwhile, 58% of India-based GCCs are already investing in agentic AI." Survey; India-based GCCs.
+| # | Signal | Era / role in the story | Why it matters to GCC leaders | On site? |
+| --- | --- | --- | --- | --- |
+| 5 | nasscom & Zinnov: 1,700+ GCCs in India, over 1.9 million people (FY2024) | **Era 01, the old order.** Evidence that the old model worked, so it isn't a caricature. | This is the scale that leaders are now responsible for re-tooling. | Yes |
+| 3 | EY: 58% of India-based GCCs investing in agentic AI, 29% more within a year | **Era 02, signal 1: "The money is moving."** | Investment is already committed; the question is execution. | Yes |
+| 4 | McKinsey: 23% scaling an agentic AI system somewhere in the enterprise; 62% at least experimenting | **Era 02, signal 2: "Few are scaling."** | Experimentation is common; scaling is not. | Yes (labelled *global survey*) |
+| 6 | Gartner: over 40% of agentic AI projects canceled by end of 2027 | **Era 02, signal 3: "Many will stall."** | Value, cost and governance decide which projects survive. | Yes (labelled *forecast*) |
+| 2 | BCG: 8% of GCCs qualify as top performers | **Era 02, signal 4: "Few lead."** | The gap between running a centre and leading is the opportunity. | Yes |
+| 1 | Gartner: 40% of enterprise apps with task-specific agents by end of 2026 | Not used. It is a forecast whose target date is now only weeks away, so it shouldn't be presented as forward-looking. | | No |
 
-The two are shown side by side, not combined into one figure. The NASSCOM and both Gartner signals are approved but not used. The McKinsey signal is approved but not used.
+**Caveats kept visible on the site:** each signal shows *Survey* or *Forecast*, its population (India-based GCCs, global respondents, or a global GCC sample of 150) and its date. The four inflection signals come from different populations and are presented as a sequence of separate findings, never combined into one figure.
+
+**Freshness:** McKinsey has published *The state of AI in 2026* (August 2026) with different baselines. The site deliberately cites the dated November 2025 finding. Before the event, decide whether to switch to the 2026 figure.
+
+**The film uses no statistics,** because small print isn't legible on a venue screen.

@@ -20,6 +20,8 @@ uniform float u_flash;
 uniform float u_mono;
 uniform vec3 u_c1;
 uniform vec3 u_c2;
+uniform vec2 u_mouse;
+uniform float u_pull;
 
 float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
 float noise(vec2 p) {
@@ -35,6 +37,10 @@ float fbm(vec2 p) {
 
 void main() {
   vec2 p = (gl_FragCoord.xy - 0.5 * u_res) / u_res.y;
+  // the cursor is a gravity well: the field bends toward it
+  vec2 toM = u_mouse - p;
+  float dm = length(toM);
+  p += toM * u_pull * 0.32 * exp(-dm * 2.6);
   float t = u_time * (0.06 + u_energy * 0.1);
   vec2 q = vec2(fbm(p * 1.5 + t), fbm(p * 1.5 - t + 4.0));
   vec2 r = vec2(fbm(p * 2.1 + q * 2.2 + vec2(1.7, 9.2) + t * 1.3), fbm(p * 2.1 + q * 2.2 + vec2(8.3, 2.8) - t));
@@ -55,6 +61,8 @@ void main() {
   // the gateway: a narrow beam rising from below centre
   float beam = exp(-abs(p.x) * (14.0 - e * 6.0)) * smoothstep(0.7, -0.6, p.y);
   col += lilac * beam * e * (0.35 + 0.5 * r.x);
+  // a soft light where the cursor is
+  col += mix(lilac, magenta, 0.5) * exp(-dm * 7.0) * u_pull * (0.12 + e * 0.35);
   // the flash on every cut
   col += u_flash * (magenta * 0.55 + lilac * 0.35);
 
@@ -66,7 +74,17 @@ void main() {
 `;
 
 export type RGB = [number, number, number];
-export type Uniforms = { time: number; energy: number; flash: number; mono: number; c1?: RGB; c2?: RGB };
+export type Uniforms = {
+  time: number;
+  energy: number;
+  flash: number;
+  mono: number;
+  c1?: RGB;
+  c2?: RGB;
+  /** cursor in field space (y up, units of screen height from centre) */
+  mouse?: [number, number];
+  pull?: number;
+};
 
 /** ViaMagus primary #6608a9 and secondary #fc60db, linear-ish 0–1 */
 export const BRAND: { c1: RGB; c2: RGB } = { c1: [0.4, 0.03, 0.66], c2: [0.99, 0.38, 0.86] };
@@ -104,6 +122,8 @@ export function createLightField(canvas: HTMLCanvasElement, scale = 0.5) {
     mono: gl.getUniformLocation(prog, "u_mono"),
     c1: gl.getUniformLocation(prog, "u_c1"),
     c2: gl.getUniformLocation(prog, "u_c2"),
+    mouse: gl.getUniformLocation(prog, "u_mouse"),
+    pull: gl.getUniformLocation(prog, "u_pull"),
   };
 
   const resize = () => {
@@ -126,6 +146,8 @@ export function createLightField(canvas: HTMLCanvasElement, scale = 0.5) {
       gl.uniform1f(u.mono, v.mono);
       gl.uniform3fv(u.c1, v.c1 ?? BRAND.c1);
       gl.uniform3fv(u.c2, v.c2 ?? BRAND.c2);
+      gl.uniform2fv(u.mouse, v.mouse ?? [0, 0]);
+      gl.uniform1f(u.pull, v.pull ?? 0);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     },
     dispose() {

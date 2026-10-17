@@ -69,10 +69,10 @@
 /* --- shared --- */
 .fx-cell {
   position: absolute;
-  left: 940px;
-  top: 520px;
-  width: 40px;
-  height: 40px;
+  left: 928px;
+  top: 440px;
+  width: 64px;
+  height: 64px;
   background: var(--magenta);
 }
 
@@ -114,9 +114,9 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 620px;
+  top: 640px;
   text-align: center;
-  font-size: 54px;
+  font-size: 92px;
   letter-spacing: -0.02em;
   color: var(--lilac);
 }
@@ -328,56 +328,46 @@
   }
 }
 
-/* --- 04 the 8% --- */
-.fx-eight {
+/* --- 04 catch up: one big line, legible from across the room --- */
+.fx-catch {
   position: absolute;
-  left: 150px;
-  top: 150px;
-  font-size: 780px;
-  line-height: 0.78;
-  letter-spacing: -0.07em;
-  font-weight: 500;
-}
-
-.fx-eight b {
-  color: var(--magenta);
-  font-weight: 500;
-}
-
-.fx--eight.is-on .fx-eight {
-  animation: big-slam 0.42s cubic-bezier(0.2, 1.3, 0.4, 1) both;
-}
-
-@keyframes big-slam {
-  from {
-    opacity: 0;
-    transform: scale(2.4);
-    filter: blur(28px);
-  }
-}
-
-.fx-eight__copy {
-  position: absolute;
-  left: 1180px;
-  top: 470px;
-  width: 640px;
+  inset: 0;
   display: grid;
-  gap: 26px;
+  place-content: center;
+  text-align: center;
+  font-size: 170px;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  font-weight: 500;
 }
 
-.fx-eight__line {
-  font-size: 92px;
-  line-height: 1;
-  letter-spacing: -0.04em;
+.fx-catch span {
+  display: block;
 }
 
-.fx-src {
-  font-size: 24px;
-  color: var(--muted);
+.fx-catch b {
+  font-weight: 500;
+  color: var(--magenta);
 }
 
-.fx--eight.is-on .fx-eight__copy {
-  animation: rise 0.5s var(--ease-out) 0.45s both;
+.fx--catch.is-on .fx-catch span {
+  animation: punch 0.5s var(--ease-out) both;
+}
+
+.fx--catch.is-on .fx-catch span:nth-child(2) {
+  animation-delay: 0.25s;
+}
+
+/* in the film the shutters carry one claim each: no small print from a distance */
+.tri--film .shutter__detail,
+.tri--film .fv-log,
+.tri--film .fv-axis,
+.tri--film .fv-rowlabel {
+  display: none;
+}
+
+.tri--film .shutter__claim {
+  font-size: 44px;
 }
 
 /* --- 05 the three forces: the thread pulls the shutters, then the camera pushes into each --- */
@@ -713,8 +703,8 @@
 .fx-pos {
   position: absolute;
   left: 160px;
-  top: 860px;
-  font-size: 56px;
+  top: 850px;
+  font-size: 68px;
   letter-spacing: -0.02em;
   color: var(--lilac);
 }
@@ -733,14 +723,14 @@
 }
 
 .fx-invite {
-  top: 400px;
-  font-size: 84px;
+  top: 380px;
+  font-size: 120px;
   letter-spacing: -0.035em;
 }
 
 .fx-for {
-  top: 640px;
-  font-size: 40px;
+  top: 620px;
+  font-size: 64px;
   color: var(--lilac);
 }
 
