@@ -109,6 +109,11 @@ export const forces: {
   why: string;
   href: string;
   source: string;
+  /** the big visual statement for this force — verified wording only */
+  proof:
+    | { kind: "swap"; from: string; to: string; caption: string }
+    | { kind: "ledger"; rows: [string, string][]; caption: string }
+    | { kind: "figure"; value: string; caption: string };
 }[] = [
   {
     key: "velocity",
@@ -123,6 +128,7 @@ export const forces: {
     why: "Adding AI tools to an old delivery model doesn’t change the pace. Changing the model does.",
     href: "https://viamagus.com/velocity-ai",
     source: "viamagus.com/velocity-ai",
+    proof: { kind: "swap", from: "3 months", to: "3–4 weeks", caption: "Delivery timelines with Velocity AI" },
   },
   {
     key: "synthia",
@@ -136,6 +142,15 @@ export const forces: {
     why: "Intelligence only creates value when it runs inside the work — with control built in.",
     href: "https://viamagus.com/synthia-ai",
     source: "viamagus.com/synthia-ai",
+    // viamagus.com/synthia-ai: "Every AI output is a draft until a named officer signs it"
+    proof: {
+      kind: "ledger",
+      rows: [
+        ["AI output", "Draft"],
+        ["Named officer", "Signed ✓"],
+      ],
+      caption: "Every AI output is a draft until a named officer signs it.",
+    },
   },
   {
     key: "select",
@@ -150,6 +165,8 @@ export const forces: {
     why: "The next capability isn’t hired from a CV database. It’s built.",
     href: "https://www.viamagusselect.ai/",
     source: "viamagusselect.ai",
+    // viamagusselect.ai: "Your 48-hour clock. It starts when you send us a role."
+    proof: { kind: "figure", value: "48h", caption: "From your brief to an engineer-vetted shortlist" },
   },
 ];
 

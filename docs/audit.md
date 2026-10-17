@@ -34,3 +34,19 @@ The brief mentions "electric blue … where supported by the brand". The brand a
 - No horizontal overflow at any tested width. Zero console errors.
 
 **Not tested:** Safari, Firefox, real phones, the venue display.
+
+## Round 2 — "I don't like the UI" (bold colour fields)
+
+Feedback: the smoke background, too dark overall, a basic layout, and demos that looked cheap. The chosen direction was **bold colour fields**.
+
+- **Flat full-bleed fields from the verified palette:** ViaMagus purple (arrival, Era 03, invitation), Select paper (old order), magenta (inflection), white (signals), Velocity cyan, Synthia violet, Select amber, and black once, for the mark. There is no light field on the site; the film keeps its own look.
+- **Editorial grid:** each field opens with a hairline strip (index · era · label), then poster-scale type on 12 columns.
+- **Demos replaced by verified statements:**
+  - Velocity: ~~3 months~~ → 3–4 weeks.
+  - Synthia: a ledger, "AI output · Draft / Named officer · Signed ✓", from the official line "Every AI output is a draft until a named officer signs it".
+  - Select: **48h**.
+- **No pinned scrolling.** Reveals, count-ups and drifting verbs are driven by IntersectionObserver and native scroll. The page is about 11 screens on desktop, down from about 18.
+- **Header** takes the colour and ink of the field beneath it, so it never sits over text.
+- **Synthia logo** is rendered in ink (`filter: brightness(0)`) on the violet field for contrast. The official site also has a dark lockup; swap it in if brand prefers.
+
+Checks: build, types and lint pass; axe shows 0 violations (desktop, mobile, reduced motion); 0 invisible focus stops; 0 blocked links; 60 fps.

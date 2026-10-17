@@ -1,6 +1,6 @@
 # The NEXT Order — ViaMagus event microsite
 
-One continuous scene on black: the film's live light field sits behind the whole site and your scroll plays the story — the hero, the old order breaking, three forces (the light turns each force's colour), the 8%, the ViaMagus mark assembling, the invitation. Plus a 30-second crescendo film, fullscreen from the site and at `/film` for event screens. Built with Next.js 16 (App Router), React 19 and plain CSS. There are no animation libraries.
+A sequence of flat colour fields in the ViaMagus palette, with poster-scale type on a 12-column grid. It tells the Three Eras story: arrival, the old order, the inflection point with four sourced signals, then the next order (Build · Operate · Scale, each in its own colour) and the mark on black. A 30-second film plays fullscreen from the site and loops at `/film` for event screens. Built with Next.js 16 (App Router), React 19 and plain CSS. There are no animation libraries.
 
 ```bash
 npm install
@@ -26,9 +26,9 @@ npm run lint
 
 ```
 src/content/      story.ts (all copy + claim sources), event.ts (verified facts only), film.ts (timeline)
-src/components/   world/World (light field, native-scroll scrubbing, flow layout, focus handling, cursor), world/Chapters, TitleSort, ForceVisuals, Triptych (film)
+src/components/   site/Sections (the colour fields), site/Motion (reveals, count-ups, header ink, cursor), TitleSort, Triptych + ForceVisuals (film)
 src/components/film/  FilmPlayer, FilmOverlay, shader.ts (light field), score.ts (Web Audio)
-src/styles/       world.css (site), shared.css (title, logos, demos), shutters.css + film-player.css (film), film.css (OG card)
+src/styles/       site.css (site), shared.css (title, logos), shutters.css + film-player.css (film), film.css (OG card)
 docs/             audit.md (issues found and fixed), self-audit.md, brand-audit.md, next-order-research.md, film-storyboard.md
 ```
 
