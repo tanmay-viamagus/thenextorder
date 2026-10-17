@@ -1,59 +1,36 @@
 /**
- * The 30-second film — a crescendo. Tension, acceleration, a rush,
- * one second of silence, then the logo on black and the invitation.
- * /film and the on-page player both run from this timeline; the storyboard
- * in docs/film-storyboard.md documents it.
+ * The 30-second film: the site's story on a clock. The same engine and the
+ * same formations; one short caption per beat, large enough for a venue
+ * screen, and nothing that depends on sound. Ends where it starts (chaos),
+ * so the loop is seamless. docs/film-storyboard.md documents it.
  */
-export type SceneId =
-  | "cursor"
-  | "grid"
-  | "crack"
-  | "rules"
-  | "catch"
-  | "forces"
-  | "rush"
-  | "silence"
-  | "logo"
-  | "title"
-  | "invite";
-
-export type Scene = {
-  id: SceneId;
+export type FilmScene = {
+  id: "arrive" | "old" | "break" | "stake" | "forces" | "mark" | "end";
   start: number;
   end: number;
-  /** light-field brightness, 0 (black) → 1 (full purple/magenta light) */
-  energy: number;
-  /** 1 = colour drained (the old order) */
-  mono?: number;
-  /** fire a flash on the cut */
-  flash?: number;
+  /** formation index (see components/order/story.ts → F) */
+  f: number;
 };
 
 export const FILM_DURATION = 30;
 
-export const scenes: Scene[] = [
-  { id: "cursor", start: 0, end: 2.2, energy: 0 },
-  { id: "grid", start: 2.2, end: 4.4, energy: 0.12, mono: 1, flash: 0.35 },
-  { id: "crack", start: 4.4, end: 6.2, energy: 0.28, mono: 0.7, flash: 0.6 },
-  { id: "rules", start: 6.2, end: 8, energy: 0.7, flash: 1 },
-  { id: "catch", start: 8, end: 10, energy: 0.5, flash: 0.8 },
-  { id: "forces", start: 10, end: 17.5, energy: 0.62, flash: 0.7 },
-  { id: "rush", start: 17.5, end: 21, energy: 1, flash: 1 },
-  { id: "silence", start: 21, end: 22, energy: 0 },
-  { id: "logo", start: 22, end: 25.2, energy: 0.22, flash: 1 },
-  { id: "title", start: 25.2, end: 28.4, energy: 0.85, flash: 0.6 },
-  { id: "invite", start: 28.4, end: 30, energy: 0.18 },
+export const filmScenes: FilmScene[] = [
+  { id: "arrive", start: 0, end: 3.6, f: 1 },
+  { id: "old", start: 3.6, end: 7.6, f: 2 },
+  { id: "break", start: 7.6, end: 10.6, f: 3 },
+  { id: "stake", start: 10.6, end: 14.2, f: 4 },
+  { id: "forces", start: 14.2, end: 21.4, f: 5 },
+  { id: "mark", start: 21.4, end: 25.4, f: 6 },
+  { id: "end", start: 25.4, end: 30, f: 1 },
 ];
 
-/** Inside the forces scene: the thread pulls the shutters (0–1.1 s), then the camera pushes into each. */
-export const FORCES_DROP = 1.1;
-/** Extra beats inside a scene: each fires a flash (and a kick when the score is on). */
-export const hits = [10.37, 10.74, 12.1, 14.0, 15.9];
-/** Scenes framed by cinematic letterbox bars, which burst open at "AI changed the rules". */
-export const letterboxed: SceneId[] = ["cursor", "grid", "crack"];
+/** inside "forces": when each force is opened in turn */
+export const FORCE_BEATS = [15.4, 17.4, 19.4];
+/** the cells start in chaos and return to it for the last second, closing the loop */
+export const CHAOS_UNTIL = 1.0;
+export const CHAOS_FROM = 29.0;
+/** seconds each transition between formations takes */
+export const BLEND = 0.9;
 
-/** The rush: one word every 0.4 s, each with its own flash and beat. */
-export const RUSH_STEP = 0.4;
-export const rushWords = ["Build.", "Operate.", "Scale.", "Engineering.", "Intelligence.", "Talent.", "Three forces.", "One order."];
-
-export const sceneAt = (t: number) => scenes.find((s) => t >= s.start && t < s.end) ?? scenes[scenes.length - 1];
+export const sceneAtTime = (t: number) =>
+  filmScenes.find((s) => t >= s.start && t < s.end) ?? filmScenes[filmScenes.length - 1];

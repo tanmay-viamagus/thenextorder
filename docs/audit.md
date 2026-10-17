@@ -60,3 +60,31 @@ Checks: build, types and lint pass; axe shows 0 violations (desktop, mobile, red
 - **The film now uses the same colour fields.**
 
 Checks: lint, types and build pass; axe 0 violations (desktop, mobile, reduced motion); 59–60 fps; 0 blocked links; 0 invisible or covered tab stops; no horizontal overflow; no console errors.
+
+---
+
+## Round 5 — "The Order" (living-cells rebuild)
+
+**Feedback addressed:**
+- **Cluttered, no animation, nothing to interact with, a generic structure.** The site is now one particle system that keeps rebuilding itself. The cursor parts the cells, press-and-hold breaks the title, and you hover or tap the forces. Seat chips change the question.
+- **The video made no sense.** The film is now the site's own story on a clock, with the same visuals, so the two reinforce each other.
+- **Scientific CTA placement.** See the README, "Where the CTA sits, and why".
+
+**Verified:**
+- Builds clean: `tsc`, `eslint`, `next build`.
+- Screenshots at 1440×900 and 390×844 for every chapter and every film beat, with no page errors.
+- The no-JS render hides no text, and the pill leaves the tab order when hidden.
+- Focusing into a chapter brings it on screen.
+- Swiftshader holds about 43 fps.
+
+**Fixed during the pass:**
+- On phones, the forces clusters collided with the panel. They now sit in one row, and the panel clears the pill.
+- Button labels wrapped onto two lines.
+- The pill was focusable while hidden.
+- The finale question was hidden without JS.
+- Word spacing was lost in the kinetic text.
+
+**Known / not done:**
+- **Axe contrast false positive.** Axe reports the ink-on-paper and ink-on-magenta headlines as ink on black, because it can't see the WebGL canvas that paints those fields. Actual contrast is about 17:1 on paper and about 7:1 on magenta. With no WebGL, CSS paints the same fields.
+- **Hardware.** Not tested on real phones, low-end laptops or a venue screen.
+- **Event details.** These are still placeholders in `event.ts`.

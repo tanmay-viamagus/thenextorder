@@ -1,148 +1,165 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
-import { whenWhere as eventLine } from "@/content/event";
-import { FILM_DURATION, FORCES_DROP, hits, letterboxed, RUSH_STEP, rushWords, sceneAt, scenes, type SceneId } from "@/content/film";
-import { invite, title } from "@/content/story";
-import { TitleSort } from "../TitleSort";
-import { Triptych } from "../Triptych";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { whenWhere } from "@/content/event";
+import { BLEND, CHAOS_FROM, CHAOS_UNTIL, FILM_DURATION, FORCE_BEATS, filmScenes, sceneAtTime } from "@/content/film";
+import { forces, inflection, nextOrder } from "@/content/story";
+import { Engine } from "../order/engine";
+import { buildStory, F, highlighter } from "../order/story";
 import { Score } from "./score";
-import { createLightField } from "./shader";
 
-const v = (o: Record<string, string | number>) => o as CSSProperties;
-const RUSH_START = scenes.find((s) => s.id === "rush")!.start;
-const FORCES_START = scenes.find((s) => s.id === "forces")!.start;
+const ease = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
 
 function readStart() {
   const q = new URLSearchParams(window.location.search);
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const t = Number(q.get("t"));
   if (q.has("t") && Number.isFinite(t)) return { t: Math.min(FILM_DURATION - 0.01, Math.max(0, t)), paused: true };
-  return { t: reduce ? 23.6 : 0, paused: reduce };
+  return { t: reduce ? 23 : 0, paused: reduce };
+}
+
+/** which formation the film shows at time t, and the blend from the previous one */
+function blendAt(t: number) {
+  if (t < CHAOS_UNTIL) return { a: F.chaos, b: F.chaos, t: 0 };
+  if (t >= CHAOS_FROM) return { a: F.title, b: F.chaos, t: ease(Math.min(1, (t - CHAOS_FROM) / 0.9)) };
+  const s = sceneAtTime(t);
+  const i = filmScenes.indexOf(s);
+  const prev = i === 0 ? F.chaos : filmScenes[i - 1].f;
+  const from = i === 0 ? CHAOS_UNTIL : s.start;
+  return { a: prev, b: s.f, t: ease(Math.min(1, (t - from) / BLEND)) };
+}
+
+function proofLine(k: number) {
+  const p = forces[k].proof;
+  if (p.kind === "swap") return `${p.from} → ${p.to}`;
+  if (p.kind === "ledger") return `${p.rows[0][1]} → ${p.rows[1][1]}`;
+  return p.value;
 }
 
 /**
- * The film: a 30-second crescendo on a fixed 1920×1080 stage, scaled to any
- * screen, over a live WebGL light field. Used full-page at /film (event
- * screens) and as an overlay on the site.
+ * The film: the site's living system of cells on a 30-second clock.
+ * Full-page at /film (event screens) or as an overlay on the site.
  */
 export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overlay"; onClose?: () => void }) {
-  const root = useRef<HTMLDivElement | null>(null);
   const canvas = useRef<HTMLCanvasElement | null>(null);
-  const sceneEls = useRef(new Map<SceneId, HTMLDivElement>());
-  const clock = useRef({ t: 0, prev: 0, last: 0, scene: "" as SceneId | "", word: -1, energy: 0, mono: 0, flash: 0 });
-  const field = useRef<ReturnType<typeof createLightField>>(null);
+  const clock = useRef({ t: 0 });
   const score = useRef<Score | null>(null);
   const [playing, setPlaying] = useState(false);
   const [sound, setSound] = useState(false);
-  const [loop, setLoop] = useState(0);
-  const [titleKey, setTitleKey] = useState(0);
-  const [scale, setScale] = useState(0);
+  const [scene, setScene] = useState<string>("");
+  const [force, setForce] = useState<number | null>(null);
   const [idle, setIdle] = useState(false);
-  const line = eventLine();
+  const [noGl, setNoGl] = useState(false);
+  const playingRef = useRef(false);
+  const line = whenWhere();
 
-  /* -- one frame of the film at time t -- */
-  const frame = useCallback((t: number, dt: number) => {
-    const c = clock.current;
-    const s = sceneAt(t);
-    if (s.id !== c.scene) {
-      const prev = c.scene ? sceneEls.current.get(c.scene) : null;
-      prev?.classList.remove("is-on");
-      const el = sceneEls.current.get(s.id);
-      if (el) {
-        el.classList.remove("is-on");
-        void el.offsetWidth; // restart this scene's CSS animations
-        el.classList.add("is-on");
-      }
-      if (s.flash) c.flash = Math.max(c.flash, s.flash);
-      if (s.id === "title") setTitleKey((k) => k + 1);
-      root.current?.classList.toggle("is-boxed", letterboxed.includes(s.id));
-      c.scene = s.id;
-      c.word = -1;
-    }
-    if (s.id === "rush") {
-      const w = Math.floor((t - RUSH_START) / RUSH_STEP);
-      if (w !== c.word && w < rushWords.length) {
-        c.word = w;
-        c.flash = Math.max(c.flash, 0.55 + (w / rushWords.length) * 0.45);
-      }
-    }
-    if (s.id === "forces") {
-      const tri = sceneEls.current.get("forces")?.querySelector<HTMLElement>(".tri");
-      if (tri) {
-        const p = Math.min(1, Math.max(0, (t - FORCES_START) / FORCES_DROP));
-        tri.style.setProperty("--p", p.toFixed(3));
-        tri.classList.toggle("is-complete", p >= 1);
-        tri.classList.toggle("is-playing", p >= 1);
-      }
-    }
-    for (const h of hits) if (c.prev < h && t >= h) c.flash = Math.max(c.flash, 0.75);
-    c.prev = t;
-    c.energy += (s.energy - c.energy) * Math.min(1, dt * (s.id === "silence" ? 30 : 5));
-    c.mono += ((s.mono ?? 0) - c.mono) * Math.min(1, dt * 4);
-    c.flash *= Math.exp(-dt * 6.5);
-    field.current?.render({ time: t + loop * FILM_DURATION, energy: c.energy, flash: c.flash, mono: c.mono });
-    const r = root.current;
-    if (r) {
-      const k = c.flash * c.flash;
-      r.style.setProperty("--flash", k.toFixed(3));
-      r.style.setProperty("--sx", ((Math.random() - 0.5) * 18 * k).toFixed(2));
-      r.style.setProperty("--sy", ((Math.random() - 0.5) * 12 * k).toFixed(2));
-    }
-  }, [loop]);
-
-  /* -- setup: stage scale, light field, start time -- */
   useEffect(() => {
-    const fit = () => {
-      const r = root.current?.getBoundingClientRect();
-      if (r) setScale(Math.min(r.width / 1920, r.height / 1080));
-    };
-    window.addEventListener("resize", fit);
-    if (canvas.current) field.current = createLightField(canvas.current);
+    playingRef.current = playing;
+  }, [playing]);
+
+  useEffect(() => {
+    const cv = canvas.current;
+    if (!cv) return;
     const s = readStart();
     clock.current.t = s.t;
-    // first frame on the next paint: sizes the stage, lights the first scene, then starts the clock
-    const first = requestAnimationFrame(() => {
-      fit();
-      frame(s.t, 1);
-      setPlaying(!s.paused);
-    });
-    return () => {
-      cancelAnimationFrame(first);
-      window.removeEventListener("resize", fit);
-      field.current?.dispose();
-      score.current?.close();
+    let engine: Engine | null = null;
+    try {
+      engine = new Engine(cv, window.innerWidth < 760 ? 2600 : 6000);
+      engine.rigid = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    } catch {
+      engine = null;
+    }
+    let hl: ReturnType<typeof highlighter> | null = null;
+    let fk: number | null = null;
+    let amount = 0;
+    let dtNow = 0.016;
+    let curScene = "";
+    let curForce: number | null = -1;
+    const family = getComputedStyle(document.body).fontFamily.split(",")[0].trim();
+    const build = () => {
+      if (!engine) return;
+      engine.resize(window.innerWidth, window.innerHeight, Math.min(2, window.devicePixelRatio || 1));
+      const story = buildStory(window.innerWidth, window.innerHeight, engine.n, family, true);
+      engine.formations = story.formations;
+      hl = highlighter(story);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (engine) engine.shape = (tx, n) => hl?.(tx, n, fk, amount, dtNow);
 
-  /* -- the clock -- */
-  useEffect(() => {
-    if (!playing) return;
     let raf = 0;
-    const c = clock.current;
-    c.last = performance.now();
-    void score.current?.ctx.resume();
+    let last = performance.now();
     const tick = (now: number) => {
-      const dt = Math.min(0.05, (now - c.last) / 1000);
-      c.last = now;
-      let t = c.t + dt;
-      if (t >= FILM_DURATION) {
-        t -= FILM_DURATION;
-        setLoop((l) => l + 1);
-        if (score.current) score.current.scheduleLoop(score.current.ctx.currentTime - t, 0);
+      raf = requestAnimationFrame(tick);
+      const dt = Math.min(0.033, (now - last) / 1000);
+      last = now;
+      dtNow = dt;
+      const c = clock.current;
+      if (playingRef.current) {
+        c.t += dt;
+        if (c.t >= FILM_DURATION) {
+          c.t -= FILM_DURATION;
+          score.current?.scheduleLoop(score.current.ctx.currentTime - c.t, 0);
+        }
       }
-      c.t = t;
-      frame(t, dt);
+      const t = c.t;
+      const sc = sceneAtTime(t);
+      const k = sc.id === "forces" ? FORCE_BEATS.reduce<number | null>((acc, b, i) => (t >= b ? i : acc), null) : null;
+      fk = k;
+      amount = sc.id === "forces" ? Math.min(1, (t - sc.start) / BLEND) : 0;
+      if (sc.id !== curScene) {
+        curScene = sc.id;
+        setScene(sc.id);
+      }
+      if (k !== curForce) {
+        curForce = k;
+        setForce(k);
+      }
+      if (!engine) return;
+      const bl = blendAt(t);
+      engine.a = bl.a;
+      engine.b = bl.b;
+      engine.t = bl.t;
+      engine.step(dt, now / 1000);
+      engine.render();
+    };
+
+    let started = false;
+    const start = () => {
+      if (started) return;
+      started = true;
+      build();
+      engine?.snap(F.chaos);
+      setNoGl(!engine);
+      setPlaying(!s.paused);
+      last = performance.now();
       raf = requestAnimationFrame(tick);
     };
-    raf = requestAnimationFrame(tick);
-    return () => {
-      cancelAnimationFrame(raf);
-      void score.current?.ctx.suspend();
+    const failsafe = window.setTimeout(start, 1000);
+    void document.fonts.ready.then(start);
+
+    let rt = 0;
+    const onResize = () => {
+      window.clearTimeout(rt);
+      rt = window.setTimeout(build, 180);
     };
-  }, [playing, frame]);
+    window.addEventListener("resize", onResize);
+    return () => {
+      started = true;
+      cancelAnimationFrame(raf);
+      window.clearTimeout(failsafe);
+      window.clearTimeout(rt);
+      window.removeEventListener("resize", onResize);
+      engine?.dispose();
+      score.current?.close();
+      score.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!score.current) return;
+    if (playing) void score.current.ctx.resume();
+    else void score.current.ctx.suspend();
+  }, [playing]);
 
   const toggleSound = useCallback(() => {
     if (score.current) {
@@ -155,23 +172,19 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
     score.current = sc;
     const t = clock.current.t;
     sc.scheduleLoop(sc.ctx.currentTime - t, t);
-    if (!playing) void sc.ctx.suspend();
+    if (!playingRef.current) void sc.ctx.suspend();
     setSound(true);
-  }, [playing]);
+  }, []);
 
   const restart = useCallback(() => {
     clock.current.t = 0;
-    clock.current.prev = 0;
-    clock.current.scene = "";
     if (score.current) {
       score.current.stopAll();
       score.current.scheduleLoop(score.current.ctx.currentTime, 0);
     }
-    frame(0, 1);
     setPlaying(true);
-  }, [frame]);
+  }, []);
 
-  /* -- keys + idle cursor -- */
   useEffect(() => {
     let timer = window.setTimeout(() => setIdle(true), 2200);
     const wake = () => {
@@ -181,7 +194,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
     };
     const onKey = (e: KeyboardEvent) => {
       wake();
-      if (e.code === "Space" && !(e.target instanceof HTMLButtonElement)) {
+      if (e.code === "Space" && !(e.target instanceof HTMLButtonElement) && !(e.target instanceof HTMLAnchorElement)) {
         e.preventDefault();
         setPlaying((p) => !p);
       } else if (e.key === "m" || e.key === "M") toggleSound();
@@ -196,141 +209,32 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
     };
   }, [toggleSound, onClose]);
 
-  const sc = (id: SceneId, children: ReactNode) => (
-    <div
-      className={`fx fx--${id}`}
-      ref={(el) => {
-        if (el) sceneEls.current.set(id, el);
-      }}
-    >
-      {children}
-    </div>
-  );
+  const on = (id: string) => (scene === id ? " is-on" : "");
 
   return (
-    <div className={`fp fp--${mode}${idle ? " is-idle" : ""}`} ref={root}>
-      <canvas className="fp__bg" ref={canvas} aria-hidden="true" />
-      <div className="fp__flash" aria-hidden="true" />
-      <div className="fp__bars" aria-hidden="true" />
-      <div
-        className="fp__stage"
-        aria-hidden="true"
-        style={{ transform: `translate(-50%, -50%) scale(${scale})`, opacity: scale ? 1 : 0 }}
-      >
-        <div className="fp__cam">
-          {sc(
-            "cursor",
-            <>
-              <i className="fx-cell fx-cell--blink" />
-              <p className="fx-typer">Every enterprise runs on an order.</p>
-            </>,
-          )}
-          {sc(
-            "grid",
-            <>
-              <div className="fx-grid">
-                {Array.from({ length: 96 }, (_, i) => (
-                  <i key={i} style={v({ "--i": i, "--r": (i * 37) % 96 })} />
-                ))}
-              </div>
-              <p className="fx-outline">
-                The old
-                <br />
-                order.
-              </p>
-            </>,
-          )}
-          {sc(
-            "crack",
-            <>
-              <div className="fx-grid fx-grid--fall">
-                {Array.from({ length: 96 }, (_, i) => (
-                  <i
-                    key={i}
-                    style={v({
-                      "--fx": (((i * 53) % 21) - 10) * 60,
-                      "--fy": 400 + ((i * 29) % 13) * 70,
-                      "--fr": (((i * 71) % 17) - 8) * 22,
-                      "--r": (i * 37) % 96,
-                    })}
-                  />
-                ))}
-              </div>
-              <p className="fx-big">
-                Built to scale
-                <br />
-                people.
-              </p>
-            </>,
-          )}
-          {sc(
-            "rules",
-            <p className="fx-glitch">
-              {["AI changed", "the rules."].map((l) => (
-                <span key={l} data-t={l}>
-                  {l}
-                </span>
-              ))}
-            </p>,
-          )}
-          {sc(
-            "catch",
-            <p className="fx-catch">
-              <span>Now everything</span>
-              <span>
-                else must <b>catch up.</b>
-              </span>
-            </p>,
-          )}
-          {sc(
-            "forces",
-            <div className="fx-cam">
-              <Triptych mode="film" />
-            </div>,
-          )}
-          {sc(
-            "rush",
-            rushWords.map((w, i) => (
-              <p key={w} className={`fx-rush${i === rushWords.length - 1 ? " fx-rush--last" : ""}`} style={v({ "--i": i })}>
-                {w}
-              </p>
-            )),
-          )}
-          {sc("silence", <i className="fx-cell fx-cell--still" />)}
-          {sc(
-            "logo",
-            <>
-              <span className="fx-ring" />
-              <span className="fx-ring fx-ring--2" />
-              <svg className="fx-logo" viewBox="0 0 30.4941 11.8959">
-                <path className="fx-logo__l" d="M0,0l6.7765,11.8958l6.7764,-11.8958z" />
-                <path className="fx-logo__r" d="M23.7177,0l-3.3881,5.9479l-3.3882,-5.9479l-6.7764,11.8955h20.3291z" />
-              </svg>
-              <span className="fx-sweep" />
-              <p className="fx-word">viamagus</p>
-            </>,
-          )}
-          {sc(
-            "title",
-            <>
-              <TitleSort key={titleKey} as="div" lines={title} speed="fast" className="fx-title" />
-              <p className="fx-pos">{invite.positioning}</p>
-            </>,
-          )}
-          {sc(
-            "invite",
-            <>
-              <p className="fx-invite">{invite.from}</p>
-              <p className="fx-for">For GCC leaders{line ? ` · ${line}` : ""}</p>
-              <i className="fx-cell fx-cell--end" />
-            </>,
-          )}
+    <div className={`fp fp--${mode}${idle ? " is-idle" : ""}${noGl ? " no-gl" : ""}`} data-scene={scene}>
+      <canvas className="fp__canvas" ref={canvas} aria-hidden="true" />
+      <div className="fp__cap" aria-hidden="true">
+        <p className={`cap cap--arrive${on("arrive")}`}>An invitation from ViaMagus</p>
+        <p className={`cap cap--old${on("old")}`}>{"Efficiency used to mean more people."}</p>
+        <p className={`cap cap--break${on("break")}`}>{inflection.headline}</p>
+        <p className={`cap cap--stake${on("stake")}`}>of GCCs lead.</p>
+        <div className={`cap cap--forces${on("forces")}`}>
+          <p className="cap__h">Build. Operate. Scale.</p>
+          {force !== null ? (
+            <p key={forces[force].key} className={`cap__proof cap__proof--${forces[force].key}`}>
+              <span>{forces[force].name}</span>
+              {proofLine(force)}
+            </p>
+          ) : null}
+        </div>
+        <p className={`cap cap--mark${on("mark")}`}>{nextOrder.closing}</p>
+        <div className={`cap cap--end${on("end")}`}>
+          <p>For GCC leaders</p>
+          <p className="cap__small">{line ?? "An invitation from ViaMagus"}</p>
         </div>
       </div>
 
-      <p className="fp__rotate" aria-hidden="true">
-        <span>⟳</span> Turn your phone for the full film
-      </p>
       <div className="fp__controls">
         <button type="button" onClick={() => setPlaying((p) => !p)} aria-pressed={!playing}>
           {playing ? "Pause" : "Play"}
@@ -350,10 +254,10 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
         )}
       </div>
       <p className="sr-only">
-        A 30-second film. A single cell on black; the old order — a rigid grid — falls apart; AI changed the rules;
-        now everything else must catch up; a thread pulls down three shutters — Velocity AI, a shippable release every
-        Friday; Synthia AI, AI that stops for your sign-off; ViaMagus Select, 3–5 people you can hire; a rush of words — build, operate, scale, one
-        order; silence; the ViaMagus logo; The Next Order — everything an enterprise needs to become AI-native.
+        A 30-second film. Thousands of cells assemble into The Next Order. They form a rigid pyramid: efficiency used to
+        mean more people. They shatter: AI changed the rules. They form 8%: of GCCs lead. They become three turning
+        forces, Velocity AI, Synthia AI and ViaMagus Select: build, operate, scale. They become the ViaMagus mark:
+        everything an enterprise needs to become AI-native. They return to The Next Order, for GCC leaders.
       </p>
     </div>
   );

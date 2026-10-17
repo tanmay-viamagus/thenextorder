@@ -1,6 +1,16 @@
 # The NEXT Order — ViaMagus event microsite
 
-A sequence of flat colour fields in the ViaMagus palette, with poster-scale type on a 12-column grid. It tells the Three Eras story: arrival, the old order, the inflection point with four sourced signals, then the next order (Build · Operate · Scale, each in its own colour) and the mark on black. A 30-second film plays fullscreen from the site and loops at `/film` for event screens. Built with Next.js 16 (App Router), React 19 and plain CSS. There are no animation libraries.
+One living system of cells tells the whole story. About 5,600 square particles, the cell from the ViaMagus mark, rebuild themselves chapter by chapter as you scroll:
+
+1. **The title.** The cells assemble "THE NEXT ORDER." The cursor parts them, and press-and-hold breaks the title apart.
+2. **The pyramid.** A rigid pyramid stands for the old order.
+3. **The shatter.** The pyramid explodes on magenta: "AI changed the rules."
+4. **8%.** "of GCCs lead."
+5. **The three forces.** Three turning clusters, one each for Velocity AI, Synthia AI and ViaMagus Select. Hover or tap one to open it.
+6. **The ViaMagus mark** on black, with the closing line.
+7. **The invitation.** Every cell converges into a single square behind the button.
+
+Scrolling is native. There's no scroll-jacking, and the chapters sit on sticky stages. The 30-second film is the same engine on a clock. Built with Next.js 16 (App Router), React 19, raw WebGL and plain CSS. No animation libraries.
 
 ```bash
 npm install
@@ -11,25 +21,39 @@ npm run lint
 
 | Route | What it is |
 | --- | --- |
-| `/` | Act I arrival · Era 01 the old order · Era 02 the inflection point (four signals) · Era 03 the next order (Build / Operate / Scale + convergence) · the ViaMagus mark and the closing line · the invitation |
-| `/film` | The 30 s film for event screens: WebGL light field, optional synthesised score (M). `?t=22` pauses on a second |
-| `/film-poster` | Internal: renders the light-field still saved as `public/film-poster.jpg` (noindex) |
+| `/` | The seven chapters above |
+| `/film` | The 30 s film for event screens: the same cells on a clock, with venue-size captions. Optional synthesised score (M). `?t=18` pauses on a second |
 | `/og-card` | Internal 1200×630 card, screenshotted to `public/og-image.jpg` (noindex) |
+
+## Where the CTA sits, and why
+
+The CTA appears at four points, each where a reader's intent peaks. There is only ever one ask: **Request an invitation**.
+
+- **Above the fold** in the arrival, next to "Watch the film". It catches people who arrive already decided.
+- **At the emotional peak:** "Be in the room" sits directly under *8% of GCCs lead*, the moment of highest tension.
+- **A floating pill** in the thumb zone, on the chapters without their own CTA (the old order, the shatter, the forces, the mark). It hides wherever a CTA is already on screen, so there are never two at once.
+- **The finale:** every cell on the page converges into one square, and the button sits on it. The whole story ends on the ask.
 
 ## Before sharing
 
-1. **Fill in `src/content/event.ts`:** date, city, venue, format, speakers and the RSVP link. Until then the site says "Shared with invitees", and the button sends interest to `viamagus.com/#contact`. Nothing is invented. `docs/self-audit.md` explains why these fields matter most.
-2. **Site URL:** on Vercel, `VERCEL_PROJECT_PRODUCTION_URL` makes share links absolute automatically. Set `NEXT_PUBLIC_SITE_URL` to override it with a custom domain.
-3. **Sign-off:** the brand values come from the live sites (`docs/brand-audit.md`), and the claims are quoted from the official product pages (sources noted in `src/content/story.ts`).
+1. **Fill in `src/content/event.ts`:** date, city, venue, format, speakers and the RSVP link. Until then the site says "To be announced", and the button sends interest to `viamagus.com/#contact`. Nothing is invented.
+2. **Site URL:** on Vercel, `VERCEL_PROJECT_PRODUCTION_URL` makes share links absolute. Set `NEXT_PUBLIC_SITE_URL` to override it.
+3. **Sign-off:** brand values come from the live sites (`docs/brand-audit.md`). Claims are quoted from the official product pages, with sources noted in `src/content/story.ts`.
 
 ## Where things live
 
 ```
-src/content/      story.ts (all copy + claim sources), event.ts (verified facts only), film.ts (timeline)
-src/components/   site/Sections (the colour fields), site/Motion (reveals, count-ups, header ink, cursor), TitleSort, Triptych + ForceVisuals (film)
-src/components/film/  FilmPlayer, FilmOverlay, shader.ts (light field), score.ts (Web Audio)
-src/styles/       site.css (site), shared.css (title, logos), shutters.css + film-player.css (film), film.css (OG card)
-docs/             audit.md (issues found and fixed), self-audit.md, brand-audit.md, next-order-research.md, film-storyboard.md
+src/content/            story.ts (all copy + claim sources), event.ts (verified facts only), film.ts (film timeline)
+src/components/order/   engine.ts (WebGL cells + spring physics), formations.ts (shapes), story.ts (the formation sequence), OrderSite.tsx (chapters + interaction)
+src/components/film/    FilmPlayer (same engine on a clock), FilmOverlay, score.ts (Web Audio)
+src/styles/             order.css (site), film-player.css (film), shared.css (logos), film.css (OG card)
+docs/                   audit.md, self-audit.md, brand-audit.md, next-order-research.md, film-storyboard.md
 ```
 
-Accessibility: semantic sections, keyboard-operable toggle and links, `prefers-reduced-motion` shows every frame in its final state, and without JavaScript the title renders in order.
+## Accessibility and fallbacks
+
+- **Reduced motion:** the cells sit still in each shape, with no springs or scatter. Text appears without movement, and the film opens paused on the mark.
+- **No WebGL:** each chapter falls back to its flat colour field, and all copy stays readable.
+- **No JavaScript:** all text renders.
+- **Keyboard:** every control is reachable. Focusing into a chapter brings it on screen, and the hidden pill leaves the tab order.
+- **Screen readers:** the force panel is announced through `aria-live`, and the film has a text description.

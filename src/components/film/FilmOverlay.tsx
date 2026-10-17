@@ -38,8 +38,10 @@ export function FilmOverlay() {
     if (!open) return;
     const prev = document.documentElement.style.overflow;
     document.documentElement.style.overflow = "hidden";
+    document.documentElement.classList.add("film-open");
     return () => {
       document.documentElement.style.overflow = prev;
+      document.documentElement.classList.remove("film-open");
     };
   }, [open]);
 
