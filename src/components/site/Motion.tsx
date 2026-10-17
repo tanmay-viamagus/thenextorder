@@ -51,6 +51,39 @@ export function Motion() {
     const fields = Array.from(document.querySelectorAll<HTMLElement>("[data-ink]"));
     const pars = Array.from(document.querySelectorAll<HTMLElement>("[data-par]"));
 
+    // stacked fields: desktop with motion only
+    const stackQuery = window.matchMedia("(min-width: 900px) and (prefers-reduced-motion: no-preference)");
+    const sections = Array.from(document.querySelectorAll<HTMLElement>("main > section"));
+    const layoutStack = () => {
+      const on = stackQuery.matches;
+      root.classList.toggle("stack", on);
+      sections.forEach((sec, i) => {
+        sec.style.zIndex = on ? String(i + 1) : "";
+        sec.style.top = on ? `${Math.min(0, window.innerHeight - sec.offsetHeight)}px` : "";
+      });
+    };
+    layoutStack();
+    window.addEventListener("resize", layoutStack);
+
+    // keyboard: a focused element is always revealed, and with stacked fields we scroll to
+    // where its field is fully uncovered (the next field hasn't started sliding over it yet)
+    const onFocus = (e: FocusEvent) => {
+      const t = e.target as HTMLElement;
+      t.closest<HTMLElement>("[data-r]")?.classList.add("in");
+      if (!stackQuery.matches) return;
+      const sec = t.closest<HTMLElement>("main > section");
+      const i = sec ? sections.indexOf(sec) : -1;
+      if (!sec || i < 0) return;
+      const naturalTop = sections.slice(0, i).reduce((a, s2) => a + s2.offsetHeight, 0);
+      const vh = window.innerHeight;
+      const within = t.getBoundingClientRect().top - sec.getBoundingClientRect().top;
+      const max = naturalTop + Math.max(0, sec.offsetHeight - vh);
+      const y = Math.min(max, Math.max(naturalTop, naturalTop + within - vh * 0.5));
+      window.scrollTo({ top: y, behavior: "instant" as ScrollBehavior });
+    };
+    document.addEventListener("focusin", onFocus);
+    stackQuery.addEventListener("change", layoutStack);
+
     // cursor
     const fine = window.matchMedia("(pointer: fine) and (prefers-reduced-motion: no-preference)");
     const ptr = { x: -100, y: -100, sx: -100, sy: -100, hot: false };
@@ -72,7 +105,7 @@ export function Motion() {
       const vh = window.innerHeight;
 
       const probe = 34; // just under the header
-      const under = fields.find((f) => {
+      const under = [...fields].reverse().find((f) => {
         const r = f.getBoundingClientRect();
         return r.top <= probe && r.bottom > probe;
       });
@@ -96,6 +129,16 @@ export function Motion() {
         }
       }
 
+      // how far the next field has slid over each one
+      if (stackQuery.matches) {
+        for (let i = 0; i < sections.length - 1; i++) {
+          // dim only by the amount the next field actually overlaps this one
+          const overlap = sections[i].getBoundingClientRect().bottom - sections[i + 1].getBoundingClientRect().top;
+          const cover = Math.max(0, Math.min(1, overlap / vh));
+          sections[i].style.setProperty("--cover", cover.toFixed(3));
+        }
+      }
+
       const max = root.scrollHeight - vh;
       root.style.setProperty("--progress", (max > 0 ? window.scrollY / max : 0).toFixed(4));
 
@@ -113,6 +156,9 @@ export function Motion() {
       cancelAnimationFrame(raf);
       io.disconnect();
       window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("resize", layoutStack);
+      document.removeEventListener("focusin", onFocus);
+      stackQuery.removeEventListener("change", layoutStack);
     };
   }, []);
 

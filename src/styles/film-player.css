@@ -422,18 +422,18 @@
 }
 
 @keyframes focus-0 {
-  0%, 26%, 50%, 100% { filter: none; }
-  53%, 96% { filter: brightness(0.35); }
+  0%, 26%, 50%, 100% { opacity: 1; }
+  53%, 96% { opacity: 0.28; }
 }
 
 @keyframes focus-1 {
-  0%, 26%, 53%, 75% { filter: none; }
-  29%, 50%, 78%, 100% { filter: brightness(0.35); }
+  0%, 26%, 53%, 75% { opacity: 1; }
+  29%, 50%, 78%, 100% { opacity: 0.28; }
 }
 
 @keyframes focus-2 {
-  0%, 26%, 78%, 100% { filter: none; }
-  29%, 75% { filter: brightness(0.35); }
+  0%, 26%, 78%, 100% { opacity: 1; }
+  29%, 75% { opacity: 0.28; }
 }
 
 /* --- cinematic letterbox: closed during the old order, bursts open with "AI changed the rules" --- */
@@ -473,7 +473,7 @@
 /* --- 08 the rush --- */
 .fx-rush {
   position: absolute;
-  inset: 0;
+  inset: -8%;
   display: grid;
   place-content: center;
   text-align: center;
@@ -485,13 +485,15 @@
   opacity: 0;
 }
 
-.fx-rush:nth-child(3n + 2) {
-  color: var(--magenta);
-}
-
-.fx-rush:nth-child(3n) {
-  color: var(--lilac);
-}
+/* the rush strobes through the brand's fields, one per word */
+.fx-rush:nth-child(1) { background: var(--vel-cyan); color: var(--sel-ink); }
+.fx-rush:nth-child(2) { background: var(--syn-bright); color: var(--sel-ink); }
+.fx-rush:nth-child(3) { background: var(--sel-amber); color: var(--sel-ink); }
+.fx-rush:nth-child(4) { background: var(--purple); color: var(--white); }
+.fx-rush:nth-child(5) { background: var(--magenta); color: var(--sel-ink); }
+.fx-rush:nth-child(6) { background: var(--sel-paper); color: var(--sel-ink); }
+.fx-rush:nth-child(7) { background: var(--white); color: var(--purple); }
+.fx-rush:nth-child(8) { background: var(--purple); color: var(--white); }
 
 .fx--rush.is-on .fx-rush {
   animation: rush 0.4s linear both;
@@ -510,16 +512,10 @@
     opacity: 0;
     transform: scale(1.3);
   }
-  12% {
+  14%,
+  100% {
     opacity: 1;
     transform: scale(1);
-  }
-  88% {
-    opacity: 1;
-    transform: scale(0.97);
-  }
-  100% {
-    opacity: 0;
   }
 }
 
@@ -835,4 +831,68 @@
     animation-duration: 0.01s !important;
     animation-delay: 0s !important;
   }
+}
+
+/* ==========================================================================
+   Colour fields — the film shares the site's flat brand fields.
+   Black is kept only for the silence and the mark.
+   ========================================================================== */
+.fx--cursor,
+.fx--title,
+.fx--invite {
+  background: var(--purple);
+}
+
+.fx--cursor .fx-typer {
+  color: var(--white);
+}
+
+.fx--grid,
+.fx--crack,
+.fx--forces {
+  background: var(--sel-paper);
+  color: var(--sel-ink);
+}
+
+.fx--grid .fx-grid i,
+.fx--crack .fx-grid--fall i {
+  background: var(--sel-ink);
+}
+
+.fx--grid .fx-outline {
+  color: var(--sel-paper);
+  -webkit-text-stroke-color: var(--sel-ink);
+}
+
+.fx--rules {
+  background: var(--magenta);
+  color: var(--sel-ink);
+}
+
+.fx--rules .fx-glitch span::before {
+  color: var(--white);
+}
+
+.fx--rules .fx-glitch span::after {
+  color: var(--purple);
+}
+
+.fx--catch {
+  background: var(--white);
+  color: var(--sel-ink);
+}
+
+.fx--catch .fx-catch b {
+  color: var(--purple);
+}
+
+.fx--silence,
+.fx--logo,
+.fx--rush {
+  background: #000;
+}
+
+.fx--title .fx-pos,
+.fx--invite .fx-for {
+  color: var(--lilac);
 }

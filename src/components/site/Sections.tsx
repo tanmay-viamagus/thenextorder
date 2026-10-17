@@ -1,9 +1,10 @@
 import type { CSSProperties, ReactNode } from "react";
 import { event, interestUrl, knownFacts, officialLinks, pending, whenWhere } from "@/content/event";
-import { eras, forces, hook, inflection, invite, nextOrder, oldOrder, title, type Signal } from "@/content/story";
+import { eras, forces, hook, inflection, invite, nextOrder, oldOrder, questions, theme, title, type Signal } from "@/content/story";
 import { SelectWordmark, SynthiaLogo, VelocityWordmark, ViaMagusLogo, ViaMagusMark } from "../Brand";
 import { FilmButton } from "../film/FilmOverlay";
 import { TitleSort } from "../TitleSort";
+import { Proof } from "../Proof";
 
 /**
  * The site as a sequence of flat colour fields. Every field opens with a
@@ -11,7 +12,7 @@ import { TitleSort } from "../TitleSort";
  * 12-column grid. `data-ink` tells the header which ink to use over it.
  */
 
-const TOTAL = 11;
+const TOTAL = 12;
 const d = (n: number) => ({ "--d": n }) as CSSProperties;
 
 function Strip({ n, era, label }: { n: number; era?: string; label: string }) {
@@ -113,7 +114,8 @@ export function Hero() {
     <Field tone="purple" ink="light" className="hero" label="The Next Order">
       <div className="hero__top">
         <p className="eyebrow">
-          {invite.from} · For GCC leaders{line ? ` · ${line}` : ""}
+          {invite.from} · {theme}
+          {line ? ` · ${line}` : ""}
         </p>
       </div>
       <TitleSort lines={title} className="hero__title" />
@@ -235,7 +237,10 @@ export function NextIntro() {
         {forces.map((f, k) => (
           <li key={f.key} className={`next__key next__key--${f.key}`} data-r="" style={d(k + 2)}>
             <span className="next__sw" aria-hidden="true" />
-            <b>{f.verb}.</b> {f.role}
+            <span className="next__k">
+              <b>{f.verb}.</b> {f.name}
+            </span>
+            <span className="next__v">{nextOrder.keys[k]}</span>
           </li>
         ))}
       </ul>
@@ -245,40 +250,6 @@ export function NextIntro() {
 
 /* 06–08 — the three forces, one colour field each, identical structure */
 const MARK = { velocity: <VelocityWordmark />, synthia: <SynthiaLogo height={34} />, select: <SelectWordmark /> };
-
-function Proof({ f }: { f: (typeof forces)[number] }) {
-  const p = f.proof;
-  if (p.kind === "swap")
-    return (
-      <figure className="proof proof--swap">
-        <p className="proof__from">
-          <s>{p.from}</s>
-        </p>
-        <p className="proof__to">{p.to}</p>
-        <figcaption>{p.caption}</figcaption>
-      </figure>
-    );
-  if (p.kind === "ledger")
-    return (
-      <figure className="proof proof--ledger">
-        <dl>
-          {p.rows.map(([k, v]) => (
-            <div key={k}>
-              <dt>{k}</dt>
-              <dd>{v}</dd>
-            </div>
-          ))}
-        </dl>
-        <figcaption>“{p.caption}”</figcaption>
-      </figure>
-    );
-  return (
-    <figure className="proof proof--figure">
-      <p className="proof__big">{p.value}</p>
-      <figcaption>{p.caption}</figcaption>
-    </figure>
-  );
-}
 
 export function Forces() {
   return (
@@ -341,7 +312,30 @@ export function Convergence() {
   );
 }
 
-/* 10 — the conclusion: the mark on black */
+/* 10 — the questions on the table: one per leadership seat */
+export function Questions() {
+  return (
+    <Field tone="white" className="questions" labelledBy="q-h">
+      <Strip n={10} era="The conversation" label="The questions on the table" />
+      <h2 id="q-h" className="poster questions__h" data-r="" style={d(1)}>
+        Four seats. Four questions.
+      </h2>
+      <ol className="qs">
+        {questions.map((q, i) => (
+          <li key={q.seat} className={`q${q.force ? ` q--${q.force}` : " q--site"}`} data-r="" style={d(i + 2)}>
+            <p className="q__seat">
+              <span className="q__sw" aria-hidden="true" />
+              {q.seat}
+            </p>
+            <p className="q__text">{q.q}</p>
+          </li>
+        ))}
+      </ol>
+    </Field>
+  );
+}
+
+/* 11 — the conclusion: the mark on black */
 export function Finale() {
   return (
     <Field tone="black" ink="light" className="finale" label="ViaMagus — The Next Order">
@@ -362,7 +356,7 @@ export function Finale() {
   );
 }
 
-/* 11 — the invitation (purple) */
+/* 12 — the invitation (purple) */
 export function Invite() {
   const rows = [
     { k: "For", v: knownFacts.audience },
@@ -370,10 +364,11 @@ export function Invite() {
     ...(event.format ? [{ k: "Format", v: event.format }] : []),
     ...(event.speakers.length ? [{ k: "With", v: event.speakers.map((s) => `${s.name}, ${s.role}`).join(" · ") }] : []),
     { k: "Hosted by", v: knownFacts.host },
+    { k: "Featuring", v: knownFacts.featuring },
   ];
   return (
     <Field id="invite" tone="purple" ink="light" className="invite" labelledBy="invite-h">
-      <Strip n={11} label="Your next move" />
+      <Strip n={12} label="Your next move" />
       <div className="grid12 invite__row">
         <h2 id="invite-h" className="invite__h" data-r="" style={d(1)}>
           {invite.headline[0]} <em>{invite.headline[1]}</em>
@@ -397,7 +392,7 @@ export function Invite() {
             target={event.registrationUrl ? undefined : "_blank"}
             rel="noopener noreferrer"
           >
-            {event.registrationUrl ? "Request your invitation" : "Register your interest"} <span aria-hidden="true">→</span>
+            Request an invitation <span aria-hidden="true">→</span>
             {event.registrationUrl ? null : <span className="sr-only"> (opens viamagus.com in a new tab)</span>}
           </a>
         </div>

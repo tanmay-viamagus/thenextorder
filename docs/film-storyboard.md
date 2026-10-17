@@ -1,5 +1,7 @@
 # The NEXT Order — 30-second event-screen film
 
+**Look (updated):** the film now uses the site's flat colour fields: purple, paper, magenta, white, Velocity cyan, Synthia violet, Select amber. Black is kept only for the one second of silence and the mark. Bright fields with ink or white type read better than dark smoke in an ambient-lit room. The rush strobes through all eight fields, one per word, and the three shutters carry the same proof statements as the site.
+
 **Purpose:** a silent loop on the venue screen, in a room with ambient light, watched in glances. Every beat carries one short message in large, high-contrast type. There are no statistics, footnotes or small print, and the three offerings get equal screen time.
 
 **Status:**
@@ -25,7 +27,7 @@ Timings are defined in `src/content/film.ts`.
 | 2.2–4.4 | The old order | **THE OLD ORDER.** | 96 navy cells pop into a rigid grid; the title wipes in as large outline type. The light is drained to grey. | The grid begins to crack |
 | 4.4–6.2 | The crack | **Built to scale people.** | The grid falls and spins away; the line punches in from blur. | The letterbox bursts open |
 | 6.2–8.0 | The inflection | **AI CHANGED THE RULES.** | Full purple light floods in; cyan/magenta channel split on the type; big flash. | Cut on flash |
-| 8.0–10.0 | Catch up | **Now everything else must catch up.** | Two lines punch in; "catch up." in magenta. | Thread draws across the top |
+| 8.0–10.0 | Catch up | **Now everything else must catch up.** | White field; two lines punch in; "catch up." in purple. | Thread draws across the top |
 | 10.0–11.1 | Three forces | **Build. · Operate. · Scale.** with the *Velocity AI*, *Synthia AI* and *ViaMagus Select* marks | Three equal shutters drop on a magenta thread, one beat each; the thread lights when all three hang together. | Camera push |
 | 11.1–17.5 | The push | **A shippable release every Friday.** · **AI that follows your SOP — and stops for your sign-off.** · **Talent built ahead of demand.** | The camera pushes into each shutter in turn (about 2 s each) while the others dim; each live demo plays (weekly releases, the human sign-off gate, the shortlist). | Flash cut |
 | 17.5–21.0 | The rush | **Build. Operate. Scale. Engineering. Intelligence. Talent. Three forces. One order.** | One word every 0.4 s at 250 px, each on a flash; "ONE ORDER." holds. | Cut to black |

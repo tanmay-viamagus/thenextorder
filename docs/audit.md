@@ -50,3 +50,13 @@ Feedback: the smoke background, too dark overall, a basic layout, and demos that
 - **Synthia logo** is rendered in ink (`filter: brightness(0)`) on the violet field for contrast. The official site also has a dark lockup; swap it in if brand prefers.
 
 Checks: build, types and lint pass; axe shows 0 violations (desktop, mobile, reduced motion); 0 invisible focus stops; 0 blocked links; 60 fps.
+
+## Round 3 — launch pass
+
+- **Efficiency is now the thread.** The eyebrow reads "The future of GCC efficiency"; Era 01 is "Efficiency meant more people."; Era 03 is "Efficiency, redefined." with *Build in weeks, not quarters · Operate with control · Scale capability ahead of demand*.
+- **New section: "Four seats. Four questions."** One question each for the site leader, CTO, COO and CHRO, marked in the source as framing to confirm against the event plan.
+- **Stacked colour fields:** each field slides over the previous one (native scroll, desktop with motion only), and the covered field dims by the true overlap. Keyboard focus scrolls to where a field is fully uncovered: all 33 tab stops verified visible.
+- **Honesty fixes:** the "Hosted by" and "Featuring" lines, "To be announced", one CTA label, and the Velocity caption "Velocity AI's stated delivery model".
+- **The film now uses the same colour fields.**
+
+Checks: lint, types and build pass; axe 0 violations (desktop, mobile, reduced motion); 59–60 fps; 0 blocked links; 0 invisible or covered tab stops; no horizontal overflow; no console errors.

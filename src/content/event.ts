@@ -31,12 +31,13 @@ export const event: EventDetails = {
 /** Until a dedicated RSVP exists, interest goes to the official ViaMagus contact section. */
 export const interestUrl = "https://viamagus.com/#contact";
 
-export const pending = "Shared with invitees";
+export const pending = "To be announced";
 
 /** What is already true about the event, from the brief. */
 export const knownFacts = {
   audience: "GCC heads, technology and talent leaders",
-  host: "ViaMagus · Velocity AI · Synthia AI · ViaMagus Select",
+  host: "ViaMagus",
+  featuring: "Velocity AI · Synthia AI · ViaMagus Select",
 };
 
 export function whenWhere(e: EventDetails = event): string | null {

@@ -1,17 +1,12 @@
 import type { CSSProperties } from "react";
 import { forces, type ForceKey } from "@/content/story";
 import { SelectWordmark, SynthiaLogo, VelocityWordmark } from "./Brand";
-import { SelectVisual, SynthiaVisual, VelocityVisual } from "./ForceVisuals";
+import { Proof } from "./Proof";
 
 const MARK: Record<ForceKey, React.ReactNode> = {
   velocity: <VelocityWordmark />,
   synthia: <SynthiaLogo height={34} />,
   select: <SelectWordmark />,
-};
-const VISUAL: Record<ForceKey, React.ReactNode> = {
-  velocity: <VelocityVisual />,
-  synthia: <SynthiaVisual />,
-  select: <SelectVisual />,
 };
 
 /**
@@ -30,7 +25,9 @@ export function Triptych({ mode = "site", style }: { mode?: "site" | "film"; sty
           <article className={`shutter shutter--${f.key}`} aria-label={`${f.verb} — ${f.name}`}>
             <p className="shutter__verb">{f.verb}.</p>
             <div className="shutter__mark">{MARK[f.key]}</div>
-            <div className="shutter__visual">{VISUAL[f.key]}</div>
+            <div className="shutter__visual">
+              <Proof f={f} />
+            </div>
             <div className="shutter__copy">
               <h3 className="shutter__claim">{f.claim}</h3>
               <p className="shutter__detail">{f.detail}</p>

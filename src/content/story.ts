@@ -10,6 +10,9 @@ export const title = ["The Next", "Order"] as const;
 
 export const hook = "The operating model that built your GCC won’t run it next.";
 
+/** The theme, stated plainly. */
+export const theme = "The future of GCC efficiency";
+
 export const eras = ["The old order", "The inflection point", "The next order"] as const;
 
 export type Signal = {
@@ -26,8 +29,8 @@ export type Signal = {
 /* Era 01 — the old order. It worked; the evidence says so. */
 export const oldOrder = {
   kicker: "Era 01 · The old order",
-  headline: "Built to scale people.",
-  body: "Cost advantage, process discipline and teams that grew layer by layer built India’s GCC ecosystem. That model still works. It wasn’t designed for what comes next.",
+  headline: "Efficiency meant more people.",
+  body: "Cost advantage, process discipline and teams that grew layer by layer built India’s GCC ecosystem. That model still works. But it measured efficiency in cost per head — and that is no longer the advantage.",
   evidence: {
     figure: "1,700+",
     headline: "",
@@ -95,7 +98,8 @@ export type ForceKey = "velocity" | "synthia" | "select";
 
 export const nextOrder = {
   kicker: "Era 03 · The next order",
-  headline: "Three forces. One operating model.",
+  headline: "Efficiency, redefined.",
+  keys: ["Build in weeks, not quarters.", "Operate with control.", "Scale capability ahead of demand."],
   closing: "Everything an enterprise needs to become AI\u2011native.",
 };
 
@@ -128,7 +132,7 @@ export const forces: {
     why: "Adding AI tools to an old delivery model doesn’t change the pace. Changing the model does.",
     href: "https://viamagus.com/velocity-ai",
     source: "viamagus.com/velocity-ai",
-    proof: { kind: "swap", from: "3 months", to: "3–4 weeks", caption: "Delivery timelines with Velocity AI" },
+    proof: { kind: "swap", from: "3 months", to: "3–4 weeks", caption: "Velocity AI’s stated delivery model" },
   },
   {
     key: "synthia",
@@ -168,6 +172,18 @@ export const forces: {
     // viamagusselect.ai: "Your 48-hour clock. It starts when you send us a role."
     proof: { kind: "figure", value: "48h", caption: "From your brief to an engineer-vetted shortlist" },
   },
+];
+
+/**
+ * The questions behind the event — one per GCC leadership seat.
+ * These frame the conversation; they are not published agenda sessions.
+ * Confirm against the final event plan before launch.
+ */
+export const questions: { seat: string; q: string; force?: ForceKey }[] = [
+  { seat: "For the site leader", q: "When cost per head is no longer the advantage, what does a GCC compete on?" },
+  { seat: "For the CTO", q: "Why are AI tools speeding up engineers but not delivery?", force: "velocity" },
+  { seat: "For the COO", q: "How do you put AI inside the process — and keep a person on every decision that matters?", force: "synthia" },
+  { seat: "For the CHRO", q: "How do you build AI capability faster than you can hire it?", force: "select" },
 ];
 
 export const invite = {

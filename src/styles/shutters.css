@@ -93,16 +93,16 @@
   grid-template-rows: auto auto 1fr auto;
   gap: calc(var(--u) * 1.1);
   padding: calc(var(--u) * 1.8) calc(var(--u) * 1.8) calc(var(--u) * 1.6);
-  background: var(--vel-bg);
-  color: var(--white);
+  background: var(--vel-cyan);
+  color: var(--sel-ink);
 }
 
 .shutter--synthia {
-  background: var(--purple-darker);
+  background: var(--syn-bright);
 }
 
 .shutter--select {
-  background: var(--sel-paper);
+  background: var(--sel-amber);
   color: var(--sel-ink);
 }
 
@@ -126,14 +126,11 @@
 }
 
 .shutter--velocity .shutter__verb {
-  background: var(--vel-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--sel-ink);
 }
 
 .shutter--synthia .shutter__verb {
-  color: var(--syn-bright);
+  color: var(--sel-ink);
 }
 
 .shutter--select .shutter__verb {
@@ -284,4 +281,44 @@
 
 .tri--film .shutter__visual {
   font-size: 15px;
+}
+
+/* film shutters carry the site's proof statements, scaled to the shutter */
+.tri--film .shutter .wm-velocity {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: inherit;
+}
+
+.tri--film .shutter .wm-synthia {
+  filter: brightness(0);
+}
+
+.tri--film .proof figcaption {
+  display: none;
+}
+
+.tri--film .proof__from {
+  font-size: 46px;
+  opacity: 0.68;
+}
+
+.tri--film .proof__to {
+  font-size: 96px;
+}
+
+.tri--film .proof--ledger dt {
+  font-size: 22px;
+}
+
+.tri--film .proof--ledger dd {
+  font-size: 64px;
+}
+
+.tri--film .proof__big {
+  font-size: 200px;
+}
+
+.tri__rail {
+  background: var(--sel-ink);
 }

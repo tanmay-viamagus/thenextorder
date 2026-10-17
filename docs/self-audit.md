@@ -77,3 +77,19 @@ All five slots already exist in `src/content/event.ts`. Fill them in and the inv
 - **Smooth.** Lenis smooth scroll (as on viamagusselect.ai) runs at 60 fps in testing.
 
 **As a GCC head now:** this looks and feels like a serious, high-design launch from a company that knows what it is doing. The story lands without reading: grey becomes colour, three forces, 8%, the mark. I would watch, scroll to the end, and register interest. The deciding gaps are unchanged and are not design problems: date and venue, format, named hosts or peers, and one concrete takeaway.
+
+## Draft 7 — final audit before launch, seat by seat
+
+| Seat | What they'll think now | Remaining gap (honest) |
+| --- | --- | --- |
+| **Site leader / MD** | "This is about the thing I'm measured on: efficiency beyond cost." The thread from *Efficiency meant more people* → *AI changed the rules* → *Efficiency, redefined.* lands in under a minute. The question "When cost per head is no longer the advantage, what does a GCC compete on?" is the reason to come. | No date, venue, format or peers in the room. This is still the deciding factor, and only ViaMagus can fill it. |
+| **CTO** | "~~3 months~~ → 3–4 weeks" stops the scroll. "Why are AI tools speeding up engineers but not delivery?" is a question I'm asked by my board. | It's ViaMagus's own claim (now captioned as such). One nameable case study would make it bulletproof. |
+| **COO** | "Draft / Signed ✓" is the governance answer regulated GCCs need. | Same as above: proof is the vendor's own. |
+| **CHRO** | "How do you build AI capability faster than you can hire it?" plus "Talent built ahead of demand" is the right reframing. | "48h" is a hiring metric; the capability-building story is in the copy, not the visual. |
+| **CFO** (implicit) | The signals are dated, sourced and labelled as surveys or forecasts. Nothing over-claims. | No efficiency or ROI figure for the event's own thesis; deliberately none, since inventing one would be worse. |
+
+**Corrected in this pass:** "Hosted by" now says ViaMagus; Velocity AI, Synthia AI and ViaMagus Select are listed as featured offerings, not co-hosts. "To be announced" replaces "Shared with invitees", which implied a guest list. The calls to action are one consistent "Request an invitation".
+
+**Needs confirmation before you promote this widely:** the four questions frame the conversation; confirm they match the event plan. Fill in `src/content/event.ts` (date, venue, format, speakers, RSVP link).
+
+**Verdict:** as a GCC head in India I'd stop, watch the film, read to the end and request an invitation. I'd commit once the date and the room are named.

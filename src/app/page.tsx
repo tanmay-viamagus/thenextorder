@@ -9,6 +9,7 @@ import {
   Invite,
   NextIntro,
   OldOrder,
+  Questions,
   Rules,
   Signals,
 } from "@/components/site/Sections";
@@ -25,6 +26,7 @@ export default function Home() {
         <NextIntro />
         <Forces />
         <Convergence />
+        <Questions />
         <Finale />
         <Invite />
       </main>
