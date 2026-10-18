@@ -46,14 +46,21 @@ export default function Register() {
           <ShiftTitle lines={["THE ", "NEXT", "ORDER."]} cutLine={2} />
           <p className="reg__q">{tagline}</p>
           <p className="lede">{invite.what}</p>
-          <dl className="tblock tblock--attend" aria-label="Event details">
-            {details.map(([k, v]) => (
-              <div key={k}>
-                <dt>{k}</dt>
-                <dd className={v ? undefined : "is-pending"}>{v ?? pending}</dd>
-              </div>
-            ))}
-          </dl>
+          {details.some(([k, v]) => k !== "Host" && v) ? (
+            <dl className="tblock tblock--attend" aria-label="Event details">
+              {details.map(([k, v]) => (
+                <div key={k}>
+                  <dt>{k}</dt>
+                  <dd className={v ? undefined : "is-pending"}>{v ?? pending}</dd>
+                </div>
+              ))}
+            </dl>
+          ) : (
+            <p className="status">
+              <span className="status__k">Hosted by {knownFacts.host}</span>
+              Date, venue and format to be announced. Request an invitation to hear first.
+            </p>
+          )}
         </section>
         <InviteForm source="register" />
       </main>

@@ -123,3 +123,33 @@ Checks: lint, types and build pass; axe 0 violations (desktop, mobile, reduced m
 - **Confirmation emails.** None are sent; registrants see an on-screen confirmation only.
 - **Hardware.** Not tested on real phones or the LED wall.
 - **Video file.** There is no MP4 of the film.
+
+
+---
+
+## Round 7 — "Show, don't tell" (final creative redesign)
+
+**Why the previous version still felt basic:** it presented the strategy rather than staging it. It had three text-led acts, a row of figures, a four-question lens, a naming exercise and seat tabs: the notes, typeset.
+
+**What changed:**
+- **Seven sections became four scenes**, held together by one motif: identical cells cut by a threshold.
+- **The shift is now a single artwork**, showing grid → crack → owned volumes. It carries the story with three headlines and two sourced figures, and the film reuses it.
+- **Practices:** three equal panels joined by one line that flows into the mark.
+- **Close:** the title's shift resolves beside the form.
+- **Removed:** the then/now/next essays, the value lens, the GCC → GIC naming section and the seat questions. The ideas survive in the composition; the strategy notes are not published.
+
+**Simulated review.** I critiqued the rendered pages from about 50 simulated viewpoints: CEOs/MDs, site heads, technology leaders, CHROs, TA leads, mobile scanners, and people deciding whether to attend. These are design-review lenses, not user research. Findings acted on:
+1. **Too many blanks:** four "To be announced" rows read as unfinished, so they became one honest status line.
+2. **No plain description:** the close lacked a one-sentence "what"; it now has one.
+3. **Host link implicit:** the practices section is now labelled "Hosted by ViaMagus".
+4. **Mobile:** the pinned scene is shorter (300vh), and the bar hides over the artwork.
+
+What held up: the cut title, the transformation, and the open "?" volume, which reads as respectful rather than prescriptive.
+
+**Verified:**
+- **Build:** `tsc`, `eslint` and `next build` all pass.
+- **Accessibility:** axe WCAG 2.1 AA reports 0 violations on `/`, `/register` and `/film` at 1440 and 390 px.
+- **No JavaScript:** no hidden text.
+- **Keyboard:** 29 focus stops with 0 problems at 1440 px.
+- **Registration:** both forms store to Neon, and `/register/response` and the CSV work. Test rows were deleted.
+- **Screenshots:** every scene and state at 1440×900 and 390×844, and film beats at 1920×1080, with no console errors.

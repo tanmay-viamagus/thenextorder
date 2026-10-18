@@ -191,7 +191,7 @@
 }
 
 .fs__fig {
-  margin-top: 56px;
+  margin-top: 44px;
   font-size: 40px;
   line-height: 1.2;
   font-weight: 500;
@@ -211,6 +211,24 @@
   font: 500 22px/1 var(--mono);
   letter-spacing: 0.06em;
   color: var(--ink-2);
+}
+
+/* the shift artwork at stage scale (never the phone layout inside the stage) */
+.fs .sa--wide {
+  display: block;
+}
+
+.fs .sa--tall {
+  display: none;
+}
+
+.fs__next {
+  margin-top: 40px;
+  font-size: 54px;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+  color: var(--purple);
 }
 
 /* the plan drawings, re-timed for the film */

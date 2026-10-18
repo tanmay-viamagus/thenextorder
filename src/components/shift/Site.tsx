@@ -1,44 +1,58 @@
-import { ViaMagusLogo, ViaMagusMark, SelectWordmark, SynthiaLogo, VelocityWordmark } from "@/components/Brand";
+import type { CSSProperties } from "react";
+import { SelectWordmark, SynthiaLogo, VelocityWordmark, ViaMagusLogo, ViaMagusMark } from "@/components/Brand";
 import { FilmButton } from "@/components/film/FilmOverlay";
 import { event, knownFacts, officialLinks, pending } from "@/content/event";
-import { convergence, invite, naming, next, now, practices, seats, tagline, then, type Evidence } from "@/content/story";
-import { Chrome, NameTheCentre, Reveal, Seats, ShiftTitle } from "./Interactive";
+import { convergence, invite, practices, shift } from "@/content/story";
+import { Chrome, Reveal, ShiftTitle } from "./Interactive";
 import { InviteForm } from "./InviteForm";
 import { SelectMech, SynthiaMech, VelocityMech } from "./Mechanisms";
-import { Plan } from "./Plan";
+import { ShiftArt } from "./ShiftArt";
 
 const ext = { target: "_blank", rel: "noopener noreferrer" } as const;
 const NewTab = () => <span className="sr-only"> (opens in a new tab)</span>;
 
-function Sheet({ n, era, label }: { n: string; era: string; label: string }) {
-  return (
-    <p className="sheet">
-      <span>Sheet {n}</span>
-      <span>{era}</span>
-      <span className="sheet__l">{label}</span>
-    </p>
-  );
-}
+const MECH = { velocity: VelocityMech, synthia: SynthiaMech, select: SelectMech };
+const MARK = { velocity: VelocityWordmark, synthia: () => <SynthiaLogo height={28} />, select: SelectWordmark };
 
-function Source({ e }: { e: Pick<Evidence, "source" | "date" | "url"> }) {
-  return (
-    <a className="src" href={e.url} {...ext}>
-      {e.source}, {e.date}
-      <NewTab />
-    </a>
-  );
-}
-
+const venue = [event.venue, event.city].filter(Boolean).join(", ") || null;
 const details: [string, string | null][] = [
   ["Date", event.date],
-  ["City & venue", [event.venue, event.city].filter(Boolean).join(", ") || null],
+  ["Venue", venue],
   ["Format", event.format],
-  ["Speakers", event.speakers.length ? event.speakers.map((s) => s.name).join(", ") : null],
   ["Host", knownFacts.host],
 ];
 
-const MECH = { velocity: VelocityMech, synthia: SynthiaMech, select: SelectMech };
-const MARK = { velocity: VelocityWordmark, synthia: () => <SynthiaLogo height={30} />, select: SelectWordmark };
+/** Cells already lifted above the line in the hero field: [col, row, cols, rows]. */
+const LIFTED: [number, number, number, number][] = [
+  [15, 1, 2, 1],
+  [18, 1, 1, 1],
+  [12, 3, 1, 1],
+  [3, 1, 1, 1],
+  [8, 1, 1, 1],
+];
+
+const nothingYet = !event.date && !venue && !event.format;
+
+/** Confirmed details as a title block; until there are any, one honest line instead of a table of blanks. */
+function Details({ className = "" }: { className?: string }) {
+  if (nothingYet)
+    return (
+      <p className={`status ${className}`}>
+        <span className="status__k">Hosted by {knownFacts.host}</span>
+        Date, venue and format to be announced. Request an invitation to hear first.
+      </p>
+    );
+  return (
+    <dl className={`tblock ${className}`} aria-label="Event details">
+      {details.map(([k, v]) => (
+        <div key={k}>
+          <dt>{k}</dt>
+          <dd className={v ? undefined : "is-pending"}>{v ?? pending}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
 
 export function Site() {
   return (
@@ -51,18 +65,12 @@ export function Site() {
 
       <header className="hdr">
         <ViaMagusLogo href={officialLinks.viamagus} />
-        <nav className="hdr__nav" aria-label="The story">
-          <a href="#then" data-for="I">
-            <i>I</i> Then
+        <nav className="hdr__nav" aria-label="Sections">
+          <a href="#shift" data-for="shift">
+            The shift
           </a>
-          <a href="#now" data-for="II">
-            <i>II</i> Now
-          </a>
-          <a href="#next" data-for="III">
-            <i>III</i> Next
-          </a>
-          <a href="#attend" data-for="IV">
-            <i>IV</i> Attend
+          <a href="#practices" data-for="practices">
+            Build · Operate · Scale
           </a>
         </nav>
         <div className="hdr__end">
@@ -76,269 +84,129 @@ export function Site() {
       </header>
 
       <main id="main">
-        {/* ------------------------------------------------ ACT I · the hero */}
-        <section id="top" className="hero" data-tone="light" aria-labelledby="hero-h">
-          <p className="hero__meta">
-            <span>Sheet 00 — An invitation from ViaMagus</span>
-            <span>For {knownFacts.audience}</span>
-          </p>
+        {/* ------------------------------------------------ OPENING · attention */}
+        <section id="top" className="hero" data-tone="light" data-shift-root aria-labelledby="hero-h">
+          <div className="fld" aria-hidden="true">
+            <div className="fld__below" />
+            <div className="fld__above">
+              {LIFTED.map(([c, r, w, h], i) => (
+                <span key={i} className="fc" style={{ "--c": c, "--r": r, "--w": w, "--h": h } as CSSProperties} />
+              ))}
+            </div>
+          </div>
+          <p className="hero__meta">An invitation from ViaMagus</p>
           <h1 id="hero-h" className="sr-only">
             The NEXT Order — an invitation from ViaMagus for India’s GCC leaders
           </h1>
-          <ShiftTitle lines={["THE ", "NEXT", "ORDER."]} cutLine={2} edges={["↓ The mandate you were given", "The mandate you take ↑"]} />
+          <ShiftTitle lines={["THE ", "NEXT", "ORDER."]} cutLine={2} edges={["The next order ↑", "↓ The old order"]} />
           <div className="hero__foot">
-            <p className="hero__q">{tagline}</p>
+            <p className="hero__line">For India’s GCC leaders.</p>
             <div className="hero__cta">
-              <a className="btn btn--shift" href="#attend">
+              <a className="btn btn--shift" href="/register">
                 Request an invitation <span aria-hidden="true">→</span>
               </a>
               <FilmButton className="btn btn--line">
-                <span className="tri" aria-hidden="true" /> Watch the film <span className="dim">30s</span>
+                <span className="tri" aria-hidden="true" /> The film <span className="dim">30s</span>
               </FilmButton>
             </div>
-            <dl className="tblock" aria-label="Event details">
-              <div>
-                <dt>Event</dt>
-                <dd>The NEXT Order</dd>
-              </div>
-              <div>
-                <dt>For</dt>
-                <dd>GCC leaders, India</dd>
-              </div>
-              <div>
-                <dt>Date</dt>
-                <dd>{event.date ?? pending}</dd>
-              </div>
-              <div>
-                <dt>Venue</dt>
-                <dd>{[event.venue, event.city].filter(Boolean).join(", ") || pending}</dd>
-              </div>
-              <div>
-                <dt>Host</dt>
-                <dd>{knownFacts.host}</dd>
-              </div>
-            </dl>
+            <Details className="tblock--hero" />
           </div>
         </section>
 
-        {/* ------------------------------------------------ ACT I · THEN */}
-        <section id="then" className="scene scene--then" data-tone="light" data-act="I" aria-labelledby="then-h">
-          <Sheet n={then.sheet} era={then.era} label={then.label} />
-          <div className="scene__grid">
-            <div className="scene__copy" data-reveal>
-              <h2 id="then-h" className="h-mon">
-                {then.headline}
-              </h2>
-              <p className="lede">{then.body}</p>
-              <p className="caveat">{then.caveat}</p>
-              <div className="fig">
-                <p className="fig__n">{then.evidence.figure}</p>
-                <p className="fig__t">{then.evidence.finding}</p>
-                <Source e={then.evidence} />
-              </div>
-            </div>
-            <Plan stage="then" bays={then.bays} label="Floor plan: a small India centre inside a global enterprise, laid out as briefed — enterprise systems, finance and accounts, technology operations, internal platforms." />
-          </div>
-        </section>
-
-        {/* ------------------------------------------------ ACT II · NOW */}
-        <section id="now" className="scene scene--now" data-tone="light" data-act="II" aria-labelledby="now-h">
-          <Sheet n={now.sheet} era={now.era} label={now.label} />
-          <div className="scene__grid scene__grid--flip">
-            <Plan stage="now" label="Floor plan: the same centre, its walls moving outward beyond the original brief." />
-            <div className="scene__copy" data-reveal>
-              <h2 id="now-h" className="h-mon">
-                {now.headline}
-              </h2>
-              <p className="lede">{now.body}</p>
-            </div>
-          </div>
-
-          <div className="dims" data-reveal>
-            <p className="dims__k">What India-based centres report</p>
-            <ul className="dims__row">
-              {now.evidence.map((e) => (
-                <li key={e.figure} className="dim-item">
-                  <span className="dim-item__n">{e.figure}</span>
-                  <span className="dim-item__t">{e.finding}</span>
-                </li>
-              ))}
-            </ul>
-            <Source e={now.evidence[0]} />
-          </div>
-
-          <div className="counter" data-reveal>
-            <p className="counter__k">A different lens, a different survey</p>
-            <p className="counter__n">{now.counterpoint.figure}</p>
-            <p className="counter__t">{now.counterpoint.finding}</p>
-            <Source e={now.counterpoint} />
-            <p className="counter__so">Ambition and arrival are different things.</p>
-          </div>
-
-          <div className="lens" data-reveal>
-            <p className="lens__k">The questions every centre is asked</p>
-            <ol className="lens__row">
-              {now.lens.map((l, i) => (
-                <li key={l.k} style={{ ["--i" as string]: i }}>
-                  <span className="lens__w">{l.k}</span>
-                  <span className="lens__q">{l.q}</span>
-                </li>
-              ))}
-            </ol>
-            <p className="lens__note">{now.lensNote}</p>
-          </div>
-        </section>
-
-        {/* ------------------------------------------------ the naming question (exploratory) */}
-        <section id="name" className="scene scene--name" data-tone="dark" aria-labelledby="name-h">
-          <Sheet n={naming.sheet} era="An open question" label="Exploratory" />
-          <h2 id="name-h" className="name__h">
-            <span>GCC</span>
-            <span className="name__arrow" aria-hidden="true">
-              →
-            </span>
-            <span>GIC</span>
-            <span className="name__arrow" aria-hidden="true">
-              →
-            </span>
-            <span className="name__q">?</span>
-            <span className="sr-only">: what will global centres be called next?</span>
+        {/* ------------------------------------------------ THE SHIFT · curiosity → relevance */}
+        <section id="shift" className="sh" data-shift-scene data-state="a" data-tone="light" data-act="shift" aria-labelledby="shift-h">
+          <h2 id="shift-h" className="sr-only">
+            The shift
           </h2>
-          <div className="name__grid">
-            <dl className="name__defs">
-              {naming.labels.map((l) => (
-                <div key={l.k}>
-                  <dt>{l.k}</dt>
-                  <dd>{l.v}</dd>
+          <div className="sh__stage">
+            <div className="sh__copy">
+              {shift.map((s, i) => (
+                <div key={s.n} className={`sh__st sh__st--${"abc"[i]}`}>
+                  <p className="sh__n">
+                    <span>{s.n}</span> {s.era}
+                  </p>
+                  <h3 className="sh__h">{s.headline}</h3>
+                  {s.evidence ? (
+                    <p className="sh__ev">
+                      <b>{s.evidence.figure}</b> {s.evidence.finding}.{" "}
+                      <a href={s.evidence.url} {...ext}>
+                        {s.evidence.source}, {s.evidence.date}
+                        <NewTab />
+                      </a>
+                    </p>
+                  ) : null}
+                  {s.coda ? <p className="sh__coda">{s.coda}</p> : null}
                 </div>
               ))}
-              <div>
-                <dt>Next?</dt>
-                <dd>No agreed name. Names change; mandate matters.</dd>
-              </div>
-            </dl>
-            <div>
-              <p className="name__body">{naming.body}</p>
-              <NameTheCentre owns={naming.owns} note={naming.note} />
+            </div>
+            <div className="sh__art">
+              <ShiftArt label="A grid of identical cells — the work as it was given — cracks along a line; everything above it slides, then the cells fuse into larger volumes: product, platforms, decisions, quality, capability, efficiency, with the original grid as the foundation and one volume left open." />
+            </div>
+            <div className="sh__progress" aria-hidden="true">
+              <span>I</span>
+              <span>II</span>
+              <span>III</span>
             </div>
           </div>
         </section>
 
-        {/* ------------------------------------------------ ACT III · NEXT */}
-        <section id="next" className="scene scene--next" data-tone="light" data-act="III" aria-labelledby="next-q">
-          <Sheet n={next.sheet} era={next.era} label={next.label} />
-          <h2 id="next-q" className="next__q" data-reveal>
-            {next.question}
-          </h2>
-          <div className="scene__grid">
-            <div className="scene__copy" data-reveal>
-              <p className="h-mon h-mon--sm">{next.headline}</p>
-              <p className="lede">{next.body}</p>
-              <Seats seats={seats} />
-            </div>
-            <Plan stage="next" rooms={next.rooms} label="Floor plan: a larger centre that owns product, platforms, decisions, quality and capability — with one room left open, yours to draw." />
-          </div>
-        </section>
-
-        {/* ------------------------------------------------ the three practices */}
-        <section id="practices" className="wall" data-tone="dark" aria-labelledby="practices-h">
-          <div className="wall__hd">
-            <p className="sheet sheet--dark">
-              <span>Sheets A–C</span>
-              <span>ViaMagus</span>
-              <span className="sheet__l">Build · Operate · Scale</span>
-            </p>
-            <h2 id="practices-h" className="wall__h">
-              Three ways to take on the next mandate.
+        {/* ------------------------------------------------ THE PRACTICES · context */}
+        <section id="practices" className="eco" data-tone="dark" data-act="practices" aria-labelledby="eco-h">
+          <div className="eco__hd">
+            <p className="eco__k">Hosted by ViaMagus</p>
+            <h2 id="eco-h" className="eco__h">
+              One system for the next mandate.
             </h2>
-            <p className="wall__lede">ViaMagus brings three practices into the room. Each answers a different part of the question.</p>
           </div>
-          {practices.map((p) => {
-            const Mech = MECH[p.key];
-            const Mark = MARK[p.key];
-            return (
-              <article key={p.key} id={p.key} className={`plate plate--${p.key}`} aria-labelledby={`${p.key}-h`}>
-                <div className="plate__copy" data-reveal>
-                  <p className="plate__n">
-                    <span>Sheet {p.n}</span>
-                    <span>{p.role}</span>
-                  </p>
-                  <h3 id={`${p.key}-h`} className="plate__verb">
+          <div className="pnls" data-reveal>
+            <span className="pnls__line" aria-hidden="true" />
+            {practices.map((p) => {
+              const Mech = MECH[p.key];
+              const Mark = MARK[p.key];
+              return (
+                <article key={p.key} className={`pnl pnl--${p.key}`} aria-labelledby={`${p.key}-h`}>
+                  <p className="pnl__n">{p.n}</p>
+                  <h3 id={`${p.key}-h`} className="pnl__verb">
                     {p.verb}.<span className="sr-only"> {p.name}</span>
                   </h3>
-                  <div className="plate__mark" aria-hidden="true">
+                  <div className="pnl__mark" aria-hidden="true">
                     <Mark />
                   </div>
-                  <p className="plate__line">{p.line}</p>
-                  <ul className="plate__quotes">
-                    {p.quotes.map((q) => (
-                      <li key={q}>“{q}”</li>
-                    ))}
-                  </ul>
-                  <a className="plate__link" href={p.href} {...ext}>
+                  <div className="pnl__mech">
+                    <Mech />
+                  </div>
+                  <p className="pnl__line">“{p.line}”</p>
+                  <a className="pnl__link" href={p.href} {...ext}>
                     {p.source} ↗<NewTab />
                   </a>
-                </div>
-                <Mech />
-              </article>
-            );
-          })}
-        </section>
-
-        {/* ------------------------------------------------ convergence */}
-        <section id="converge" className="converge" data-tone="dark" aria-labelledby="converge-h">
-          <div className="converge__fig" data-reveal aria-hidden="true">
-            <svg viewBox="0 0 600 300" className="converge__lines">
-              <path className="cl cl--v" d="M40 0 C 40 150, 300 120, 300 210" pathLength={1} />
-              <path className="cl cl--s" d="M300 0 V 210" pathLength={1} />
-              <path className="cl cl--x" d="M560 0 C 560 150, 300 120, 300 210" pathLength={1} />
-            </svg>
-            <ViaMagusMark className="converge__mark" />
+                </article>
+              );
+            })}
           </div>
-          <h2 id="converge-h" className="converge__h" data-reveal>
-            {convergence.line}
-          </h2>
-          <p className="converge__by" data-reveal>
-            {convergence.by}
-          </p>
+          <div className="eco__end" data-reveal>
+            <svg className="eco__lines" viewBox="0 0 1200 260" preserveAspectRatio="none" aria-hidden="true">
+              <path className="cl cl--v" d="M200 0 C 200 140, 600 120, 600 250" pathLength={1} />
+              <path className="cl cl--s" d="M600 0 V 250" pathLength={1} />
+              <path className="cl cl--x" d="M1000 0 C 1000 140, 600 120, 600 250" pathLength={1} />
+            </svg>
+            <ViaMagusMark className="eco__mark" />
+            <p className="eco__close">{convergence}</p>
+          </div>
         </section>
 
-        {/* ------------------------------------------------ ACT IV · attend */}
-        <section id="attend" className="scene scene--attend" data-tone="light" data-act="IV" aria-labelledby="attend-h">
-          <Sheet n={invite.sheet} era="Your next move" label="Attend" />
-          <div className="attend">
-            <div className="attend__copy">
-              <h2 id="attend-h" className="h-mon">
-                {invite.headline}
+        {/* ------------------------------------------------ CLOSING · action */}
+        <section id="register" className="close" data-tone="light" data-act="register" data-shift-root aria-labelledby="register-h">
+          <div className="close__grid">
+            <div className="close__art">
+              <p className="hero__meta">An invitation from ViaMagus</p>
+              <h2 id="register-h" className="sr-only">
+                Request an invitation to The NEXT Order
               </h2>
-              <dl className="brief">
-                <div>
-                  <dt>What</dt>
-                  <dd>{invite.what}</dd>
-                </div>
-                <div>
-                  <dt>Why</dt>
-                  <dd>{invite.why}</dd>
-                </div>
-                <div>
-                  <dt>Who</dt>
-                  <dd>
-                    <ul>
-                      {invite.who.map((w) => (
-                        <li key={w}>{w}</li>
-                      ))}
-                    </ul>
-                  </dd>
-                </div>
-              </dl>
-              <dl className="tblock tblock--attend" aria-label="Event details">
-                {details.map(([k, val]) => (
-                  <div key={k}>
-                    <dt>{k}</dt>
-                    <dd className={val ? undefined : "is-pending"}>{val ?? pending}</dd>
-                  </div>
-                ))}
-              </dl>
+              <ShiftTitle lines={["THE ", "NEXT", "ORDER."]} cutLine={2} still />
+              <p className="close__line">{invite.line}</p>
+              <p className="close__who">{invite.what}</p>
+              <p className="close__who close__who--b">{invite.who}</p>
+              <Details />
             </div>
             <InviteForm source="site" />
           </div>
@@ -347,7 +215,6 @@ export function Site() {
 
       <footer className="ftr" data-tone="dark">
         <ViaMagusLogo href={officialLinks.viamagus} />
-        <p>The NEXT Order — an invitation from ViaMagus.</p>
         <ul>
           <li>
             <a href={officialLinks.velocity} {...ext}>
@@ -365,16 +232,16 @@ export function Site() {
             </a>
           </li>
           <li>
-            <a href="/register">Register</a>
+            <a href="/film">The film</a>
           </li>
           <li>
-            <a href="/film">The film</a>
+            <a href="/register">Register</a>
           </li>
         </ul>
       </footer>
 
-      <div className="bar" aria-hidden="false">
-        <a className="btn btn--shift" href="#attend">
+      <div className="bar">
+        <a className="btn btn--shift" href="/register">
           Request an invitation <span aria-hidden="true">→</span>
         </a>
       </div>

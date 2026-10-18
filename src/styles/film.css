@@ -9,9 +9,15 @@
   flex-direction: column;
   justify-content: space-between;
   background-color: #f4f2ec;
-  background-image: linear-gradient(rgba(14, 13, 18, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(14, 13, 18, 0.06) 1px, transparent 1px);
-  background-size: 64px 64px;
   color: #0e0d12;
+  --gutter: 0px;
+  --pitch: 64px;
+  --cut-y: 371px;
+  --s: 1;
+}
+
+.og > :not(.fld) {
+  position: relative;
 }
 
 .og__k {

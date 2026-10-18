@@ -4,9 +4,9 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { ViaMagusMark, SelectWordmark, SynthiaLogo, VelocityWordmark } from "@/components/Brand";
 import { SelectMech, SynthiaMech, VelocityMech } from "@/components/shift/Mechanisms";
-import { Plan } from "@/components/shift/Plan";
+import { ShiftArt } from "@/components/shift/ShiftArt";
 import { FILM_DURATION, sceneAtTime, type FilmSceneId } from "@/content/film";
-import { convergence, next, now, then } from "@/content/story";
+import { convergence, shift } from "@/content/story";
 import { Score } from "./score";
 
 function readStart() {
@@ -157,6 +157,12 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
   }, [toggleSound, onClose]);
 
   const d = (s: number): CSSProperties => ({ ["--d" as string]: `${s}s` });
+  // the shift artwork on the film clock: held as given (03–06), then cracks and fuses (06–10)
+  const oldP = useCallback(() => 0, []);
+  const inflP = useCallback(() => {
+    const t = clock.current.t;
+    return t < 6 ? 0 : Math.min(1, 0.1 + ((t - 6) / 3.6) * 0.9);
+  }, []);
 
   return (
     <div ref={root} className={`fp fp--${mode}${idle ? " is-idle" : ""}${playing ? "" : " is-paused"}`} data-scene={scene}>
@@ -181,32 +187,41 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
         {/* 03–06 · The Old Order */}
         <section className="fs fs--old" data-id="old">
           <div className="fs__copy">
-            <p className="fs__mono fs__era">Then · The old order</p>
+            <p className="fs__mono fs__era">I · {shift[0].era}</p>
             <p className="fs__h a-up" style={d(0.2)}>
-              {then.headline}
+              {shift[0].headline}
+            </p>
+            <p className="fs__fig a-up" style={d(0.9)}>
+              <b>{shift[0].evidence!.figure}</b> {shift[0].evidence!.finding}
+            </p>
+            <p className="fs__src a-up" style={d(1.1)}>
+              {shift[0].evidence!.source}, {shift[0].evidence!.date}
             </p>
           </div>
           <div className="fs__plan">
-            <Plan stage="then" bays={then.bays} label="" />
+            <ShiftArt getProgress={oldP} label="" />
           </div>
         </section>
 
         {/* 06–10 · The Inflection Point */}
         <section className="fs fs--inflection" data-id="inflection">
           <div className="fs__copy">
-            <p className="fs__mono fs__era">Now · The inflection point</p>
+            <p className="fs__mono fs__era">II · {shift[1].era}</p>
             <p className="fs__h a-up" style={d(0.2)}>
-              {now.headline}
+              {shift[1].headline}
             </p>
-            <p className="fs__fig a-up" style={d(1.6)}>
-              <b>{now.evidence[0].figure}</b> of India-based GCCs {now.evidence[0].finding}
+            <p className="fs__fig a-up" style={d(0.9)}>
+              <b>{shift[1].evidence!.figure}</b> {shift[1].evidence!.finding}
             </p>
-            <p className="fs__src a-up" style={d(1.9)}>
-              EY GCC Pulse Survey 2025
+            <p className="fs__src a-up" style={d(1.1)}>
+              {shift[1].evidence!.source}, {shift[1].evidence!.date}
+            </p>
+            <p className="fs__next a-up" style={d(2.6)}>
+              {shift[2].headline}
             </p>
           </div>
           <div className="fs__plan">
-            <Plan stage="now" label="" />
+            <ShiftArt getProgress={inflP} label="" />
           </div>
         </section>
 
@@ -286,10 +301,10 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
         {/* 26–30 · close, wiping back to paper for the loop */}
         <section className="fs fs--close" data-id="close">
           <p className="fs__close a-up" style={d(0.2)}>
-            {convergence.line}
+            {convergence}
           </p>
           <p className="fs__mono fs__cta a-up" style={d(1.2)}>
-            The NEXT Order · {next.question.replace("your GCC", "your centre")}
+            The NEXT Order · An invitation for India’s GCC leaders
           </p>
           {host ? (
             <p className="fs__mono fs__url a-up" style={d(1.6)}>
@@ -319,9 +334,10 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
         )}
       </div>
       <p className="sr-only">
-        A 30-second film. The NEXT Order. The old order: a small room inside a global enterprise, laid out as briefed — the
-        room you were given. The inflection point: its walls move outward; 92% of India-based GCCs aim to deliver value
-        beyond cost arbitrage (EY GCC Pulse Survey 2025). Build: Velocity AI — three-month timelines become three-to-four
+        A 30-second film. The NEXT Order. The old order: a strict grid of identical cells — the work you were given. The
+        inflection point: the grid cracks, everything above the line slides, and the cells fuse into owned volumes —
+        product, platforms, decisions, quality, capability; 92% of India-based GCCs aim to deliver value beyond cost
+        arbitrage (EY GCC Pulse Survey 2025). What will your centre own next? Build: Velocity AI — three-month timelines become three-to-four
         weeks. Operate: Synthia AI — every AI output is a draft until a named officer signs it. Scale: ViaMagus Select — the
         mandate is yours, so is the team. Three lines converge into the ViaMagus mark: build, operate, scale. Everything an
         enterprise needs to become AI-native.

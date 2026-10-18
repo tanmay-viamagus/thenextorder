@@ -1,12 +1,12 @@
 # The film — storyboard (30 s, 16:9, loops, readable without sound)
 
-The film is browser-rendered at `/film`, not a video file. It plays on a 1920×1080 stage that scales to any screen. It reuses the site's own drawings: the floor plans and the three practice diagrams. The timeline lives in `src/content/film.ts`, and the motion in `src/styles/film-player.css`.
+The film is browser-rendered at `/film`, not a video file. It plays on a 1920×1080 stage that scales to any screen. It reuses the site's own artwork: the shifting grid and the three practice diagrams. The timeline lives in `src/content/film.ts`, and the motion in `src/styles/film-player.css`.
 
 | Time | Scene | On screen |
 | --- | --- | --- |
 | 00–03 | **The NEXT Order** | The cut title on drawing paper. The threshold line draws, then everything above it shifts. "For India's GCC leaders" |
-| 03–06 | **The old order** | "The room you were given." The plan draws: a small India centre inside a global enterprise, with four bays and rows of desks |
-| 06–10 | **The inflection point** | "The walls are moving." The room's walls physically expand. **92%** of India-based GCCs aim to deliver value beyond cost arbitrage (EY GCC Pulse Survey 2025) |
+| 03–06 | **The old order** | "The work you were given." A strict grid of identical cells. **1,700+** GCCs in India (nasscom & Zinnov, FY2024) |
+| 06–10 | **The inflection point** | "Then the walls moved." The grid cracks along the line and the upper half slides, then the cells fuse into owned volumes, one left open. **92%** of India-based GCCs aim to deliver value beyond cost arbitrage (EY GCC Pulse Survey 2025). "What will your centre own next?" |
 | 10–14 | **Velocity AI — BUILD** | A 3-month bar compresses to 3–4 weeks, with a ship tick every Friday. "Three-month timelines become three-to-four weeks." |
 | 14–18 | **Synthia AI — OPERATE** | SOP → AI drafts → named officer signs ✓ → logged. "Every AI output is a draft until a named officer signs it." |
 | 18–22 | **ViaMagus Select — SCALE** | 50 CVs → 4 worth an engineer's time → 3 pass. "The mandate is yours. So is the team." |
