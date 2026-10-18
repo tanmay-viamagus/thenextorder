@@ -31,11 +31,14 @@ export const event: EventDetails = {
 /** Until a dedicated RSVP exists, interest goes to the official ViaMagus contact section. */
 export const interestUrl = "https://viamagus.com/#contact";
 
+/** The contact address published on viamagus.com (verified Oct 2026). The invitation form addresses requests here. */
+export const contactEmail = "hi@viamagus.com";
+
 export const pending = "To be announced";
 
 /** What is already true about the event, from the brief. */
 export const knownFacts = {
-  audience: "GCC heads, technology and talent leaders",
+  audience: "India’s GCC leaders",
   host: "ViaMagus",
   featuring: "Velocity AI · Synthia AI · ViaMagus Select",
 };

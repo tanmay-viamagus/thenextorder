@@ -1,9 +1,9 @@
-import { FILM_DURATION, FORCE_BEATS, filmScenes } from "@/content/film";
+import { FILM_DURATION, filmScenes } from "@/content/film";
 
 /**
  * An optional score, synthesised live with Web Audio — no audio files.
- * A kick on every change of formation, hats while the forces turn, a riser
- * into the mark, a sub-bass boom when it lands, a pad under the name.
+ * A kick on every scene, hats under the three practices, a riser into the
+ * convergence, a sub-bass boom when the mark lands, a pad under the close.
  * The film never depends on it.
  */
 export class Score {
@@ -111,19 +111,19 @@ export class Score {
   scheduleLoop(loopStart: number, fromT = 0) {
     const at = (t: number) => loopStart + t;
     const ok = (t: number) => t >= fromT - 0.001;
+    const scene = (id: string) => filmScenes.find((s) => s.id === id)!;
     for (const s of filmScenes) {
-      if (!ok(s.start) || s.id === "mark") continue;
+      if (!ok(s.start) || s.id === "converge") continue;
       this.kick(at(s.start), 0.85);
       this.hit(at(s.start), 0.3, 2500, "highpass", 0.12);
     }
-    for (const b of FORCE_BEATS) if (ok(b)) this.kick(at(b), 0.7);
-    const forces = filmScenes.find((s) => s.id === "forces")!;
-    for (let t = forces.start; t < forces.end; t += 0.25) if (ok(t)) this.hit(at(t), 0.1, 8000, "highpass", 0.04);
-    const mark = filmScenes.find((s) => s.id === "mark")!;
-    if (ok(mark.start - 1.8)) this.riser(at(mark.start - 1.8), 1.8);
-    if (ok(mark.start)) this.boom(at(mark.start));
-    const end = filmScenes.find((s) => s.id === "end")!;
-    if (ok(end.start)) this.pad(at(end.start), FILM_DURATION - end.start);
+    // hats under the three practices
+    for (let t = scene("build").start; t < scene("scale").end; t += 0.25) if (ok(t)) this.hit(at(t), 0.08, 8000, "highpass", 0.04);
+    const c = scene("converge").start;
+    if (ok(c - 1.6)) this.riser(at(c - 1.6), 1.6);
+    if (ok(c)) this.boom(at(c));
+    const end = scene("close").start;
+    if (ok(end)) this.pad(at(end), FILM_DURATION - end);
   }
 
   stopAll() {

@@ -1,10 +1,10 @@
 import { FilmOverlay } from "@/components/film/FilmOverlay";
-import { OrderSite } from "@/components/order/OrderSite";
+import { Site } from "@/components/shift/Site";
 
 export default function Home() {
   return (
     <>
-      <OrderSite />
+      <Site />
       <FilmOverlay />
     </>
   );

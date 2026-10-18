@@ -1,193 +1,187 @@
 /**
- * Everything the visitor reads, organised as the Three Eras.
+ * Everything the visitor reads. The narrative is THEN → NOW → NEXT: how a
+ * global centre's mandate can grow, told as three eras. It follows the
+ * corrected GCC strategy notes (internal; local copy at docs/strategy-notes.md, not committed):
+ *  - the story is the centre's mandate, ownership, capability and value — not AI;
+ *  - centres differ; nothing here says every GCC follows one path;
+ *  - GCC → GIC → ? is a naming question, labelled exploratory, never a prediction.
  *
- * Product claims are quoted or closely paraphrased from the official sites
- * (source sentence noted beside each). Research signals are verified against
- * the original publisher pages — see docs/next-order-research.md.
+ * Every figure is quoted from its publisher (docs/next-order-research.md).
+ * Every product line is quoted from the official product page (source beside it).
  */
 
-export const title = ["The Next", "Order"] as const;
-
-export const hook = "The operating model that built your GCC won’t run it next.";
-
-/** The theme, stated plainly. */
-export const theme = "The future of GCC efficiency";
-
-export const eras = ["The old order", "The inflection point", "The next order"] as const;
-
-export type Signal = {
+export type Evidence = {
   figure: string;
-  headline: string;
   finding: string;
-  kind: "Survey" | "Forecast" | "Industry estimate";
-  population: string;
   source: string;
   date: string;
   url: string;
 };
 
-/* Era 01 — the old order. It worked; the evidence says so. */
-export const oldOrder = {
-  kicker: "Era 01 · The old order",
-  headline: "Efficiency meant more people.",
-  body: "Cost advantage, process discipline and teams that grew layer by layer built India’s GCC ecosystem. That model still works. But it measured efficiency in cost per head — and that is no longer the advantage.",
+export const tagline = "Where was your centre, where is it now — and where could it go next?";
+
+export const description =
+  "An invitation from ViaMagus to India’s GCC leaders: a conversation about where global centres go next — what they own, the value they create and the capabilities they’ll need.";
+
+/* ---------------------------------------------------------------- THEN */
+export const then = {
+  sheet: "01",
+  era: "The old order",
+  label: "Then",
+  headline: "The room you were given.",
+  body: "Many centres began by bringing defined work in‑house: enterprise systems, finance and accounts, technology operations, internal platforms. The brief was written elsewhere. The job was to run it well — and many did.",
+  caveat: "Centres began in different places. This is one common starting point, not everyone’s.",
+  bays: ["Enterprise systems", "Finance & accounts", "Technology operations", "Internal platforms"],
   evidence: {
     figure: "1,700+",
-    headline: "",
     finding: "GCCs in India, employing over 1.9 million people.",
-    kind: "Industry estimate",
-    population: "India, FY2024",
     source: "nasscom & Zinnov, India GCC Landscape Report",
-    date: "2024",
+    date: "FY2024",
     url: "https://nasscom.in/knowledge-center/publications/india-gcc-landscape-report-5-year-journey",
-  } satisfies Signal,
+  } satisfies Evidence,
 };
 
-/* Era 02 — the inflection point. Four signals, one arc: investing, experimenting, stalling, leading. */
-export const inflection = {
-  kicker: "Era 02 · The inflection point",
-  headline: "AI changed the rules.",
-  body: "Investment is moving fast. Operating models are not. The signals:",
-  signals: [
-    {
-      figure: "58%",
-      headline: "The money is moving.",
-      finding: "of India-based GCCs are already investing in agentic AI — and another 29% plan to within a year.",
-      kind: "Survey",
-      population: "GCCs operating from India, Aug–Oct 2025",
-      source: "EY GCC Pulse Survey",
-      date: "Nov 2025",
-      url: "https://www.ey.com/en_in/newsroom/2025/11/58-percent-gccs-in-india-investing-in-agentic-ai-two-third-creating-dedicated-innovation-teams-to-globalize-ideas-ey-gcc-pulse-survey-2025",
-    },
-    {
-      figure: "23%",
-      headline: "Few are scaling.",
-      finding: "of respondents say their organisations are scaling an agentic AI system somewhere in the enterprise. 62% are at least experimenting.",
-      kind: "Survey",
-      population: "Global, 1,993 respondents, Jun–Jul 2025",
-      source: "McKinsey, The state of AI in 2025",
-      date: "Nov 2025",
-      url: "https://www.mckinsey.com/~/media/mckinsey/business%20functions/quantumblack/our%20insights/the%20state%20of%20ai/the-state-of-ai-in-2025-vf.pdf",
-    },
-    {
-      figure: "40%+",
-      headline: "Many will stall.",
-      finding: "of agentic AI projects will be canceled by the end of 2027 — on escalating costs, unclear business value or inadequate risk controls.",
-      kind: "Forecast",
-      population: "Gartner prediction",
-      source: "Gartner",
-      date: "Jun 2025",
-      url: "https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027",
-    },
-    {
-      figure: "8%",
-      headline: "Few lead.",
-      finding: "of GCCs qualify as top performers across market advantage, innovation and enterprise efficiency.",
-      kind: "Survey",
-      population: "GCC Survey 2024, N = 150, global",
-      source: "BCG, Rewriting the Global Capability Center Playbook",
-      date: "Jun 2025",
-      url: "https://www.bcg.com/publications/2025/india-rewriting-the-global-capability-center-playbook",
-    },
-  ] satisfies Signal[],
-  closing: "The next order won’t wait for everyone to catch up.",
+/* ---------------------------------------------------------------- NOW */
+const EY = {
+  source: "EY GCC Pulse Survey 2025 · India-based GCCs",
+  date: "Nov 2025",
+  url: "https://www.ey.com/en_in/newsroom/2025/11/58-percent-gccs-in-india-investing-in-agentic-ai-two-third-creating-dedicated-innovation-teams-to-globalize-ideas-ey-gcc-pulse-survey-2025",
 };
 
-/* Era 03 — the next order: three forces, equal weight. */
-export type ForceKey = "velocity" | "synthia" | "select";
-
-export const nextOrder = {
-  kicker: "Era 03 · The next order",
-  headline: "Efficiency, redefined.",
-  keys: ["Build in weeks, not quarters.", "Operate with control.", "Scale capability ahead of demand."],
-  closing: "Everything an enterprise needs to become AI\u2011native.",
+export const now = {
+  sheet: "02",
+  era: "The inflection point",
+  label: "Now",
+  headline: "The walls are moving.",
+  body: "Some centres still run what they were given. Others now own products, platforms, decisions and outcomes. Most sit somewhere in between — and are being asked to prove the value of where they stand.",
+  evidence: [
+    { figure: "92%", finding: "aim to deliver value beyond cost arbitrage.", ...EY },
+    { figure: "52%", finding: "hold shared accountability for global decisions. Another 26% are formally consulted.", ...EY },
+    { figure: "67%", finding: "are creating dedicated innovation teams to generate, test and globalise ideas from India.", ...EY },
+  ] satisfies Evidence[],
+  counterpoint: {
+    figure: "8%",
+    finding: "of GCCs have advanced significantly across innovation, competitive differentiation and operational efficiency.",
+    source: "BCG, Rewriting the Global Capability Center Playbook",
+    date: "Jun 2025",
+    url: "https://www.bcg.com/publications/2025/india-rewriting-the-global-capability-center-playbook",
+  } satisfies Evidence,
+  /** the value lens from the strategy notes — a lens, not a maturity ladder */
+  lens: [
+    { k: "Product", q: "Is what we build getting stronger?" },
+    { k: "Systems + quality", q: "Do our systems work, and is quality reliable?" },
+    { k: "Efficiency", q: "Is the work more effective — not only cheaper?" },
+    { k: "Capability + scale", q: "Can we grow capability without losing quality?" },
+  ],
+  lensNote: "A lens, not a ladder. Every centre weighs these differently.",
 };
 
-export const forces: {
-  key: ForceKey;
+/* ---------------------------------------------------------------- the naming question (exploratory) */
+export const naming = {
+  sheet: "02·B",
+  labels: [
+    { k: "GCC", v: "Global Capability Centre" },
+    { k: "GIC", v: "Global In‑house Centre — or Global Innovation Centre, depending on who you ask" },
+  ],
+  body: "There is no agreed next name, and a new name doesn’t make a new mandate. So try it the other way round: start with what your centre owns.",
+  owns: ["Products", "Platforms", "Decisions", "Quality", "Innovation", "Capability", "Outcomes"],
+  note: "Exploratory. Your label — not an industry term or a prediction.",
+};
+
+/* ---------------------------------------------------------------- NEXT */
+export const next = {
+  sheet: "03",
+  era: "The next order",
+  label: "Next",
+  headline: "The room you’ll build.",
+  question: "What should the next chapter of your GCC look like?",
+  body: "Not every centre should take the same path. But every centre will be asked what it owns, what value it creates and what it needs to grow — by people who weren’t in the room when it was set up.",
+  rooms: ["Product", "Platforms", "Decisions", "Quality", "Capability"],
+};
+
+/** Framing questions, one per seat. These frame the conversation; they are not the agenda. */
+export const seats: { seat: string; q: string }[] = [
+  { seat: "CEO / MD", q: "What does your centre own today that it didn’t three years ago — and what should it own next?" },
+  { seat: "Site leader", q: "How do you make the case to global leadership for your centre’s next mandate?" },
+  { seat: "Technology leader", q: "Which products and platforms should be built from India — not just run from here?" },
+  { seat: "CHRO / Talent", q: "Which capabilities does the next mandate need — before it arrives?" },
+];
+
+/* ---------------------------------------------------------------- the three practices (equal weight) */
+export type PracticeKey = "velocity" | "synthia" | "select";
+
+export const practices: {
+  key: PracticeKey;
+  n: string;
   verb: string;
   name: string;
   role: string;
-  claim: string;
-  detail: string;
-  why: string;
+  line: string;
+  /** verbatim from the official page */
+  quotes: string[];
   href: string;
   source: string;
-  /** the big visual statement for this force — verified wording only */
-  proof:
-    | { kind: "swap"; from: string; to: string; caption: string }
-    | { kind: "ledger"; rows: [string, string][]; caption: string }
-    | { kind: "figure"; value: string; caption: string };
 }[] = [
   {
     key: "velocity",
+    n: "A",
     verb: "Build",
     name: "Velocity AI",
     role: "AI-native engineering",
-    claim: "A shippable release every Friday.",
-    // viamagus.com/velocity-ai: "Three-month timelines become three-to-four weeks,
-    // with a shippable submodule delivered every single Friday."
-    // "Velocity AI is the operating model rebuilt for AI-native delivery."
-    detail: "Three-month timelines become three-to-four weeks — an engineering operating model rebuilt for AI-native delivery.",
-    why: "Adding AI tools to an old delivery model doesn’t change the pace. Changing the model does.",
+    // viamagus.com/velocity-ai
+    line: "When the next mandate is a product, it has to ship.",
+    quotes: [
+      "Three-month timelines become three-to-four weeks, with a shippable submodule delivered every single Friday.",
+      "Velocity AI is the operating model rebuilt for AI-native delivery.",
+      "Shippable means shippable: to production, not just to a reviewer’s browser.",
+    ],
     href: "https://viamagus.com/velocity-ai",
     source: "viamagus.com/velocity-ai",
-    proof: { kind: "swap", from: "3 months", to: "3–4 weeks", caption: "Velocity AI’s stated delivery model" },
   },
   {
     key: "synthia",
+    n: "B",
     verb: "Operate",
     name: "Synthia AI",
-    role: "AI-enabled operations",
-    claim: "AI that follows your SOP — and stops for your sign-off.",
-    // viamagus.com/synthia-ai: "Every business process becomes a governed, auditable,
-    // continuously-improving AI workflow." "The AI stops where you told it to and waits for a person."
-    detail: "Business processes become governed, auditable AI workflows. Every action, AI and human, is logged.",
-    why: "Intelligence only creates value when it runs inside the work — with control built in.",
+    role: "AI-native business processes",
+    // viamagus.com/synthia-ai
+    line: "When the next mandate is a process, it has to stay in control.",
+    quotes: [
+      "Every business process becomes a governed, auditable, continuously-improving AI workflow.",
+      "The AI follows your playbook, not its own.",
+      "Every AI output is a draft until a named officer signs it.",
+    ],
     href: "https://viamagus.com/synthia-ai",
     source: "viamagus.com/synthia-ai",
-    // viamagus.com/synthia-ai: "Every AI output is a draft until a named officer signs it"
-    proof: {
-      kind: "ledger",
-      rows: [
-        ["AI output", "Draft"],
-        ["Named officer", "Signed ✓"],
-      ],
-      caption: "Every AI output is a draft until a named officer signs it.",
-    },
   },
   {
     key: "select",
+    n: "C",
     verb: "Scale",
     name: "ViaMagus Select",
-    role: "Talent & capability",
-    claim: "Talent built ahead of demand.",
-    // viamagusselect.ai: "Your shortlist comes from a bench we build ahead of demand: engineers
-    // trained in our 6–8 week AI-native programme and vetted by our own engineers."
-    // "Engineer-vetted AI talent, shortlisted in 48 hours."
-    detail: "Engineers trained in a 6–8 week AI-native programme, vetted by ViaMagus engineers, shortlisted for your GCC in 48 hours.",
-    why: "The next capability isn’t hired from a CV database. It’s built.",
+    role: "Specialist technology talent",
+    // viamagusselect.ai
+    line: "When the next mandate needs capability you don’t have yet, it needs the right people — judged by engineers.",
+    quotes: [
+      "The mandate is yours. So is the team.",
+      "We match pre-vetted engineers from our bench, engineers who ship AI assess them, and you get written verdicts in 48 hours.",
+      "Recruiters send CVs. We send verdicts.",
+    ],
     href: "https://www.viamagusselect.ai/",
     source: "viamagusselect.ai",
-    // viamagusselect.ai: "Your 48-hour clock. It starts when you send us a role."
-    proof: { kind: "figure", value: "48h", caption: "From your brief to an engineer-vetted shortlist" },
   },
 ];
 
-/**
- * The questions behind the event — one per GCC leadership seat.
- * These frame the conversation; they are not published agenda sessions.
- * Confirm against the final event plan before launch.
- */
-export const questions: { seat: string; q: string; force?: ForceKey }[] = [
-  { seat: "For the site leader", q: "When cost per head is no longer the advantage, what does a GCC compete on?" },
-  { seat: "For the CTO", q: "Why are AI tools speeding up engineers but not delivery?", force: "velocity" },
-  { seat: "For the COO", q: "How do you put AI inside the process — and keep a person on every decision that matters?", force: "synthia" },
-  { seat: "For the CHRO", q: "How do you build AI capability faster than you can hire it?", force: "select" },
-];
+export const convergence = {
+  line: "Everything an enterprise needs to become AI‑native.",
+  by: "Build · Operate · Scale — three practices, one ViaMagus.",
+};
 
+/* ---------------------------------------------------------------- your next move */
 export const invite = {
-  headline: ["The future of your GCC", "is something to build."],
-  positioning: "Everything an enterprise needs to become AI\u2011native.",
-  from: "An invitation from ViaMagus",
+  sheet: "04",
+  headline: "Your next move.",
+  what: "The NEXT Order is a ViaMagus event for India’s GCC leaders about where global centres go next: what they own, the value they create and the capabilities they’ll need.",
+  why: "Because a centre’s next mandate is rarely handed over. It is earned and argued for — and it helps to think it through with peers making the same case.",
+  who: ["GCC CEOs, MDs and senior executives", "Site heads and site leaders", "Technology and engineering leaders", "CHROs, HR and talent acquisition leaders"],
 };

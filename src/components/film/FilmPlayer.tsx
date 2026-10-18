@@ -1,155 +1,101 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { whenWhere } from "@/content/event";
-import { BLEND, CHAOS_FROM, CHAOS_UNTIL, FILM_DURATION, FORCE_BEATS, filmScenes, sceneAtTime } from "@/content/film";
-import { forces, inflection, nextOrder } from "@/content/story";
-import { Engine } from "../order/engine";
-import { buildStory, F, highlighter } from "../order/story";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
+import { ViaMagusMark, SelectWordmark, SynthiaLogo, VelocityWordmark } from "@/components/Brand";
+import { SelectMech, SynthiaMech, VelocityMech } from "@/components/shift/Mechanisms";
+import { Plan } from "@/components/shift/Plan";
+import { FILM_DURATION, sceneAtTime, type FilmSceneId } from "@/content/film";
+import { convergence, next, now, then } from "@/content/story";
 import { Score } from "./score";
-
-const ease = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
 
 function readStart() {
   const q = new URLSearchParams(window.location.search);
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const t = Number(q.get("t"));
   if (q.has("t") && Number.isFinite(t)) return { t: Math.min(FILM_DURATION - 0.01, Math.max(0, t)), paused: true };
-  return { t: reduce ? 23 : 0, paused: reduce };
-}
-
-/** which formation the film shows at time t, and the blend from the previous one */
-function blendAt(t: number) {
-  if (t < CHAOS_UNTIL) return { a: F.chaos, b: F.chaos, t: 0 };
-  if (t >= CHAOS_FROM) return { a: F.title, b: F.chaos, t: ease(Math.min(1, (t - CHAOS_FROM) / 0.9)) };
-  const s = sceneAtTime(t);
-  const i = filmScenes.indexOf(s);
-  const prev = i === 0 ? F.chaos : filmScenes[i - 1].f;
-  const from = i === 0 ? CHAOS_UNTIL : s.start;
-  return { a: prev, b: s.f, t: ease(Math.min(1, (t - from) / BLEND)) };
-}
-
-function proofLine(k: number) {
-  const p = forces[k].proof;
-  if (p.kind === "swap") return `${p.from} → ${p.to}`;
-  if (p.kind === "ledger") return `${p.rows[0][1]} → ${p.rows[1][1]}`;
-  return p.value;
+  // reduced motion: open paused on the closing line
+  return { t: reduce ? 27 : 0, paused: reduce };
 }
 
 /**
- * The film: the site's living system of cells on a 30-second clock.
- * Full-page at /film (event screens) or as an overlay on the site.
+ * The film: the site's drawings on a 30-second clock, on a 1920×1080 stage
+ * scaled to any screen. Full-page at /film (event screens) or as an overlay.
+ * The clock decides which scene is on; each scene's motion is CSS that starts
+ * when the scene does (its drawings reuse the site's own reveal states).
  */
 export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overlay"; onClose?: () => void }) {
-  const canvas = useRef<HTMLCanvasElement | null>(null);
+  const root = useRef<HTMLDivElement | null>(null);
   const clock = useRef({ t: 0 });
   const score = useRef<Score | null>(null);
   const [playing, setPlaying] = useState(false);
   const [sound, setSound] = useState(false);
-  const [scene, setScene] = useState<string>("");
-  const [force, setForce] = useState<number | null>(null);
+  const [scene, setScene] = useState<FilmSceneId | "">("");
   const [idle, setIdle] = useState(false);
-  const [noGl, setNoGl] = useState(false);
+  const [host, setHost] = useState("");
   const playingRef = useRef(false);
-  const line = whenWhere();
 
   useEffect(() => {
     playingRef.current = playing;
   }, [playing]);
 
+  // stage scale
   useEffect(() => {
-    const cv = canvas.current;
-    if (!cv) return;
+    const el = root.current;
+    if (!el) return;
+    const fit = () => el.style.setProperty("--k", String(Math.min(window.innerWidth / 1920, window.innerHeight / 1080)));
+    fit();
+    window.addEventListener("resize", fit);
+    return () => window.removeEventListener("resize", fit);
+  }, []);
+
+  // the clock
+  useEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    setHost(window.location.host);
     const s = readStart();
     clock.current.t = s.t;
-    let engine: Engine | null = null;
-    try {
-      engine = new Engine(cv, window.innerWidth < 760 ? 2600 : 6000);
-      engine.rigid = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    } catch {
-      engine = null;
-    }
-    let hl: ReturnType<typeof highlighter> | null = null;
-    let fk: number | null = null;
-    let amount = 0;
-    let dtNow = 0.016;
-    let curScene = "";
-    let curForce: number | null = -1;
-    const family = getComputedStyle(document.body).fontFamily.split(",")[0].trim();
-    const build = () => {
-      if (!engine) return;
-      engine.resize(window.innerWidth, window.innerHeight, Math.min(2, window.devicePixelRatio || 1));
-      const story = buildStory(window.innerWidth, window.innerHeight, engine.n, family, true);
-      engine.formations = story.formations;
-      hl = highlighter(story);
+    let cur = "";
+    const enter = (id: FilmSceneId, into: number) => {
+      el.querySelectorAll<HTMLElement>(".fs").forEach((sc) => {
+        const on = sc.dataset.id === id;
+        sc.classList.toggle("is-on", on);
+        if (on) sc.style.setProperty("--into", `${into.toFixed(3)}s`);
+        sc.querySelectorAll("[data-reveal]").forEach((r) => r.classList.toggle("is-in", on));
+      });
+      setScene(id);
     };
-    if (engine) engine.shape = (tx, n) => hl?.(tx, n, fk, amount, dtNow);
-
     let raf = 0;
     let last = performance.now();
-    const tick = (now: number) => {
+    const tick = (nowMs: number) => {
       raf = requestAnimationFrame(tick);
-      const dt = Math.min(0.033, (now - last) / 1000);
-      last = now;
-      dtNow = dt;
+      const dt = Math.min(0.1, (nowMs - last) / 1000);
+      last = nowMs;
       const c = clock.current;
       if (playingRef.current) {
         c.t += dt;
         if (c.t >= FILM_DURATION) {
           c.t -= FILM_DURATION;
+          cur = "";
           score.current?.scheduleLoop(score.current.ctx.currentTime - c.t, 0);
         }
       }
-      const t = c.t;
-      const sc = sceneAtTime(t);
-      const k = sc.id === "forces" ? FORCE_BEATS.reduce<number | null>((acc, b, i) => (t >= b ? i : acc), null) : null;
-      fk = k;
-      amount = sc.id === "forces" ? Math.min(1, (t - sc.start) / BLEND) : 0;
-      if (sc.id !== curScene) {
-        curScene = sc.id;
-        setScene(sc.id);
+      const sc = sceneAtTime(c.t);
+      if (sc.id !== cur) {
+        cur = sc.id;
+        enter(sc.id, c.t - sc.start);
       }
-      if (k !== curForce) {
-        curForce = k;
-        setForce(k);
-      }
-      if (!engine) return;
-      const bl = blendAt(t);
-      engine.a = bl.a;
-      engine.b = bl.b;
-      engine.t = bl.t;
-      engine.step(dt, now / 1000);
-      engine.render();
     };
-
-    let started = false;
-    const start = () => {
-      if (started) return;
-      started = true;
-      build();
-      engine?.snap(F.chaos);
-      setNoGl(!engine);
-      setPlaying(!s.paused);
-      last = performance.now();
-      raf = requestAnimationFrame(tick);
+    setPlaying(!s.paused);
+    raf = requestAnimationFrame(tick);
+    const onRestart = () => {
+      cur = "";
     };
-    const failsafe = window.setTimeout(start, 1000);
-    void document.fonts.ready.then(start);
-
-    let rt = 0;
-    const onResize = () => {
-      window.clearTimeout(rt);
-      rt = window.setTimeout(build, 180);
-    };
-    window.addEventListener("resize", onResize);
+    el.addEventListener("fp-restart", onRestart);
     return () => {
-      started = true;
       cancelAnimationFrame(raf);
-      window.clearTimeout(failsafe);
-      window.clearTimeout(rt);
-      window.removeEventListener("resize", onResize);
-      engine?.dispose();
+      el.removeEventListener("fp-restart", onRestart);
       score.current?.close();
       score.current = null;
     };
@@ -178,6 +124,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
 
   const restart = useCallback(() => {
     clock.current.t = 0;
+    root.current?.dispatchEvent(new Event("fp-restart"));
     if (score.current) {
       score.current.stopAll();
       score.current.scheduleLoop(score.current.ctx.currentTime, 0);
@@ -209,30 +156,148 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
     };
   }, [toggleSound, onClose]);
 
-  const on = (id: string) => (scene === id ? " is-on" : "");
+  const d = (s: number): CSSProperties => ({ ["--d" as string]: `${s}s` });
 
   return (
-    <div className={`fp fp--${mode}${idle ? " is-idle" : ""}${noGl ? " no-gl" : ""}`} data-scene={scene}>
-      <canvas className="fp__canvas" ref={canvas} aria-hidden="true" />
-      <div className="fp__cap" aria-hidden="true">
-        <p className={`cap cap--arrive${on("arrive")}`}>An invitation from ViaMagus</p>
-        <p className={`cap cap--old${on("old")}`}>{"Efficiency used to mean more people."}</p>
-        <p className={`cap cap--break${on("break")}`}>{inflection.headline}</p>
-        <p className={`cap cap--stake${on("stake")}`}>of GCCs lead.</p>
-        <div className={`cap cap--forces${on("forces")}`}>
-          <p className="cap__h">Build. Operate. Scale.</p>
-          {force !== null ? (
-            <p key={forces[force].key} className={`cap__proof cap__proof--${forces[force].key}`}>
-              <span>{forces[force].name}</span>
-              {proofLine(force)}
+    <div ref={root} className={`fp fp--${mode}${idle ? " is-idle" : ""}${playing ? "" : " is-paused"}`} data-scene={scene}>
+      <div className="fp__stage" aria-hidden="true">
+        {/* 00–03 · The NEXT Order */}
+        <section className="fs fs--title" data-id="title">
+          <p className="fs__mono fs__tl">An invitation from ViaMagus</p>
+          <div className="fs__title">
+            <div className="ft ft--below">
+              <span>THE NEXT</span>
+              <span>ORDER.</span>
+            </div>
+            <div className="ft ft--above">
+              <span>THE NEXT</span>
+              <span>ORDER.</span>
+            </div>
+            <span className="ft__cut" />
+          </div>
+          <p className="fs__mono fs__bl">For India’s GCC leaders</p>
+        </section>
+
+        {/* 03–06 · The Old Order */}
+        <section className="fs fs--old" data-id="old">
+          <div className="fs__copy">
+            <p className="fs__mono fs__era">Then · The old order</p>
+            <p className="fs__h a-up" style={d(0.2)}>
+              {then.headline}
+            </p>
+          </div>
+          <div className="fs__plan">
+            <Plan stage="then" bays={then.bays} label="" />
+          </div>
+        </section>
+
+        {/* 06–10 · The Inflection Point */}
+        <section className="fs fs--inflection" data-id="inflection">
+          <div className="fs__copy">
+            <p className="fs__mono fs__era">Now · The inflection point</p>
+            <p className="fs__h a-up" style={d(0.2)}>
+              {now.headline}
+            </p>
+            <p className="fs__fig a-up" style={d(1.6)}>
+              <b>{now.evidence[0].figure}</b> of India-based GCCs {now.evidence[0].finding}
+            </p>
+            <p className="fs__src a-up" style={d(1.9)}>
+              EY GCC Pulse Survey 2025
+            </p>
+          </div>
+          <div className="fs__plan">
+            <Plan stage="now" label="" />
+          </div>
+        </section>
+
+        {/* 10–14 · BUILD */}
+        <section className="fs fs--build fs--practice" data-id="build">
+          <div className="fs__copy">
+            <p className="fs__mono fs__era">Velocity AI</p>
+            <p className="fs__verb a-up" style={d(0.1)}>
+              Build.
+            </p>
+            <div className="fs__mark a-up" style={d(0.5)}>
+              <VelocityWordmark />
+            </div>
+            <p className="fs__line a-up" style={d(0.8)}>
+              Three-month timelines become three-to-four weeks.
+            </p>
+          </div>
+          <div className="fs__mech">
+            <VelocityMech />
+          </div>
+        </section>
+
+        {/* 14–18 · OPERATE */}
+        <section className="fs fs--operate fs--practice" data-id="operate">
+          <div className="fs__copy">
+            <p className="fs__mono fs__era">Synthia AI</p>
+            <p className="fs__verb a-up" style={d(0.1)}>
+              Operate.
+            </p>
+            <div className="fs__mark a-up" style={d(0.5)}>
+              <SynthiaLogo height={44} />
+            </div>
+            <p className="fs__line a-up" style={d(0.8)}>
+              Every AI output is a draft until a named officer signs it.
+            </p>
+          </div>
+          <div className="fs__mech">
+            <SynthiaMech />
+          </div>
+        </section>
+
+        {/* 18–22 · SCALE */}
+        <section className="fs fs--scale fs--practice" data-id="scale">
+          <div className="fs__copy">
+            <p className="fs__mono fs__era">ViaMagus Select</p>
+            <p className="fs__verb a-up" style={d(0.1)}>
+              Scale.
+            </p>
+            <div className="fs__mark a-up" style={d(0.5)}>
+              <SelectWordmark />
+            </div>
+            <p className="fs__line a-up" style={d(0.8)}>
+              The mandate is yours. So is the team.
+            </p>
+          </div>
+          <div className="fs__mech">
+            <SelectMech />
+          </div>
+        </section>
+
+        {/* 22–26 · convergence */}
+        <section className="fs fs--converge" data-id="converge">
+          <svg viewBox="0 0 1920 1080" className="fs__lines">
+            <path className="cl cl--v" d="M260 -10 C 260 520, 960 420, 960 640" pathLength={1} />
+            <path className="cl cl--s" d="M960 -10 V 640" pathLength={1} />
+            <path className="cl cl--x" d="M1660 -10 C 1660 520, 960 420, 960 640" pathLength={1} />
+          </svg>
+          <ViaMagusMark className="fs__vm" />
+          <p className="fs__trio a-up" style={d(1.6)}>
+            Build. Operate. Scale.
+          </p>
+          <p className="fs__mono fs__names a-up" style={d(2)}>
+            Velocity AI · Synthia AI · ViaMagus Select
+          </p>
+        </section>
+
+        {/* 26–30 · close, wiping back to paper for the loop */}
+        <section className="fs fs--close" data-id="close">
+          <p className="fs__close a-up" style={d(0.2)}>
+            {convergence.line}
+          </p>
+          <p className="fs__mono fs__cta a-up" style={d(1.2)}>
+            The NEXT Order · {next.question.replace("your GCC", "your centre")}
+          </p>
+          {host ? (
+            <p className="fs__mono fs__url a-up" style={d(1.6)}>
+              Register · {host}/register
             </p>
           ) : null}
-        </div>
-        <p className={`cap cap--mark${on("mark")}`}>{nextOrder.closing}</p>
-        <div className={`cap cap--end${on("end")}`}>
-          <p>For GCC leaders</p>
-          <p className="cap__small">{line ?? "An invitation from ViaMagus"}</p>
-        </div>
+          <span className="fs__wipe" />
+        </section>
       </div>
 
       <div className="fp__controls">
@@ -254,10 +319,12 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
         )}
       </div>
       <p className="sr-only">
-        A 30-second film. Thousands of cells assemble into The Next Order. They form a rigid pyramid: efficiency used to
-        mean more people. They shatter: AI changed the rules. They form 8%: of GCCs lead. They become three turning
-        forces, Velocity AI, Synthia AI and ViaMagus Select: build, operate, scale. They become the ViaMagus mark:
-        everything an enterprise needs to become AI-native. They return to The Next Order, for GCC leaders.
+        A 30-second film. The NEXT Order. The old order: a small room inside a global enterprise, laid out as briefed — the
+        room you were given. The inflection point: its walls move outward; 92% of India-based GCCs aim to deliver value
+        beyond cost arbitrage (EY GCC Pulse Survey 2025). Build: Velocity AI — three-month timelines become three-to-four
+        weeks. Operate: Synthia AI — every AI output is a draft until a named officer signs it. Scale: ViaMagus Select — the
+        mandate is yours, so is the team. Three lines converge into the ViaMagus mark: build, operate, scale. Everything an
+        enterprise needs to become AI-native.
       </p>
     </div>
   );

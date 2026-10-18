@@ -88,3 +88,38 @@ Checks: lint, types and build pass; axe 0 violations (desktop, mobile, reduced m
 - **Axe contrast false positive.** Axe reports the ink-on-paper and ink-on-magenta headlines as ink on black, because it can't see the WebGL canvas that paints those fields. Actual contrast is about 17:1 on paper and about 7:1 on magenta. With no WebGL, CSS paints the same fields.
 - **Hardware.** Not tested on real phones, low-end laptops or a venue screen.
 - **Event details.** These are still placeholders in `event.ts`.
+
+---
+
+## Round 6 — "The Shift" (brief: reimagine as an exceptional event experience)
+
+**Audit of the previous version (the five biggest weaknesses):**
+1. Its concept, floating particles and glowing orbs, is the very thing the brief rules out.
+2. The story was AI-led ("AI changed the rules", agentic-AI statistics) rather than about the centre's mandate, ownership and value, which is what the corrected strategy notes ask for.
+3. There was no real registration: the CTA only linked out to viamagus.com.
+4. The hero depended on an animation assembling before the name could be read, and the essential details were tiny.
+5. Metadata was generic: no canonical URL, sitemap or robots file, and a social description that didn't mention the event.
+
+**What changed:**
+- **Concept:** The Shift, the mandate as architecture.
+- **Narrative:** THEN → NOW → NEXT, following the corrected GCC strategy notes (internal, not committed). GCC → GIC → ? appears only as a labelled, exploratory question.
+- **Figures:** verified and mandate-focused. EY 2025: 92% beyond cost arbitrage, 52% shared accountability, 67% innovation teams. BCG: 8%. nasscom/Zinnov: 1,700+ GCCs.
+- **Three practices:** three equal plates. Each has a working diagram built only from verbatim claims on the official pages, and the verbs share one size.
+- **Registration:** real, stored in Neon, with a private responses page and CSV export.
+- **Film:** rebuilt to the brief's storyboard.
+- **Social:** a new OG image, plus canonical URL, sitemap and robots.
+
+**Verified (Oct 2026):**
+- **Build:** `tsc`, `eslint` and `next build` all pass.
+- **Accessibility:** axe WCAG 2.1 AA reports 0 violations on `/`, `/register` and `/film` at 1440 and 390 px.
+- **No JavaScript:** no hidden text.
+- **Keyboard:** the walk through the home page found 0 problems at 1440 px. At 390 px one stop remains: the sticky CTA bar mid-transition.
+- **Registration end to end:** a browser submission was stored, appeared on `/register/response` and exported as CSV. The responses page returns 401 without credentials or with a wrong password. The API rejects invalid input, and the honeypot is ignored. Test rows were deleted afterwards.
+- **Screenshots:** every scene at 1440×900 and 390×844, and every film beat at 1920×1080, with no console errors.
+- **Quotes:** every product quote was re-checked verbatim against the live pages.
+
+**Not done / needs the owner:**
+- **Event details.** Date, venue, format and speakers aren't confirmed, so they show as "To be announced".
+- **Confirmation emails.** None are sent; registrants see an on-screen confirmation only.
+- **Hardware.** Not tested on real phones or the LED wall.
+- **Video file.** There is no MP4 of the film.
