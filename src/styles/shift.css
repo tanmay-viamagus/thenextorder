@@ -5095,7 +5095,7 @@ html:not(.js) .evo__cap > * {
     --pan: -60%;
   }
   .evo[data-stage="5"] .ev {
-    --pan: -60%;
+    --pan: -41%;
   }
   .evo__t {
     grid-template-columns: 1fr;
@@ -5107,5 +5107,222 @@ html:not(.js) .evo__cap > * {
   }
   .evo__fine {
     display: none;
+  }
+}
+
+/* ==========================================================================
+   One swipe, one stage: native scroll-snap points inside the pinned scenes.
+   Proximity snapping applies only near these points; scroll-snap-stop keeps a
+   single swipe from skipping a stage. Elsewhere the page scrolls freely.
+   ========================================================================== */
+html {
+  scroll-snap-type: y proximity;
+}
+
+.evo__snap,
+.nb__snap {
+  position: absolute;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  pointer-events: none;
+}
+
+/* 100vh of stage + 50vh per transition */
+.evo {
+  height: 300vh;
+}
+
+.nb {
+  height: 200vh;
+}
+
+@media (max-width: 759px) {
+  .evo {
+    height: 300vh;
+  }
+  .nb {
+    height: 200vh;
+  }
+}
+
+html:not(.js) .evo__snap,
+html:not(.js) .nb__snap {
+  display: none;
+}
+
+/* ---------------------------------------------------------------- the caption: one block, fixed in place */
+.evo__hd {
+  align-items: end;
+}
+
+.evo__cap {
+  min-height: 0;
+  height: 7.4rem;
+  padding: 14px 0 0;
+  border-top: 1.5px solid var(--ink);
+  overflow: hidden;
+}
+
+.evo__n {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  color: var(--ink);
+}
+
+.evo__n span {
+  color: var(--purple);
+}
+
+.evo__line {
+  margin-top: 10px;
+  font-size: clamp(1.35rem, 1.8vw, 2.1rem);
+  font-weight: 700;
+}
+
+.evo__note {
+  margin-top: 6px;
+  font-size: 0.98rem;
+  max-width: 34em;
+}
+
+/* ---------------------------------------------------------------- the capability gap, set in the sky above HQ */
+.evo__art .evo__gap {
+  position: absolute;
+  left: 0;
+  top: 2%;
+  z-index: 2;
+  width: min(330px, 24%);
+  margin: 0;
+  padding: 0 0 0 14px;
+  border: 0;
+  border-left: 2px solid var(--purple);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.5s, transform 0.6s var(--ease-out), visibility 0s 0.5s;
+}
+
+.evo__art .evo__gap.is-on {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.6s 0.35s, transform 0.7s var(--ease-out) 0.35s;
+}
+
+.evo__art .evo__gapp {
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.evo__art .evo__gap a {
+  min-height: 32px;
+  font-size: 0.92rem;
+}
+
+html:not(.js) .evo__art .evo__gap {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+/* ---------------------------------------------------------------- the drawing: clean build-up */
+.rise {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transform: scaleY(0.55);
+  transition: transform 0.9s var(--ease-out);
+}
+
+.drop {
+  transform: translateY(-18px);
+  opacity: 0;
+  transition: transform 0.8s var(--ease-out) 0.35s, opacity 0.6s 0.35s;
+}
+
+.evo[data-stage="2"] .vis--2 .rise,
+.evo[data-stage="3"] .vis--3 .rise,
+.evo[data-stage="4"] .vis--3 .rise,
+.evo[data-stage="5"] .vis--3 .rise,
+.evo[data-stage="4"] .vis--4 .rise,
+.evo[data-stage="5"] .vis--4 .rise,
+.evo[data-stage="5"] .vis--5 .rise {
+  transform: none;
+}
+
+.evo[data-stage="4"] .drop,
+.evo[data-stage="5"] .drop {
+  transform: none;
+  opacity: 1;
+}
+
+.ev-arc--draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 0.9s var(--ease) 0.25s;
+}
+
+.evo[data-stage="5"] .ev-arc--draw {
+  stroke-dashoffset: 0;
+}
+
+.ev-place--far {
+  font-size: 13px;
+  fill: var(--ink-2);
+}
+
+/* superseded flows leave the stage */
+.ev-tr--work {
+  transition: opacity 0.4s;
+}
+
+.evo[data-stage="4"] .ev-tr--work,
+.evo[data-stage="5"] .ev-tr--work {
+  opacity: 0;
+}
+
+/* focus: the current stage is sharp; at 05 the ownership tower stays strong too */
+.evo[data-stage="3"] .f:not(.f-3),
+.evo[data-stage="4"] .f:not(.f-4),
+.evo[data-stage="5"] .f:not(.f-5) {
+  opacity: 0.5;
+}
+
+.evo[data-stage="5"] .f-4 {
+  opacity: 0.88;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .drop,
+  .ev-arc--draw,
+  .evo__art .evo__gap {
+    transition: none !important;
+  }
+}
+
+/* phones */
+@media (max-width: 759px) {
+  .evo__cap {
+    height: auto;
+    min-height: 5.6rem;
+    padding-top: 10px;
+  }
+  .evo__note {
+    display: none;
+  }
+  .evo__art .evo__gap {
+    left: var(--gutter);
+    top: 0;
+    width: 66%;
+    padding: 8px 10px;
+    background: rgba(244, 242, 236, 0.94);
+  }
+  .evo__art .evo__gapp {
+    font-size: 0.78rem;
   }
 }
