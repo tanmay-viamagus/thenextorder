@@ -78,7 +78,7 @@ export function Site() {
           </h2>
           <div className="eras__stage">
             <div className="eras__dial">
-              <YearCycle label="A ring of years from 2001 to 2030. 2001 to 2019, the old order: the years are solid and uniform, built to execute. The old order ends in 2019; the inflection point runs 2020 to 2024, its years shifted out of line. The next order begins in 2025: the years fuse into owned blocks — product, platforms, capability — and one is left open." />
+              <YearCycle label="A ring of years from 2016 to 2030, starting in 2016. 2016 to 2019, the old order: the years are solid and uniform, built to execute. The old order ends in 2019; the inflection point runs 2020 to 2024, its years shifted out of line. The next order begins in 2025: the years fuse into owned blocks — product, platforms, capability — and one is left open." />
               <div className="eras__copy">
                 <p className="eras__yr" aria-hidden="true" />
                 {shift.map((s, i) => (

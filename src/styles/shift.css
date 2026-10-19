@@ -3311,8 +3311,7 @@ html:not(.js) .eras__stage {
     width: 100%;
   }
   .yc-era,
-  .yc-bound text,
-  .yc-y:not(.is-major) {
+  .yc-bound text {
     display: none;
   }
   .yc-y.is-major {
@@ -3370,7 +3369,7 @@ html:not(.js) .eras__stage {
 
 /* ---------------------------------------------------------------- the ring of years: the centre */
 .eras {
-  --yr: 2001;
+  --yr: 2016;
 }
 
 .eras__yr {
@@ -3747,8 +3746,11 @@ html:not(.js) .eras__stage {
   .eras__ev {
     margin-top: 10px;
   }
+  .yc-y {
+    font-size: 26px;
+  }
   .yc-y.is-major {
-    font-size: 36px;
+    font-size: 34px;
   }
   .yc-bound text {
     display: none;

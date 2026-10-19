@@ -3,18 +3,18 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Three eras as a ring of years: 2001 at the top, clockwise to 2030, exactly
- * 12° a year. A marker travels the years as the visitor scrolls (or on the
+ * Three eras as a ring of years: 2016 at the top, clockwise to 2030, exactly
+ * 24° a year. A marker travels the years as the visitor scrolls (or on the
  * film's clock) and the years it passes change state:
- *   2001–2019 · the old order        — solid, uniform: built to execute
+ *   2016–2019 · the old order        — solid, uniform: built to execute
  *   2020–2024 · the inflection point — shifted out of line, in purple
  *   2025–2030 · the next order       — fused into owned blocks, one left open
  * The boundaries are marked on the ring. The era dates are the story's framing,
  * not data; the figures in the captions carry their own sources.
  */
-export const FIRST = 2001;
-const YEARS = 30;
-const STEP = 360 / YEARS; // 12°
+export const FIRST = 2016;
+const YEARS = 15;
+const STEP = 360 / YEARS; // 24°
 export const INFLECTION = 2020;
 export const NEXT = 2025;
 const yA = (year: number) => (year - FIRST) * STEP; // angle where a year begins
@@ -28,7 +28,7 @@ const OWNED: { from: number; to: number; name: string; fill: string; ink: string
 
 const R = 430; // band radius
 const W = 64; // band width
-const GAP = 1.2; // degrees between years
+const GAP = 1.6; // degrees between years
 const rad = (d: number) => (d * Math.PI) / 180;
 const pt = (a: number, r: number) => [Math.sin(rad(a)) * r, -Math.cos(rad(a)) * r];
 const f = (n: number) => n.toFixed(2);
@@ -82,7 +82,7 @@ export function YearCycle({ label, getProgress }: { label: string; getProgress?:
         p = Math.max(0, Math.min(1, -r.top / Math.max(1, r.height - window.innerHeight)));
       }
       // reduced motion: the marker moves era by era, not continuously
-      if (reduce.matches) p = p < 0.4 ? 0.62 : p < 0.75 ? 0.8 : 1;
+      if (reduce.matches) p = p < 0.3 ? 0.2 : p < 0.68 ? 0.55 : 1;
       if (Math.abs(p - last) < 0.0004) return;
       last = p;
       const A = Math.min(359.9, p * 360);
@@ -114,7 +114,7 @@ export function YearCycle({ label, getProgress }: { label: string; getProgress?:
       if (!scene || getProgress) return;
       const st = (e.target as HTMLElement).closest?.(".eras__st");
       if (!st) return;
-      const p = st.classList.contains("eras__st--a") ? 0.45 : st.classList.contains("eras__st--b") ? 0.72 : 0.97;
+      const p = st.classList.contains("eras__st--a") ? 0.18 : st.classList.contains("eras__st--b") ? 0.5 : 0.97;
       const top = scene.getBoundingClientRect().top + window.scrollY;
       window.scrollTo({ top: top + p * (scene.offsetHeight - window.innerHeight), behavior: "instant" });
     };
@@ -130,7 +130,7 @@ export function YearCycle({ label, getProgress }: { label: string; getProgress?:
   return (
     <svg ref={svg} className="yc" viewBox="-900 -620 1800 1240" role="img" aria-label={label}>
       <defs>
-        {eraPath("yc-e1", yA(2001) + 3, yA(INFLECTION) - 3)}
+        {eraPath("yc-e1", yA(FIRST) + 3, yA(INFLECTION) - 3)}
         {eraPath("yc-e2", yA(INFLECTION) + 2, yA(NEXT) - 2, true)}
       </defs>
       <circle r={R + W / 2 + 18} className="yc-rim" />
@@ -170,7 +170,7 @@ export function YearCycle({ label, getProgress }: { label: string; getProgress?:
       {Array.from({ length: YEARS }, (_, i) => {
         const yr = FIRST + i;
         const [x, y] = pt(i * STEP + STEP / 2, R + W / 2 + 46);
-        const major = yr % 5 === 0 || yr === FIRST || yr === INFLECTION || yr === NEXT;
+        const major = yr === FIRST || yr === INFLECTION || yr === NEXT || yr === FIRST + YEARS - 1;
         return (
           <text key={yr} x={f(x)} y={f(y)} className={`yc-y${major ? " is-major" : ""}`} textAnchor="middle" dominantBaseline="central">
             {yr}
@@ -181,7 +181,7 @@ export function YearCycle({ label, getProgress }: { label: string; getProgress?:
       {/* the two eras before the next, written along the inside of the ring */}
       <text className="yc-era">
         <textPath href="#yc-e1" startOffset="50%" textAnchor="middle">
-          The old order · 2001–2019
+          The old order · 2016–2019
         </textPath>
       </text>
       <text className="yc-era">
@@ -191,6 +191,7 @@ export function YearCycle({ label, getProgress }: { label: string; getProgress?:
       </text>
 
       {/* where one order ends and the next begins */}
+      <Boundary year={FIRST} lines={["Where this story starts", "2016 · Built to deliver"]} />
       <Boundary year={INFLECTION} lines={["Old order ends · 2019", "Inflection · 2020"]} />
       <Boundary year={NEXT} lines={["The next order", "Begins 2025"]} />
 

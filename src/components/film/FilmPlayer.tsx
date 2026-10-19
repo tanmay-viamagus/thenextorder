@@ -186,10 +186,10 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
     };
   }, [toggleSound, onClose]);
 
-  // the ring of years on the film clock: the marker runs 2016 → 2030 during 06–09.4, crossing both boundaries
+  // the ring of years on the film clock: the marker runs 2019 → 2030 during 06–09.4, crossing both boundaries
   const inflP = useCallback(() => {
     const t = clock.current.t;
-    return t < 6 ? 0.5 : Math.min(1, 0.5 + ((t - 6) / 3.4) * 0.5);
+    return t < 6 ? 0.2 : Math.min(1, 0.2 + ((t - 6) / 3.4) * 0.8);
   }, []);
 
   const d = (s: number): CSSProperties => ({ ["--d" as string]: `${s}s` });
@@ -428,7 +428,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
       </div>
       <p className="sr-only">
         A 30-second film. A ring of identical segments is cut by a magenta line and its upper half twists out of
-        alignment: The NEXT Order, for India’s GCC leaders. The old order, 2001 to 2019: the years count up over rows of
+        alignment: The NEXT Order, for India’s GCC leaders. The old order, 2016 to 2019: the years count up over rows of
         identical units in lockstep — built to execute; 1,700+ GCCs in India today (nasscom and Zinnov, FY2024). The
         inflection point: on a ring of years the marker crosses 2020 and 2025, the years crack and then fuse — then the
         mandate grew; 92% of India-based GCCs now aim beyond cost arbitrage (EY GCC Pulse Survey 2025). Build: Velocity AI — three months becomes three to four weeks, a shippable
