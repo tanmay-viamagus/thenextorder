@@ -7,6 +7,8 @@ import { convergence, cta, invite, practices, shift } from "@/content/story";
 import { FILM_DURATION } from "@/content/film";
 import { Chrome, Reveal, ShiftTitle } from "./Interactive";
 import { InviteForm } from "./InviteForm";
+import { NameBoard } from "./NameBoard";
+import { Showcase } from "./Showcase";
 import { SelectMech, SynthiaMech, VelocityMech } from "./Mechanisms";
 
 const ext = { target: "_blank", rel: "noopener noreferrer" } as const;
@@ -69,39 +71,8 @@ export function Site() {
           </div>
         </section>
 
-        {/* ------------------------------------------------ THE NAME · GCC → GIC → ? */}
-        <section id="name" className="nm" data-tone="dark" data-act="name" aria-labelledby="nm-h">
-          <p className="nm__k">First, a question of names</p>
-          <h2 id="nm-h" className="sr-only">
-            It was the GCC. Then the GIC. What comes next?
-          </h2>
-          <ol className="nm__row" data-reveal aria-hidden="true">
-            <li className="nm__w nm__w--a">
-              <span className="nm__was">It was</span>
-              <b>GCC</b>
-              <span className="nm__def">Global Capability Centre</span>
-            </li>
-            <li className="nm__arr">→</li>
-            <li className="nm__w nm__w--b">
-              <span className="nm__was">Then</span>
-              <b>GIC</b>
-              <span className="nm__def">Global In-house Centre — or Innovation Centre, depending on who you ask</span>
-            </li>
-            <li className="nm__arr">→</li>
-            <li className="nm__w nm__w--c">
-              <span className="nm__was">Next</span>
-              <b>?</b>
-              <span className="nm__def">Not written yet</span>
-            </li>
-          </ol>
-          <div className="nm__foot" data-reveal>
-            <p className="nm__h">The name will follow the mandate.</p>
-            <p className="nm__p">
-              No one has agreed what global centres will be called next — and a new name won’t change what a centre does. What it
-              owns will. That is the conversation.
-            </p>
-          </div>
-        </section>
+        {/* ------------------------------------------------ THE NAME · GCC → GIC → ? (split-flap, pinned) */}
+        <NameBoard />
 
         {/* ------------------------------------------------ THE ERAS · one hand, one revolution */}
         <section id="eras" className="eras" data-era-scene data-era="a" data-tone="light" data-act="eras" aria-labelledby="eras-h">
@@ -204,28 +175,25 @@ export function Site() {
 
         {/* ------------------------------------------------ THE FILM · near the end */}
         <section id="film" className="fl" data-tone="dark" aria-labelledby="fl-h">
-          <FilmButton className="fl__poster">
-            <span className="fl__mark" aria-hidden="true">
-              <svg viewBox="-0.6 -0.6 31.7 13.1">
-                <path className="fl__p fl__p--v" d="M0,0 L6.7765,11.8958 L13.5529,0 Z" />
-                <path className="fl__p fl__p--s" d="M16.9414,0 L20.3296,5.9479 L20.3396,11.8955 L10.165,11.8955 Z" />
-                <path className="fl__p fl__p--x" d="M23.7177,0 L30.4941,11.8955 L20.3196,11.8955 L20.3296,5.9479 Z" />
-              </svg>
-            </span>
-            <span className="fl__play" aria-hidden="true">
-              <span className="tri" />
-            </span>
-            <span className="sr-only">Play the film</span>
-          </FilmButton>
-          <div className="fl__copy">
-            <p className="fl__k">The film · {filmLength}</p>
-            <h2 id="fl-h" className="fl__h">
-              See what’s changing.
-            </h2>
-            <p className="fl__txt">The old order, the shift, and three practices that become one ViaMagus. No sound needed.</p>
-            <FilmButton className="fl__btn">
-              <span className="tri" aria-hidden="true" /> Play the film
-            </FilmButton>
+          <div className="fl__head">
+            <div>
+              <p className="fl__k">The film · {filmLength}</p>
+              <h2 id="fl-h" className="fl__h">
+                See what’s changing.
+              </h2>
+            </div>
+            <div className="fl__side">
+              <p className="fl__txt">The old order, the shift, and three practices that become one ViaMagus. No sound needed.</p>
+              <FilmButton className="fl__btn">
+                <span className="fl__btnplay" aria-hidden="true">
+                  <span className="tri" />
+                </span>
+                Play the film
+              </FilmButton>
+            </div>
+          </div>
+          <div className="fl__show">
+            <Showcase />
           </div>
         </section>
 

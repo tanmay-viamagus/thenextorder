@@ -3,7 +3,7 @@
 **Concept: the shift.**
 
 1. **Opening.** "THE NEXT ORDER", full width, cut by a magenta line across the screen; one line, one action, the details.
-1b. **GCC → GIC → ?** "It was the GCC. Then the GIC. Next: not written yet." The name will follow the mandate; labelled as an open question, not a prediction.
+1b. **GCC → GIC → ?** A split-flap board pinned while you scroll: the middle letter flips C → I, then spins and lands on a magenta "?" — not written yet. The name will follow the mandate; labelled as an open question, not a prediction.
    - Below the line, the old order: aligned and grey.
    - Above it, the next order: turned out of alignment, lilac, and partly fused into owned arcs.
    - Title and ring shift with the pointer, and the ring's centre plays the film ("See what's changing").
@@ -15,7 +15,7 @@
    - **2025 onward, the next order:** the years fuse into owned blocks (Product, Platforms, Capability) and one open "?". *Built to own, create and lead.*
    - These era dates are the story's framing, not data; the figures carry their own sources.
 3. **Three hands. One clock.** Velocity AI, Synthia AI and ViaMagus Select. Each gets a diagram, a colour-coded action to its own site ("Let's build", "Let's automate", "Let's hire") and "Bring a … to the room", which preselects it on `/register`.
-3b. **The film**, near the end only: a poster of the three mark pieces and "See what's changing".
+3b. **The film**, near the end only: "See what's changing" with a play button, above the practices playing as a story (progress bars, the three-hands clock, each practice's transformation); it restarts at Build when it comes into view.
 4. **Closing.** "Find your place in the conversation", with three steps (request, review, invitation) beside the form.
 
 There is one call to action everywhere: **Request your place**. It goes to `/register`, which opens at the top. Places are confirmed by invitation.

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ViaMagusLogo } from "@/components/Brand";
 import { InviteForm } from "@/components/shift/InviteForm";
 import { Showcase } from "@/components/shift/Showcase";
@@ -28,9 +27,10 @@ export default async function Register({ searchParams }: { searchParams: Promise
       <aside className="reg__show" aria-label="The NEXT Order">
         <div className="reg__top">
           <ViaMagusLogo />
-          <Link className="reg__back" href="/">
+          {/* a full navigation to the top of the microsite, never a restored scroll position */}
+          <a className="reg__back" href="/#top">
             ← The site
-          </Link>
+          </a>
         </div>
         <div className="reg__id">
           <p className="reg__k">An invitation for India’s GCC leaders</p>

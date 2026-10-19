@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { SelectWordmark, SynthiaLogo, VelocityWordmark } from "@/components/Brand";
 import { HandsClock } from "@/components/clock/Clock";
 import { practices } from "@/content/story";
@@ -56,6 +56,26 @@ const subscribeMotion = (cb: () => void) => {
 export function Showcase() {
   const [i, setI] = useState(0);
   const [hold, setHold] = useState(false);
+  // play only while on screen; each time it comes into view, start again at Build
+  const [seen, setSeen] = useState(false);
+  const [run, setRun] = useState(0);
+  const box = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const el = box.current;
+    if (!el || !("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        setSeen(e.isIntersecting);
+        if (e.isIntersecting) {
+          setI(0);
+          setRun((r) => r + 1);
+        }
+      },
+      { threshold: 0.35 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
   const still = useSyncExternalStore(subscribeMotion, () => window.matchMedia(RM).matches, () => false);
 
   const p = practices[i];
@@ -64,7 +84,8 @@ export function Showcase() {
 
   return (
     <div
-      className={`sc${hold ? " is-held" : ""}${still ? " is-still" : ""}`}
+      ref={box}
+      className={`sc${hold || !seen ? " is-held" : ""}${still ? " is-still" : ""}`}
       data-k={p.key}
       onPointerEnter={() => setHold(true)}
       onPointerLeave={() => setHold(false)}
@@ -82,7 +103,7 @@ export function Showcase() {
             onClick={() => setI(k)}
           >
             <span className="sc__track">
-              {k === i ? <span key={`${x.key}-${i}`} className="sc__fill" onAnimationEnd={still ? undefined : next} /> : null}
+              {k === i ? <span key={`${x.key}-${i}-${run}`} className="sc__fill" onAnimationEnd={still ? undefined : next} /> : null}
             </span>
             <span className="sc__lbl">{x.verb}</span>
           </button>
@@ -93,7 +114,7 @@ export function Showcase() {
         <div className="sc__clock">
           <HandsClock hl={p.key} label="A live clock whose three hands are Velocity AI, Synthia AI and ViaMagus Select, pinned on the ViaMagus mark." />
         </div>
-        <div key={p.key} className="sc__story" role="tabpanel" aria-live="polite">
+        <div key={`${p.key}-${run}`} className="sc__story" role="tabpanel" aria-live="polite">
           <p className="sc__hand">{HAND[p.key]}</p>
           <p className="sc__verb">{p.verb}.</p>
           <div className="sc__mark">
