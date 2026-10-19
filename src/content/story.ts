@@ -1,193 +1,107 @@
 /**
- * Everything the visitor reads, organised as the Three Eras.
+ * Every word the visitor reads. Deliberately few: the artwork carries the
+ * story (components/shift/ShiftArt.tsx); the words name each moment.
  *
- * Product claims are quoted or closely paraphrased from the official sites
- * (source sentence noted beside each). Research signals are verified against
- * the original publisher pages — see docs/next-order-research.md.
+ * Shaped by the corrected GCC strategy notes (internal; not published):
+ * the story is a centre's evolving mandate and value — not AI; centres
+ * differ, so the next state is a question, not a prescription; ViaMagus
+ * Select is framed by the mandate it serves, never by CV supply.
+ *
+ * Figures are quoted from their publishers (docs/next-order-research.md);
+ * product lines are verbatim from the official pages (source beside each).
  */
 
-export const title = ["The Next", "Order"] as const;
+export type Evidence = { figure: string; finding: string; source: string; date: string; url: string };
 
-export const hook = "The operating model that built your GCC won’t run it next.";
+export const description =
+  "An invitation from ViaMagus to India’s GCC leaders: a conversation about where global centres go next — what they own, the value they create and the capabilities they’ll need.";
 
-/** The theme, stated plainly. */
-export const theme = "The future of GCC efficiency";
+export const tagline = "Where was your centre, where is it now — and where could it go next?";
 
-export const eras = ["The old order", "The inflection point", "The next order"] as const;
-
-export type Signal = {
-  figure: string;
-  headline: string;
-  finding: string;
-  kind: "Survey" | "Forecast" | "Industry estimate";
-  population: string;
-  source: string;
-  date: string;
-  url: string;
-};
-
-/* Era 01 — the old order. It worked; the evidence says so. */
-export const oldOrder = {
-  kicker: "Era 01 · The old order",
-  headline: "Efficiency meant more people.",
-  body: "Cost advantage, process discipline and teams that grew layer by layer built India’s GCC ecosystem. That model still works. But it measured efficiency in cost per head — and that is no longer the advantage.",
-  evidence: {
-    figure: "1,700+",
-    headline: "",
-    finding: "GCCs in India, employing over 1.9 million people.",
-    kind: "Industry estimate",
-    population: "India, FY2024",
-    source: "nasscom & Zinnov, India GCC Landscape Report",
-    date: "2024",
-    url: "https://nasscom.in/knowledge-center/publications/india-gcc-landscape-report-5-year-journey",
-  } satisfies Signal,
-};
-
-/* Era 02 — the inflection point. Four signals, one arc: investing, experimenting, stalling, leading. */
-export const inflection = {
-  kicker: "Era 02 · The inflection point",
-  headline: "AI changed the rules.",
-  body: "Investment is moving fast. Operating models are not. The signals:",
-  signals: [
-    {
-      figure: "58%",
-      headline: "The money is moving.",
-      finding: "of India-based GCCs are already investing in agentic AI — and another 29% plan to within a year.",
-      kind: "Survey",
-      population: "GCCs operating from India, Aug–Oct 2025",
+/** The three states of the shift — one headline each. */
+export const shift: { n: string; era: string; headline: string; evidence?: Evidence; coda?: string }[] = [
+  {
+    n: "I",
+    era: "The old order",
+    headline: "The work you were given.",
+    evidence: {
+      figure: "1,700+",
+      finding: "GCCs in India, employing over 1.9 million people",
+      source: "nasscom & Zinnov",
+      date: "FY2024",
+      url: "https://nasscom.in/knowledge-center/publications/india-gcc-landscape-report-5-year-journey",
+    },
+  },
+  {
+    n: "II",
+    era: "The inflection point",
+    headline: "Then the walls moved.",
+    evidence: {
+      figure: "92%",
+      finding: "of India-based GCCs aim to deliver value beyond cost arbitrage",
       source: "EY GCC Pulse Survey",
-      date: "Nov 2025",
+      date: "2025",
       url: "https://www.ey.com/en_in/newsroom/2025/11/58-percent-gccs-in-india-investing-in-agentic-ai-two-third-creating-dedicated-innovation-teams-to-globalize-ideas-ey-gcc-pulse-survey-2025",
     },
-    {
-      figure: "23%",
-      headline: "Few are scaling.",
-      finding: "of respondents say their organisations are scaling an agentic AI system somewhere in the enterprise. 62% are at least experimenting.",
-      kind: "Survey",
-      population: "Global, 1,993 respondents, Jun–Jul 2025",
-      source: "McKinsey, The state of AI in 2025",
-      date: "Nov 2025",
-      url: "https://www.mckinsey.com/~/media/mckinsey/business%20functions/quantumblack/our%20insights/the%20state%20of%20ai/the-state-of-ai-in-2025-vf.pdf",
-    },
-    {
-      figure: "40%+",
-      headline: "Many will stall.",
-      finding: "of agentic AI projects will be canceled by the end of 2027 — on escalating costs, unclear business value or inadequate risk controls.",
-      kind: "Forecast",
-      population: "Gartner prediction",
-      source: "Gartner",
-      date: "Jun 2025",
-      url: "https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027",
-    },
-    {
-      figure: "8%",
-      headline: "Few lead.",
-      finding: "of GCCs qualify as top performers across market advantage, innovation and enterprise efficiency.",
-      kind: "Survey",
-      population: "GCC Survey 2024, N = 150, global",
-      source: "BCG, Rewriting the Global Capability Center Playbook",
-      date: "Jun 2025",
-      url: "https://www.bcg.com/publications/2025/india-rewriting-the-global-capability-center-playbook",
-    },
-  ] satisfies Signal[],
-  closing: "The next order won’t wait for everyone to catch up.",
-};
+  },
+  {
+    n: "III",
+    era: "The next order",
+    headline: "What will your centre own next?",
+    coda: "Every centre’s plan is different. That is the conversation.",
+  },
+];
 
-/* Era 03 — the next order: three forces, equal weight. */
-export type ForceKey = "velocity" | "synthia" | "select";
+/* ---------------------------------------------------------------- the three practices (equal weight) */
+export type PracticeKey = "velocity" | "synthia" | "select";
 
-export const nextOrder = {
-  kicker: "Era 03 · The next order",
-  headline: "Efficiency, redefined.",
-  keys: ["Build in weeks, not quarters.", "Operate with control.", "Scale capability ahead of demand."],
-  closing: "Everything an enterprise needs to become AI\u2011native.",
-};
-
-export const forces: {
-  key: ForceKey;
+export const practices: {
+  key: PracticeKey;
+  n: string;
   verb: string;
   name: string;
-  role: string;
-  claim: string;
-  detail: string;
-  why: string;
+  /** verbatim from the official page */
+  line: string;
   href: string;
   source: string;
-  /** the big visual statement for this force — verified wording only */
-  proof:
-    | { kind: "swap"; from: string; to: string; caption: string }
-    | { kind: "ledger"; rows: [string, string][]; caption: string }
-    | { kind: "figure"; value: string; caption: string };
 }[] = [
   {
     key: "velocity",
+    n: "A",
     verb: "Build",
     name: "Velocity AI",
-    role: "AI-native engineering",
-    claim: "A shippable release every Friday.",
-    // viamagus.com/velocity-ai: "Three-month timelines become three-to-four weeks,
-    // with a shippable submodule delivered every single Friday."
-    // "Velocity AI is the operating model rebuilt for AI-native delivery."
-    detail: "Three-month timelines become three-to-four weeks — an engineering operating model rebuilt for AI-native delivery.",
-    why: "Adding AI tools to an old delivery model doesn’t change the pace. Changing the model does.",
+    // viamagus.com/velocity-ai: "Three-month timelines become three-to-four weeks, with a shippable submodule delivered every single Friday."
+    line: "Three-month timelines become three-to-four weeks.",
     href: "https://viamagus.com/velocity-ai",
     source: "viamagus.com/velocity-ai",
-    proof: { kind: "swap", from: "3 months", to: "3–4 weeks", caption: "Velocity AI’s stated delivery model" },
   },
   {
     key: "synthia",
+    n: "B",
     verb: "Operate",
     name: "Synthia AI",
-    role: "AI-enabled operations",
-    claim: "AI that follows your SOP — and stops for your sign-off.",
-    // viamagus.com/synthia-ai: "Every business process becomes a governed, auditable,
-    // continuously-improving AI workflow." "The AI stops where you told it to and waits for a person."
-    detail: "Business processes become governed, auditable AI workflows. Every action, AI and human, is logged.",
-    why: "Intelligence only creates value when it runs inside the work — with control built in.",
+    // viamagus.com/synthia-ai
+    line: "Every AI output is a draft until a named officer signs it.",
     href: "https://viamagus.com/synthia-ai",
     source: "viamagus.com/synthia-ai",
-    // viamagus.com/synthia-ai: "Every AI output is a draft until a named officer signs it"
-    proof: {
-      kind: "ledger",
-      rows: [
-        ["AI output", "Draft"],
-        ["Named officer", "Signed ✓"],
-      ],
-      caption: "Every AI output is a draft until a named officer signs it.",
-    },
   },
   {
     key: "select",
+    n: "C",
     verb: "Scale",
     name: "ViaMagus Select",
-    role: "Talent & capability",
-    claim: "Talent built ahead of demand.",
-    // viamagusselect.ai: "Your shortlist comes from a bench we build ahead of demand: engineers
-    // trained in our 6–8 week AI-native programme and vetted by our own engineers."
-    // "Engineer-vetted AI talent, shortlisted in 48 hours."
-    detail: "Engineers trained in a 6–8 week AI-native programme, vetted by ViaMagus engineers, shortlisted for your GCC in 48 hours.",
-    why: "The next capability isn’t hired from a CV database. It’s built.",
+    // viamagusselect.ai (hero headline)
+    line: "The mandate is yours. So is the team.",
     href: "https://www.viamagusselect.ai/",
     source: "viamagusselect.ai",
-    // viamagusselect.ai: "Your 48-hour clock. It starts when you send us a role."
-    proof: { kind: "figure", value: "48h", caption: "From your brief to an engineer-vetted shortlist" },
   },
 ];
 
-/**
- * The questions behind the event — one per GCC leadership seat.
- * These frame the conversation; they are not published agenda sessions.
- * Confirm against the final event plan before launch.
- */
-export const questions: { seat: string; q: string; force?: ForceKey }[] = [
-  { seat: "For the site leader", q: "When cost per head is no longer the advantage, what does a GCC compete on?" },
-  { seat: "For the CTO", q: "Why are AI tools speeding up engineers but not delivery?", force: "velocity" },
-  { seat: "For the COO", q: "How do you put AI inside the process — and keep a person on every decision that matters?", force: "synthia" },
-  { seat: "For the CHRO", q: "How do you build AI capability faster than you can hire it?", force: "select" },
-];
+export const convergence = "Everything an enterprise needs to become AI‑native.";
 
+/* ---------------------------------------------------------------- the invitation */
 export const invite = {
-  headline: ["The future of your GCC", "is something to build."],
-  positioning: "Everything an enterprise needs to become AI\u2011native.",
-  from: "An invitation from ViaMagus",
+  line: "An invitation for India’s GCC leaders.",
+  who: "For GCC CEOs and MDs, site leaders, technology and engineering leaders, CHROs and talent leaders.",
+  what: "A ViaMagus event on where global centres go next: what they own, the value they create and the capabilities they’ll need.",
 };

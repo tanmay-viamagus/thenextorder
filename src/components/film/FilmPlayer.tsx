@@ -1,148 +1,127 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
-import { whenWhere as eventLine } from "@/content/event";
-import { FILM_DURATION, FORCES_DROP, hits, letterboxed, RUSH_STEP, rushWords, sceneAt, scenes, type SceneId } from "@/content/film";
-import { invite, title } from "@/content/story";
-import { TitleSort } from "../TitleSort";
-import { Triptych } from "../Triptych";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
+import { SelectWordmark, SynthiaLogo, VelocityWordmark } from "@/components/Brand";
+import { SelectMech, SynthiaMech, VelocityMech } from "@/components/shift/Mechanisms";
+import { EraClock, FilmDial, HandsClock, LiveClock } from "@/components/clock/Clock";
+import { FILM_DURATION, filmScenes, sceneAtTime, type FilmSceneId } from "@/content/film";
+import { convergence, shift } from "@/content/story";
 import { Score } from "./score";
-import { createLightField } from "./shader";
 
-const v = (o: Record<string, string | number>) => o as CSSProperties;
-const RUSH_START = scenes.find((s) => s.id === "rush")!.start;
-const FORCES_START = scenes.find((s) => s.id === "forces")!.start;
+const LABEL = {
+  old: "The old order",
+  inflection: "The inflection point",
+  build: "Velocity AI · Build",
+  operate: "Synthia AI · Operate",
+  scale: "ViaMagus Select · Scale",
+  converge: "Three hands, one clock",
+  close: "The invitation",
+};
 
 function readStart() {
   const q = new URLSearchParams(window.location.search);
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const t = Number(q.get("t"));
   if (q.has("t") && Number.isFinite(t)) return { t: Math.min(FILM_DURATION - 0.01, Math.max(0, t)), paused: true };
-  return { t: reduce ? 23.6 : 0, paused: reduce };
+  // reduced motion: open paused on the closing line
+  return { t: reduce ? 27 : 0, paused: reduce };
 }
 
 /**
- * The film: a 30-second crescendo on a fixed 1920×1080 stage, scaled to any
- * screen, over a live WebGL light field. Used full-page at /film (event
- * screens) and as an overlay on the site.
+ * The film: the site's drawings on a 30-second clock, on a 1920×1080 stage
+ * scaled to any screen. Full-page at /film (event screens) or as an overlay.
+ * The clock decides which scene is on; each scene's motion is CSS that starts
+ * when the scene does (its drawings reuse the site's own reveal states).
  */
 export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overlay"; onClose?: () => void }) {
   const root = useRef<HTMLDivElement | null>(null);
-  const canvas = useRef<HTMLCanvasElement | null>(null);
-  const sceneEls = useRef(new Map<SceneId, HTMLDivElement>());
-  const clock = useRef({ t: 0, prev: 0, last: 0, scene: "" as SceneId | "", word: -1, energy: 0, mono: 0, flash: 0 });
-  const field = useRef<ReturnType<typeof createLightField>>(null);
+  const clock = useRef({ t: 0 });
   const score = useRef<Score | null>(null);
   const [playing, setPlaying] = useState(false);
   const [sound, setSound] = useState(false);
-  const [loop, setLoop] = useState(0);
-  const [titleKey, setTitleKey] = useState(0);
-  const [scale, setScale] = useState(0);
+  const [scene, setScene] = useState<FilmSceneId | "">("");
   const [idle, setIdle] = useState(false);
-  const line = eventLine();
+  const [host, setHost] = useState("");
+  const [hudT, setHudT] = useState(0);
+  const playingRef = useRef(false);
 
-  /* -- one frame of the film at time t -- */
-  const frame = useCallback((t: number, dt: number) => {
-    const c = clock.current;
-    const s = sceneAt(t);
-    if (s.id !== c.scene) {
-      const prev = c.scene ? sceneEls.current.get(c.scene) : null;
-      prev?.classList.remove("is-on");
-      const el = sceneEls.current.get(s.id);
-      if (el) {
-        el.classList.remove("is-on");
-        void el.offsetWidth; // restart this scene's CSS animations
-        el.classList.add("is-on");
-      }
-      if (s.flash) c.flash = Math.max(c.flash, s.flash);
-      if (s.id === "title") setTitleKey((k) => k + 1);
-      root.current?.classList.toggle("is-boxed", letterboxed.includes(s.id));
-      c.scene = s.id;
-      c.word = -1;
-    }
-    if (s.id === "rush") {
-      const w = Math.floor((t - RUSH_START) / RUSH_STEP);
-      if (w !== c.word && w < rushWords.length) {
-        c.word = w;
-        c.flash = Math.max(c.flash, 0.55 + (w / rushWords.length) * 0.45);
-      }
-    }
-    if (s.id === "forces") {
-      const tri = sceneEls.current.get("forces")?.querySelector<HTMLElement>(".tri");
-      if (tri) {
-        const p = Math.min(1, Math.max(0, (t - FORCES_START) / FORCES_DROP));
-        tri.style.setProperty("--p", p.toFixed(3));
-        tri.classList.toggle("is-complete", p >= 1);
-        tri.classList.toggle("is-playing", p >= 1);
-      }
-    }
-    for (const h of hits) if (c.prev < h && t >= h) c.flash = Math.max(c.flash, 0.75);
-    c.prev = t;
-    c.energy += (s.energy - c.energy) * Math.min(1, dt * (s.id === "silence" ? 30 : 5));
-    c.mono += ((s.mono ?? 0) - c.mono) * Math.min(1, dt * 4);
-    c.flash *= Math.exp(-dt * 6.5);
-    field.current?.render({ time: t + loop * FILM_DURATION, energy: c.energy, flash: c.flash, mono: c.mono });
-    const r = root.current;
-    if (r) {
-      const k = c.flash * c.flash;
-      r.style.setProperty("--flash", k.toFixed(3));
-      r.style.setProperty("--sx", ((Math.random() - 0.5) * 18 * k).toFixed(2));
-      r.style.setProperty("--sy", ((Math.random() - 0.5) * 12 * k).toFixed(2));
-    }
-  }, [loop]);
-
-  /* -- setup: stage scale, light field, start time -- */
   useEffect(() => {
-    const fit = () => {
-      const r = root.current?.getBoundingClientRect();
-      if (r) setScale(Math.min(r.width / 1920, r.height / 1080));
-    };
+    playingRef.current = playing;
+  }, [playing]);
+
+  // stage scale
+  useEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    const fit = () => el.style.setProperty("--k", String(Math.min(window.innerWidth / 1920, window.innerHeight / 1080)));
+    fit();
     window.addEventListener("resize", fit);
-    if (canvas.current) field.current = createLightField(canvas.current);
-    const s = readStart();
-    clock.current.t = s.t;
-    // first frame on the next paint: sizes the stage, lights the first scene, then starts the clock
-    const first = requestAnimationFrame(() => {
-      fit();
-      frame(s.t, 1);
-      setPlaying(!s.paused);
-    });
-    return () => {
-      cancelAnimationFrame(first);
-      window.removeEventListener("resize", fit);
-      field.current?.dispose();
-      score.current?.close();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => window.removeEventListener("resize", fit);
   }, []);
 
-  /* -- the clock -- */
+  // the clock
   useEffect(() => {
-    if (!playing) return;
-    let raf = 0;
-    const c = clock.current;
-    c.last = performance.now();
-    void score.current?.ctx.resume();
-    const tick = (now: number) => {
-      const dt = Math.min(0.05, (now - c.last) / 1000);
-      c.last = now;
-      let t = c.t + dt;
-      if (t >= FILM_DURATION) {
-        t -= FILM_DURATION;
-        setLoop((l) => l + 1);
-        if (score.current) score.current.scheduleLoop(score.current.ctx.currentTime - t, 0);
-      }
-      c.t = t;
-      frame(t, dt);
-      raf = requestAnimationFrame(tick);
+    const el = root.current;
+    if (!el) return;
+    setHost(window.location.host);
+    const s = readStart();
+    clock.current.t = s.t;
+    let cur = "";
+    const enter = (id: FilmSceneId, into: number) => {
+      el.querySelectorAll<HTMLElement>(".fs").forEach((sc) => {
+        const on = sc.dataset.id === id;
+        sc.classList.toggle("is-on", on);
+        if (on) sc.style.setProperty("--into", `${into.toFixed(3)}s`);
+        sc.querySelectorAll("[data-reveal]").forEach((r) => r.classList.toggle("is-in", on));
+      });
+      setScene(id);
     };
+    let raf = 0;
+    let hudLast = -1;
+    let last = performance.now();
+    const tick = (nowMs: number) => {
+      raf = requestAnimationFrame(tick);
+      const dt = Math.min(0.1, (nowMs - last) / 1000);
+      last = nowMs;
+      const c = clock.current;
+      if (playingRef.current) {
+        c.t += dt;
+        if (c.t >= FILM_DURATION) {
+          c.t -= FILM_DURATION;
+          cur = "";
+          score.current?.scheduleLoop(score.current.ctx.currentTime - c.t, 0);
+        }
+      }
+      if (Math.floor(c.t * 10) !== hudLast) {
+        hudLast = Math.floor(c.t * 10);
+        setHudT(c.t);
+      }
+      const sc = sceneAtTime(c.t);
+      if (sc.id !== cur) {
+        cur = sc.id;
+        enter(sc.id, c.t - sc.start);
+      }
+    };
+    setPlaying(!s.paused);
     raf = requestAnimationFrame(tick);
+    const onRestart = () => {
+      cur = "";
+    };
+    el.addEventListener("fp-restart", onRestart);
     return () => {
       cancelAnimationFrame(raf);
-      void score.current?.ctx.suspend();
+      el.removeEventListener("fp-restart", onRestart);
+      score.current?.close();
+      score.current = null;
     };
-  }, [playing, frame]);
+  }, []);
+
+  useEffect(() => {
+    if (!score.current) return;
+    if (playing) void score.current.ctx.resume();
+    else void score.current.ctx.suspend();
+  }, [playing]);
 
   const toggleSound = useCallback(() => {
     if (score.current) {
@@ -155,23 +134,20 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
     score.current = sc;
     const t = clock.current.t;
     sc.scheduleLoop(sc.ctx.currentTime - t, t);
-    if (!playing) void sc.ctx.suspend();
+    if (!playingRef.current) void sc.ctx.suspend();
     setSound(true);
-  }, [playing]);
+  }, []);
 
   const restart = useCallback(() => {
     clock.current.t = 0;
-    clock.current.prev = 0;
-    clock.current.scene = "";
+    root.current?.dispatchEvent(new Event("fp-restart"));
     if (score.current) {
       score.current.stopAll();
       score.current.scheduleLoop(score.current.ctx.currentTime, 0);
     }
-    frame(0, 1);
     setPlaying(true);
-  }, [frame]);
+  }, []);
 
-  /* -- keys + idle cursor -- */
   useEffect(() => {
     let timer = window.setTimeout(() => setIdle(true), 2200);
     const wake = () => {
@@ -181,7 +157,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
     };
     const onKey = (e: KeyboardEvent) => {
       wake();
-      if (e.code === "Space" && !(e.target instanceof HTMLButtonElement)) {
+      if (e.code === "Space" && !(e.target instanceof HTMLButtonElement) && !(e.target instanceof HTMLAnchorElement)) {
         e.preventDefault();
         setPlaying((p) => !p);
       } else if (e.key === "m" || e.key === "M") toggleSound();
@@ -196,141 +172,176 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
     };
   }, [toggleSound, onClose]);
 
-  const sc = (id: SceneId, children: ReactNode) => (
-    <div
-      className={`fx fx--${id}`}
-      ref={(el) => {
-        if (el) sceneEls.current.set(id, el);
-      }}
-    >
-      {children}
-    </div>
-  );
+  const d = (s: number): CSSProperties => ({ ["--d" as string]: `${s}s` });
+  // the shift artwork on the film clock: held as given (03–06), then cracks and fuses (06–10)
+  // the eras dial on the film clock: 12→4 during the old order (03–06), 4→12 through the inflection (06–10)
+  const oldP = useCallback(() => {
+    const t = clock.current.t;
+    return Math.max(0, Math.min(0.33, ((t - 3) / 2.6) * 0.33));
+  }, []);
+  const inflP = useCallback(() => {
+    const t = clock.current.t;
+    return t < 6 ? 0.33 : Math.min(1, 0.33 + ((t - 6) / 3.6) * 0.67);
+  }, []);
 
   return (
-    <div className={`fp fp--${mode}${idle ? " is-idle" : ""}`} ref={root}>
-      <canvas className="fp__bg" ref={canvas} aria-hidden="true" />
-      <div className="fp__flash" aria-hidden="true" />
-      <div className="fp__bars" aria-hidden="true" />
-      <div
-        className="fp__stage"
-        aria-hidden="true"
-        style={{ transform: `translate(-50%, -50%) scale(${scale})`, opacity: scale ? 1 : 0 }}
-      >
-        <div className="fp__cam">
-          {sc(
-            "cursor",
-            <>
-              <i className="fx-cell fx-cell--blink" />
-              <p className="fx-typer">Every enterprise runs on an order.</p>
-            </>,
-          )}
-          {sc(
-            "grid",
-            <>
-              <div className="fx-grid">
-                {Array.from({ length: 96 }, (_, i) => (
-                  <i key={i} style={v({ "--i": i, "--r": (i * 37) % 96 })} />
-                ))}
-              </div>
-              <p className="fx-outline">
-                The old
-                <br />
-                order.
-              </p>
-            </>,
-          )}
-          {sc(
-            "crack",
-            <>
-              <div className="fx-grid fx-grid--fall">
-                {Array.from({ length: 96 }, (_, i) => (
-                  <i
-                    key={i}
-                    style={v({
-                      "--fx": (((i * 53) % 21) - 10) * 60,
-                      "--fy": 400 + ((i * 29) % 13) * 70,
-                      "--fr": (((i * 71) % 17) - 8) * 22,
-                      "--r": (i * 37) % 96,
-                    })}
-                  />
-                ))}
-              </div>
-              <p className="fx-big">
-                Built to scale
-                <br />
-                people.
-              </p>
-            </>,
-          )}
-          {sc(
-            "rules",
-            <p className="fx-glitch">
-              {["AI changed", "the rules."].map((l) => (
-                <span key={l} data-t={l}>
-                  {l}
-                </span>
-              ))}
-            </p>,
-          )}
-          {sc(
-            "catch",
-            <p className="fx-catch">
-              <span>Now everything</span>
-              <span>
-                else must <b>catch up.</b>
-              </span>
-            </p>,
-          )}
-          {sc(
-            "forces",
-            <div className="fx-cam">
-              <Triptych mode="film" />
-            </div>,
-          )}
-          {sc(
-            "rush",
-            rushWords.map((w, i) => (
-              <p key={w} className={`fx-rush${i === rushWords.length - 1 ? " fx-rush--last" : ""}`} style={v({ "--i": i })}>
-                {w}
-              </p>
-            )),
-          )}
-          {sc("silence", <i className="fx-cell fx-cell--still" />)}
-          {sc(
-            "logo",
-            <>
-              <span className="fx-ring" />
-              <span className="fx-ring fx-ring--2" />
-              <svg className="fx-logo" viewBox="0 0 30.4941 11.8959">
-                <path className="fx-logo__l" d="M0,0l6.7765,11.8958l6.7764,-11.8958z" />
-                <path className="fx-logo__r" d="M23.7177,0l-3.3881,5.9479l-3.3882,-5.9479l-6.7764,11.8955h20.3291z" />
-              </svg>
-              <span className="fx-sweep" />
-              <p className="fx-word">viamagus</p>
-            </>,
-          )}
-          {sc(
-            "title",
-            <>
-              <TitleSort key={titleKey} as="div" lines={title} speed="fast" className="fx-title" />
-              <p className="fx-pos">{invite.positioning}</p>
-            </>,
-          )}
-          {sc(
-            "invite",
-            <>
-              <p className="fx-invite">{invite.from}</p>
-              <p className="fx-for">For GCC leaders{line ? ` · ${line}` : ""}</p>
-              <i className="fx-cell fx-cell--end" />
-            </>,
-          )}
-        </div>
+    <div ref={root} className={`fp fp--${mode}${idle ? " is-idle" : ""}${playing ? "" : " is-paused"}`} data-scene={scene}>
+      <div className="fp__stage" aria-hidden="true">
+        {/* 00–03 · The NEXT Order */}
+        <section className="fs fs--title" data-id="title">
+          <div className="fs__clock">
+            <LiveClock />
+          </div>
+          <p className="fs__mono fs__tl">An invitation from ViaMagus</p>
+          <div className="fs__title">
+            <div className="ft ft--below">
+              <span>THE NEXT</span>
+              <span>ORDER.</span>
+            </div>
+            <div className="ft ft--above">
+              <span>THE NEXT</span>
+              <span>ORDER.</span>
+            </div>
+            <span className="ft__cut" />
+          </div>
+          <p className="fs__mono fs__bl">For India’s GCC leaders</p>
+        </section>
+
+        {/* 03–06 · The Old Order */}
+        <section className="fs fs--old" data-id="old">
+          <div className="fs__copy">
+            <p className="fs__mono fs__era">I · {shift[0].era}</p>
+            <p className="fs__h a-up" style={d(0.2)}>
+              {shift[0].headline}
+            </p>
+            <p className="fs__fig a-up" style={d(0.9)}>
+              <b>{shift[0].evidence!.figure}</b> {shift[0].evidence!.finding}
+            </p>
+            <p className="fs__src a-up" style={d(1.1)}>
+              {shift[0].evidence!.source}, {shift[0].evidence!.date}
+            </p>
+          </div>
+          <div className="fs__plan">
+            <EraClock getProgress={oldP} label="" />
+          </div>
+        </section>
+
+        {/* 06–10 · The Inflection Point */}
+        <section className="fs fs--inflection" data-id="inflection">
+          <div className="fs__copy">
+            <p className="fs__mono fs__era">II · {shift[1].era}</p>
+            <p className="fs__h a-up" style={d(0.2)}>
+              {shift[1].headline}
+            </p>
+            <p className="fs__fig a-up" style={d(0.9)}>
+              <b>{shift[1].evidence!.figure}</b> {shift[1].evidence!.finding}
+            </p>
+            <p className="fs__src a-up" style={d(1.1)}>
+              {shift[1].evidence!.source}, {shift[1].evidence!.date}
+            </p>
+            <p className="fs__next a-up" style={d(2.6)}>
+              {shift[2].headline}
+            </p>
+          </div>
+          <div className="fs__plan">
+            <EraClock getProgress={inflP} label="" />
+          </div>
+        </section>
+
+        {/* 10–14 · BUILD */}
+        <section className="fs fs--build fs--practice" data-id="build">
+          <div className="fs__copy">
+            <p className="fs__mono fs__era">Velocity AI</p>
+            <p className="fs__verb a-up" style={d(0.1)}>
+              Build.
+            </p>
+            <div className="fs__mark a-up" style={d(0.5)}>
+              <VelocityWordmark />
+            </div>
+            <p className="fs__line a-up" style={d(0.8)}>
+              Three-month timelines become three-to-four weeks.
+            </p>
+          </div>
+          <div className="fs__mech">
+            <VelocityMech />
+          </div>
+        </section>
+
+        {/* 14–18 · OPERATE */}
+        <section className="fs fs--operate fs--practice" data-id="operate">
+          <div className="fs__copy">
+            <p className="fs__mono fs__era">Synthia AI</p>
+            <p className="fs__verb a-up" style={d(0.1)}>
+              Operate.
+            </p>
+            <div className="fs__mark a-up" style={d(0.5)}>
+              <SynthiaLogo height={44} />
+            </div>
+            <p className="fs__line a-up" style={d(0.8)}>
+              Every AI output is a draft until a named officer signs it.
+            </p>
+          </div>
+          <div className="fs__mech">
+            <SynthiaMech />
+          </div>
+        </section>
+
+        {/* 18–22 · SCALE */}
+        <section className="fs fs--scale fs--practice" data-id="scale">
+          <div className="fs__copy">
+            <p className="fs__mono fs__era">ViaMagus Select</p>
+            <p className="fs__verb a-up" style={d(0.1)}>
+              Scale.
+            </p>
+            <div className="fs__mark a-up" style={d(0.5)}>
+              <SelectWordmark />
+            </div>
+            <p className="fs__line a-up" style={d(0.8)}>
+              The mandate is yours. So is the team.
+            </p>
+          </div>
+          <div className="fs__mech">
+            <SelectMech />
+          </div>
+        </section>
+
+        {/* 22–26 · convergence */}
+        <section className="fs fs--converge" data-id="converge">
+          <div className="fs__hands">
+            <HandsClock label="" />
+          </div>
+          <p className="fs__trio a-up" style={d(1.6)}>
+            Three hands. One clock.
+          </p>
+          <p className="fs__mono fs__names a-up" style={d(2)}>
+            Velocity AI · Synthia AI · ViaMagus Select
+          </p>
+        </section>
+
+        {/* 26–30 · close, wiping back to paper for the loop */}
+        <section className="fs fs--close" data-id="close">
+          <p className="fs__close a-up" style={d(0.2)}>
+            {convergence}
+          </p>
+          <p className="fs__mono fs__cta a-up" style={d(1.2)}>
+            The NEXT Order · An invitation for India’s GCC leaders
+          </p>
+          {host ? (
+            <p className="fs__mono fs__url a-up" style={d(1.6)}>
+              Register · {host}/register
+            </p>
+          ) : null}
+          <span className="fs__wipe" />
+        </section>
       </div>
 
-      <p className="fp__rotate" aria-hidden="true">
-        <span>⟳</span> Turn your phone for the full film
-      </p>
+      <div className="fp__hud" aria-hidden="true">
+        <FilmDial scenes={filmScenes} t={hudT} duration={FILM_DURATION} />
+        <p className="fp__tc">
+          <b>00:{String(Math.floor(hudT)).padStart(2, "0")}</b> / 00:30
+          <span>{sceneAtTime(hudT).id === "title" ? "The NEXT Order" : (LABEL as Record<string, string>)[sceneAtTime(hudT).id]}</span>
+        </p>
+      </div>
       <div className="fp__controls">
         <button type="button" onClick={() => setPlaying((p) => !p)} aria-pressed={!playing}>
           {playing ? "Pause" : "Play"}
@@ -350,10 +361,13 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
         )}
       </div>
       <p className="sr-only">
-        A 30-second film. A single cell on black; the old order — a rigid grid — falls apart; AI changed the rules;
-        now everything else must catch up; a thread pulls down three shutters — Velocity AI, a shippable release every
-        Friday; Synthia AI, AI that stops for your sign-off; ViaMagus Select, 3–5 people you can hire; a rush of words — build, operate, scale, one
-        order; silence; the ViaMagus logo; The Next Order — everything an enterprise needs to become AI-native.
+        A 30-second film. The NEXT Order. The old order: a strict grid of identical cells — the work you were given. The
+        inflection point: the grid cracks, everything above the line slides, and the cells fuse into owned volumes —
+        product, platforms, decisions, quality, capability; 92% of India-based GCCs aim to deliver value beyond cost
+        arbitrage (EY GCC Pulse Survey 2025). What will your centre own next? Build: Velocity AI — three-month timelines become three-to-four
+        weeks. Operate: Synthia AI — every AI output is a draft until a named officer signs it. Scale: ViaMagus Select — the
+        mandate is yours, so is the team. Three lines converge into the ViaMagus mark: build, operate, scale. Everything an
+        enterprise needs to become AI-native.
       </p>
     </div>
   );

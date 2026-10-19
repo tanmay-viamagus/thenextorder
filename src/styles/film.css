@@ -1,38 +1,91 @@
-/* internal OG card (rendered to public/og-image.png) */
+/* internal OG card (rendered to public/og-image.jpg) — the hero's cut title at thumbnail scale */
 .og {
+  position: relative;
   width: 1200px;
   height: 630px;
-  background: var(--purple);
-  color: var(--white);
-  padding: 72px 80px;
+  overflow: hidden;
+  padding: 52px 64px 48px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-color: #010103;
+  color: #fcfdff;
 }
 
-.og .ts {
-  font-size: 196px;
+.og > :not(.og__clock) {
+  position: relative;
+}
+
+.og__clock {
+  position: absolute;
+  right: -150px;
+  top: 50%;
+  width: 760px;
+  height: 760px;
+  transform: translateY(-50%);
+}
+
+.og__k {
+  font: 500 17px/1 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(252, 253, 255, 0.66);
+}
+
+.og__t {
+  --cut: 1.27em;
+  position: relative;
+  margin-left: -6px;
+  font: 800 172px/0.8 var(--font);
+  letter-spacing: -0.05em;
+}
+
+.og__l span {
+  display: block;
+  white-space: nowrap;
+}
+
+.og__l--below {
+  clip-path: inset(var(--cut) -1em -0.2em -1em);
+}
+
+.og__l--below {
+  color: #fcfdff;
+}
+
+.og__l--above {
+  position: absolute;
+  inset: 0;
+  color: #f2d0ff;
+  clip-path: inset(-0.3em -1em calc(100% - var(--cut)) -1em);
+  transform: translateX(0.11em);
+}
+
+.og__cut {
+  position: absolute;
+  top: var(--cut);
+  left: -64px;
+  width: 1200px;
+  height: 4px;
+  margin-top: -2px;
+  background: #fc60db;
 }
 
 .og__foot {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  gap: 40px;
 }
 
-.og__line {
-  font-size: 32px;
-  line-height: 1.2;
-  color: var(--lilac);
-  max-width: 16em;
+.og__q {
+  font-size: 30px;
+  line-height: 1.15;
+  font-weight: 500;
   letter-spacing: -0.02em;
+  max-width: 19em;
 }
 
 .og .vm-logo {
-  font-size: 34px;
-}
-
-.fb-shift__grid .shift__stage,
-.fb-shift__grid .shift__controls {
-  grid-area: auto;
+  font-size: 32px;
 }

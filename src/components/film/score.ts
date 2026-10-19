@@ -1,10 +1,10 @@
-import { FILM_DURATION, hits, RUSH_STEP, rushWords, scenes } from "@/content/film";
+import { FILM_DURATION, filmScenes } from "@/content/film";
 
 /**
  * An optional score, synthesised live with Web Audio — no audio files.
- * Pulse under the build-up, hats once the forces arrive, a kick on every
- * rush word over a rising noise sweep, one second of silence, a sub-bass
- * boom under the logo and a pad under the title. The film never depends on it.
+ * A kick on every scene, hats under the three practices, a riser into the
+ * convergence, a sub-bass boom when the mark lands, a pad under the close.
+ * The film never depends on it.
  */
 export class Score {
   ctx: AudioContext;
@@ -51,7 +51,7 @@ export class Score {
     this.track(o, at, 0.4);
   }
 
-  noiseHit(at: number, peak: number, freq: number, type: BiquadFilterType, decay: number) {
+  hit(at: number, peak: number, freq: number, type: BiquadFilterType, decay: number) {
     const s = this.ctx.createBufferSource();
     s.buffer = this.noise;
     const f = this.ctx.createBiquadFilter();
@@ -67,8 +67,7 @@ export class Score {
     o.frequency.exponentialRampToValueAtTime(28, at + 1.4);
     o.connect(this.env(at, 1.2, 0.01, 2.6));
     this.track(o, at, 2.8);
-    this.noiseHit(at, 0.7, 380, "lowpass", 1.6);
-    this.noiseHit(at, 0.25, 5000, "highpass", 0.5);
+    this.hit(at, 0.6, 380, "lowpass", 1.6);
   }
 
   riser(at: number, dur: number) {
@@ -82,14 +81,13 @@ export class Score {
     f.frequency.exponentialRampToValueAtTime(7000, at + dur);
     const g = this.ctx.createGain();
     g.gain.setValueAtTime(0.0001, at);
-    g.gain.exponentialRampToValueAtTime(0.5, at + dur - 0.02);
+    g.gain.exponentialRampToValueAtTime(0.45, at + dur - 0.02);
     g.gain.setValueAtTime(0.0001, at + dur);
     s.connect(f).connect(g).connect(this.out);
     this.track(s, at, dur);
   }
 
   pad(at: number, dur: number) {
-    // A minor (add 9) — open and resolved
     [110, 164.81, 220, 246.94, 329.63].forEach((hz, i) => {
       const o = this.ctx.createOscillator();
       o.type = "sawtooth";
@@ -113,25 +111,19 @@ export class Score {
   scheduleLoop(loopStart: number, fromT = 0) {
     const at = (t: number) => loopStart + t;
     const ok = (t: number) => t >= fromT - 0.001;
-    for (const s of scenes) {
-      if (!s.flash || !ok(s.start) || s.id === "logo" || s.id === "rush") continue;
-      this.kick(at(s.start), 0.8);
-      this.noiseHit(at(s.start), 0.35, 2500, "highpass", 0.12);
+    const scene = (id: string) => filmScenes.find((s) => s.id === id)!;
+    for (const s of filmScenes) {
+      if (!ok(s.start) || s.id === "converge") continue;
+      this.kick(at(s.start), 0.85);
+      this.hit(at(s.start), 0.3, 2500, "highpass", 0.12);
     }
-    for (const t of hits) if (ok(t)) this.kick(at(t), 0.85);
-    for (let t = 2.2; t < 17.5; t += 0.5) if (ok(t)) this.kick(at(t), t < 10 ? 0.35 : 0.55);
-    for (let t = 10; t < 17.5; t += 0.25) if (ok(t)) this.noiseHit(at(t), 0.12, 8000, "highpass", 0.04);
-    const rushStart = scenes.find((s) => s.id === "rush")!.start;
-    rushWords.forEach((_, i) => {
-      const t = rushStart + i * RUSH_STEP;
-      if (ok(t)) {
-        this.kick(at(t), 1);
-        this.noiseHit(at(t), 0.3, 3000, "highpass", 0.08);
-      }
-    });
-    if (ok(rushStart)) this.riser(at(rushStart), 21 - rushStart);
-    if (ok(22)) this.boom(at(22));
-    if (ok(25.2)) this.pad(at(25.2), FILM_DURATION - 25.2);
+    // hats under the three practices
+    for (let t = scene("build").start; t < scene("scale").end; t += 0.25) if (ok(t)) this.hit(at(t), 0.08, 8000, "highpass", 0.04);
+    const c = scene("converge").start;
+    if (ok(c - 1.6)) this.riser(at(c - 1.6), 1.6);
+    if (ok(c)) this.boom(at(c));
+    const end = scene("close").start;
+    if (ok(end)) this.pad(at(end), FILM_DURATION - end);
   }
 
   stopAll() {

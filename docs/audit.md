@@ -60,3 +60,115 @@ Checks: build, types and lint pass; axe shows 0 violations (desktop, mobile, red
 - **The film now uses the same colour fields.**
 
 Checks: lint, types and build pass; axe 0 violations (desktop, mobile, reduced motion); 59–60 fps; 0 blocked links; 0 invisible or covered tab stops; no horizontal overflow; no console errors.
+
+---
+
+## Round 5 — "The Order" (living-cells rebuild)
+
+**Feedback addressed:**
+- **Cluttered, no animation, nothing to interact with, a generic structure.** The site is now one particle system that keeps rebuilding itself. The cursor parts the cells, press-and-hold breaks the title, and you hover or tap the forces. Seat chips change the question.
+- **The video made no sense.** The film is now the site's own story on a clock, with the same visuals, so the two reinforce each other.
+- **Scientific CTA placement.** See the README, "Where the CTA sits, and why".
+
+**Verified:**
+- Builds clean: `tsc`, `eslint`, `next build`.
+- Screenshots at 1440×900 and 390×844 for every chapter and every film beat, with no page errors.
+- The no-JS render hides no text, and the pill leaves the tab order when hidden.
+- Focusing into a chapter brings it on screen.
+- Swiftshader holds about 43 fps.
+
+**Fixed during the pass:**
+- On phones, the forces clusters collided with the panel. They now sit in one row, and the panel clears the pill.
+- Button labels wrapped onto two lines.
+- The pill was focusable while hidden.
+- The finale question was hidden without JS.
+- Word spacing was lost in the kinetic text.
+
+**Known / not done:**
+- **Axe contrast false positive.** Axe reports the ink-on-paper and ink-on-magenta headlines as ink on black, because it can't see the WebGL canvas that paints those fields. Actual contrast is about 17:1 on paper and about 7:1 on magenta. With no WebGL, CSS paints the same fields.
+- **Hardware.** Not tested on real phones, low-end laptops or a venue screen.
+- **Event details.** These are still placeholders in `event.ts`.
+
+---
+
+## Round 6 — "The Shift" (brief: reimagine as an exceptional event experience)
+
+**Audit of the previous version (the five biggest weaknesses):**
+1. Its concept, floating particles and glowing orbs, is the very thing the brief rules out.
+2. The story was AI-led ("AI changed the rules", agentic-AI statistics) rather than about the centre's mandate, ownership and value, which is what the corrected strategy notes ask for.
+3. There was no real registration: the CTA only linked out to viamagus.com.
+4. The hero depended on an animation assembling before the name could be read, and the essential details were tiny.
+5. Metadata was generic: no canonical URL, sitemap or robots file, and a social description that didn't mention the event.
+
+**What changed:**
+- **Concept:** The Shift, the mandate as architecture.
+- **Narrative:** THEN → NOW → NEXT, following the corrected GCC strategy notes (internal, not committed). GCC → GIC → ? appears only as a labelled, exploratory question.
+- **Figures:** verified and mandate-focused. EY 2025: 92% beyond cost arbitrage, 52% shared accountability, 67% innovation teams. BCG: 8%. nasscom/Zinnov: 1,700+ GCCs.
+- **Three practices:** three equal plates. Each has a working diagram built only from verbatim claims on the official pages, and the verbs share one size.
+- **Registration:** real, stored in Neon, with a private responses page and CSV export.
+- **Film:** rebuilt to the brief's storyboard.
+- **Social:** a new OG image, plus canonical URL, sitemap and robots.
+
+**Verified (Oct 2026):**
+- **Build:** `tsc`, `eslint` and `next build` all pass.
+- **Accessibility:** axe WCAG 2.1 AA reports 0 violations on `/`, `/register` and `/film` at 1440 and 390 px.
+- **No JavaScript:** no hidden text.
+- **Keyboard:** the walk through the home page found 0 problems at 1440 px. At 390 px one stop remains: the sticky CTA bar mid-transition.
+- **Registration end to end:** a browser submission was stored, appeared on `/register/response` and exported as CSV. The responses page returns 401 without credentials or with a wrong password. The API rejects invalid input, and the honeypot is ignored. Test rows were deleted afterwards.
+- **Screenshots:** every scene at 1440×900 and 390×844, and every film beat at 1920×1080, with no console errors.
+- **Quotes:** every product quote was re-checked verbatim against the live pages.
+
+**Not done / needs the owner:**
+- **Event details.** Date, venue, format and speakers aren't confirmed, so they show as "To be announced".
+- **Confirmation emails.** None are sent; registrants see an on-screen confirmation only.
+- **Hardware.** Not tested on real phones or the LED wall.
+- **Video file.** There is no MP4 of the film.
+
+
+---
+
+## Round 7 — "Show, don't tell" (final creative redesign)
+
+**Why the previous version still felt basic:** it presented the strategy rather than staging it. It had three text-led acts, a row of figures, a four-question lens, a naming exercise and seat tabs: the notes, typeset.
+
+**What changed:**
+- **Seven sections became four scenes**, held together by one motif: identical cells cut by a threshold.
+- **The shift is now a single artwork**, showing grid → crack → owned volumes. It carries the story with three headlines and two sourced figures, and the film reuses it.
+- **Practices:** three equal panels joined by one line that flows into the mark.
+- **Close:** the title's shift resolves beside the form.
+- **Removed:** the then/now/next essays, the value lens, the GCC → GIC naming section and the seat questions. The ideas survive in the composition; the strategy notes are not published.
+
+**Simulated review.** I critiqued the rendered pages from about 50 simulated viewpoints: CEOs/MDs, site heads, technology leaders, CHROs, TA leads, mobile scanners, and people deciding whether to attend. These are design-review lenses, not user research. Findings acted on:
+1. **Too many blanks:** four "To be announced" rows read as unfinished, so they became one honest status line.
+2. **No plain description:** the close lacked a one-sentence "what"; it now has one.
+3. **Host link implicit:** the practices section is now labelled "Hosted by ViaMagus".
+4. **Mobile:** the pinned scene is shorter (300vh), and the bar hides over the artwork.
+
+What held up: the cut title, the transformation, and the open "?" volume, which reads as respectful rather than prescriptive.
+
+**Verified:**
+- **Build:** `tsc`, `eslint` and `next build` all pass.
+- **Accessibility:** axe WCAG 2.1 AA reports 0 violations on `/`, `/register` and `/film` at 1440 and 390 px.
+- **No JavaScript:** no hidden text.
+- **Keyboard:** 29 focus stops with 0 problems at 1440 px.
+- **Registration:** both forms store to Neon, and `/register/response` and the CSV work. Test rows were deleted.
+- **Screenshots:** every scene and state at 1440×900 and 390×844, and film beats at 1920×1080, with no console errors.
+
+
+---
+
+## Round 8 — the clock
+
+**Feedback:** "still boring … looks AI made; use a clock or something to show the animation and timings."
+
+**What changed:**
+- **Identity:** the event now runs on a real clock that keeps India time. The paper-grid, mono-label look that read as templated is gone.
+- **The clock does the storytelling:** a live clock in the hero, a scroll-turned eras dial, the three practices as the three hands of one clock, a countdown at the close, and a timing dial in the film.
+
+**Verified:**
+- **Build:** `tsc`, `eslint` and `next build` pass.
+- **Accessibility:** axe WCAG 2.1 AA reports 0 violations on `/`, `/register` and `/film` at 1440 and 390 px.
+- **No JavaScript:** no hidden text.
+- **Keyboard:** 29 focus stops with 0 problems at 1440 px.
+- **Registration:** end-to-end test passed, and test rows were deleted.
+- **Screenshots:** every scene at both widths and every film beat at 1920×1080, with no console errors.
