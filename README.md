@@ -7,14 +7,14 @@
    - Below the line, the old order: aligned and grey.
    - Above it, the next order: turned out of alignment, lilac, and partly fused into owned arcs.
    - Title and ring shift with the pointer, and the ring's centre plays the film ("See what's changing").
-2. **How a GCC evolves.** A pinned scene with five stages, driven by scroll or by the 01–05 buttons. One organisational form evolves throughout:
-   - **01 The origin:** a solid tower in the home market, with the decision node on top.
-   - **02 The arrival:** a bridge, and one block in India.
-   - **03 The operating centre:** India fills with teams, and work flows in.
-   - **04 The ownership shift:** the blocks fuse into Product, Platforms and Engineering; work flows back in purple; a decision node appears in India.
-   - **05 The next order:** India connects out across the organisation and builds what's NEXT.
+2. **How a GCC evolves.** One editorial line illustration on ivory that evolves through five stages, driven by scroll (pinned, native) or the timeline set on the ground line:
+   - **01 The origin:** a recognisable headquarters with people at its entrance, and an empty plot in India.
+   - **02 The arrival:** a modest India centre, joined to HQ by "the mandate", with a brief travelling along it.
+   - **03 The operating centre:** a bigger building whose glass front shows teams at desks; briefs go in and finished work comes back.
+   - **04 The ownership shift:** a tower signed Product · Platforms · Engineering, a glass room on the roof ("Decisions made here"), and purple products flowing back to HQ.
+   - **05 The next order:** links to other markets, and a crane building what's NEXT.
 
-   From 04 a restrained ViaMagus Select note names the capability gap. It is a conceptual journey, not a rule. The earlier ring of years (`components/clock/YearCycle.tsx`) is kept for later and is still used in the film.
+   The stage in focus is sharp and earlier ones step back. From 04 the caption closes with the capability gap and one link to ViaMagus Select. On phones the camera pans across the scene. It is a conceptual journey, not a rule. The earlier ring of years (`components/clock/YearCycle.tsx`) is kept for later.
 3. **Three hands. One clock.** Velocity AI, Synthia AI and ViaMagus Select. Each gets a diagram, a colour-coded action to its own site ("Let's build", "Let's automate", "Let's hire") and "Bring a … to the room", which preselects it on `/register`.
 3b. **The film**, near the end only: "See what's changing" with a play button, above the practices playing as a story (progress bars, the three-hands clock, each practice's transformation); it restarts at Build when it comes into view.
 4. **Closing.** "Find your place in the conversation", with three steps (request, review, invitation) beside the form.
