@@ -6,8 +6,8 @@
    - Below the line, the old order: aligned and grey.
    - Above it, the next order: turned out of alignment, lilac, and partly fused into owned arcs.
    - Title and ring shift with the pointer, and the ring's centre plays the film ("See what's changing").
-2. **The ring of years.** It runs 2001 to 2030, 12° per year, with 2001 at the top. A marker travels it as you scroll, and the running year is shown at the centre.
-   - **2001–2019, the old order:** solid years. *Built to execute*, with 1,700+ GCCs in India today.
+2. **The ring of years.** It runs 2016 to 2030, 24° per year, with 2016 at the top. A marker travels it as you scroll, and the running year is shown at the centre.
+   - **2016–2019, the old order:** solid years. *Built to execute*, with 1,700+ GCCs in India today.
    - **The boundary at 2020:** "Old order ends · 2019 / Inflection · 2020".
    - **2020–2024, the inflection point:** the years shift out of line. *Then the mandate grew*, with 92%.
    - **The boundary at 2025:** "The next order begins 2025".
