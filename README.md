@@ -1,24 +1,27 @@
 # The NEXT Order — ViaMagus event microsite
 
-**Concept: The next hour.** The NEXT Order runs on a real clock that keeps India time.
+**Concept: the shift.**
 
-1. **Opening:** a live clock on black. The cut title's upper half ticks forward each second and snaps back on the minute.
-2. **The eras:** scrolling turns one hand through a full revolution, with native scrolling throughout.
-   - **12→4, the old order:** regular, identical ticks.
-   - **4→8, the inflection point:** the ticks crack out of line.
-   - **8→12, the next order:** the ticks fuse into owned arcs (product, platforms, decisions, capability), with one left open.
-   - The headline sits inside the dial, with two sourced figures.
-3. **Three hands. One clock.** A live clock whose hands are the three practices: Velocity AI the second hand, Synthia AI the minute hand, ViaMagus Select the hour hand. All three are pinned on the ViaMagus mark. Hovering a practice lights its hand.
-4. **Closing:** a countdown that starts as soon as `event.startsAt` is set (until then it shows dashes), beside the registration form.
+1. **Opening.** "THE NEXT ORDER" is cut by a magenta line. The same line runs into a ring system: three rings of identical segments.
+   - Below the line, the old order: aligned and grey.
+   - Above it, the next order: turned out of alignment, lilac, and partly fused into owned arcs.
+   - Title and ring shift with the pointer, and the ring's centre plays the film ("See what's changing").
+2. **The year.** Twelve months, January at the top, 30° each, with a marker that travels the year as you scroll. A "Today" mark shows the real date.
+   - Jan–Apr, the old order: solid. *Built to execute*, with 1,700+ GCCs.
+   - May–Aug, the inflection point: shifted out of line. *Then the mandate grew*, with 92%.
+   - Sep–Dec, the next order: fused into owned blocks (Product, Platforms, Capability) plus one open "?". *Built to own, create and lead.*
+3. **Three hands. One clock.** Velocity AI, Synthia AI and ViaMagus Select. Each gets a diagram, "Explore it at the event" (preselects it on `/register`) and "Visit product ↗".
+4. **Closing.** "Find your place in the conversation", with the form.
 
-The film uses the same clocks, and a timing dial (one arc per scene, a playhead and a running timecode) shows where you are in the 30 seconds.
+There is one call to action everywhere: **Request your place**. It goes to `/register`, which opens at the top. Places are confirmed by invitation.
 
 ```bash
 npm install
-vercel env pull .env.local --yes   # DATABASE_URL (Neon) + RESPONSES_PASSWORD
+vercel env pull .env.local --yes   # DATABASE_URL (Neon), RESPONSES_PASSWORD, FORM_SECRET
 npm run dev        # http://localhost:3000
 npm run build && npm start
 npm run lint
+npm test           # LinkedIn URL validation
 ```
 
 | Route | What it is |
@@ -34,14 +37,21 @@ npm run lint
 
 - **Storage:** each form posts to `POST /api/register`, which stores the entry in **Neon Postgres**. The database was provisioned through the Vercel Marketplace as the resource `thenextorder-registrations` on team `shreenath-1591s-projects`, and `DATABASE_URL` is injected automatically.
 - **One row per email:** registering again updates the existing row.
-- **Validation and spam:** inputs are validated on both the client and the server, and a hidden honeypot field filters bots.
+- **Validation:** every field is validated on the client and again on the server. The LinkedIn link must be an https personal profile on linkedin.com (or a country subdomain), and is stored in canonical form. This checks the format only; it does not verify identity.
+- **Bot protection, all enforced server-side in `POST /api/register`:**
+  - Vercel BotID (invisible; `checkBotId()`).
+  - A hidden honeypot field.
+  - A signed form token from `GET /api/register/token`. Submissions without it, with a forged one, or within 2.5 s are refused.
+  - Per-IP rate limiting (6 attempts per 10 minutes), with IPs stored only as salted hashes.
+  - Without `FORM_SECRET`, every submission is refused (fail closed).
+- **Optional:** BotID Deep Analysis can be switched on in the Vercel dashboard under Firewall → Configure.
 - **Where to read them:** `/register/response`, or download the CSV there. Cells are protected against spreadsheet-formula injection.
 - **Changing the password:** `vercel env rm RESPONSES_PASSWORD` and then `vercel env add RESPONSES_PASSWORD`, followed by a redeploy.
 - **Shared database:** development, preview and production all write to the same database. Delete test rows before launch.
 
 ## Before sharing
 
-1. **Fill in `src/content/event.ts`:** date, `startsAt` (an ISO time with offset, which switches on the live countdown), city and venue, format, and speakers. Until then the site shows "To be announced" and invents nothing. Details in the internal event plan that are still marked "to finalise" are not published.
+1. **Fill in `src/content/event.ts`:** date, city and venue, format, and speakers. Until then the site shows "To be announced" and invents nothing. Details in the internal event plan that are still marked "to finalise" are not published.
 2. **Site URL:** canonical links, the sitemap and OG URLs use `NEXT_PUBLIC_SITE_URL`, falling back to the Vercel production URL. Set it if a custom domain is added.
 3. **Sign-off:** the strategy follows the corrected GCC strategy notes (internal; a local copy lives at `docs/strategy-notes.md`, which is git-ignored because this repo is public). Every figure and product quote has its source next to it in `src/content/story.ts`.
 
@@ -49,10 +59,12 @@ npm run lint
 
 ```
 src/content/            story.ts (all copy + sources), event.ts (verified facts only), film.ts (film timeline)
-src/components/clock/   Clock (LiveClock, EraClock, HandsClock, Countdown, FilmDial, StillClock)
+src/components/clock/   ShiftRing (hero), YearCycle (the year), Clock (HandsClock, FilmDial)
 src/components/shift/   Site (the page), Mechanisms (the three practice diagrams), Interactive (cut title, reveals, header), InviteForm
 src/components/film/    FilmPlayer (the 30 s film), FilmOverlay, score.ts (Web Audio)
-src/lib/                registrations.ts (Neon), site-url.ts
+src/lib/                registrations.ts (Neon), guard.ts (token + rate limit), linkedin.ts, site-url.ts
+src/instrumentation-client.ts  BotID client
+tests/                  linkedin.test.mts (npm test)
 src/proxy.ts            Basic auth for /register/response
 src/styles/             shift.css (site + register), film-player.css (film), film.css (OG card), shared.css (logos)
 docs/                   audit.md, brand-audit.md, next-order-research.md, film-storyboard.md

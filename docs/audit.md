@@ -194,3 +194,31 @@ What held up: the cut title, the transformation, and the open "?" volume, which 
 - **Keyboard:** chips show a visible focus ring.
 - **Registration end to end:** preselect, validation, chips stored, and the responses page and CSV all work. Test rows were deleted.
 - **Film:** checked frame by frame at 1920×1080.
+
+
+---
+
+## Round 10 — the shift, the year, a place in the conversation
+
+**Changes:**
+- **Hero:** the ordinary clock is replaced by a ring system that breaks and reorganises along the title's cut line, with the film integrated at its centre.
+- **The year:** the minute dial becomes an exact 12-month cycle with a real "Today" mark. The copy is reworked to "Built to execute → Then the mandate grew → Built to own, create and lead".
+- **Countdown:** removed, along with its component, styles and the `startsAt` field.
+- **Call to action:** one throughout, "Request your place", with a larger button and a hover arrow. Product links are rebuilt as "Explore it at the event →" and "Visit product ↗ + domain".
+- **Form:** a required LinkedIn profile field, validated on the client and the server.
+- **Bot protection:** BotID, honeypot, signed timing token and rate limiting.
+
+**Navigation:** on production, every primary CTA opened `/register` at scrollY 0 with no hash, at 1440 and 390 px. The jump couldn't be reproduced. The home page's form section id was renamed from `register` to `request`, so no `#register` anchor exists.
+
+**Verified locally:**
+- `npm test`: 2 of 2 pass.
+- Server-side checks:
+  - no token: 400;
+  - forged token: 400;
+  - submitted under 2.5 s: 429;
+  - bad LinkedIn link: 400 with a field error;
+  - honeypot filled: 200, nothing stored;
+  - valid submission: 200, stored with the canonical URL;
+  - burst from one connection: 429.
+- **Browser E2E:** the LinkedIn error keeps the other data and moves focus; the submission appears on `/register/response` and in the CSV.
+- **Build and audits:** `tsc`, `eslint` and the build pass. axe: 0 violations at 1440 and 390 px. No-JS: no hidden text.

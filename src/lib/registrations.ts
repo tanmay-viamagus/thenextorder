@@ -1,5 +1,6 @@
 import { neon } from "@neondatabase/serverless";
 import { FOCUS, INTERESTS, SEATS } from "@/content/register";
+import { normalizeLinkedIn } from "@/lib/linkedin";
 
 /**
  * Registrations live in the Neon Postgres database provisioned through the
@@ -14,6 +15,7 @@ export type Registration = {
   email: string;
   organisation: string;
   role: string;
+  linkedin: string | null;
   interests: string | null;
   focus: string | null;
   next_mandate: string | null;
@@ -42,13 +44,13 @@ function ensureTable() {
       next_mandate text,
       source text
     )`;
-    await q`ALTER TABLE registrations ADD COLUMN IF NOT EXISTS interests text, ADD COLUMN IF NOT EXISTS focus text`;
+    await q`ALTER TABLE registrations ADD COLUMN IF NOT EXISTS interests text, ADD COLUMN IF NOT EXISTS focus text, ADD COLUMN IF NOT EXISTS linkedin text`;
     await q`CREATE UNIQUE INDEX IF NOT EXISTS registrations_email_key ON registrations (lower(email))`;
   })();
   return ready;
 }
 
-export type Input = { name: string; email: string; organisation: string; role: string; interests: string; focus: string; source: string };
+export type Input = { name: string; email: string; organisation: string; role: string; linkedin: string; interests: string; focus: string; source: string };
 
 const list = (v: unknown, allowed: readonly string[]) =>
   (Array.isArray(v) ? v : typeof v === "string" && v ? [v] : [])
@@ -63,6 +65,7 @@ export function validate(raw: Record<string, unknown>): { ok: true; data: Input 
     email: s("email", 200).toLowerCase(),
     organisation: s("organisation", 160),
     role: s("role", 80),
+    linkedin: "",
     interests: list(raw.interests, INTERESTS),
     focus: list(raw.focus, FOCUS),
     source: s("source", 40) || "site",
@@ -72,16 +75,19 @@ export function validate(raw: Record<string, unknown>): { ok: true; data: Input 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) errors.email = "Please add a valid work email.";
   if (!data.organisation) errors.organisation = "Please add your organisation.";
   if (!(SEATS as readonly string[]).includes(data.role)) errors.role = "Please choose your seat.";
+  const li = normalizeLinkedIn(s("linkedin", 300));
+  if (li.ok) data.linkedin = li.url;
+  else errors.linkedin = li.error;
   return Object.keys(errors).length ? { ok: false, errors } : { ok: true, data };
 }
 
 export async function saveRegistration(d: Input) {
   await ensureTable();
   const rows = (await sql()`
-    INSERT INTO registrations (name, email, organisation, role, interests, focus, source)
-    VALUES (${d.name}, ${d.email}, ${d.organisation}, ${d.role}, ${d.interests || null}, ${d.focus || null}, ${d.source})
+    INSERT INTO registrations (name, email, organisation, role, linkedin, interests, focus, source)
+    VALUES (${d.name}, ${d.email}, ${d.organisation}, ${d.role}, ${d.linkedin}, ${d.interests || null}, ${d.focus || null}, ${d.source})
     ON CONFLICT (lower(email)) DO UPDATE SET
-      name = EXCLUDED.name, organisation = EXCLUDED.organisation, role = EXCLUDED.role,
+      name = EXCLUDED.name, organisation = EXCLUDED.organisation, role = EXCLUDED.role, linkedin = EXCLUDED.linkedin,
       interests = COALESCE(EXCLUDED.interests, registrations.interests),
       focus = COALESCE(EXCLUDED.focus, registrations.focus),
       source = EXCLUDED.source, updated_at = now()

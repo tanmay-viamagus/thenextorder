@@ -161,7 +161,7 @@ export function Chrome() {
     const root = document.documentElement;
     const scenes = [...document.querySelectorAll<HTMLElement>("[data-tone]")];
     const hero = document.getElementById("top");
-    const form = document.getElementById("register");
+    const form = document.getElementById("request");
     let raf = 0;
     const update = () => {
       raf = 0;

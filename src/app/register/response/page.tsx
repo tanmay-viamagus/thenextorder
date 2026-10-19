@@ -69,6 +69,7 @@ export default async function Responses() {
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Organisation</th>
+                <th scope="col">LinkedIn</th>
                 <th scope="col">Seat</th>
                 <th scope="col">Explore</th>
                 <th scope="col">Taking on</th>
@@ -87,6 +88,15 @@ export default async function Responses() {
                     <a href={`mailto:${r.email}`}>{r.email}</a>
                   </td>
                   <td>{r.organisation}</td>
+                  <td>
+                    {r.linkedin ? (
+                      <a href={r.linkedin} target="_blank" rel="noopener noreferrer">
+                        {r.linkedin.replace("https://www.linkedin.com/in/", "in/")}
+                      </a>
+                    ) : (
+                      "—"
+                    )}
+                  </td>
                   <td>{r.role}</td>
                   <td>{r.interests ?? "—"}</td>
                   <td className="resp__note">{[r.focus, r.next_mandate].filter(Boolean).join(" · ") || "—"}</td>

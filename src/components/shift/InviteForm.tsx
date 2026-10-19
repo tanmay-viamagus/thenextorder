@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { contactEmail } from "@/content/event";
 import { FOCUS, INTERESTS, SEATS } from "@/content/register";
+import { cta } from "@/content/story";
+import { normalizeLinkedIn } from "@/lib/linkedin";
 
 type State = { kind: "idle" } | { kind: "sending" } | { kind: "done"; name: string; updated: boolean } | { kind: "failed"; message: string };
 
@@ -15,6 +17,18 @@ type State = { kind: "idle" } | { kind: "sending" } | { kind: "done"; name: stri
 export function InviteForm({ source = "site", preset }: { source?: string; preset?: string }) {
   const [state, setState] = useState<State>({ kind: "idle" });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  // a signed, timestamped token from the server; the API refuses submissions without it
+  const token = useRef<string>("");
+  const fetchToken = () =>
+    fetch("/api/register/token", { cache: "no-store" })
+      .then((r) => r.json())
+      .then((j: { t?: string }) => {
+        token.current = j.t ?? "";
+      })
+      .catch(() => {});
+  useEffect(() => {
+    void fetchToken();
+  }, []);
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,6 +40,8 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v("email"))) local.email = "Please add a valid work email.";
     if (!v("organisation")) local.organisation = "Please add your organisation.";
     if (!v("role")) local.role = "Please choose your seat.";
+    const li = normalizeLinkedIn(v("linkedin"));
+    if (!li.ok) local.linkedin = li.error;
     if (Object.keys(local).length) {
       setErrors(local);
       form.querySelector<HTMLElement>(`[name="${Object.keys(local)[0]}"]`)?.focus();
@@ -42,6 +58,8 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
           email: v("email"),
           organisation: v("organisation"),
           role: v("role"),
+          linkedin: li.ok ? li.url : v("linkedin"),
+          t: token.current,
           interests: fd.getAll("interests"),
           focus: fd.getAll("focus"),
           website: v("website"),
@@ -60,6 +78,7 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
         return;
       }
       setState({ kind: "failed", message: json.error ?? "We couldn’t save your request just now." });
+      void fetchToken();
     } catch {
       setState({ kind: "failed", message: "You seem to be offline." });
     }
@@ -88,7 +107,7 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
         <p className="rf__p">
           {state.updated
             ? "We already had your request, and we’ve updated it with these details."
-            : "Your request is with the ViaMagus team. We’ll share the date and venue with you as soon as they’re confirmed."}
+            : "Your request is with the ViaMagus team. Places are confirmed by invitation — we’ll be in touch once the date and venue are set."}
         </p>
         <p className="rf__small">
           Questions in the meantime? <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
@@ -103,7 +122,7 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
     <form className="rf" onSubmit={submit} noValidate aria-labelledby={id("rf-h")} aria-busy={sending}>
       <div className="rf__head">
         <p className="rf__k" id={id("rf-h")}>
-          Request an invitation
+          {cta.primary}
         </p>
         <p className="rf__time">About 30 seconds</p>
       </div>
@@ -129,6 +148,26 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
         <span>Organisation</span>
         <input name="organisation" autoComplete="organization" required maxLength={160} {...a("organisation")} />
         {err("organisation")}
+      </label>
+      <label className="rf__field">
+        <span>LinkedIn profile</span>
+        <input
+          name="linkedin"
+          type="url"
+          inputMode="url"
+          autoComplete="url"
+          spellCheck={false}
+          required
+          maxLength={300}
+          placeholder="https://www.linkedin.com/in/your-profile"
+          {...a("linkedin")}
+          aria-describedby={errors.linkedin ? `linkedin-${source}-err` : `linkedin-${source}-help`}
+        />
+        {err("linkedin") ?? (
+          <span className="rf__help" id={`linkedin-${source}-help`}>
+            Helps the ViaMagus team confirm professional details when reviewing requests.
+          </span>
+        )}
       </label>
 
       <fieldset className="rf__set" aria-describedby={errors.role ? `role-${source}-err` : undefined}>
@@ -184,9 +223,9 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
         </p>
       ) : null}
       <button type="submit" className="btn btn--shift rf__go" disabled={sending}>
-        {sending ? "Sending…" : "Request my invitation"} <span aria-hidden="true">→</span>
+        {sending ? "Sending…" : cta.submit} <span className="btn__arr" aria-hidden="true">→</span>
       </button>
-      <p className="rf__small">Your details go only to the ViaMagus team, to manage invitations for this event.</p>
+      <p className="rf__small">Places are confirmed by invitation. Your details go only to the ViaMagus team, to review requests for this event.</p>
     </form>
   );
 }
