@@ -98,17 +98,6 @@
   color: var(--sel-amber);
 }
 
-/* tick marks shared by every dial */
-.mt {
-  stroke: rgba(252, 253, 255, 0.3);
-  stroke-width: 4;
-}
-
-.mt--h {
-  stroke: rgba(252, 253, 255, 0.92);
-  stroke-width: 11;
-}
-
 /* ---------------------------------------------------------------- 00–03 · the hook: the ring, cut and shifted */
 @property --s {
   syntax: "<number>";
@@ -497,78 +486,52 @@
   color: var(--sel-ink);
 }
 
-.fs--scale .mt {
-  stroke: rgba(14, 13, 18, 0.25);
-}
 
-.fs--scale .mt--h {
-  stroke: rgba(14, 13, 18, 0.7);
-}
-
-/* each practice sits in front of its own hand, turning */
-.fs__ring {
+/* each practice stands in front of its piece of the mark */
+.fs__piece {
   position: absolute;
-  right: -240px;
+  right: -60px;
   top: 50%;
-  width: 1200px;
-  height: 1200px;
-  margin-top: -600px;
-  opacity: 0.5;
+  height: 900px;
+  width: auto;
+  margin-top: -450px;
+  overflow: visible;
 }
 
-.ring__hand {
-  transform-box: view-box;
-  transform-origin: 0 0;
+.fs__piece path {
+  stroke-width: 0.08;
 }
 
-.ring__hand--fast rect {
-  fill: var(--vel-cyan);
+.fs__piece--velocity path {
+  fill: rgba(0, 199, 206, 0.1);
+  stroke: var(--vel-cyan);
 }
 
-.ring__hand--mid rect {
-  fill: var(--syn-bright);
+.fs__piece--synthia path {
+  fill: rgba(190, 101, 255, 0.14);
+  stroke: var(--syn-bright);
 }
 
-.ring__hand--slow rect {
-  fill: var(--sel-amber);
+.fs__piece--select path {
+  fill: rgba(245, 184, 61, 0.22);
+  stroke: var(--sel-amber);
 }
 
-.fs--build.is-on .ring__hand {
-  animation: spin 4s linear calc(0s - var(--into, 0s)) both;
+.fs--p.is-on .fs__piece {
+  animation: piece-drift 4s cubic-bezier(0.2, 0.7, 0.3, 1) calc(0s - var(--into, 0s)) both;
 }
 
-.fs--operate.is-on .ring__hand {
-  animation: spin-q 4s linear calc(0s - var(--into, 0s)) both;
-}
-
-.fs--scale.is-on .ring__hand {
-  animation: spin-e 4s linear calc(0s - var(--into, 0s)) both;
-}
-
-@keyframes spin {
+@keyframes piece-drift {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: translateX(160px) rotate(10deg) scale(0.92);
+  }
+  25% {
+    opacity: 1;
   }
   to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes spin-q {
-  from {
-    transform: rotate(-30deg);
-  }
-  to {
-    transform: rotate(60deg);
-  }
-}
-
-@keyframes spin-e {
-  from {
-    transform: rotate(20deg);
-  }
-  to {
-    transform: rotate(45deg);
+    opacity: 1;
+    transform: rotate(-2deg);
   }
 }
 
@@ -892,133 +855,138 @@
   }
 }
 
-/* ---------------------------------------------------------------- 22–26 · the payoff: three hands lock at twelve */
+/* ---------------------------------------------------------------- 22–26 · the payoff: three pieces become the mark */
 .fs--converge {
   background: var(--black);
   text-align: center;
 }
 
-.lock {
+.asm {
   position: absolute;
   left: 50%;
-  top: 60px;
-  width: 700px;
-  height: 700px;
-  margin-left: -350px;
+  top: 150px;
+  width: 820px;
+  margin-left: -410px;
   overflow: visible;
 }
 
-.lock__face {
-  fill: #0a090e;
-  stroke: rgba(252, 253, 255, 0.12);
-  stroke-width: 2;
+.asm__p {
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
-.lock__pulse {
-  fill: none;
-  stroke: var(--white);
-  stroke-width: 6;
-  opacity: 0;
-  transform-box: view-box;
-  transform-origin: 0 0;
-}
-
-.lock__h {
-  transform-box: view-box;
-  transform-origin: 0 0;
-}
-
-.lock__h--velocity rect,
-.lock__h--velocity circle {
+.asm__p--velocity {
   fill: var(--vel-cyan);
 }
 
-.lock__h--synthia rect {
+.asm__p--synthia {
   fill: var(--syn-bright);
 }
 
-.lock__h--select rect {
+.asm__p--select {
   fill: var(--sel-amber);
 }
 
-.lock__pin {
-  fill: var(--black);
-  stroke: rgba(252, 253, 255, 0.3);
-  stroke-width: 2;
+/* each piece flies in on its own path and spin; all three lock at 2.5 s, then turn white */
+.fs--converge.is-on .asm__p--velocity {
+  animation:
+    fly-v 2.5s cubic-bezier(0.2, 0.75, 0.1, 1) calc(0s - var(--into, 0s)) both,
+    whiten 0.5s var(--ease) calc(2.55s - var(--into, 0s)) forwards;
 }
 
-.lock__mark path {
+.fs--converge.is-on .asm__p--synthia {
+  animation:
+    fly-s 2.5s cubic-bezier(0.2, 0.75, 0.1, 1) calc(0s - var(--into, 0s)) both,
+    whiten 0.5s var(--ease) calc(2.6s - var(--into, 0s)) forwards;
+}
+
+.fs--converge.is-on .asm__p--select {
+  animation:
+    fly-x 2.5s cubic-bezier(0.2, 0.75, 0.1, 1) calc(0s - var(--into, 0s)) both,
+    whiten 0.5s var(--ease) calc(2.65s - var(--into, 0s)) forwards;
+}
+
+@keyframes fly-v {
+  from {
+    transform: translate(-40px, -9px) rotate(-200deg) scale(1.7);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes fly-s {
+  from {
+    transform: translate(-6px, 22px) rotate(150deg) scale(1.7);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes fly-x {
+  from {
+    transform: translate(40px, -12px) rotate(240deg) scale(1.7);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes whiten {
+  to {
+    fill: var(--white);
+  }
+}
+
+.asm__whole path {
   fill: var(--white);
 }
 
-/* each hand spins at its own speed, then all three settle on twelve at 2.5 s */
-.fs--converge.is-on .lock__h--velocity {
-  animation: lock-v 2.5s cubic-bezier(0.15, 0.6, 0.15, 1) calc(0s - var(--into, 0s)) both;
+.asm__whole {
+  opacity: 0;
 }
 
-.fs--converge.is-on .lock__h--synthia {
-  animation: lock-s 2.5s cubic-bezier(0.15, 0.6, 0.15, 1) calc(0s - var(--into, 0s)) both;
+.fs--converge.is-on .asm__whole {
+  animation: k-in 0.3s linear calc(3s - var(--into, 0s)) both;
 }
 
-.fs--converge.is-on .lock__h--select {
-  animation: lock-x 2.5s cubic-bezier(0.15, 0.6, 0.15, 1) calc(0s - var(--into, 0s)) both;
+/* the moment they lock: one bright pulse */
+.fs--converge.is-on .asm {
+  animation: lockflash 0.9s var(--ease-out) calc(2.5s - var(--into, 0s)) both;
 }
 
-@keyframes lock-v {
-  from {
-    transform: rotate(-1260deg);
+@keyframes lockflash {
+  0% {
+    filter: drop-shadow(0 0 0 rgba(252, 96, 219, 0));
   }
-  to {
-    transform: rotate(0deg);
+  25% {
+    filter: drop-shadow(0 0 40px rgba(252, 96, 219, 0.9));
   }
-}
-
-@keyframes lock-s {
-  from {
-    transform: rotate(-470deg);
-  }
-  to {
-    transform: rotate(0deg);
+  100% {
+    filter: drop-shadow(0 0 0 rgba(252, 96, 219, 0));
   }
 }
 
-@keyframes lock-x {
-  from {
-    transform: rotate(-200deg);
-  }
-  to {
-    transform: rotate(0deg);
-  }
-}
-
-.fs--converge.is-on .lock__pulse {
-  animation: pulse 1s var(--ease-out) calc(2.5s - var(--into, 0s)) forwards;
-}
-
-@keyframes pulse {
-  from {
-    opacity: 0.9;
-    transform: scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: scale(1.25);
-  }
-}
-
-.fs__begins {
+.asm__word {
   position: absolute;
   left: 0;
   right: 0;
-  top: 785px;
-  color: var(--lilac);
+  top: 560px;
+  font: 500 96px/1 var(--font-josefin), var(--font);
+  letter-spacing: 0.01em;
+  opacity: 0;
+}
+
+.fs--converge.is-on .asm__word {
+  animation: k-up 0.7s var(--ease-out) calc(2.75s - var(--into, 0s)) both;
 }
 
 .fs__trio {
   position: absolute;
   left: 0;
   right: 0;
-  top: 830px;
+  top: 760px;
   font-size: 110px;
   letter-spacing: -0.05em;
   font-weight: 800;
@@ -1028,7 +996,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 978px;
+  top: 910px;
 }
 
 /* ---------------------------------------------------------------- 26–30 · the line, then the invitation */
@@ -1127,69 +1095,75 @@
   opacity: 0.85;
 }
 
-/* ---------------------------------------------------------------- the timing dial */
+/* ---------------------------------------------------------------- the timing bar */
 .fp__hud {
   position: absolute;
+  left: 20px;
   right: 20px;
-  top: 18px;
+  top: 16px;
   z-index: 9;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 10px 16px 10px 10px;
-  background: rgba(10, 9, 14, 0.78);
-  border: 1px solid rgba(252, 253, 255, 0.2);
-  color: var(--white);
   transition: opacity 0.5s;
 }
 
 .fp.is-idle .fp__hud {
-  opacity: 0.8;
+  opacity: 0.75;
 }
 
-.fd {
-  width: 84px;
-  height: 84px;
-}
-
-.fd-face {
-  fill: #0a090e;
-  stroke: rgba(252, 253, 255, 0.2);
-}
-
-.fd-seg {
-  fill: none;
-  stroke: rgba(252, 253, 255, 0.28);
-  stroke-width: 14;
-}
-
-.fd-seg.is-on {
-  stroke: var(--magenta);
-}
-
-.fd-dot,
-.fd-hand,
-.fd-pin {
-  fill: var(--white);
-}
-
-.fp__tc {
+.fbar {
   display: grid;
-  gap: 4px;
-  font: 500 13px/1.2 var(--mono);
+  gap: 8px;
+}
+
+.fbar__tc {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font: 500 13px/1 var(--mono);
   letter-spacing: 0.06em;
   color: rgba(252, 253, 255, 0.7);
   font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
 }
 
-.fp__tc b {
-  font-size: 22px;
+.fbar__tc b {
+  font-size: 18px;
   color: var(--white);
 }
 
-.fp__tc span {
+.fbar__tc em {
+  margin-left: auto;
+  font-style: normal;
   text-transform: uppercase;
   color: var(--lilac);
+}
+
+.fbar__track {
+  position: relative;
+  display: flex;
+  gap: 4px;
+  height: 4px;
+}
+
+.fbar__s {
+  flex-basis: 0;
+  background: rgba(252, 253, 255, 0.25);
+}
+
+.fbar__s.is-done {
+  background: rgba(252, 253, 255, 0.6);
+}
+
+.fbar__s.is-on {
+  background: var(--magenta);
+}
+
+.fbar__ph {
+  position: absolute;
+  top: -4px;
+  width: 2px;
+  height: 12px;
+  margin-left: -1px;
+  background: var(--white);
 }
 
 /* ---------------------------------------------------------------- controls */
@@ -1245,7 +1219,7 @@
   .fp__hud {
     left: 12px;
     right: 12px;
-    top: 12px;
+    top: 10px;
   }
   .fp__controls {
     left: 12px;

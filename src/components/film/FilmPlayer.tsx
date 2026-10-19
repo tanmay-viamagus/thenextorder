@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { SelectWordmark, SynthiaLogo, VelocityWordmark } from "@/components/Brand";
-import { FilmDial } from "@/components/clock/Clock";
 import { ShiftRing } from "@/components/clock/ShiftRing";
 import { YearCycle } from "@/components/clock/YearCycle";
 import { FILM_DURATION, filmScenes, sceneAtTime, type FilmSceneId } from "@/content/film";
@@ -17,7 +16,7 @@ const LABEL: Record<FilmSceneId, string> = {
   build: "Velocity AI · Build",
   operate: "Synthia AI · Operate",
   scale: "ViaMagus Select · Scale",
-  converge: "Three hands, one clock",
+  converge: "Three practices, one ViaMagus",
   close: "The invitation",
 };
 
@@ -30,22 +29,54 @@ function readStart() {
   return { t: reduce ? 27 : 0, paused: reduce };
 }
 
-const rad = (a: number) => (a * Math.PI) / 180;
-const tickLines = (n: number, r: number, major: number, minor: number) =>
-  Array.from({ length: n }, (_, i) => {
-    const big = i % 5 === 0;
-    const a = (i * 360) / n;
-    const x0 = Math.sin(rad(a)) * r;
-    const y0 = -Math.cos(rad(a)) * r;
-    const x1 = Math.sin(rad(a)) * (r - (big ? major : minor));
-    const y1 = -Math.cos(rad(a)) * (r - (big ? major : minor));
-    return <line key={i} x1={x0.toFixed(1)} y1={y0.toFixed(1)} x2={x1.toFixed(1)} y2={y1.toFixed(1)} className={big ? "mt mt--h" : "mt"} />;
-  });
+/**
+ * The ViaMagus mark, cut into three exact pieces — one per practice. They meet
+ * along their shared edges and, reassembled, are the mark itself
+ * (viamagus.com/viamagus-logo.svg). The two right pieces overlap by a hair at
+ * x = 20.33 so the seam never shows.
+ */
+const PIECE = {
+  velocity: { d: "M0,0 L6.7765,11.8958 L13.5529,0 Z", box: "-0.4 -0.4 14.35 12.7" },
+  synthia: { d: "M16.9414,0 L20.3296,5.9479 L20.3396,11.8955 L10.165,11.8955 Z", box: "9.76 -0.4 11 12.7" },
+  select: { d: "M23.7177,0 L30.4941,11.8955 L20.3196,11.8955 L20.3296,5.9479 Z", box: "19.9 -0.4 11 12.7" },
+} as const;
+
+function Piece({ k, className }: { k: keyof typeof PIECE; className: string }) {
+  return (
+    <svg className={className} viewBox={PIECE[k].box}>
+      <path d={PIECE[k].d} />
+    </svg>
+  );
+}
+
+/** The film's timing: one segment per scene, a playhead, the timecode. */
+function FilmBar({ t, label }: { t: number; label: string }) {
+  return (
+    <div className="fbar">
+      <p className="fbar__tc">
+        <b>00:{String(Math.floor(t)).padStart(2, "0")}</b>
+        <span>/ 00:30</span>
+        <em>{label}</em>
+      </p>
+      <div className="fbar__track">
+        {filmScenes.map((s) => (
+          <span
+            key={s.id}
+            className={`fbar__s${t >= s.start && t < s.end ? " is-on" : ""}${t >= s.end ? " is-done" : ""}`}
+            style={{ flexGrow: s.end - s.start }}
+          />
+        ))}
+        <span className="fbar__ph" style={{ left: `${(t / FILM_DURATION) * 100}%` }} />
+      </div>
+    </div>
+  );
+}
 
 /**
  * The film — 30 s, 16:9, silent-first, loops. Directed for a room:
  * one idea per beat, never more than a few words on screen, every product as
- * one big legible transformation, and a payoff — three hands locking at twelve.
+ * one big legible transformation, and a payoff — the three practices, as three
+ * pieces of the ViaMagus mark, fly in and lock together into the logo.
  * The clock decides which scene is on; each scene's motion is CSS that starts
  * when the scene does (--into lets the clock join a scene part-way).
  */
@@ -272,14 +303,9 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
 
         {/* 10–14 · BUILD: three months becomes three-to-four weeks */}
         <section className="fs fs--build fs--p" data-id="build">
-          <svg className="fs__ring" viewBox="-500 -500 1000 1000">
-            {tickLines(60, 480, 40, 18)}
-            <g className="ring__hand ring__hand--fast">
-              <rect x="-3" y="-470" width="6" height="520" />
-            </g>
-          </svg>
+          <Piece k="velocity" className="fs__piece fs__piece--velocity" />
           <p className="fs__mono fs__era k-in" style={d(0)}>
-            The second hand
+            01 / 03 · Velocity AI
           </p>
           <p className="fs__verb k-up" style={d(0.1)}>
             Build.
@@ -296,14 +322,9 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
 
         {/* 14–18 · OPERATE: the draft gets signed */}
         <section className="fs fs--operate fs--p" data-id="operate">
-          <svg className="fs__ring" viewBox="-500 -500 1000 1000">
-            {tickLines(60, 480, 40, 18)}
-            <g className="ring__hand ring__hand--mid">
-              <rect x="-7" y="-420" width="14" height="470" />
-            </g>
-          </svg>
+          <Piece k="synthia" className="fs__piece fs__piece--synthia" />
           <p className="fs__mono fs__era k-in" style={d(0)}>
-            The minute hand
+            02 / 03 · Synthia AI
           </p>
           <p className="fs__verb k-up" style={d(0.1)}>
             Operate.
@@ -326,14 +347,9 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
 
         {/* 18–22 · SCALE: fifty CVs become three verdicts */}
         <section className="fs fs--scale fs--p" data-id="scale">
-          <svg className="fs__ring" viewBox="-500 -500 1000 1000">
-            {tickLines(60, 480, 40, 18)}
-            <g className="ring__hand ring__hand--slow">
-              <rect x="-12" y="-300" width="24" height="350" />
-            </g>
-          </svg>
+          <Piece k="select" className="fs__piece fs__piece--select" />
           <p className="fs__mono fs__era k-in" style={d(0)}>
-            The hour hand
+            03 / 03 · ViaMagus Select
           </p>
           <p className="fs__verb k-up" style={d(0.1)}>
             Scale.
@@ -351,35 +367,23 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
           </div>
         </section>
 
-        {/* 22–26 · PAYOFF: three hands lock at twelve */}
+        {/* 22–26 · PAYOFF: three pieces fly in and lock into the ViaMagus mark */}
         <section className="fs fs--converge" data-id="converge">
-          <svg className="lock" viewBox="-500 -500 1000 1000">
-            <circle r="497" className="lock__face" />
-            {tickLines(60, 480, 46, 20)}
-            <circle r="497" className="lock__pulse" />
-            <g className="lock__h lock__h--select">
-              <rect x="-16" y="-260" width="32" height="300" rx="2" />
-            </g>
-            <g className="lock__h lock__h--synthia">
-              <rect x="-8" y="-400" width="16" height="440" rx="2" />
-            </g>
-            <g className="lock__h lock__h--velocity">
-              <rect x="-3" y="-462" width="6" height="540" />
-              <circle cy="-462" r="12" />
-            </g>
-            <circle r="78" className="lock__pin" />
-            <g transform="translate(-50 -20) scale(3.3)" className="lock__mark">
+          <svg className="asm" viewBox="-0.6 -0.6 31.7 13.1">
+            <path className="asm__p asm__p--velocity" d={PIECE.velocity.d} />
+            <path className="asm__p asm__p--synthia" d={PIECE.synthia.d} />
+            <path className="asm__p asm__p--select" d={PIECE.select.d} />
+            {/* once locked, the whole mark settles over the pieces: no seams */}
+            <g className="asm__whole">
               <path d="M0,0l6.7765,11.8958l6.7764,-11.8958z" />
               <path d="M23.7177,0l-3.3881,5.9479l-3.3882,-5.9479l-6.7764,11.8955h20.3291z" />
             </g>
           </svg>
-          <p className="fs__trio k-up" style={d(2.75)}>
-            Three hands. One clock.
+          <p className="asm__word">viamagus</p>
+          <p className="fs__trio k-up" style={d(2.95)}>
+            Three practices. One ViaMagus.
           </p>
-          <p className="fs__mono fs__begins k-in" style={d(2.6)}>
-            2025 onward · The next order
-          </p>
-          <p className="fs__mono fs__names k-in" style={d(3.05)}>
+          <p className="fs__mono fs__names k-in" style={d(3.2)}>
             <span className="k-v">Velocity AI</span> · <span className="k-s">Synthia AI</span> · <span className="k-x">ViaMagus Select</span>
           </p>
         </section>
@@ -401,11 +405,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
       </div>
 
       <div className="fp__hud" aria-hidden="true">
-        <FilmDial scenes={filmScenes} t={hudT} duration={FILM_DURATION} />
-        <p className="fp__tc">
-          <b>00:{String(Math.floor(hudT)).padStart(2, "0")}</b> / 00:30
-          <span>{LABEL[sceneAtTime(hudT).id]}</span>
-        </p>
+        <FilmBar t={hudT} label={LABEL[sceneAtTime(hudT).id]} />
       </div>
 
       <div className="fp__controls">
@@ -431,10 +431,11 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
         alignment: The NEXT Order, for India’s GCC leaders. The old order, 2016 to 2019: the years count up over rows of
         identical units in lockstep — built to execute; 1,700+ GCCs in India today (nasscom and Zinnov, FY2024). The
         inflection point: on a ring of years the marker crosses 2020 and 2025, the years crack and then fuse — then the
-        mandate grew; 92% of India-based GCCs now aim beyond cost arbitrage (EY GCC Pulse Survey 2025). Build: Velocity AI — three months becomes three to four weeks, a shippable
+        mandate grew; 92% of India-based GCCs now aim beyond cost arbitrage (EY GCC Pulse Survey 2025). Build: Velocity AI, behind it the first piece of the ViaMagus mark — three months becomes three to four weeks, a shippable
         submodule every Friday. Operate: Synthia AI — a draft is stamped signed by a named officer. Scale: ViaMagus Select
-        — fifty CVs count down to three verdicts; the mandate is yours, so is the team. Three hands — cyan, violet and
-        amber — spin and lock together at twelve on the ViaMagus mark: three hands, one clock. Everything an enterprise
+        — fifty CVs count down to three verdicts; the mandate is yours, so is the team. Three pieces — cyan, violet and
+        amber, one per practice — fly in from three directions and lock together into the ViaMagus mark: three
+        practices, one ViaMagus. Everything an enterprise
         needs to become AI-native. The NEXT Order: request your place.
       </p>
     </div>
