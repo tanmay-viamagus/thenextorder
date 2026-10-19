@@ -1,12 +1,12 @@
 import { SelectWordmark, SynthiaLogo, VelocityWordmark, ViaMagusLogo } from "@/components/Brand";
 import { HandsClock } from "@/components/clock/Clock";
-import { YearCycle } from "@/components/clock/YearCycle";
 import { FilmButton } from "@/components/film/FilmOverlay";
 import { event, knownFacts, officialLinks } from "@/content/event";
-import { convergence, cta, invite, practices, shift } from "@/content/story";
+import { convergence, cta, invite, practices } from "@/content/story";
 import { FILM_DURATION } from "@/content/film";
 import { Chrome, Reveal, ShiftTitle } from "./Interactive";
 import { InviteForm } from "./InviteForm";
+import { GccEvolution } from "./GccEvolution";
 import { NameBoard } from "./NameBoard";
 import { Showcase } from "./Showcase";
 import { SelectMech, SynthiaMech, VelocityMech } from "./Mechanisms";
@@ -38,8 +38,8 @@ export function Site() {
           <a href="#name" data-for="name">
             GCC → ?
           </a>
-          <a href="#eras" data-for="eras">
-            The eras
+          <a href="#evolve" data-for="evolve">
+            How a GCC evolves
           </a>
           <a href="#practices" data-for="practices">
             The practices
@@ -74,44 +74,9 @@ export function Site() {
         {/* ------------------------------------------------ THE NAME · GCC → GIC → ? (split-flap, pinned) */}
         <NameBoard />
 
-        {/* ------------------------------------------------ THE ERAS · one hand, one revolution */}
-        <section id="eras" className="eras" data-era-scene data-era="a" data-tone="light" data-act="eras" aria-labelledby="eras-h">
-          <h2 id="eras-h" className="sr-only">
-            Three eras
-          </h2>
-          <div className="eras__stage">
-            <div className="eras__dial">
-              <YearCycle label="A ring of years from 2016 to 2030, starting in 2016. 2016 to 2019, the old order: the years are solid and uniform, built to execute. The old order ends in 2019; the inflection point runs 2020 to 2024, its years shifted out of line. The next order begins in 2025: the years fuse into owned blocks — product, platforms, capability — and one is left open." />
-              <div className="eras__copy">
-                <p className="eras__yr" aria-hidden="true" />
-                {shift.map((s, i) => (
-                  <div key={s.n} className={`eras__st eras__st--${"abc"[i]}`}>
-                    <p className="eras__n">
-                      {s.years} · {s.era}
-                    </p>
-                    <h3 className="eras__h">{s.headline}</h3>
-                    <p className="eras__line">{s.line}</p>
-                    {s.evidence ? (
-                      <p className="eras__ev">
-                        <b>{s.evidence.figure}</b>
-                        <span>
-                          {s.evidence.finding}
-                          <a href={s.evidence.url} {...ext}>
-                            {s.evidence.source}, {s.evidence.date}
-                            <NewTab />
-                          </a>
-                        </span>
-                      </p>
-                    ) : null}
-                  </div>
-                ))}
-              </div>
-            </div>
-            <p className="eras__hint" aria-hidden="true">
-              Scroll through the years
-            </p>
-          </div>
-        </section>
+        {/* ------------------------------------------------ HOW A GCC EVOLVES · five stages (pinned)
+            The ring of years (YearCycle) is kept in components/clock for later use. */}
+        <GccEvolution />
 
         {/* ------------------------------------------------ THREE HANDS, ONE CLOCK */}
         <section id="practices" className="eco" data-tone="dark" data-act="practices" aria-labelledby="eco-h">
