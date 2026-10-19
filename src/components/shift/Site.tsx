@@ -19,14 +19,6 @@ const HAND = { velocity: "The second hand", synthia: "The minute hand", select: 
 const venue = [event.venue, event.city].filter(Boolean).join(", ") || null;
 const confirmed = [event.date, venue, event.format].filter(Boolean).join(" · ");
 
-function Status() {
-  return (
-    <p className="status">
-      <span className="status__k">Hosted by {knownFacts.host}</span>
-      {confirmed || "Date, venue and format to be announced. Request your place to hear first."}
-    </p>
-  );
-}
 
 export function Site() {
   return (
@@ -86,28 +78,34 @@ export function Site() {
           </h2>
           <div className="eras__stage">
             <div className="eras__dial">
-              <YearCycle label="A year, January to December. January to April, the old order: twelve months begin solid and uniform, built to execute. May to August, the inflection point: the months shift out of line. September to December, the next order: the months fuse into owned blocks — product, platforms, capability — and one is left open. A mark shows today’s place in the year." />
+              <YearCycle label="A ring of years from 2001 to 2030. 2001 to 2019, the old order: the years are solid and uniform, built to execute. The old order ends in 2019; the inflection point runs 2020 to 2024, its years shifted out of line. The next order begins in 2025: the years fuse into owned blocks — product, platforms, capability — and one is left open." />
               <div className="eras__copy">
+                <p className="eras__yr" aria-hidden="true" />
                 {shift.map((s, i) => (
                   <div key={s.n} className={`eras__st eras__st--${"abc"[i]}`}>
-                    <p className="eras__n">{s.era}</p>
+                    <p className="eras__n">
+                      {s.years} · {s.era}
+                    </p>
                     <h3 className="eras__h">{s.headline}</h3>
+                    <p className="eras__line">{s.line}</p>
                     {s.evidence ? (
                       <p className="eras__ev">
-                        <b>{s.evidence.figure}</b> {s.evidence.finding}.{" "}
-                        <a href={s.evidence.url} {...ext}>
-                          {s.evidence.source}, {s.evidence.date}
-                          <NewTab />
-                        </a>
+                        <b>{s.evidence.figure}</b>
+                        <span>
+                          {s.evidence.finding}
+                          <a href={s.evidence.url} {...ext}>
+                            {s.evidence.source}, {s.evidence.date}
+                            <NewTab />
+                          </a>
+                        </span>
                       </p>
                     ) : null}
-                    {s.coda ? <p className="eras__coda">{s.coda}</p> : null}
                   </div>
                 ))}
               </div>
             </div>
             <p className="eras__hint" aria-hidden="true">
-              Scroll through the year
+              Scroll through the years
             </p>
           </div>
         </section>
@@ -148,17 +146,20 @@ export function Site() {
                   </div>
                   <p className="pnl__line">“{p.line}”</p>
                   <div className="pnl__acts">
-                    <a className="pnl__go" href={`/register?interest=${p.key}`}>
-                      <span>Explore it at the event</span>
-                      <span className="pnl__arr" aria-hidden="true">→</span>
-                    </a>
-                    <a className="pnl__visit" href={p.href} {...ext}>
-                      <span className="pnl__vl">
-                        Visit product <span aria-hidden="true">↗</span>
+                    <a className="pnl__go" href={p.href} {...ext}>
+                      <span>{p.go}</span>
+                      <span className="pnl__goarr" aria-hidden="true">
+                        ↗
                       </span>
-                      <span className="pnl__vu">{p.source}</span>
-                      <NewTab />
+                      <span className="sr-only"> — {p.name} (opens in a new tab)</span>
                     </a>
+                    <a className="pnl__room" href={`/register?interest=${p.key}`}>
+                      <span>{p.room}</span>
+                      <span className="pnl__arr" aria-hidden="true">
+                        →
+                      </span>
+                    </a>
+                    <p className="pnl__src">{p.source}</p>
                   </div>
                 </article>
               );
@@ -179,7 +180,29 @@ export function Site() {
               </h2>
               <p className="close__who">{invite.what}</p>
               <p className="close__who close__who--b">{invite.who}</p>
-              <Status />
+              <ol className="steps">
+                <li>
+                  <b>01</b>
+                  <span>
+                    <strong>Request your place</strong> — about 30 seconds, mostly taps.
+                  </span>
+                </li>
+                <li>
+                  <b>02</b>
+                  <span>
+                    <strong>The ViaMagus team reviews every request</strong>, including the LinkedIn profile you share.
+                  </span>
+                </li>
+                <li>
+                  <b>03</b>
+                  <span>
+                    <strong>Invitations go out</strong> with the date, venue and format once they’re confirmed.
+                  </span>
+                </li>
+              </ol>
+              <p className="close__note">
+                {confirmed || "Date, venue and format to be announced"} · Hosted by {knownFacts.host}
+              </p>
             </div>
             <InviteForm source="site" />
           </div>

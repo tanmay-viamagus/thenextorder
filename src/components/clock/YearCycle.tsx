@@ -1,27 +1,34 @@
 "use client";
 
-import { useEffect, useRef, useSyncExternalStore } from "react";
+import { useEffect, useRef } from "react";
 
 /**
- * The year as the transition. Twelve months, January at the top, clockwise,
- * exactly 30° each. A marker travels the year as the visitor scrolls (or on
- * the film's clock); the months it passes change state:
- *   Jan–Apr · the old order — solid, uniform: built to execute
- *   May–Aug · the inflection point — shifted out of line, in purple
- *   Sep–Dec · the next order — fused into owned blocks, one left open
- * A small mark shows today's real position in the year.
+ * Three eras as a ring of years: 2001 at the top, clockwise to 2030, exactly
+ * 12° a year. A marker travels the years as the visitor scrolls (or on the
+ * film's clock) and the years it passes change state:
+ *   2001–2019 · the old order        — solid, uniform: built to execute
+ *   2020–2024 · the inflection point — shifted out of line, in purple
+ *   2025–2030 · the next order       — fused into owned blocks, one left open
+ * The boundaries are marked on the ring. The era dates are the story's framing,
+ * not data; the figures in the captions carry their own sources.
  */
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const OWNED: { m: number; name: string; fill: string; ink: string; open?: boolean }[] = [
-  { m: 8, name: "Product", fill: "#6608a9", ink: "#fcfbf8" },
-  { m: 9, name: "Platforms", fill: "#0e0d12", ink: "#fcfbf8" },
-  { m: 10, name: "Capability", fill: "#2f0050", ink: "#fcfbf8" },
-  { m: 11, name: "?", fill: "#f2d0ff", ink: "#6608a9", open: true },
+export const FIRST = 2001;
+const YEARS = 30;
+const STEP = 360 / YEARS; // 12°
+export const INFLECTION = 2020;
+export const NEXT = 2025;
+const yA = (year: number) => (year - FIRST) * STEP; // angle where a year begins
+
+const OWNED: { from: number; to: number; name: string; fill: string; ink: string; open?: boolean }[] = [
+  { from: 2025, to: 2026, name: "Product", fill: "#6608a9", ink: "#fcfbf8" },
+  { from: 2027, to: 2028, name: "Platforms", fill: "#0e0d12", ink: "#fcfbf8" },
+  { from: 2029, to: 2029, name: "Capability", fill: "#2f0050", ink: "#fcfbf8" },
+  { from: 2030, to: 2030, name: "?", fill: "#e9c6fb", ink: "#6608a9", open: true },
 ];
 
-const R = 430; // month band radius
-const W = 64; // month band width
-const GAP = 1.6; // degrees between months
+const R = 430; // band radius
+const W = 64; // band width
+const GAP = 1.2; // degrees between years
 const rad = (d: number) => (d * Math.PI) / 180;
 const pt = (a: number, r: number) => [Math.sin(rad(a)) * r, -Math.cos(rad(a)) * r];
 const f = (n: number) => n.toFixed(2);
@@ -31,21 +38,29 @@ const arc = (a0: number, a1: number, r: number, ccw = false) => {
   return `M${f(x0)} ${f(y0)} A${r} ${r} 0 ${a1 - a0 > 180 ? 1 : 0} ${ccw ? 0 : 1} ${f(x1)} ${f(y1)}`;
 };
 
-const noop = () => () => {};
-function todaySnapshot() {
-  const now = new Date(Date.now() + 5.5 * 3600e3);
-  const y = now.getUTCFullYear();
-  const start = Date.UTC(y, 0, 1);
-  const days = (Date.UTC(y + 1, 0, 1) - start) / 864e5;
-  const doy = (Date.UTC(y, now.getUTCMonth(), now.getUTCDate()) - start) / 864e5;
-  return `${(((doy + 0.5) / days) * 360).toFixed(2)}|Today · ${now.getUTCDate()} ${MONTHS[now.getUTCMonth()]}`;
+/** A boundary: a line across the band, out past the year names, then a two-line label. */
+function Boundary({ year, lines }: { year: number; lines: [string, string] }) {
+  const a = yA(year);
+  const [x0, y0] = pt(a, R - W / 2 - 10);
+  const [x1, y1] = pt(a, R + W / 2 + 92);
+  const left = a > 180;
+  const x2 = x1 + (left ? -46 : 46);
+  return (
+    <g className="yc-bound">
+      <polyline points={`${f(x0)},${f(y0)} ${f(x1)},${f(y1)} ${f(x2)},${f(y1)}`} />
+      <circle cx={f(x1)} cy={f(y1)} r="7" />
+      <text x={f(x2 + (left ? -12 : 12))} y={f(y1 - 16)} textAnchor={left ? "end" : "start"}>
+        <tspan className="yc-bound__a">{lines[0]}</tspan>
+        <tspan className="yc-bound__b" x={f(x2 + (left ? -12 : 12))} dy="34">
+          {lines[1]}
+        </tspan>
+      </text>
+    </g>
+  );
 }
 
 export function YearCycle({ label, getProgress }: { label: string; getProgress?: () => number }) {
   const svg = useRef<SVGSVGElement | null>(null);
-  // today's position in the year (India time) — read on the client only, so it is always current
-  const todayKey = useSyncExternalStore(noop, todaySnapshot, () => "");
-  const today = todayKey ? { a: Number(todayKey.split("|")[0]), text: todayKey.split("|")[1] } : null;
 
   useEffect(() => {
     const el = svg.current;
@@ -54,7 +69,7 @@ export function YearCycle({ label, getProgress }: { label: string; getProgress?:
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
     const marker = el.querySelector<SVGGElement>(".yc-marker")!;
     const sweep = el.querySelector<SVGPathElement>(".yc-sweep")!;
-    const months = [...el.querySelectorAll<SVGPathElement>(".yc-m")];
+    const years = [...el.querySelectorAll<SVGPathElement>(".yc-m")];
     const owned = [...el.querySelectorAll<SVGGElement>(".yc-own")];
     let last = -1;
     let raf = 0;
@@ -66,34 +81,40 @@ export function YearCycle({ label, getProgress }: { label: string; getProgress?:
         const r = scene.getBoundingClientRect();
         p = Math.max(0, Math.min(1, -r.top / Math.max(1, r.height - window.innerHeight)));
       }
-      // reduced motion: the marker moves season by season, not continuously
-      if (reduce.matches) p = p < 0.34 ? 0.333 : p < 0.67 ? 0.666 : 1;
+      // reduced motion: the marker moves era by era, not continuously
+      if (reduce.matches) p = p < 0.4 ? 0.62 : p < 0.75 ? 0.8 : 1;
       if (Math.abs(p - last) < 0.0004) return;
       last = p;
       const A = Math.min(359.9, p * 360);
+      const year = Math.min(FIRST + YEARS - 1, FIRST + Math.floor(A / STEP));
       marker.setAttribute("transform", `rotate(${f(A)})`);
       sweep.setAttribute("d", A < 0.5 ? "" : `M0 0 ${arc(0, A, R + W / 2 + 6).replace(/^M/, "L")} Z`);
-      if (scene) scene.dataset.era = A < 120 ? "a" : A < 240 ? "b" : "c";
-      months.forEach((m, i) => {
-        const k = Math.max(0, Math.min(1, (A - i * 30) / 30));
-        m.dataset.state = k <= 0 ? "" : i < 4 ? "a" : i < 8 ? "b" : "c";
-        // the inflection months shift out of line, alternately outward and inward
-        const off = i >= 4 && i < 8 ? (i % 2 ? 14 : -12) * k : 0;
-        m.style.transform = off ? `translate(${f(Math.sin(rad(i * 30 + 15)) * off)}px, ${f(-Math.cos(rad(i * 30 + 15)) * off)}px)` : "";
+      const host = scene ?? el.parentElement;
+      if (host) {
+        host.dataset.era = year < INFLECTION ? "a" : year < NEXT ? "b" : "c";
+        host.style.setProperty("--yr", String(year));
+      }
+      years.forEach((m, i) => {
+        const yr = FIRST + i;
+        const k = Math.max(0, Math.min(1, (A - i * STEP) / STEP));
+        m.dataset.state = k <= 0 ? "" : yr < INFLECTION ? "a" : yr < NEXT ? "b" : "c";
+        // the inflection years shift out of line, alternately outward and inward
+        const off = yr >= INFLECTION && yr < NEXT ? (i % 2 ? 14 : -12) * k : 0;
+        const mid = i * STEP + STEP / 2;
+        m.style.transform = off ? `translate(${f(Math.sin(rad(mid)) * off)}px, ${f(-Math.cos(rad(mid)) * off)}px)` : "";
       });
       owned.forEach((o, j) => {
-        const i = OWNED[j].m;
-        const k = Math.max(0, Math.min(1, (A - i * 30) / 30));
+        const k = Math.max(0, Math.min(1, (A - yA(OWNED[j].from)) / STEP));
         o.style.opacity = String(k);
       });
     };
     raf = requestAnimationFrame(draw);
-    // keyboard: focusing an era's link moves the marker to that season, so focus never lands on a hidden caption
+    // keyboard: focusing an era's link moves the marker into that era, so focus never lands on a hidden caption
     const onFocus = (e: FocusEvent) => {
       if (!scene || getProgress) return;
       const st = (e.target as HTMLElement).closest?.(".eras__st");
       if (!st) return;
-      const p = st.classList.contains("eras__st--a") ? 0.2 : st.classList.contains("eras__st--b") ? 0.52 : 0.95;
+      const p = st.classList.contains("eras__st--a") ? 0.45 : st.classList.contains("eras__st--b") ? 0.72 : 0.97;
       const top = scene.getBoundingClientRect().top + window.scrollY;
       window.scrollTo({ top: top + p * (scene.offsetHeight - window.innerHeight), behavior: "instant" });
     };
@@ -104,62 +125,63 @@ export function YearCycle({ label, getProgress }: { label: string; getProgress?:
     };
   }, [getProgress]);
 
-  const eraPath = (id: string, a0: number, a1: number, ccw = false) => <path id={id} d={arc(a0, a1, R - W / 2 - 34, ccw)} fill="none" />;
+  const eraPath = (id: string, a0: number, a1: number, ccw = false) => <path id={id} d={arc(a0, a1, R - W / 2 - 30, ccw)} fill="none" />;
 
   return (
-    <svg ref={svg} className="yc" viewBox="-760 -620 1520 1240" role="img" aria-label={label}>
+    <svg ref={svg} className="yc" viewBox="-900 -620 1800 1240" role="img" aria-label={label}>
       <defs>
-        {eraPath("yc-e1", 4, 116)}
-        {eraPath("yc-e2", 124, 236, true)}
-        {eraPath("yc-e3", 244, 356)}
+        {eraPath("yc-e1", yA(2001) + 3, yA(INFLECTION) - 3)}
+        {eraPath("yc-e2", yA(INFLECTION) + 2, yA(NEXT) - 2, true)}
       </defs>
       <circle r={R + W / 2 + 18} className="yc-rim" />
       <path className="yc-sweep" d="" />
+      <circle r={R - W / 2 - 104} className="yc-disc" />
 
-      {/* twelve months */}
-      {MONTHS.map((m, i) => (
-        <path key={m} className="yc-m" d={arc(i * 30 + GAP / 2, (i + 1) * 30 - GAP / 2, R)} strokeWidth={W} />
+      {/* thirty years */}
+      {Array.from({ length: YEARS }, (_, i) => (
+        <path key={i} className="yc-m" d={arc(i * STEP + GAP / 2, (i + 1) * STEP - GAP / 2, R)} strokeWidth={W} />
       ))}
 
-      {/* Sep–Dec fuse into owned blocks once the marker reaches them */}
+      {/* 2025 onward: the years fuse into owned blocks once the marker reaches them */}
       {OWNED.map((o) => {
-        const a0 = o.m * 30 + (o.m === 8 ? GAP / 2 : 0);
-        const a1 = (o.m + 1) * 30 - (o.m === 11 ? GAP / 2 : 0);
-        const mid = o.m * 30 + 15;
-        const [x, y] = pt(mid, R);
-        const rot = mid > 90 && mid < 270 ? mid - 180 : mid;
+        const a0 = yA(o.from) + (o.from === NEXT ? GAP / 2 : 0);
+        const a1 = yA(o.to + 1) - (o.open ? GAP / 2 : 0);
+        const mid = (a0 + a1) / 2;
+        // labels sit just inside the band, upright, reading in toward the centre
+        const [lx, ly] = pt(mid, R - W / 2 - 18);
+        const [qx, qy] = pt(mid, R);
         return (
           <g key={o.name} className={`yc-own${o.open ? " yc-own--open" : ""}`} style={{ opacity: 0 }}>
             <path d={arc(a0, a1, R)} strokeWidth={W} stroke={o.fill} fill="none" />
-            <text
-              x={f(x)}
-              y={f(y)}
-              transform={`rotate(${f(rot)} ${f(x)} ${f(y)})`}
-              fill={o.ink}
-              textAnchor="middle"
-              dominantBaseline="central"
-              className={o.open ? "yc-q" : "yc-ol"}
-            >
-              {o.open ? "?" : o.name.toUpperCase()}
-            </text>
+            {o.open ? (
+              <text x={f(qx)} y={f(qy)} className="yc-q" fill={o.ink} textAnchor="middle" dominantBaseline="central">
+                ?
+              </text>
+            ) : (
+              <text x={f(lx)} y={f(ly)} className="yc-ol" fill={o.fill} textAnchor={mid > 180 ? "start" : "end"} dominantBaseline="central">
+                {o.name}
+              </text>
+            )}
           </g>
         );
       })}
 
-      {/* month names, upright, exactly at each month's centre */}
-      {MONTHS.map((m, i) => {
-        const [x, y] = pt(i * 30 + 15, R + W / 2 + 54);
+      {/* every year, upright, at its own centre */}
+      {Array.from({ length: YEARS }, (_, i) => {
+        const yr = FIRST + i;
+        const [x, y] = pt(i * STEP + STEP / 2, R + W / 2 + 46);
+        const major = yr % 5 === 0 || yr === FIRST || yr === INFLECTION || yr === NEXT;
         return (
-          <text key={m} x={f(x)} y={f(y)} className="yc-ml" textAnchor="middle" dominantBaseline="central">
-            {m.toUpperCase()}
+          <text key={yr} x={f(x)} y={f(y)} className={`yc-y${major ? " is-major" : ""}`} textAnchor="middle" dominantBaseline="central">
+            {yr}
           </text>
         );
       })}
 
-      {/* the three seasons, written along the ring */}
+      {/* the two eras before the next, written along the inside of the ring */}
       <text className="yc-era">
         <textPath href="#yc-e1" startOffset="50%" textAnchor="middle">
-          The old order
+          The old order · 2001–2019
         </textPath>
       </text>
       <text className="yc-era">
@@ -167,40 +189,16 @@ export function YearCycle({ label, getProgress }: { label: string; getProgress?:
           The inflection point
         </textPath>
       </text>
-      <text className="yc-era">
-        <textPath href="#yc-e3" startOffset="50%" textAnchor="middle">
-          The next order
-        </textPath>
-      </text>
 
-      {/* today, at its real place in the year */}
-      {today ? (
-        <g className="yc-today">
-          {(() => {
-            const [x0, y0] = pt(today.a, R + W / 2 + 4);
-            const [x1, y1] = pt(today.a, R + W / 2 + 26);
-            // a bent leader, clear of the month names: out past the ring, then along
-            const left = today.a > 180;
-            const y2 = y1 + (Math.abs(Math.cos(rad(today.a))) < 0.5 ? (y1 < 0 ? -72 : 72) : 0);
-            const x2 = x1 + (left ? -56 : 56);
-            return (
-              <>
-                <polyline points={`${f(x0)},${f(y0)} ${f(x1)},${f(y1)} ${f(x1 + (left ? -28 : 28))},${f(y2)} ${f(x2)},${f(y2)}`} />
-                <text x={f(x2 + (left ? -12 : 12))} y={f(y2)} textAnchor={left ? "end" : "start"} dominantBaseline="central">
-                  {today.text}
-                </text>
-              </>
-            );
-          })()}
-        </g>
-      ) : null}
+      {/* where one order ends and the next begins */}
+      <Boundary year={INFLECTION} lines={["Old order ends · 2019", "Inflection · 2020"]} />
+      <Boundary year={NEXT} lines={["The next order", "Begins 2025"]} />
 
-      {/* the marker travelling the year */}
+      {/* the marker travelling the years */}
       <g className="yc-marker">
         <line x1="0" y1={-(R - W / 2 - 8)} x2="0" y2={-(R + W / 2 + 8)} />
         <circle cy={-(R + W / 2 + 8)} r="11" />
       </g>
-      <circle r={R - W / 2 - 62} className="yc-disc" />
     </svg>
   );
 }

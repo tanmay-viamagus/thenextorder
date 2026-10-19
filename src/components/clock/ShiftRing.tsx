@@ -40,12 +40,12 @@ function Segments({ ring }: { ring: Ring }) {
   );
 }
 
-export function ShiftRing() {
+export function ShiftRing({ still = false }: { still?: boolean }) {
   const ref = useRef<SVGSVGElement | null>(null);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || still) return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
     const fine = window.matchMedia("(pointer: fine)");
     let want = 1;
@@ -92,10 +92,10 @@ export function ShiftRing() {
       cancelAnimationFrame(raf);
       window.removeEventListener("pointermove", onMove);
     };
-  }, []);
+  }, [still]);
 
   return (
-    <div className="ring">
+    <div className={`ring${still ? " ring--still" : ""}`}>
       <svg ref={ref} className="ring__svg" viewBox="-720 -520 1200 1040" preserveAspectRatio="xMaxYMid meet" aria-hidden="true">
         <defs>
           <clipPath id="ring-up">
@@ -145,11 +145,13 @@ export function ShiftRing() {
           ↓ The old order
         </text>
       </svg>
-      <button type="button" className="ring__play" onClick={() => window.dispatchEvent(new Event(OPEN_FILM))}>
-        <span className="ring__tri" aria-hidden="true" />
-        <span className="ring__pl">See what’s changing</span>
-        <span className="ring__pt">Film · 0:30</span>
-      </button>
+      {still ? null : (
+        <button type="button" className="ring__play" onClick={() => window.dispatchEvent(new Event(OPEN_FILM))}>
+          <span className="ring__tri" aria-hidden="true" />
+          <span className="ring__pl">See what’s changing</span>
+          <span className="ring__pt">Film · 0:30</span>
+        </button>
+      )}
     </div>
   );
 }

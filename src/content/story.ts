@@ -18,15 +18,17 @@ export const description =
 
 export const tagline = "Where was your centre, where is it now — and where could it go next?";
 
-/** The three states of the shift — one headline each. */
-export const shift: { n: string; era: string; headline: string; evidence?: Evidence; coda?: string }[] = [
+/** The three eras on the ring of years — one headline, one line a leader recognises, one sourced number. */
+export const shift: { n: string; years: string; era: string; headline: string; line: string; evidence?: Evidence }[] = [
   {
     n: "I",
+    years: "2001–2019",
     era: "The old order",
     headline: "Built to execute.",
+    line: "The brief came from HQ. Success was measured in cost, SLAs and headcount.",
     evidence: {
       figure: "1,700+",
-      finding: "GCCs in India, employing over 1.9 million people",
+      finding: "GCCs in India today",
       source: "nasscom & Zinnov",
       date: "FY2024",
       url: "https://nasscom.in/knowledge-center/publications/india-gcc-landscape-report-5-year-journey",
@@ -34,11 +36,13 @@ export const shift: { n: string; era: string; headline: string; evidence?: Evide
   },
   {
     n: "II",
+    years: "2020–2024",
     era: "The inflection point",
     headline: "Then the mandate grew.",
+    line: "The question changed from ‘how much cheaper?’ to ‘what can you own?’",
     evidence: {
       figure: "92%",
-      finding: "of India-based GCCs aim to deliver value beyond cost arbitrage",
+      finding: "of India-based GCCs now aim beyond cost arbitrage",
       source: "EY GCC Pulse Survey",
       date: "2025",
       url: "https://www.ey.com/en_in/newsroom/2025/11/58-percent-gccs-in-india-investing-in-agentic-ai-two-third-creating-dedicated-innovation-teams-to-globalize-ideas-ey-gcc-pulse-survey-2025",
@@ -46,9 +50,10 @@ export const shift: { n: string; era: string; headline: string; evidence?: Evide
   },
   {
     n: "III",
+    years: "2025 onward",
     era: "The next order",
     headline: "Built to own, create and lead.",
-    coda: "Every centre’s path is different. What will yours own next?",
+    line: "Products, platforms and decisions — run from India. What will yours own next?",
   },
 ];
 
@@ -64,6 +69,10 @@ export const practices: {
   for: string;
   /** verbatim from the official page */
   line: string;
+  /** the way into the conversation at the event */
+  room: string;
+  /** the action on the product's own site */
+  go: string;
   href: string;
   source: string;
 }[] = [
@@ -75,6 +84,8 @@ export const practices: {
     for: "For centres taking on product ownership.",
     // viamagus.com/velocity-ai: "Three-month timelines become three-to-four weeks, with a shippable submodule delivered every single Friday."
     line: "Three-month timelines become three-to-four weeks.",
+    room: "Bring a build challenge to the room",
+    go: "Let’s build",
     href: "https://viamagus.com/velocity-ai",
     source: "viamagus.com/velocity-ai",
   },
@@ -86,6 +97,8 @@ export const practices: {
     for: "For centres running processes for the enterprise.",
     // viamagus.com/synthia-ai
     line: "Every AI output is a draft until a named officer signs it.",
+    room: "Bring a process to the room",
+    go: "Let’s automate",
     href: "https://viamagus.com/synthia-ai",
     source: "viamagus.com/synthia-ai",
   },
@@ -97,6 +110,8 @@ export const practices: {
     for: "For centres building capability they don’t have yet.",
     // viamagusselect.ai (hero headline)
     line: "The mandate is yours. So is the team.",
+    room: "Bring a hiring brief to the room",
+    go: "Let’s hire",
     href: "https://www.viamagusselect.ai/",
     source: "viamagusselect.ai",
   },

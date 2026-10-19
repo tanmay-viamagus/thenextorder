@@ -4,9 +4,10 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { SelectWordmark, SynthiaLogo, VelocityWordmark } from "@/components/Brand";
 import { FilmDial } from "@/components/clock/Clock";
+import { ShiftRing } from "@/components/clock/ShiftRing";
 import { YearCycle } from "@/components/clock/YearCycle";
 import { FILM_DURATION, filmScenes, sceneAtTime, type FilmSceneId } from "@/content/film";
-import { convergence, shift } from "@/content/story";
+import { convergence, cta, shift } from "@/content/story";
 import { Score } from "./score";
 
 const LABEL: Record<FilmSceneId, string> = {
@@ -185,10 +186,10 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
     };
   }, [toggleSound, onClose]);
 
-  // the year on the film clock: the marker runs May→December during 06–08.6
+  // the ring of years on the film clock: the marker runs 2016 → 2030 during 06–09.4, crossing both boundaries
   const inflP = useCallback(() => {
     const t = clock.current.t;
-    return t < 6 ? 0.33 : Math.min(1, 0.33 + ((t - 6) / 2.6) * 0.67);
+    return t < 6 ? 0.5 : Math.min(1, 0.5 + ((t - 6) / 3.4) * 0.5);
   }, []);
 
   const d = (s: number): CSSProperties => ({ ["--d" as string]: `${s}s` });
@@ -198,15 +199,9 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
       <div className="fp__stage" aria-hidden="true">
         {/* 00–03 · HOOK: a giant dial sweeps; the title lands on the third second */}
         <section className="fs fs--title" data-id="title">
-          <svg className="mac" viewBox="-500 -500 1000 1000">
-            <circle r="497" className="mac__face" />
-            {tickLines(60, 480, 70, 30)}
-            <g className="mac__hand">
-              <rect x="-3" y="-490" width="6" height="590" />
-              <circle cy="-490" r="12" />
-            </g>
-            <circle r="18" className="mac__pin" />
-          </svg>
+          <div className="fs__shiftring">
+            <ShiftRing still />
+          </div>
           <p className="fs__mono fs__tl k-in" style={d(0.3)}>
             An invitation from ViaMagus
           </p>
@@ -229,7 +224,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
         {/* 03–06 · THE OLD ORDER: identical units, in lockstep */}
         <section className="fs fs--old" data-id="old">
           <div className="march">
-            {[0, 1, 2, 3].map((r) => (
+            {[0, 1, 2].map((r) => (
               <div key={r} className="march__row" style={{ ["--r" as string]: r } as CSSProperties}>
                 {Array.from({ length: 40 }, (_, i) => (
                   <span key={i} />
@@ -237,15 +232,16 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
               </div>
             ))}
           </div>
+          <p className="fs__yrs" />
           <div className="fs__copy">
             <p className="fs__mono fs__era k-in" style={d(0)}>
-              I · {shift[0].era}
+              {shift[0].years} · {shift[0].era}
             </p>
             <p className="fs__h k-up" style={d(0.15)}>
               {shift[0].headline}
             </p>
             <p className="fs__stat k-up" style={d(1.2)}>
-              <b>{shift[0].evidence!.figure}</b> GCCs in India · {shift[0].evidence!.source}, {shift[0].evidence!.date}
+              <b>{shift[0].evidence!.figure}</b> {shift[0].evidence!.finding} · {shift[0].evidence!.source}, {shift[0].evidence!.date}
             </p>
           </div>
         </section>
@@ -257,14 +253,14 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
           </div>
           <div className="fs__copy">
             <p className="fs__mono fs__era k-in" style={d(0)}>
-              II · {shift[1].era}
+              {shift[1].years} · {shift[1].era}
             </p>
             <div className="swap">
               <p className="fs__h swap__a">{shift[1].headline}</p>
               <div className="swap__b">
                 <p className="fs__big">{shift[1].evidence!.figure}</p>
                 <p className="fs__under">
-                  of India-based GCCs aim to deliver value beyond cost arbitrage.
+                  {shift[1].evidence!.finding}.
                   <span>
                     {shift[1].evidence!.source}, {shift[1].evidence!.date}
                   </span>
@@ -380,6 +376,9 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
           <p className="fs__trio k-up" style={d(2.75)}>
             Three hands. One clock.
           </p>
+          <p className="fs__mono fs__begins k-in" style={d(2.6)}>
+            2025 onward · The next order
+          </p>
           <p className="fs__mono fs__names k-in" style={d(3.05)}>
             <span className="k-v">Velocity AI</span> · <span className="k-s">Synthia AI</span> · <span className="k-x">ViaMagus Select</span>
           </p>
@@ -393,7 +392,10 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
             <p className="fs__endt">
               <span>The NEXT</span> Order.
             </p>
-            <p className="fs__endu">{host ? `${host}/register` : "Request your invitation"}</p>
+            <p className="fs__endu">
+              <span>{cta.primary}</span>
+              <span className="fs__endurl">{host ? `${host}/register` : ""}</span>
+            </p>
           </div>
         </section>
       </div>
@@ -425,14 +427,15 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
         )}
       </div>
       <p className="sr-only">
-        A 30-second film. A giant clock sweeps; The NEXT Order, for India’s GCC leaders. The old order: rows of identical
-        units in lockstep — the work you were given; 1,700+ GCCs in India (nasscom and Zinnov, FY2024). The inflection
-        point: the dial cracks — then the walls moved; 92% of India-based GCCs aim to deliver value beyond cost
-        arbitrage (EY GCC Pulse Survey 2025). Build: Velocity AI — three months becomes three to four weeks, a shippable
+        A 30-second film. A ring of identical segments is cut by a magenta line and its upper half twists out of
+        alignment: The NEXT Order, for India’s GCC leaders. The old order, 2001 to 2019: the years count up over rows of
+        identical units in lockstep — built to execute; 1,700+ GCCs in India today (nasscom and Zinnov, FY2024). The
+        inflection point: on a ring of years the marker crosses 2020 and 2025, the years crack and then fuse — then the
+        mandate grew; 92% of India-based GCCs now aim beyond cost arbitrage (EY GCC Pulse Survey 2025). Build: Velocity AI — three months becomes three to four weeks, a shippable
         submodule every Friday. Operate: Synthia AI — a draft is stamped signed by a named officer. Scale: ViaMagus Select
         — fifty CVs count down to three verdicts; the mandate is yours, so is the team. Three hands — cyan, violet and
         amber — spin and lock together at twelve on the ViaMagus mark: three hands, one clock. Everything an enterprise
-        needs to become AI-native. The NEXT Order: request your invitation.
+        needs to become AI-native. The NEXT Order: request your place.
       </p>
     </div>
   );
