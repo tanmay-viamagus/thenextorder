@@ -172,3 +172,25 @@ What held up: the cut title, the transformation, and the open "?" volume, which 
 - **Keyboard:** 29 focus stops with 0 problems at 1440 px.
 - **Registration:** end-to-end test passed, and test rows were deleted.
 - **Screenshots:** every scene at both widths and every film beat at 1920×1080, with no console errors.
+
+
+---
+
+## Round 9 — finesse
+
+**Feedback:** the landing felt cluttered (the clock crossed the title, the CTAs and the film button); there were too few reasons to engage with the products; the film needed directing; and the form should be short, selectable and paired with a moving showcase.
+
+**What changed:**
+- **Hero:** two columns, words left and a complete clock right, with nothing crossing. The film is a quiet play link, and the details sit in one mono line.
+- **Practices:** each has a "who it's for" line and "Explore it at the event", which preselects that practice on `/register`.
+- **Form:** three typed fields. Seat, interests and focus are tap-to-select chips (native radios and checkboxes). The new fields are stored, and `/register/response` counts interest by practice.
+- **`/register`:** a live showcase on the left (three-hands clock with a spotlight cycling through the practices, and the countdown), with the form on the right.
+- **Film, re-directed:** a hook, a lockstep old order, a crack then 92%, one big transformation per practice, and three hands locking at twelve as the payoff.
+
+**Verified:**
+- **Build:** `tsc`, `eslint` and `next build` pass.
+- **Accessibility:** axe WCAG 2.1 AA reports 0 violations on `/`, `/register` and `/film` at 1440 and 390 px.
+- **No JavaScript:** no hidden text.
+- **Keyboard:** chips show a visible focus ring.
+- **Registration end to end:** preselect, validation, chips stored, and the responses page and CSV all work. Test rows were deleted.
+- **Film:** checked frame by frame at 1920×1080.

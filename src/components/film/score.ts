@@ -113,15 +113,16 @@ export class Score {
     const ok = (t: number) => t >= fromT - 0.001;
     const scene = (id: string) => filmScenes.find((s) => s.id === id)!;
     for (const s of filmScenes) {
-      if (!ok(s.start) || s.id === "converge") continue;
+      if (!ok(s.start)) continue;
       this.kick(at(s.start), 0.85);
       this.hit(at(s.start), 0.3, 2500, "highpass", 0.12);
     }
     // hats under the three practices
     for (let t = scene("build").start; t < scene("scale").end; t += 0.25) if (ok(t)) this.hit(at(t), 0.08, 8000, "highpass", 0.04);
-    const c = scene("converge").start;
-    if (ok(c - 1.6)) this.riser(at(c - 1.6), 1.6);
-    if (ok(c)) this.boom(at(c));
+    // the three hands lock at twelve 2.5 s into the convergence: riser into it, boom on it
+    const lockAt = scene("converge").start + 2.5;
+    if (ok(lockAt - 2.2)) this.riser(at(lockAt - 2.2), 2.2);
+    if (ok(lockAt)) this.boom(at(lockAt));
     const end = scene("close").start;
     if (ok(end)) this.pad(at(end), FILM_DURATION - end);
   }

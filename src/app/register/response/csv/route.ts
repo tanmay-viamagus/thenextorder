@@ -3,7 +3,7 @@ import { listRegistrations } from "@/lib/registrations";
 /** CSV export of every registration. Protected by src/proxy.ts. */
 export async function GET() {
   const rows = await listRegistrations();
-  const cols = ["created_at", "updated_at", "name", "email", "organisation", "role", "next_mandate", "source"] as const;
+  const cols = ["created_at", "updated_at", "name", "email", "organisation", "role", "interests", "focus", "next_mandate", "source"] as const;
   const cell = (v: unknown) => {
     let s = v == null ? "" : String(v instanceof Date ? v.toISOString() : v);
     // neutralise spreadsheet formulas

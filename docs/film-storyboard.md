@@ -2,16 +2,18 @@
 
 The film is browser-rendered at `/film`, not a video file. It plays on a 1920×1080 stage that scales to any screen. It reuses the site's own artwork: the shifting grid and the three practice diagrams. The timeline lives in `src/content/film.ts`, and the motion in `src/styles/film-player.css`.
 
-| Time | Scene | On screen |
+Directed for a room: one idea per beat, a few words at most, every product as one big transformation, and a payoff.
+
+| Time | Beat | On screen |
 | --- | --- | --- |
-| 00–03 | **The NEXT Order** | The cut title on black beside the live clock (IST). "For India's GCC leaders" |
-| 03–06 | **The old order** | "The work you were given." The eras hand sweeps 12→4 over regular ticks. **1,700+** GCCs in India (nasscom & Zinnov, FY2024) |
-| 06–10 | **The inflection point** | "Then the walls moved." The hand sweeps 4→12: the ticks crack out of line, then fuse into owned arcs, one left open. **92%** (EY GCC Pulse Survey 2025). "What will your centre own next?" |
-| 10–14 | **Velocity AI — BUILD** | A 3-month bar compresses to 3–4 weeks, with a ship tick every Friday. "Three-month timelines become three-to-four weeks." |
-| 14–18 | **Synthia AI — OPERATE** | SOP → AI drafts → named officer signs ✓ → logged. "Every AI output is a draft until a named officer signs it." |
-| 18–22 | **ViaMagus Select — SCALE** | 50 CVs → 4 worth an engineer's time → 3 pass. "The mandate is yours. So is the team." |
-| 22–26 | **Convergence** | The three-hands clock: Velocity AI (seconds), Synthia AI (minutes) and ViaMagus Select (hours), pinned on the ViaMagus mark. "Three hands. One clock." |
-| 26–30 | **Close** | "Everything an enterprise needs to become AI-native." The register URL appears, then the threshold rises and wipes back to paper, where the title begins again |
+| 00–03 | **Hook** | Inside a giant clock face; the magenta second hand ticks three times and the camera pulls back. On the third tick, "THE NEXT ORDER." slams in on its cut line. "For India's GCC leaders" |
+| 03–06 | **The old order** | Rows of identical units step left in lockstep, once a second. "The work you were given." **1,700+** GCCs in India (nasscom & Zinnov, FY2024) |
+| 06–10 | **The inflection point** | The eras dial: ticks crack out of line, then fuse into owned arcs. "Then the walls moved." gives way to **92%**: "of India-based GCCs aim to deliver value beyond cost arbitrage" (EY GCC Pulse Survey 2025) |
+| 10–14 | **BUILD · Velocity AI** | Cyan second hand spinning. "3 months" is struck through and "3–4 weeks" lands. "A shippable submodule, every Friday." |
+| 14–18 | **OPERATE · Synthia AI** | Violet minute hand. An AI output marked DRAFT gets a **SIGNED ✓ · Named officer** stamp. "Every AI output is a draft until a named officer signs it." |
+| 18–22 | **SCALE · ViaMagus Select** | Amber hour hand. A counter runs 50 → 3; "CVs a search sends" becomes "pass — each with a written verdict". "The mandate is yours. So is the team." |
+| 22–26 | **Payoff** | Three hands, cyan, violet and amber, spin at their own speeds and lock together on twelve at 24.5 s, with a ring pulse, over the ViaMagus mark. "Three hands. One clock." |
+| 26–30 | **Close** | "Everything an enterprise needs to become AI-native." then "THE NEXT ORDER." with the register URL. A hard cut back to the hook for the loop |
 
 **Timing on screen:** a small dial in the top-right shows one arc per scene, a playhead hand, the timecode (00:12 / 00:30) and the current scene's name.
 

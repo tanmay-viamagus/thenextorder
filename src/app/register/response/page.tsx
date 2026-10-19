@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { connection } from "next/server";
 import { ViaMagusLogo } from "@/components/Brand";
-import { listRegistrations, ROLES, type Registration } from "@/lib/registrations";
+import { INTERESTS, SEATS } from "@/content/register";
+import { listRegistrations, type Registration } from "@/lib/registrations";
 
 export const metadata: Metadata = {
   title: "Registrations | The NEXT Order",
@@ -20,7 +21,8 @@ export default async function Responses() {
     console.error(e);
     failed = true;
   }
-  const byRole = ROLES.map((r) => [r, rows.filter((x) => x.role === r).length] as const);
+  const byRole = SEATS.map((r) => [r, rows.filter((x) => x.role === r).length] as const);
+  const byInterest = INTERESTS.map((r) => [r, rows.filter((x) => (x.interests ?? "").split(", ").includes(r)).length] as const);
 
   return (
     <main className="resp">
@@ -36,8 +38,18 @@ export default async function Responses() {
           Download CSV
         </a>
       </div>
+      <p className="resp__sub">By seat</p>
       <dl className="resp__roles">
         {byRole.map(([r, n]) => (
+          <div key={r}>
+            <dt>{r}</dt>
+            <dd>{n}</dd>
+          </div>
+        ))}
+      </dl>
+      <p className="resp__sub">Want to explore</p>
+      <dl className="resp__roles">
+        {byInterest.map(([r, n]) => (
           <div key={r}>
             <dt>{r}</dt>
             <dd>{n}</dd>
@@ -58,7 +70,8 @@ export default async function Responses() {
                 <th scope="col">Email</th>
                 <th scope="col">Organisation</th>
                 <th scope="col">Seat</th>
-                <th scope="col">Taking on next</th>
+                <th scope="col">Explore</th>
+                <th scope="col">Taking on</th>
                 <th scope="col">Via</th>
               </tr>
             </thead>
@@ -75,7 +88,8 @@ export default async function Responses() {
                   </td>
                   <td>{r.organisation}</td>
                   <td>{r.role}</td>
-                  <td className="resp__note">{r.next_mandate ?? "—"}</td>
+                  <td>{r.interests ?? "—"}</td>
+                  <td className="resp__note">{[r.focus, r.next_mandate].filter(Boolean).join(" · ") || "—"}</td>
                   <td>{r.source ?? "—"}</td>
                 </tr>
               ))}

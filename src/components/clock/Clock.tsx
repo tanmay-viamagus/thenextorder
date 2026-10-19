@@ -270,7 +270,7 @@ export function EraClock({ label, getProgress }: { label: string; getProgress?: 
  * the hour hand — pinned on the ViaMagus mark. [data-hl] on the wrapper
  * highlights one hand (set by hovering its panel).
  */
-export function HandsClock({ label }: { label: string }) {
+export function HandsClock({ label, hl }: { label: string; hl?: string }) {
   const svg = useRef<SVGSVGElement | null>(null);
 
   useEffect(() => {
@@ -288,8 +288,8 @@ export function HandsClock({ label }: { label: string }) {
       hh.setAttribute("transform", `rotate(${f(((h % 12) + m / 60) * 30)})`);
     };
     raf = requestAnimationFrame(draw);
-    // hovering or focusing a practice lights its hand
-    const sec = el.closest("section");
+    // hovering or focusing a practice lights its hand (unless a parent drives it)
+    const sec = hl === undefined ? el.closest("section") : null;
     const wrap = el.parentElement!;
     const on = (e: Event) => {
       const k = (e.target as HTMLElement).closest?.<HTMLElement>("[data-practice]")?.dataset.practice;
@@ -310,10 +310,10 @@ export function HandsClock({ label }: { label: string }) {
       sec?.removeEventListener("pointerout", off);
       sec?.removeEventListener("focusout", off);
     };
-  }, []);
+  }, [hl]);
 
   return (
-    <div className="hc">
+    <div className="hc" data-hl={hl}>
       <svg ref={svg} className="hc__dial" viewBox="-500 -500 1000 1000" role="img" aria-label={label}>
         <circle r="498" className="ck-face" />
         <Ticks />

@@ -60,6 +60,8 @@ export const practices: {
   n: string;
   verb: string;
   name: string;
+  /** who it's for, in a GCC leader's terms */
+  for: string;
   /** verbatim from the official page */
   line: string;
   href: string;
@@ -70,6 +72,7 @@ export const practices: {
     n: "A",
     verb: "Build",
     name: "Velocity AI",
+    for: "For centres taking on product ownership.",
     // viamagus.com/velocity-ai: "Three-month timelines become three-to-four weeks, with a shippable submodule delivered every single Friday."
     line: "Three-month timelines become three-to-four weeks.",
     href: "https://viamagus.com/velocity-ai",
@@ -80,6 +83,7 @@ export const practices: {
     n: "B",
     verb: "Operate",
     name: "Synthia AI",
+    for: "For centres running processes for the enterprise.",
     // viamagus.com/synthia-ai
     line: "Every AI output is a draft until a named officer signs it.",
     href: "https://viamagus.com/synthia-ai",
@@ -90,6 +94,7 @@ export const practices: {
     n: "C",
     verb: "Scale",
     name: "ViaMagus Select",
+    for: "For centres building capability they don’t have yet.",
     // viamagusselect.ai (hero headline)
     line: "The mandate is yours. So is the team.",
     href: "https://www.viamagusselect.ai/",
