@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 
 /**
  * GCC → GIC → ? as a split-flap board, driven by scroll (pinned, native scroll).
- * Only the middle letter changes — C, then I — and then it spins through the
- * alphabet and lands on a question mark: the next name isn't written yet.
+ * Only the middle letter changes — C, then I, then a question mark: the next
+ * name isn't written yet. One clean flip per change.
  */
 const STATES = [
   { word: ["G", "C", "C"], k: "It was", name: "Global Capability Centre", note: "Built to deliver what headquarters designed." },
@@ -17,20 +17,19 @@ const STATES = [
   },
   { word: ["G", "?", "C"], k: "Next", name: "Not written yet", note: "The name will follow the mandate — and the mandate is what this room is about." },
 ];
-const SPIN = "ABDEFHJKLMNOPRSTUVWXYZ";
 
-function Flap({ ch, spin }: { ch: string; spin?: boolean }) {
+function Flap({ ch }: { ch: string }) {
   const [shown, setShown] = useState(ch);
   const [prev, setPrev] = useState(ch);
   const [flip, setFlip] = useState(0);
   const timer = useRef<number | undefined>(undefined);
 
   useEffect(() => {
-    if (ch === shown && !spin) return;
+    if (ch === shown) return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     window.clearInterval(timer.current);
-    // reduced motion: no spin, no flip — the letter simply changes
-    const seq = reduce ? [ch] : spin ? [...Array.from({ length: 9 }, (_, i) => SPIN[(i * 7 + 3) % SPIN.length]), ch] : [ch];
+    // one clean flip per change — I gives way straight to ?; reduced motion: the letter simply changes
+    const seq = [ch];
     let i = 0;
     let cur = shown;
     const step = () => {
@@ -48,7 +47,7 @@ function Flap({ ch, spin }: { ch: string; spin?: boolean }) {
       window.clearInterval(timer.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ch, spin]);
+  }, [ch]);
 
   return (
     <span className={`flap${shown === "?" ? " is-q" : ""}`}>
@@ -123,7 +122,7 @@ export function NameBoard() {
         <div className="nb__board">
           <span className="nb__seam" />
           <Flap ch={s.word[0]} />
-          <Flap ch={s.word[1]} spin={i === 2} />
+          <Flap ch={s.word[1]} />
           <Flap ch={s.word[2]} />
         </div>
         <div key={i} className="nb__cap">

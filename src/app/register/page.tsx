@@ -27,7 +27,8 @@ export default async function Register({ searchParams }: { searchParams: Promise
       <aside className="reg__show" aria-label="The NEXT Order">
         <div className="reg__top">
           <ViaMagusLogo />
-          {/* a full navigation to the top of the microsite, never a restored scroll position */}
+          {/* a full navigation to the top of the microsite — client-side routing restored the form's scroll position */}
+          {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
           <a className="reg__back" href="/#top">
             ← The site
           </a>

@@ -175,7 +175,7 @@ export function Chrome() {
       const atForm = form ? form.getBoundingClientRect().top < window.innerHeight * 0.9 : false;
       // the pinned artwork gets the whole screen: no bar over it
       // the pinned scenes (the name board, the ring of years) get the whole screen
-      const inShift = ["name", "eras"].some((id) => {
+      const inShift = ["name", "eras", "evolve"].some((id) => {
         const r = document.getElementById(id)?.getBoundingClientRect();
         return r ? r.top < window.innerHeight * 0.5 && r.bottom > window.innerHeight * 0.5 : false;
       });
