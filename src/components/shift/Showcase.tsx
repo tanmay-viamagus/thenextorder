@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { SelectWordmark, SynthiaLogo, VelocityWordmark } from "@/components/Brand";
 import { HandsClock } from "@/components/clock/Clock";
 import { practices } from "@/content/story";
@@ -46,14 +46,17 @@ function Beat({ k }: { k: string }) {
  * that practice's transformation. Hover or focus pauses; a bar jumps.
  * Reduced motion: no auto-advance and no animation, every state complete.
  */
+const RM = "(prefers-reduced-motion: reduce)";
+const subscribeMotion = (cb: () => void) => {
+  const m = window.matchMedia(RM);
+  m.addEventListener("change", cb);
+  return () => m.removeEventListener("change", cb);
+};
+
 export function Showcase() {
   const [i, setI] = useState(0);
   const [hold, setHold] = useState(false);
-  const [still, setStill] = useState(false);
-
-  useEffect(() => {
-    setStill(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-  }, []);
+  const still = useSyncExternalStore(subscribeMotion, () => window.matchMedia(RM).matches, () => false);
 
   const p = practices[i];
   const Mark = MARK[p.key];

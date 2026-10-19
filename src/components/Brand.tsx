@@ -42,6 +42,7 @@ export function SynthiaLogo({ height = 40 }: { height?: number }) {
       alt="Synthia AI"
       width={Math.round((187 / 33) * height)}
       height={height}
+      style={{ height, width: "auto" }}
       unoptimized
     />
   );

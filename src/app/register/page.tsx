@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ViaMagusLogo } from "@/components/Brand";
-import { Countdown } from "@/components/clock/Clock";
 import { InviteForm } from "@/components/shift/InviteForm";
 import { Showcase } from "@/components/shift/Showcase";
 import { event, knownFacts } from "@/content/event";
@@ -42,14 +41,11 @@ export default async function Register({ searchParams }: { searchParams: Promise
         <Showcase />
         <div className="reg__when">
           <p className="reg__k">{confirmed || "Date & venue to be announced"}</p>
-          <Countdown startsAt={event.startsAt} />
           <p className="reg__host">Hosted by {knownFacts.host}</p>
         </div>
       </aside>
       <main className="reg__main">
-        <h1 className="reg__h">
-          Be in the room.
-        </h1>
+        <h1 className="reg__h">Find your place in the conversation.</h1>
         <p className="reg__lede">A ViaMagus event on where global centres go next: what they own, the value they create and the capabilities they’ll need.</p>
         <InviteForm source="register" preset={preset} />
       </main>

@@ -8,8 +8,6 @@
 export type EventDetails = {
   /** e.g. "Thursday, 12 March 2027" */
   date: string | null;
-  /** Start time with offset, e.g. "2027-03-12T18:30:00+05:30". Turns on the live countdown. */
-  startsAt: string | null;
   /** e.g. "Bengaluru" */
   city: string | null;
   venue: string | null;
@@ -23,7 +21,6 @@ export type EventDetails = {
 
 export const event: EventDetails = {
   date: null,
-  startsAt: null,
   city: null,
   venue: null,
   format: null,

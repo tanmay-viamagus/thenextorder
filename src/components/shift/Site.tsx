@@ -1,8 +1,10 @@
 import { SelectWordmark, SynthiaLogo, VelocityWordmark, ViaMagusLogo } from "@/components/Brand";
-import { Countdown, EraClock, HandsClock, LiveClock } from "@/components/clock/Clock";
+import { HandsClock } from "@/components/clock/Clock";
+import { ShiftRing } from "@/components/clock/ShiftRing";
+import { YearCycle } from "@/components/clock/YearCycle";
 import { FilmButton } from "@/components/film/FilmOverlay";
 import { event, knownFacts, officialLinks } from "@/content/event";
-import { convergence, invite, practices, shift } from "@/content/story";
+import { convergence, cta, invite, practices, shift } from "@/content/story";
 import { Chrome, Reveal, ShiftTitle } from "./Interactive";
 import { InviteForm } from "./InviteForm";
 import { SelectMech, SynthiaMech, VelocityMech } from "./Mechanisms";
@@ -21,7 +23,7 @@ function Status() {
   return (
     <p className="status">
       <span className="status__k">Hosted by {knownFacts.host}</span>
-      {confirmed || "Date, venue and format to be announced. Request an invitation to hear first."}
+      {confirmed || "Date, venue and format to be announced. Request your place to hear first."}
     </p>
   );
 }
@@ -49,37 +51,31 @@ export function Site() {
           <FilmButton className="hdr__film">
             <span className="tri" aria-hidden="true" /> Film
           </FilmButton>
-          <a className="btn btn--shift btn--sm" href="/register">
-            Register
+          <a className="btn btn--shift btn--sm hdr__cta" href="/register">
+            {cta.primary} <span className="btn__arr" aria-hidden="true">→</span>
           </a>
         </div>
       </header>
 
       <main id="main">
         {/* ------------------------------------------------ OPENING · it's already running */}
-        <section id="top" className="hero" data-tone="dark" data-clock-root aria-labelledby="hero-h">
+        <section id="top" className="hero" data-tone="dark" data-shift-root aria-labelledby="hero-h">
           <div className="hero__l">
             <p className="hero__meta">An invitation from ViaMagus</p>
             <h1 id="hero-h" className="sr-only">
               The NEXT Order — an invitation from ViaMagus for India’s GCC leaders
             </h1>
-            <ShiftTitle lines={["THE ", "NEXT", "ORDER."]} cutLine={2} tick />
-            <p className="hero__line">For India’s GCC leaders.</p>
+            <ShiftTitle lines={["THE ", "NEXT", "ORDER."]} cutLine={2} />
+            <p className="hero__line">For the leaders shaping what India’s GCCs become next.</p>
             <div className="hero__cta">
-              <a className="btn btn--shift" href="/register">
-                Request an invitation <span aria-hidden="true">→</span>
+              <a className="btn btn--shift btn--lg" href="/register">
+                {cta.primary} <span className="btn__arr" aria-hidden="true">→</span>
               </a>
-              <FilmButton className="playlink">
-                <span className="playlink__i" aria-hidden="true">
-                  <span className="tri" />
-                </span>
-                Watch the film <span className="playlink__t">0:30</span>
-              </FilmButton>
             </div>
             <p className="hero__note">{confirmed || "Date & venue to be announced"} · Hosted by {knownFacts.host}</p>
           </div>
           <div className="hero__r">
-            <LiveClock />
+            <ShiftRing />
           </div>
         </section>
 
@@ -90,7 +86,7 @@ export function Site() {
           </h2>
           <div className="eras__stage">
             <div className="eras__dial">
-              <EraClock label="A clock face. One hand makes a full turn. From twelve to four, the old order: regular, identical ticks. From four to eight, the inflection point: the ticks crack out of line. From eight to twelve, the next order: the ticks fuse into owned arcs — product, platforms, decisions, capability — and one is left open." />
+              <YearCycle label="A year, January to December. January to April, the old order: twelve months begin solid and uniform, built to execute. May to August, the inflection point: the months shift out of line. September to December, the next order: the months fuse into owned blocks — product, platforms, capability — and one is left open. A mark shows today’s place in the year." />
               <div className="eras__copy">
                 {shift.map((s, i) => (
                   <div key={s.n} className={`eras__st eras__st--${"abc"[i]}`}>
@@ -111,7 +107,7 @@ export function Site() {
               </div>
             </div>
             <p className="eras__hint" aria-hidden="true">
-              Scroll to turn the hand
+              Scroll through the year
             </p>
           </div>
         </section>
@@ -153,10 +149,15 @@ export function Site() {
                   <p className="pnl__line">“{p.line}”</p>
                   <div className="pnl__acts">
                     <a className="pnl__go" href={`/register?interest=${p.key}`}>
-                      Explore it at the event <span aria-hidden="true">→</span>
+                      <span>Explore it at the event</span>
+                      <span className="pnl__arr" aria-hidden="true">→</span>
                     </a>
-                    <a className="pnl__link" href={p.href} {...ext}>
-                      {p.source} ↗<NewTab />
+                    <a className="pnl__visit" href={p.href} {...ext}>
+                      <span className="pnl__vl">
+                        Visit product <span aria-hidden="true">↗</span>
+                      </span>
+                      <span className="pnl__vu">{p.source}</span>
+                      <NewTab />
                     </a>
                   </div>
                 </article>
@@ -169,13 +170,12 @@ export function Site() {
         </section>
 
         {/* ------------------------------------------------ CLOSING · the next hour */}
-        <section id="register" className="close" data-tone="light" data-act="register" aria-labelledby="register-h">
+        <section id="request" className="close" data-tone="light" data-act="register" aria-labelledby="register-h">
           <div className="close__grid">
             <div className="close__copy">
-              <p className="close__k">The NEXT Order begins in</p>
-              <Countdown startsAt={event.startsAt} />
+              <p className="close__k">The NEXT Order</p>
               <h2 id="register-h" className="close__h">
-                Be in the room when it starts.
+                Find your place in the conversation.
               </h2>
               <p className="close__who">{invite.what}</p>
               <p className="close__who close__who--b">{invite.who}</p>
@@ -208,14 +208,14 @@ export function Site() {
             <a href="/film">The film</a>
           </li>
           <li>
-            <a href="/register">Register</a>
+            <a href="/register">{cta.primary}</a>
           </li>
         </ul>
       </footer>
 
       <div className="bar">
         <a className="btn btn--shift" href="/register">
-          Request an invitation <span aria-hidden="true">→</span>
+          {cta.primary} <span className="btn__arr" aria-hidden="true">→</span>
         </a>
       </div>
     </>

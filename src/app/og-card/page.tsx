@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ViaMagusLogo } from "@/components/Brand";
-import { StillClock } from "@/components/clock/Clock";
+import { ShiftRing } from "@/components/clock/ShiftRing";
 
 // Internal 1200×630 composition, screenshotted to public/og-image.jpg (see README).
 export const metadata: Metadata = { title: "OG card", robots: { index: false, follow: false } };
@@ -9,8 +9,7 @@ export default function OgCard() {
   return (
     <div className="og">
       <div className="og__clock">
-        {/* a minute before the hour */}
-        <StillClock h={11} m={59} s={8} />
+        <ShiftRing />
       </div>
       <p className="og__k">An invitation from ViaMagus</p>
       <div className="og__t" aria-label="The NEXT Order">

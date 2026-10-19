@@ -18,11 +18,16 @@
 
 .og__clock {
   position: absolute;
-  right: -150px;
-  top: 50%;
-  width: 760px;
-  height: 760px;
-  transform: translateY(-50%);
+  right: -130px;
+  top: 108px;
+  width: 640px;
+}
+
+.og .ring__play,
+.og .ring__lab,
+.og .ring__cut,
+.og .ring__node {
+  display: none;
 }
 
 .og__k {

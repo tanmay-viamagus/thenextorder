@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { SelectWordmark, SynthiaLogo, VelocityWordmark } from "@/components/Brand";
-import { EraClock, FilmDial } from "@/components/clock/Clock";
+import { FilmDial } from "@/components/clock/Clock";
+import { YearCycle } from "@/components/clock/YearCycle";
 import { FILM_DURATION, filmScenes, sceneAtTime, type FilmSceneId } from "@/content/film";
 import { convergence, shift } from "@/content/story";
 import { Score } from "./score";
@@ -184,7 +185,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
     };
   }, [toggleSound, onClose]);
 
-  // the eras dial on the film clock: the hand sweeps 4→12 during 06–08.6
+  // the year on the film clock: the marker runs May→December during 06–08.6
   const inflP = useCallback(() => {
     const t = clock.current.t;
     return t < 6 ? 0.33 : Math.min(1, 0.33 + ((t - 6) / 2.6) * 0.67);
@@ -252,7 +253,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
         {/* 06–10 · THE INFLECTION POINT: the dial cracks, then the number */}
         <section className="fs fs--inflection" data-id="inflection">
           <div className="fs__dial">
-            <EraClock getProgress={inflP} label="" />
+            <YearCycle getProgress={inflP} label="" />
           </div>
           <div className="fs__copy">
             <p className="fs__mono fs__era k-in" style={d(0)}>

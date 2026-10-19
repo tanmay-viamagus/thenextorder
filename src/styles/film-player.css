@@ -360,14 +360,14 @@
 
 .fs__dial {
   position: absolute;
-  right: 60px;
+  right: 20px;
   top: 50%;
-  width: 1000px;
-  height: 940px;
+  width: 1120px;
+  height: 914px;
   transform: translateY(-50%);
 }
 
-.fs__dial .ec-era {
+.fs__dial .yc-today {
   display: none;
 }
 

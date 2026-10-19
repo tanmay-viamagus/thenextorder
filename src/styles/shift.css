@@ -238,25 +238,8 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   color: var(--white);
 }
 
-.hero__clock {
-  position: absolute;
-  top: 50%;
-  right: max(-16vh, -9vw);
-  width: min(116vh, 66vw);
-  aspect-ratio: 1;
-  transform: translateY(-50%);
-  pointer-events: none;
-}
 
-.lc,
-.lc__dial {
-  width: 100%;
-  height: 100%;
-}
 
-.lc {
-  position: relative;
-}
 
 .ck-face {
   fill: #0a090e;
@@ -274,26 +257,8 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   stroke-width: 11;
 }
 
-.ck-hand {
-  fill: var(--white);
-}
 
-.ck-sec,
-.ck-pin {
-  fill: var(--magenta);
-}
 
-.lc__read {
-  position: absolute;
-  left: 50%;
-  top: calc(100% + 26px);
-  transform: translateX(-50%);
-  font: 500 clamp(0.8rem, 1vw, 1.05rem) / 1 var(--mono);
-  letter-spacing: 0.22em;
-  color: rgba(252, 253, 255, 0.62);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
 
 .hero__meta {
   position: relative;
@@ -524,80 +489,19 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   container-type: size;
 }
 
-.ec {
-  display: block;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
 
-.ec-face {
-  fill: var(--sheet);
-  stroke: var(--ink);
-  stroke-width: 3;
-}
 
-.ec-sweep {
-  fill: rgba(102, 8, 169, 0.08);
-}
 
-.ec-bound {
-  stroke: var(--ink);
-  stroke-width: 3;
-}
 
-.ec-era {
-  font: 600 25px var(--mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  fill: var(--ink);
-}
 
-.ec-t {
-  stroke: rgba(14, 13, 18, 0.22);
-  stroke-width: 6;
-  transition: stroke 0.25s;
-}
 
-.ec-t.is-a {
-  stroke: var(--ink);
-}
 
-.ec-t.is-b {
-  stroke: var(--purple);
-  stroke-width: 8;
-}
 
-.ec-t.is-c {
-  stroke: transparent;
-}
 
-.ec-vol {
-  fill: none;
-  stroke-width: 76;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-}
 
-.ec-vlab {
-  font: 600 19px var(--mono);
-  letter-spacing: 0.06em;
-  opacity: 0;
-}
 
-.ec-vlab--q {
-  font: 800 46px var(--font);
-}
 
-.ec-hand {
-  fill: var(--purple);
-}
 
-.ec-disc {
-  fill: var(--paper);
-  stroke: var(--ink);
-  stroke-width: 2;
-}
 
 .eras__copy {
   position: absolute;
@@ -709,33 +613,9 @@ html:not(.js) .eras__stage {
   padding: clamp(80px, 12vh, 150px) var(--gutter) clamp(80px, 12vh, 140px);
 }
 
-.eco__top {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-  gap: clamp(32px, 5vw, 96px);
-  align-items: center;
-  margin-bottom: clamp(48px, 8vh, 96px);
-}
 
-.eco__k {
-  color: var(--sel-tint);
-  margin-bottom: 20px;
-}
 
-.eco__h {
-  font-size: clamp(3rem, 7.4vw, 9rem);
-  line-height: 0.88;
-  letter-spacing: -0.055em;
-  font-weight: 800;
-}
 
-.eco__lede {
-  margin-top: 28px;
-  font-size: clamp(1.15rem, 1.5vw, 1.6rem);
-  line-height: 1.4;
-  color: rgba(252, 253, 255, 0.86);
-  max-width: 22em;
-}
 
 .k-v,
 .k-s,
@@ -903,15 +783,6 @@ html:not(.js) .eras__stage {
   text-underline-offset: 3px;
 }
 
-.eco__close {
-  margin: clamp(64px, 10vh, 120px) auto 0;
-  text-align: center;
-  font-size: clamp(2.2rem, 4.8vw, 6rem);
-  line-height: 0.96;
-  letter-spacing: -0.05em;
-  font-weight: 700;
-  max-width: 13em;
-}
 
 @media (prefers-reduced-motion: no-preference) {
   .js .eco__hd,
@@ -948,37 +819,10 @@ html:not(.js) .eras__stage {
   color: var(--purple);
 }
 
-.cd {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0 clamp(14px, 2.4vw, 40px);
-  margin: 14px 0 clamp(36px, 6vh, 64px);
-}
 
-.cd__u {
-  display: grid;
-  gap: 8px;
-}
 
-.cd__n {
-  font-size: clamp(3.8rem, 8.6vw, 10rem);
-  line-height: 0.86;
-  letter-spacing: -0.05em;
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-}
 
-.cd__u.is-tba .cd__n {
-  font-weight: 300;
-  color: var(--line-2);
-}
 
-.cd__l {
-  font: 500 0.72rem/1 var(--mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-2);
-}
 
 .close__h {
   font-size: clamp(2rem, 3.6vw, 4.2rem);
@@ -1576,9 +1420,6 @@ html:not(.js) .eras__stage {
     grid-column: 1 / -1;
     justify-self: start;
   }
-  .eco__top {
-    grid-template-columns: 1fr;
-  }
   .hc {
     justify-self: center;
     max-width: 560px;
@@ -1612,9 +1453,6 @@ html:not(.js) .eras__stage {
   }
   .hdr .vm-logo {
     font-size: 1.15rem;
-  }
-  .lc__read {
-    top: calc(100% + 14px);
   }
   .st {
     --cut: 2.06em;
@@ -1690,24 +1528,11 @@ html:not(.js) .eras__stage {
     margin-top: 10px;
     font-size: 1rem;
   }
-  .ec-era {
-    display: none;
-  }
   .eras__hint {
     display: none;
   }
-  .eco {
-    padding-left: 12px;
-    padding-right: 12px;
-  }
-  .eco__top {
-    padding: 0 8px;
-  }
   .pnl {
     padding: 22px 20px 28px;
-  }
-  .cd__n {
-    font-size: 15vw;
   }
   .form {
     box-shadow: 6px 6px 0 var(--purple);
@@ -1929,9 +1754,10 @@ html:not(.js) .eras__stage {
   margin: clamp(18px, 3.4vh, 40px) 0 clamp(18px, 3.6vh, 44px) -0.05em;
 }
 
+/* the title's cut runs on into the ring's: one line across the whole opening */
 .hero .st__cut {
   left: calc(-1 * var(--gutter));
-  width: calc(100% + var(--gutter) + 0.05em);
+  width: 100vw;
 }
 
 .hero__line {
@@ -1960,57 +1786,7 @@ html:not(.js) .eras__stage {
   aspect-ratio: 1;
 }
 
-.hero__r::before {
-  /* a faint halo ring: the clock sits on something, not on nothing */
-  content: "";
-  position: absolute;
-  inset: -4.5%;
-  border: 1px solid rgba(252, 253, 255, 0.1);
-  border-radius: 50%;
-}
 
-/* the film: a quiet, confident secondary action */
-.playlink {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  min-height: 48px;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: inherit;
-  font: 600 1rem/1 var(--font);
-  cursor: pointer;
-}
-
-.playlink__i {
-  display: grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  border: 1.5px solid rgba(252, 253, 255, 0.6);
-  border-radius: 50%;
-  transition: background-color 0.25s, border-color 0.25s, transform 0.35s var(--ease-out);
-}
-
-.playlink__i .tri {
-  margin-left: 3px;
-}
-
-.playlink__t {
-  font: 500 0.78rem/1 var(--mono);
-  letter-spacing: 0.06em;
-  opacity: 0.6;
-}
-
-@media (hover: hover) {
-  .playlink:hover .playlink__i {
-    background: var(--magenta);
-    border-color: var(--magenta);
-    color: var(--ink);
-    transform: scale(1.06);
-  }
-}
 
 /* panels: who it's for, and a way in */
 .pnl {
@@ -2093,7 +1869,7 @@ html:not(.js) .eras__stage {
 
 .rf__k,
 .rf__time,
-.rf__field > span,
+.rf__field > span:first-child,
 .rf__set legend {
   font: 500 0.72rem/1.3 var(--mono);
   letter-spacing: 0.08em;
@@ -2120,7 +1896,7 @@ html:not(.js) .eras__stage {
   gap: 6px;
 }
 
-.rf__field > span,
+.rf__field > span:first-child,
 .rf__set legend {
   color: var(--ink-2);
 }
@@ -2477,9 +2253,6 @@ html:not(.js) .eras__stage {
   }
   .hero__cta .btn {
     width: 100%;
-  }
-  .playlink {
-    justify-content: center;
   }
   .rf__row {
     grid-template-columns: 1fr;
@@ -2971,28 +2744,10 @@ html:not(.js) .eras__stage {
   border-top: 1px solid rgba(252, 253, 255, 0.16);
 }
 
-.reg__when .cd {
-  margin: 0;
-  gap: 0 18px;
-}
 
-.reg__when .cd__u {
-  gap: 4px;
-}
 
-.reg__when .cd__n {
-  font-size: clamp(1.6rem, 2.2vw, 2.2rem);
-  color: var(--white);
-}
 
-.reg__when .cd__u.is-tba .cd__n {
-  color: rgba(252, 253, 255, 0.35);
-}
 
-.reg__when .cd__l {
-  font-size: 0.6rem;
-  color: rgba(252, 253, 255, 0.55);
-}
 
 .reg__when .reg__host {
   margin-left: auto;
@@ -3030,5 +2785,506 @@ html:not(.js) .eras__stage {
   .reg__when .cd,
   .reg__when .reg__host {
     display: none;
+  }
+}
+
+/* ==========================================================================
+   The ring, the year, the call to action, the product links, LinkedIn help
+   ========================================================================== */
+
+/* ---------------------------------------------------------------- the call to action: one, and unmissable */
+.btn--lg {
+  min-height: 64px;
+  padding: 0 30px 0 32px;
+  font-size: 1.12rem;
+  gap: 14px;
+}
+
+.btn__arr {
+  display: inline-block;
+  transition: transform 0.35s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .btn:hover .btn__arr {
+    transform: translateX(5px);
+  }
+}
+
+.btn--shift:focus-visible {
+  outline: 3px solid var(--magenta);
+  outline-offset: 4px;
+}
+
+.hdr__cta {
+  min-height: 46px;
+  padding: 0 20px;
+  font-size: 0.95rem;
+  box-shadow: 0 0 0 1px rgba(252, 253, 255, 0.08), 0 10px 30px -12px rgba(102, 8, 169, 0.9);
+}
+
+/* ---------------------------------------------------------------- hero: the ring */
+.hero__r {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: min(108vh, 780px);
+  justify-self: end;
+}
+
+.ring {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1200 / 1040;
+  transform: translateY(var(--ring-dy, 0px));
+}
+
+.ring__svg {
+  --s: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.ring__svg path {
+  fill: none;
+}
+
+.ring__old path {
+  stroke: rgba(252, 253, 255, 0.34);
+}
+
+.ring__new path {
+  stroke: var(--lilac);
+}
+
+.ring__turn {
+  transform-box: view-box;
+  transform-origin: 0 0;
+  transform: rotate(calc(var(--s) * var(--turn)));
+}
+
+.ring__new .ring__owned {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .ring__owned {
+    animation: ring-own 1.4s var(--ease) 0.9s both;
+  }
+  .js .ring__cut {
+    animation: ring-cut 1s var(--ease) 0.15s both;
+  }
+}
+
+@keyframes ring-own {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes ring-cut {
+  from {
+    stroke-dashoffset: 1120;
+  }
+}
+
+.ring__cut {
+  stroke: var(--magenta);
+  stroke-width: 6;
+  stroke-dasharray: 1120;
+}
+
+.ring__node {
+  fill: var(--magenta);
+}
+
+.ring__lab {
+  font: 500 22px var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  fill: rgba(252, 253, 255, 0.55);
+}
+
+.ring__lab--new {
+  fill: var(--lilac);
+}
+
+/* the centre plays the film */
+.ring__play {
+  position: absolute;
+  left: 60%;
+  top: 50%;
+  width: 35%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 8px;
+  border: 1.5px solid rgba(252, 253, 255, 0.28);
+  border-radius: 50%;
+  background: radial-gradient(circle, #121019 0%, #050408 70%);
+  color: var(--white);
+  cursor: pointer;
+  transition: border-color 0.3s, transform 0.4s var(--ease-out), background-color 0.3s;
+}
+
+.ring__tri {
+  width: 0;
+  height: 0;
+  margin-left: 6px;
+  border-left: 20px solid var(--white);
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  transition: border-color 0.3s;
+}
+
+.ring__pl {
+  margin-top: 6px;
+  font: 600 clamp(0.9rem, 1.05vw, 1.1rem) / 1.1 var(--font);
+  letter-spacing: -0.01em;
+}
+
+.ring__pt {
+  font: 500 0.68rem/1 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(252, 253, 255, 0.6);
+}
+
+@media (hover: hover) {
+  .ring__play:hover {
+    border-color: var(--magenta);
+    transform: translate(-50%, -50%) scale(1.04);
+  }
+  .ring__play:hover .ring__tri {
+    border-left-color: var(--magenta);
+  }
+}
+
+.ring__play:focus-visible {
+  outline: 3px solid var(--magenta);
+  outline-offset: 6px;
+}
+
+/* ---------------------------------------------------------------- the year */
+.eras__dial {
+  aspect-ratio: 1520 / 1240;
+}
+
+@media (min-width: 760px) {
+  .eras__copy {
+    width: 33%;
+  }
+}
+
+.yc {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.yc-rim {
+  fill: var(--sheet);
+  stroke: var(--ink);
+  stroke-width: 2.5;
+}
+
+.yc-sweep {
+  fill: rgba(102, 8, 169, 0.07);
+}
+
+.yc-m {
+  fill: none;
+  stroke: rgba(14, 13, 18, 0.1);
+  transition: stroke 0.35s, transform 0.5s var(--ease-out);
+}
+
+.yc-m[data-state="a"] {
+  stroke: var(--ink);
+}
+
+.yc-m[data-state="b"] {
+  stroke: var(--purple);
+}
+
+.yc-m[data-state="c"] {
+  stroke: rgba(14, 13, 18, 0.1);
+}
+
+.yc-own {
+  transition: opacity 0.4s;
+}
+
+.yc-own--open path {
+  stroke-dasharray: 10 8;
+  stroke-width: 6;
+}
+
+.yc-own--open path {
+  stroke: var(--purple);
+}
+
+.yc-ol {
+  font: 600 19px var(--mono);
+  letter-spacing: 0.08em;
+}
+
+.yc-q {
+  font: 800 44px var(--font);
+}
+
+.yc-ml {
+  font: 600 24px var(--mono);
+  letter-spacing: 0.12em;
+  fill: var(--ink);
+}
+
+.yc-era {
+  font: 600 21px var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  fill: var(--purple);
+}
+
+.yc-today polyline {
+  fill: none;
+  stroke: var(--magenta);
+  stroke-width: 3;
+}
+
+.yc-today text {
+  font: 600 22px var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  fill: var(--purple);
+}
+
+.yc-marker line {
+  stroke: var(--purple);
+  stroke-width: 6;
+}
+
+.yc-marker circle {
+  fill: var(--purple);
+}
+
+.yc-disc {
+  fill: var(--paper);
+  stroke: var(--ink);
+  stroke-width: 1.5;
+}
+
+/* the centre: era · headline · the number that matters */
+@media (min-width: 760px) {
+  .eras__h {
+    font-size: 4.4cqw;
+  }
+  .eras__ev {
+    margin-top: 2.2cqh;
+    font-size: max(0.8rem, 1.3cqw);
+  }
+}
+
+/* ---------------------------------------------------------------- product links */
+.pnl__acts {
+  display: grid;
+  gap: 0;
+  margin-top: 10px;
+  border-top: 1px solid currentColor;
+  border-color: rgba(127, 127, 140, 0.35);
+}
+
+.pnl__go,
+.pnl__visit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 54px;
+  padding: 0 2px;
+  border-bottom: 1px solid rgba(127, 127, 140, 0.35);
+  text-decoration: none;
+  transition: padding 0.35s var(--ease-out), color 0.25s;
+}
+
+.pnl__go {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.pnl__arr {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  font-size: 0.95rem;
+  transition: background-color 0.25s, color 0.25s, transform 0.35s var(--ease-out);
+}
+
+.pnl__visit {
+  font-size: 0.92rem;
+  color: inherit;
+}
+
+.pnl__vl {
+  font-weight: 600;
+}
+
+.pnl__vu {
+  font: 500 0.7rem/1 var(--mono);
+  letter-spacing: 0.04em;
+  opacity: 0.75;
+}
+
+@media (hover: hover) {
+  .pnl__go:hover,
+  .pnl__visit:hover {
+    padding-left: 8px;
+  }
+  .pnl__go:hover .pnl__arr {
+    transform: translateX(4px);
+  }
+}
+
+.pnl--velocity .pnl__go {
+  color: var(--vel-cyan);
+}
+
+.pnl--velocity .pnl__go:hover .pnl__arr {
+  background: var(--vel-cyan);
+  color: var(--vel-bg);
+}
+
+.pnl--synthia .pnl__go {
+  color: var(--syn-bright);
+}
+
+.pnl--synthia .pnl__go:hover .pnl__arr {
+  background: var(--syn-bright);
+  color: var(--purple-darker);
+}
+
+.pnl--select .pnl__go {
+  color: var(--purple);
+}
+
+.pnl--select .pnl__go:hover .pnl__arr {
+  background: var(--purple);
+  color: var(--white);
+}
+
+.pnl__go:focus-visible,
+.pnl__visit:focus-visible {
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------- form: LinkedIn help */
+.rf__help {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--ink-2);
+}
+
+.rf__field input::placeholder {
+  color: #85828b;
+  font-weight: 400;
+}
+
+/* ---------------------------------------------------------------- responsive: ring, year, links */
+@media (max-width: 1080px) {
+  .hero__r {
+    width: min(60vw, 40svh);
+  }
+}
+
+@media (max-width: 759px) {
+  .hero__r {
+    width: min(76vw, 30svh);
+    margin: 0 auto 4px;
+  }
+  .ring__lab {
+    display: none;
+  }
+  .ring__play {
+    width: 37%;
+    gap: 4px;
+  }
+  .ring__tri {
+    border-left-width: 14px;
+    border-top-width: 9px;
+    border-bottom-width: 9px;
+  }
+  .ring__pl {
+    font-size: 0.72rem;
+  }
+  .ring__pt {
+    display: none;
+  }
+  .btn--lg {
+    width: 100%;
+  }
+  .yc-era,
+  .yc-today text {
+    display: none;
+  }
+  .yc-ml {
+    font-size: 34px;
+  }
+  .yc-ol {
+    font-size: 24px;
+  }
+  .hdr__cta {
+    min-height: 40px;
+    padding: 0 14px;
+    font-size: 0.84rem;
+  }
+  .hdr__film {
+    display: none;
+  }
+}
+
+/* phones: centre the ring (its canvas carries the labels on the left, hidden here) */
+@media (max-width: 759px) {
+  .ring {
+    width: 125%;
+    max-width: none;
+    margin-left: -25%;
+  }
+}
+
+@media (max-width: 1080px) and (min-width: 760px) {
+  .hero .st {
+    font-size: min(15vw, 17svh);
+  }
+  .hero__r {
+    justify-self: center;
+    max-width: min(80vw, 46svh);
+  }
+}
+
+@media (max-width: 759px) {
+  /* phones: enlarge the drawing itself; its month labels reach the screen edges, the words stay put */
+  .eras__dial .yc {
+    width: 128%;
+    max-width: none;
+    height: auto;
+    margin-left: -14%;
+    margin-top: -6%;
+  }
+}
+
+@media (max-width: 759px) {
+  .eras__dial {
+    width: calc(100vw - 20px);
+    justify-self: center;
   }
 }

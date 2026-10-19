@@ -6,10 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "node --test tests/"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.2.0",
+    "botid": "^1.5.11",
     "next": "^16.4.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"

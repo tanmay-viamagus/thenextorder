@@ -23,7 +23,7 @@ export const shift: { n: string; era: string; headline: string; evidence?: Evide
   {
     n: "I",
     era: "The old order",
-    headline: "The work you were given.",
+    headline: "Built to execute.",
     evidence: {
       figure: "1,700+",
       finding: "GCCs in India, employing over 1.9 million people",
@@ -35,7 +35,7 @@ export const shift: { n: string; era: string; headline: string; evidence?: Evide
   {
     n: "II",
     era: "The inflection point",
-    headline: "Then the walls moved.",
+    headline: "Then the mandate grew.",
     evidence: {
       figure: "92%",
       finding: "of India-based GCCs aim to deliver value beyond cost arbitrage",
@@ -47,8 +47,8 @@ export const shift: { n: string; era: string; headline: string; evidence?: Evide
   {
     n: "III",
     era: "The next order",
-    headline: "What will your centre own next?",
-    coda: "Every centre’s plan is different. That is the conversation.",
+    headline: "Built to own, create and lead.",
+    coda: "Every centre’s path is different. What will yours own next?",
   },
 ];
 
@@ -105,6 +105,9 @@ export const practices: {
 export const convergence = "Everything an enterprise needs to become AI‑native.";
 
 /* ---------------------------------------------------------------- the invitation */
+/** The one call to action, everywhere. Places are confirmed by invitation, so it asks — it never promises. */
+export const cta = { primary: "Request your place", submit: "Request my place" };
+
 export const invite = {
   line: "An invitation for India’s GCC leaders.",
   who: "For GCC CEOs and MDs, site leaders, technology and engineering leaders, CHROs and talent leaders.",
