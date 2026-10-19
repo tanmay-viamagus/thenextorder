@@ -1,214 +1,284 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 /**
- * How a GCC evolves — one organisational form, five stages.
- * The site's block motif: the home market is a solid tower with the decision
- * node on top; India starts empty. Stage by stage the centre arrives, fills
- * with teams and takes in work (01–03); then its blocks fuse into owned
- * volumes, work flows back and a decision node appears in India (04); then it
- * connects out across the global organisation and builds what's next (05).
- * A conceptual maturity journey — not a rule every centre follows.
- * Scroll (pinned, native scroll) or the stage buttons drive it.
+ * How a GCC evolves — one editorial line illustration that changes across
+ * five stages: a headquarters at home, a centre arriving in India, the centre
+ * operating, the ownership shift, and the next order. Fine black lines on
+ * ivory; purple only where ownership moves. Scroll (pinned, native) or the
+ * stage timeline on the ground line drives it. A conceptual journey, not a
+ * maturity model every centre must follow.
  */
 export const STAGES = [
-  { n: "01", title: "The origin", line: "The business begins at home.", note: "Leadership, core teams and the decisions all sit in the home market." },
-  { n: "02", title: "The arrival", line: "India becomes part of the plan.", note: "A centre opens in India — new, small, and connected to headquarters." },
+  { n: "01", title: "The origin", line: "The business begins at home.", note: "Leadership, teams and decisions all sit at headquarters." },
+  { n: "02", title: "The arrival", line: "India becomes part of the plan.", note: "A centre opens in India, connected to headquarters by a clear mandate." },
   {
     n: "03",
     title: "The operating centre",
     line: "Teams form. Capabilities take shape.",
-    note: "Work flows in from headquarters and delivery flows back. This is where many GCCs are today.",
+    note: "Work comes in, delivery goes back. This is where many GCCs are today.",
   },
   {
     n: "04",
     title: "The ownership shift",
     line: "From executing work to owning outcomes.",
-    note: "Product, platforms and engineering decisions start to sit in India. The work flows both ways now.",
+    note: "Products, platforms and engineering — and the decisions that go with them — start to sit in India.",
   },
   {
     n: "05",
     title: "The next order",
     line: "Building what the business becomes next.",
-    note: "The centre shapes global products and where the organisation goes next — one of its centres of gravity.",
+    note: "The centre helps decide what the global business builds, and where it goes next.",
   },
 ] as const;
 
-type Pt = [number, number];
-type Geo = {
-  vb: string;
-  ground: [number, number, number][]; // x0, x1, y
-  hq: { x: number; y: number }; // bottom-left of the tower
-  ind: { x: number; y: number }; // bottom-left of the centre
-  bridges: string[]; // HQ → India
-  globals: { at: Pt; path: string }[]; // India → the wider organisation
-  label: { hq: Pt; ind: Pt };
-};
+const SELECT_URL = "https://www.viamagusselect.ai/";
+const G = 560; // ground
 
-const S = 46; // block
-const P = 54; // pitch
-const HQ_C = 4;
-const HQ_R = 6;
-const IN_C = 4;
-const IN_R = 4;
+/* ---------------------------------------------------------------- drawing parts */
+function Person({ x, y = G, s = 1, tone = "ink" }: { x: number; y?: number; s?: number; tone?: "ink" | "purple" }) {
+  return (
+    <g className={`ev-p ev-p--${tone}`} transform={`translate(${x} ${y}) scale(${s})`}>
+      <circle cx="0" cy="-27" r="5.5" />
+      <path d="M-8 0 V-12 C-8 -19 -4 -20 0 -20 C4 -20 8 -19 8 -12 V0 Z" />
+    </g>
+  );
+}
 
-const WIDE: Geo = {
-  vb: "130 125 1440 545",
-  ground: [
-    [150, 470, 600],
-    [1020, 1350, 600],
-  ],
-  hq: { x: 200, y: 600 },
-  ind: { x: 1080, y: 600 },
-  bridges: ["M412 300 C 620 150, 870 230, 1072 396", "M412 380 C 640 300, 860 340, 1072 452", "M412 460 C 660 430, 860 450, 1072 506"],
-  globals: [
-    { at: [1450, 210], path: "M1296 396 C 1360 330, 1400 260, 1437 223" },
-    { at: [1520, 430], path: "M1296 452 C 1380 440, 1460 440, 1507 443" },
-    { at: [940, 150], path: "M1130 330 C 1080 230, 1010 180, 966 163" },
-  ],
-  label: { hq: [304, 640], ind: [1184, 640] },
-};
+/** a person at a desk, seen through glass */
+function Desk({ x, y }: { x: number; y: number }) {
+  return (
+    <g className="ev-desk" transform={`translate(${x} ${y})`}>
+      <circle cx="0" cy="-30" r="5" className="ev-fill" />
+      <path d="M-9 -8 C-9 -17 -5 -19 0 -19 C5 -19 9 -17 9 -8 Z" className="ev-fill" />
+      <rect x="10" y="-26" width="18" height="13" className="ev-line" />
+      <line x1="19" y1="-13" x2="19" y2="-8" className="ev-line" />
+      <line x1="-16" y1="-8" x2="36" y2="-8" className="ev-line" />
+    </g>
+  );
+}
 
-const TALL: Geo = {
-  vb: "50 80 720 980",
-  ground: [
-    [80, 380, 430],
-    [400, 720, 990],
-  ],
-  hq: { x: 120, y: 430 },
-  ind: { x: 450, y: 990 },
-  bridges: ["M332 150 C 560 200, 600 520, 548 772", "M332 250 C 500 330, 540 560, 600 772", "M332 350 C 430 470, 560 600, 652 772"],
-  globals: [
-    { at: [720, 640], path: "M666 790 C 700 740, 715 700, 720 666" },
-    { at: [90, 760], path: "M442 840 C 300 820, 160 800, 103 773" },
-    { at: [700, 520], path: "M610 760 C 640 660, 680 590, 700 546" },
-  ],
-  label: { hq: [224, 470], ind: [554, 1030] },
-};
+function Tree({ x }: { x: number }) {
+  return (
+    <g className="ev-tree">
+      <line x1={x} y1={G} x2={x} y2={G - 34} />
+      <circle cx={x} cy={G - 50} r="20" />
+    </g>
+  );
+}
 
-// India's blocks: rows from the bottom. Row 0 stays operations; the rest fuse at stage 04.
-const GROUPS: { name: string; cls: string; c0: number; c1: number; r0: number; r1: number }[] = [
-  { name: "Operations", cls: "ops", c0: 0, c1: 3, r0: 0, r1: 0 },
-  { name: "Engineering", cls: "eng", c0: 0, c1: 3, r0: 1, r1: 1 },
-  { name: "Product", cls: "prod", c0: 0, c1: 1, r0: 2, r1: 3 },
-  { name: "Platforms", cls: "plat", c0: 2, c1: 3, r0: 2, r1: 3 },
-];
-
-function Blocks({ x, y, cols, rows, cls, arrive }: { x: number; y: number; cols: number; rows: number; cls: string; arrive?: boolean }) {
-  const out = [];
+function Windows({
+  x,
+  y,
+  cols,
+  rows,
+  w,
+  h,
+  gx,
+  gy,
+  lit = [],
+}: {
+  x: number;
+  y: number;
+  cols: number;
+  rows: number;
+  w: number;
+  h: number;
+  gx: number;
+  gy: number;
+  lit?: number[];
+}) {
+  const out: ReactNode[] = [];
   for (let r = 0; r < rows; r++)
     for (let c = 0; c < cols; c++) {
-      const first = arrive && r === 0 && c === 0;
-      out.push(
-        <rect
-          key={`${r}-${c}`}
-          className={`${cls}${first ? " is-first" : ""}`}
-          x={x + c * P}
-          y={y - (r + 1) * P + (P - S)}
-          width={S}
-          height={S}
-          style={{ ["--k" as string]: r * cols + c }}
-        />,
-      );
+      const k = r * cols + c;
+      out.push(<rect key={k} className={`ev-win${lit.includes(k) ? " is-lit" : ""}`} x={x + c * gx} y={y + r * gy} width={w} height={h} />);
     }
   return <>{out}</>;
 }
 
-function Scene({ g, kind }: { g: Geo; kind: "wide" | "tall" }) {
-  const hqTop = g.hq.y - HQ_R * P + (P - S);
-  const inTop = g.ind.y - IN_R * P + (P - S);
-  const hqMid = g.hq.x + (HQ_C * P - (P - S)) / 2;
-    const box = (c0: number, c1: number, r0: number, r1: number) => ({
-    x: g.ind.x + c0 * P - 3,
-    y: g.ind.y - (r1 + 1) * P + (P - S) - 3,
-    w: (c1 - c0 + 1) * P - (P - S) + 6,
-    h: (r1 - r0 + 1) * P - (P - S) + 6,
-  });
-  const next = box(2, 3, 4, 4);
+/** a small item travelling a path: a brief (envelope), finished work (box) or a product (purple cube) */
+function Traveller({ path, kind, dur, reverse = false, delay = 0 }: { path: string; kind: "brief" | "box" | "product"; dur: number; reverse?: boolean; delay?: number }) {
   return (
-    <svg className={`ev ev--${kind}`} viewBox={g.vb} aria-hidden="true">
-      {g.ground.map(([a, b, y], k) => (
-        <line key={k} className="ev-ground" x1={a} x2={b} y1={y} y2={y} />
-      ))}
-      <text className="ev-place" x={g.label.hq[0]} y={g.label.hq[1]} textAnchor="middle">
-        HOME MARKET
+    <g className={`ev-tr ev-tr--${kind}`}>
+      {kind === "brief" ? (
+        <g>
+          <rect x="-11" y="-8" width="22" height="16" />
+          <path d="M-11 -8 L0 1 L11 -8" />
+        </g>
+      ) : (
+        <g>
+          <path d="M0 -10 L10 -5 L10 6 L0 11 L-10 6 L-10 -5 Z" />
+          <path d="M-10 -5 L0 0 L10 -5 M0 0 V11" />
+        </g>
+      )}
+      <animateMotion
+        dur={`${dur}s`}
+        begin={`${delay}s`}
+        repeatCount="indefinite"
+        path={path}
+        {...(reverse ? { keyPoints: "1;0", keyTimes: "0;1", calcMode: "linear" } : {})}
+      />
+    </g>
+  );
+}
+
+// relationships: HQ roof → India; India → the organisation's other markets
+const ARC_A = "M428 190 C 650 50, 960 70, 1236 410";
+const ARC_B = "M428 190 C 650 40, 900 50, 1100 232";
+const ARC_C = "M1074 330 C 1010 320, 950 380, 930 456";
+const ARC_D = "M1074 370 C 960 360, 800 420, 740 492";
+
+function Scene() {
+  return (
+    <svg className="ev" viewBox="0 0 1600 610" aria-hidden="true">
+      {/* the ground: home on the left, India on the right */}
+      <line className="ev-ground" x1="40" x2="1560" y1={G} y2={G} />
+      <text className="ev-place" x="300" y={G + 34} textAnchor="middle">
+        HOME MARKET · HEADQUARTERS
       </text>
-      <text className="ev-place ev-place--in" x={g.label.ind[0]} y={g.label.ind[1]} textAnchor="middle">
+      <text className="ev-place ev-place--in" x="1250" y={G + 34} textAnchor="middle">
         INDIA
       </text>
 
-      {/* the bridges: one at arrival, three once the centre operates */}
-      {g.bridges.map((d, k) => (
-        <g key={k} className={`ev-br ev-br--${k}`}>
-          <path d={d} pathLength={1} />
-          <circle r="7" className="ev-dot ev-dot--in">
-            <animateMotion dur={`${2.6 + k * 0.4}s`} repeatCount="indefinite" path={d} />
-          </circle>
-          <circle r="7" className="ev-dot ev-dot--out">
-            <animateMotion dur={`${2.8 + k * 0.4}s`} repeatCount="indefinite" path={d} keyPoints="1;0" keyTimes="0;1" calcMode="linear" />
-          </circle>
+      {/* 01 · headquarters — always there */}
+      <g className="f f-1">
+        <Tree x={130} />
+        <Tree x={555} />
+        <rect className="ev-bld" x="180" y="200" width="240" height="360" />
+        <rect className="ev-bld" x="170" y="186" width="260" height="14" />
+        <text className="ev-sign" x="300" y="174" textAnchor="middle">
+          HQ
+        </text>
+        <Windows x={196} y={216} cols={5} rows={7} w={30} h={24} gx={44} gy={38} lit={[1, 7, 12, 16, 23, 28, 31]} />
+        <rect className="ev-bld" x="420" y="380" width="96" height="180" />
+        <Windows x={434} y={396} cols={2} rows={3} w={28} h={22} gx={42} gy={36} lit={[2]} />
+        <rect className="ev-door" x="272" y="496" width="56" height="64" />
+        <line className="ev-line" x1="300" y1="496" x2="300" y2="560" />
+        <line className="ev-line ev-thick" x1="254" y1="492" x2="346" y2="492" />
+        <Person x={238} />
+        <Person x={362} s={0.95} />
+        <Person x={384} s={1.05} />
+        <Person x={470} s={0.9} />
+      </g>
+
+      {/* 01 · India, not yet: an empty plot */}
+      <g className="vis vis--1">
+        <rect className="ev-plot" x="1060" y="520" width="380" height="40" />
+        <text className="ev-note" x="1250" y="506" textAnchor="middle">
+          A SITE, NOT YET A CENTRE
+        </text>
+      </g>
+
+      {/* 02 · the arrival: a modest centre, and the mandate that connects it */}
+      <g className="vis vis--2">
+        <g className="f f-2">
+          <path className="ev-arc" d={ARC_A} />
+          <text className="ev-arclab" x="720" y="74" textAnchor="middle">
+            THE MANDATE
+          </text>
+          <Traveller path={ARC_A} kind="brief" dur={4} />
+          <rect className="ev-bld" x="1140" y="430" width="220" height="130" />
+          <rect className="ev-bld" x="1132" y="418" width="236" height="12" />
+          <Windows x={1156} y={446} cols={5} rows={2} w={28} h={22} gx={40} gy={36} />
+          <rect className="ev-door" x="1230" y="510" width="40" height="50" />
+          <text className="ev-sign" x="1250" y="404" textAnchor="middle">
+            GCC · INDIA
+          </text>
+          <Person x={1200} />
         </g>
-      ))}
+      </g>
 
-      {/* the wider organisation */}
-      {g.globals.map((o, k) => (
-        <g key={k} className="ev-gl">
-          <path d={o.path} pathLength={1} />
-          <rect x={o.at[0] - 13} y={o.at[1] - 13} width="26" height="26" />
-          <circle r="5" className="ev-dot ev-dot--out">
-            <animateMotion dur={`${2.2 + k * 0.3}s`} repeatCount="indefinite" path={o.path} />
-          </circle>
+      {/* 03+ · the operating centre: people, desks, work in and delivery out */}
+      <g className="vis vis--3">
+        <g className="f f-3">
+          <path className="ev-arc ev-arc--work" d={ARC_B} />
+          <text className="ev-arclab ev-arclab--3" x="720" y="66" textAnchor="middle">
+            WORK IN · DELIVERY OUT
+          </text>
+          <Traveller path={ARC_B} kind="brief" dur={4.2} />
+          <Traveller path={ARC_B} kind="box" dur={4.6} reverse delay={1.2} />
+          <rect className="ev-bld" x="1080" y="250" width="290" height="310" />
+          <rect className="ev-bld" x="1070" y="238" width="310" height="12" />
+          <Windows x={1096} y={266} cols={6} rows={5} w={30} h={24} gx={44} gy={36} lit={[0, 3, 7, 8, 11, 14, 19, 22, 25, 28]} />
+          {/* the glass front: teams at work */}
+          <rect className="ev-glass" x="1094" y="452" width="262" height="108" />
+          <Desk x={1118} y={548} />
+          <Desk x={1186} y={548} />
+          <Desk x={1254} y={548} />
+          <Desk x={1318} y={548} />
+          <Person x={1058} s={0.95} />
         </g>
-      ))}
-
-      {/* home market */}
-      <g className="ev-hq">
-        <Blocks x={g.hq.x} y={g.hq.y} cols={HQ_C} rows={HQ_R} cls="ev-b" />
-      </g>
-      <g className="ev-node ev-node--hq">
-        <line x1={hqMid} x2={hqMid} y1={hqTop - 6} y2={hqTop - 30} />
-        <circle cx={hqMid} cy={hqTop - 42} r="13" />
-        <text x={hqMid + 26} y={hqTop - 37}>
-          DECISIONS
-        </text>
       </g>
 
-      {/* India */}
-      <g className="ev-in">
-        <Blocks x={g.ind.x} y={g.ind.y} cols={IN_C} rows={IN_R} cls="ev-b" arrive />
+      {/* 04+ · the ownership shift: a tower that owns things, a room where decisions are made, products going back */}
+      <g className="vis vis--4">
+        <g className="f f-4">
+          <path className="ev-arc ev-arc--own" d={ARC_B} />
+          <text className="ev-arclab ev-arclab--own" x="720" y="40" textAnchor="middle">
+            PRODUCTS AND DECISIONS FLOW BACK
+          </text>
+          <Traveller path={ARC_B} kind="product" dur={3.6} reverse delay={0.4} />
+          <Traveller path={ARC_B} kind="product" dur={3.6} reverse delay={2.2} />
+          {/* the new tower */}
+          <rect className="ev-bld" x="1370" y="100" width="124" height="460" />
+          <rect className="ev-bld" x="1362" y="88" width="140" height="12" />
+          <rect className="ev-band ev-band--prod" x="1370" y="130" width="124" height="56" />
+          <text className="ev-bandt ev-bandt--light" x="1432" y="163" textAnchor="middle">
+            PRODUCT
+          </text>
+          <rect className="ev-band ev-band--plat" x="1370" y="196" width="124" height="56" />
+          <text className="ev-bandt ev-bandt--light" x="1432" y="229" textAnchor="middle">
+            PLATFORMS
+          </text>
+          <rect className="ev-band ev-band--eng" x="1370" y="262" width="124" height="56" />
+          <text className="ev-bandt" x="1432" y="295" textAnchor="middle">
+            ENGINEERING
+          </text>
+          <Windows x={1386} y={334} cols={3} rows={5} w={24} h={22} gx={34} gy={34} lit={[1, 4, 6, 10, 13]} />
+          {/* decisions are made here */}
+          <rect className="ev-glass ev-glass--room" x="1120" y="180" width="200" height="58" />
+          <line className="ev-line" x1="1150" y1="226" x2="1290" y2="226" />
+          <Person x={1162} y={226} s={0.8} tone="purple" />
+          <Person x={1200} y={226} s={0.8} tone="purple" />
+          <Person x={1240} y={226} s={0.8} tone="purple" />
+          <Person x={1278} y={226} s={0.8} tone="purple" />
+          <text className="ev-callout" x="1220" y="168" textAnchor="middle">
+            DECISIONS MADE HERE
+          </text>
+        </g>
       </g>
-      <g className="ev-own">
-        {GROUPS.map((gr) => {
-          const b = box(gr.c0, gr.c1, gr.r0, gr.r1);
-          return (
-            <g key={gr.cls} className={`ev-v ev-v--${gr.cls}`}>
-              <rect x={b.x} y={b.y} width={b.w} height={b.h} />
-              <text x={b.x + 10} y={b.y + 22}>
-                {gr.name.toUpperCase()}
-              </text>
-            </g>
-          );
-        })}
-      </g>
-      <g className="ev-next">
-        <rect x={next.x} y={next.y} width={next.w} height={next.h} />
-        <text x={next.x + next.w / 2} y={next.y + next.h / 2 + 6} textAnchor="middle">
-          NEXT
-        </text>
-      </g>
-      {/* India's decisions: over the first column, clear of what's being built next */}
-      <g className="ev-node ev-node--in">
-        <line x1={g.ind.x + S / 2} x2={g.ind.x + S / 2} y1={inTop - 6} y2={inTop - 30} />
-        <circle cx={g.ind.x + S / 2} cy={inTop - 42} r="13" />
-        <text x={g.ind.x + S / 2 - 24} y={inTop - 37} textAnchor="end">
-          DECISIONS
-        </text>
+
+      {/* 05 · the next order: one of the organisation's centres of gravity, building what's next */}
+      <g className="vis vis--5">
+        <g className="f f-5">
+          <path className="ev-arc ev-arc--own" d={ARC_C} />
+          <path className="ev-arc ev-arc--own" d={ARC_D} />
+          <Traveller path={ARC_C} kind="product" dur={3.2} delay={0.6} />
+          <Traveller path={ARC_D} kind="product" dur={3.8} delay={1.4} />
+          <rect className="ev-bld ev-far" x="890" y="462" width="70" height="98" />
+          <Windows x={900} y={474} cols={2} rows={3} w={18} h={16} gx={30} gy={26} />
+          <rect className="ev-bld ev-far" x="700" y="498" width="70" height="62" />
+          <Windows x={710} y={510} cols={2} rows={2} w={18} h={16} gx={30} gy={24} />
+          <text className="ev-note" x="830" y="448" textAnchor="middle">
+            OTHER MARKETS
+          </text>
+          {/* a crane: building what's next */}
+          <line className="ev-crane" x1="1538" y1={G} x2="1538" y2="60" />
+          <line className="ev-crane" x1="1500" y1="70" x2="1580" y2="70" />
+          <line className="ev-line" x1="1516" y1="70" x2="1516" y2="300" />
+          <rect className="ev-next" x="1512" y="420" width="44" height="140" />
+          <text className="ev-nextt" x="1534" y="406" textAnchor="middle">
+            NEXT
+          </text>
+        </g>
       </g>
     </svg>
   );
 }
 
+/* ---------------------------------------------------------------- the section */
 export function GccEvolution() {
   const root = useRef<HTMLElement | null>(null);
   const [i, setI] = useState(0);
@@ -236,7 +306,7 @@ export function GccEvolution() {
     };
   }, []);
 
-  // the stage buttons scroll the page to that stage (native scroll, never hijacked)
+  // a stage on the timeline scrolls the page to that stage — native scroll, never hijacked
   const go = (k: number) => {
     const el = root.current;
     if (!el) return;
@@ -249,58 +319,56 @@ export function GccEvolution() {
   return (
     <section id="evolve" ref={root} className="evo" data-stage={i + 1} data-tone="light" data-act="evolve" aria-labelledby="evo-h">
       <div className="evo__stage">
-        <div className="evo__hd">
-          <div>
+        <header className="evo__hd">
+          <div className="evo__title">
             <p className="evo__k">How a GCC evolves</p>
             <h2 id="evo-h" className="evo__h">
-              From a presence in India to a force in the business.
+              From a presence in India <br />
+              to a force in the business.
             </h2>
           </div>
-          <div className="evo__rail" role="group" aria-label="The five stages">
-            {STAGES.map((x, k) => (
-              <button
-                key={x.n}
-                type="button"
-                className={`evo__r${k === i ? " is-on" : k < i ? " is-done" : ""}${k >= 3 ? " is-next" : ""}`}
-                aria-pressed={k === i}
-                onClick={() => go(k)}
-              >
-                <b>{x.n}</b>
-                <span>{x.title}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="evo__art">
-          <Scene g={WIDE} kind="wide" />
-          <Scene g={TALL} kind="tall" />
-        </div>
-
-        <div className="evo__ft">
           <div key={i} className="evo__cap" aria-live="polite">
             <p className="evo__n">
-              {s.n} / 05 · {s.title}
+              {s.n} — {s.title}
             </p>
             <p className="evo__line">{s.line}</p>
             <p className="evo__note">{s.note}</p>
+            {i >= 3 ? (
+              <div className="evo__gap">
+                <p className="evo__gapk">The capability gap</p>
+                <p className="evo__gapp">
+                  The talent that sets up a centre isn’t always the talent that takes it to the next level. <b>ViaMagus Select</b> brings
+                  engineer-vetted specialist talent for what comes next.
+                </p>
+                <a href={SELECT_URL} target="_blank" rel="noopener noreferrer">
+                  Meet ViaMagus Select ↗<span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              </div>
+            ) : null}
           </div>
-          <aside className={`evo__sel${i >= 3 ? " is-on" : ""}`} aria-hidden={i < 3}>
-            <p className="evo__selk">The capability gap</p>
-            <p className="evo__selp">
-              The people who set up a centre aren’t always the people who will own what it builds next. <b>ViaMagus Select</b> brings
-              engineer-vetted specialist talent for that next stage.
-            </p>
-            <div className="evo__sela">
-              <a href="https://www.viamagusselect.ai/" target="_blank" rel="noopener noreferrer" tabIndex={i >= 3 ? 0 : -1}>
-                Let’s hire ↗<span className="sr-only"> — ViaMagus Select (opens in a new tab)</span>
-              </a>
-              <a href="/register?interest=select" tabIndex={i >= 3 ? 0 : -1}>
-                Bring a hiring brief to the room →
-              </a>
-            </div>
-          </aside>
+        </header>
+
+        <div className="evo__art">
+          <Scene />
         </div>
+
+        {/* the five stages, set on the ground line */}
+        <ol className="evo__tl" aria-label="The five stages">
+          {STAGES.map((x, k) => (
+            <li key={x.n}>
+              <button
+                type="button"
+                className={`evo__t${k === i ? " is-on" : k < i ? " is-done" : ""}${k >= 3 ? " is-own" : ""}`}
+                aria-current={k === i ? "step" : undefined}
+                onClick={() => go(k)}
+              >
+                <span className="evo__tdot" aria-hidden="true" />
+                <b>{x.n}</b>
+                <span className="evo__tlab">{x.title}</span>
+              </button>
+            </li>
+          ))}
+        </ol>
         <p className="evo__fine">A way of seeing it, not a rule — every centre’s path is different.</p>
       </div>
       <ol className="sr-only">
