@@ -1,5 +1,6 @@
 "use client";
 
+import { useStepScroll } from "./useStepScroll";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 /**
@@ -11,8 +12,18 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
  * maturity model every centre must follow.
  */
 export const STAGES = [
-  { n: "01", title: "The origin", line: "The business begins at home.", note: "Leadership, teams and decisions all sit at headquarters." },
-  { n: "02", title: "The arrival", line: "India becomes part of the plan.", note: "A centre opens in India, connected to headquarters by a clear mandate." },
+  {
+    n: "01",
+    title: "The origin",
+    line: "The business begins at home.",
+    note: "Leadership, teams and decisions all sit at headquarters.",
+  },
+  {
+    n: "02",
+    title: "The arrival",
+    line: "India becomes part of the plan.",
+    note: "A centre opens in India, connected to headquarters by a clear mandate.",
+  },
   {
     n: "03",
     title: "The operating centre",
@@ -37,9 +48,22 @@ const SELECT_URL = "https://www.viamagusselect.ai/";
 const G = 560; // ground
 
 /* ---------------------------------------------------------------- drawing parts */
-function Person({ x, y = G, s = 1, tone = "ink" }: { x: number; y?: number; s?: number; tone?: "ink" | "purple" }) {
+function Person({
+  x,
+  y = G,
+  s = 1,
+  tone = "ink",
+}: {
+  x: number;
+  y?: number;
+  s?: number;
+  tone?: "ink" | "purple";
+}) {
   return (
-    <g className={`ev-p ev-p--${tone}`} transform={`translate(${x} ${y}) scale(${s})`}>
+    <g
+      className={`ev-p ev-p--${tone}`}
+      transform={`translate(${x} ${y}) scale(${s})`}
+    >
       <circle cx="0" cy="-27" r="5.5" />
       <path d="M-8 0 V-12 C-8 -19 -4 -20 0 -20 C4 -20 8 -19 8 -12 V0 Z" />
     </g>
@@ -51,7 +75,10 @@ function Desk({ x, y }: { x: number; y: number }) {
   return (
     <g className="ev-desk" transform={`translate(${x} ${y})`}>
       <circle cx="0" cy="-30" r="5" className="ev-fill" />
-      <path d="M-9 -8 C-9 -17 -5 -19 0 -19 C5 -19 9 -17 9 -8 Z" className="ev-fill" />
+      <path
+        d="M-9 -8 C-9 -17 -5 -19 0 -19 C5 -19 9 -17 9 -8 Z"
+        className="ev-fill"
+      />
       <rect x="10" y="-26" width="18" height="13" className="ev-line" />
       <line x1="19" y1="-13" x2="19" y2="-8" className="ev-line" />
       <line x1="-16" y1="-8" x2="36" y2="-8" className="ev-line" />
@@ -93,15 +120,38 @@ function Windows({
   for (let r = 0; r < rows; r++)
     for (let c = 0; c < cols; c++) {
       const k = r * cols + c;
-      out.push(<rect key={k} className={`ev-win${lit.includes(k) ? " is-lit" : ""}`} x={x + c * gx} y={y + r * gy} width={w} height={h} />);
+      out.push(
+        <rect
+          key={k}
+          className={`ev-win${lit.includes(k) ? " is-lit" : ""}`}
+          x={x + c * gx}
+          y={y + r * gy}
+          width={w}
+          height={h}
+        />,
+      );
     }
   return <>{out}</>;
 }
 
 /** a small item travelling a path: a brief (envelope), finished work (box) or a product (purple cube) */
-function Traveller({ path, kind, dur, reverse = false, delay = 0 }: { path: string; kind: "brief" | "box" | "product"; dur: number; reverse?: boolean; delay?: number }) {
+function Traveller({
+  path,
+  kind,
+  dur,
+  reverse = false,
+  delay = 0,
+  className = "",
+}: {
+  path: string;
+  kind: "brief" | "box" | "product";
+  dur: number;
+  reverse?: boolean;
+  delay?: number;
+  className?: string;
+}) {
   return (
-    <g className={`ev-tr ev-tr--${kind}`}>
+    <g className={`ev-tr ev-tr--${kind} ${className}`}>
       {kind === "brief" ? (
         <g>
           <rect x="-11" y="-8" width="22" height="16" />
@@ -118,7 +168,9 @@ function Traveller({ path, kind, dur, reverse = false, delay = 0 }: { path: stri
         begin={`${delay}s`}
         repeatCount="indefinite"
         path={path}
-        {...(reverse ? { keyPoints: "1;0", keyTimes: "0;1", calcMode: "linear" } : {})}
+        {...(reverse
+          ? { keyPoints: "1;0", keyTimes: "0;1", calcMode: "linear" }
+          : {})}
       />
     </g>
   );
@@ -127,8 +179,8 @@ function Traveller({ path, kind, dur, reverse = false, delay = 0 }: { path: stri
 // relationships: HQ roof → India; India → the organisation's other markets
 const ARC_A = "M428 190 C 650 50, 960 70, 1236 410";
 const ARC_B = "M428 190 C 650 40, 900 50, 1100 232";
-const ARC_C = "M1074 330 C 1010 320, 950 380, 930 456";
-const ARC_D = "M1074 370 C 960 360, 800 420, 740 492";
+const ARC_C = "M1076 410 Q 1000 392 928 460";
+const ARC_D = "M1076 440 Q 900 420 738 496";
 
 function Scene() {
   return (
@@ -138,7 +190,12 @@ function Scene() {
       <text className="ev-place" x="300" y={G + 34} textAnchor="middle">
         HOME MARKET · HEADQUARTERS
       </text>
-      <text className="ev-place ev-place--in" x="1250" y={G + 34} textAnchor="middle">
+      <text
+        className="ev-place ev-place--in"
+        x="1250"
+        y={G + 34}
+        textAnchor="middle"
+      >
         INDIA
       </text>
 
@@ -151,12 +208,38 @@ function Scene() {
         <text className="ev-sign" x="300" y="174" textAnchor="middle">
           HQ
         </text>
-        <Windows x={196} y={216} cols={5} rows={7} w={30} h={24} gx={44} gy={38} lit={[1, 7, 12, 16, 23, 28, 31]} />
+        <Windows
+          x={196}
+          y={216}
+          cols={5}
+          rows={7}
+          w={30}
+          h={24}
+          gx={44}
+          gy={38}
+          lit={[1, 7, 12, 16, 23, 28, 31]}
+        />
         <rect className="ev-bld" x="420" y="380" width="96" height="180" />
-        <Windows x={434} y={396} cols={2} rows={3} w={28} h={22} gx={42} gy={36} lit={[2]} />
+        <Windows
+          x={434}
+          y={396}
+          cols={2}
+          rows={3}
+          w={28}
+          h={22}
+          gx={42}
+          gy={36}
+          lit={[2]}
+        />
         <rect className="ev-door" x="272" y="496" width="56" height="64" />
         <line className="ev-line" x1="300" y1="496" x2="300" y2="560" />
-        <line className="ev-line ev-thick" x1="254" y1="492" x2="346" y2="492" />
+        <line
+          className="ev-line ev-thick"
+          x1="254"
+          y1="492"
+          x2="346"
+          y2="492"
+        />
         <Person x={238} />
         <Person x={362} s={0.95} />
         <Person x={384} s={1.05} />
@@ -179,13 +262,30 @@ function Scene() {
             THE MANDATE
           </text>
           <Traveller path={ARC_A} kind="brief" dur={4} />
-          <rect className="ev-bld" x="1140" y="430" width="220" height="130" />
-          <rect className="ev-bld" x="1132" y="418" width="236" height="12" />
-          <Windows x={1156} y={446} cols={5} rows={2} w={28} h={22} gx={40} gy={36} />
-          <rect className="ev-door" x="1230" y="510" width="40" height="50" />
-          <text className="ev-sign" x="1250" y="404" textAnchor="middle">
-            GCC · INDIA
-          </text>
+          <g className="rise">
+            <rect
+              className="ev-bld"
+              x="1140"
+              y="430"
+              width="220"
+              height="130"
+            />
+            <rect className="ev-bld" x="1132" y="418" width="236" height="12" />
+            <Windows
+              x={1156}
+              y={446}
+              cols={5}
+              rows={2}
+              w={28}
+              h={22}
+              gx={40}
+              gy={36}
+            />
+            <rect className="ev-door" x="1230" y="510" width="40" height="50" />
+            <text className="ev-sign" x="1250" y="404" textAnchor="middle">
+              GCC · INDIA
+            </text>
+          </g>
           <Person x={1200} />
         </g>
       </g>
@@ -194,20 +294,56 @@ function Scene() {
       <g className="vis vis--3">
         <g className="f f-3">
           <path className="ev-arc ev-arc--work" d={ARC_B} />
-          <text className="ev-arclab ev-arclab--3" x="720" y="66" textAnchor="middle">
+          <text
+            className="ev-arclab ev-arclab--3"
+            x="720"
+            y="66"
+            textAnchor="middle"
+          >
             WORK IN · DELIVERY OUT
           </text>
           <Traveller path={ARC_B} kind="brief" dur={4.2} />
-          <Traveller path={ARC_B} kind="box" dur={4.6} reverse delay={1.2} />
-          <rect className="ev-bld" x="1080" y="250" width="290" height="310" />
-          <rect className="ev-bld" x="1070" y="238" width="310" height="12" />
-          <Windows x={1096} y={266} cols={6} rows={5} w={30} h={24} gx={44} gy={36} lit={[0, 3, 7, 8, 11, 14, 19, 22, 25, 28]} />
-          {/* the glass front: teams at work */}
-          <rect className="ev-glass" x="1094" y="452" width="262" height="108" />
-          <Desk x={1118} y={548} />
-          <Desk x={1186} y={548} />
-          <Desk x={1254} y={548} />
-          <Desk x={1318} y={548} />
+          <Traveller
+            path={ARC_B}
+            kind="box"
+            dur={4.6}
+            reverse
+            delay={1.2}
+            className="ev-tr--work"
+          />
+          <g className="rise">
+            <rect
+              className="ev-bld"
+              x="1080"
+              y="250"
+              width="290"
+              height="310"
+            />
+            <rect className="ev-bld" x="1070" y="238" width="310" height="12" />
+            <Windows
+              x={1096}
+              y={266}
+              cols={6}
+              rows={5}
+              w={30}
+              h={24}
+              gx={44}
+              gy={36}
+              lit={[0, 3, 7, 8, 11, 14, 19, 22, 25, 28]}
+            />
+            {/* the glass front: teams at work */}
+            <rect
+              className="ev-glass"
+              x="1094"
+              y="452"
+              width="262"
+              height="108"
+            />
+            <Desk x={1118} y={548} />
+            <Desk x={1186} y={548} />
+            <Desk x={1254} y={548} />
+            <Desk x={1318} y={548} />
+          </g>
           <Person x={1058} s={0.95} />
         </g>
       </g>
@@ -216,60 +352,179 @@ function Scene() {
       <g className="vis vis--4">
         <g className="f f-4">
           <path className="ev-arc ev-arc--own" d={ARC_B} />
-          <text className="ev-arclab ev-arclab--own" x="720" y="40" textAnchor="middle">
+          <text
+            className="ev-arclab ev-arclab--own"
+            x="720"
+            y="40"
+            textAnchor="middle"
+          >
             PRODUCTS AND DECISIONS FLOW BACK
           </text>
-          <Traveller path={ARC_B} kind="product" dur={3.6} reverse delay={0.4} />
-          <Traveller path={ARC_B} kind="product" dur={3.6} reverse delay={2.2} />
+          <Traveller
+            path={ARC_B}
+            kind="product"
+            dur={3.6}
+            reverse
+            delay={0.4}
+          />
+          <Traveller
+            path={ARC_B}
+            kind="product"
+            dur={3.6}
+            reverse
+            delay={2.2}
+          />
           {/* the new tower */}
-          <rect className="ev-bld" x="1370" y="100" width="124" height="460" />
-          <rect className="ev-bld" x="1362" y="88" width="140" height="12" />
-          <rect className="ev-band ev-band--prod" x="1370" y="130" width="124" height="56" />
-          <text className="ev-bandt ev-bandt--light" x="1432" y="163" textAnchor="middle">
-            PRODUCT
-          </text>
-          <rect className="ev-band ev-band--plat" x="1370" y="196" width="124" height="56" />
-          <text className="ev-bandt ev-bandt--light" x="1432" y="229" textAnchor="middle">
-            PLATFORMS
-          </text>
-          <rect className="ev-band ev-band--eng" x="1370" y="262" width="124" height="56" />
-          <text className="ev-bandt" x="1432" y="295" textAnchor="middle">
-            ENGINEERING
-          </text>
-          <Windows x={1386} y={334} cols={3} rows={5} w={24} h={22} gx={34} gy={34} lit={[1, 4, 6, 10, 13]} />
+          <g className="rise rise--tall">
+            <rect
+              className="ev-bld"
+              x="1370"
+              y="100"
+              width="124"
+              height="460"
+            />
+            <rect className="ev-bld" x="1362" y="88" width="140" height="12" />
+            <rect
+              className="ev-band ev-band--prod"
+              x="1370"
+              y="130"
+              width="124"
+              height="56"
+            />
+            <text
+              className="ev-bandt ev-bandt--light"
+              x="1432"
+              y="163"
+              textAnchor="middle"
+            >
+              PRODUCT
+            </text>
+            <rect
+              className="ev-band ev-band--plat"
+              x="1370"
+              y="196"
+              width="124"
+              height="56"
+            />
+            <text
+              className="ev-bandt ev-bandt--light"
+              x="1432"
+              y="229"
+              textAnchor="middle"
+            >
+              PLATFORMS
+            </text>
+            <rect
+              className="ev-band ev-band--eng"
+              x="1370"
+              y="262"
+              width="124"
+              height="56"
+            />
+            <text className="ev-bandt" x="1432" y="295" textAnchor="middle">
+              ENGINEERING
+            </text>
+            <Windows
+              x={1386}
+              y={334}
+              cols={3}
+              rows={5}
+              w={24}
+              h={22}
+              gx={34}
+              gy={34}
+              lit={[1, 4, 6, 10, 13]}
+            />
+          </g>
           {/* decisions are made here */}
-          <rect className="ev-glass ev-glass--room" x="1120" y="180" width="200" height="58" />
-          <line className="ev-line" x1="1150" y1="226" x2="1290" y2="226" />
-          <Person x={1162} y={226} s={0.8} tone="purple" />
-          <Person x={1200} y={226} s={0.8} tone="purple" />
-          <Person x={1240} y={226} s={0.8} tone="purple" />
-          <Person x={1278} y={226} s={0.8} tone="purple" />
-          <text className="ev-callout" x="1220" y="168" textAnchor="middle">
-            DECISIONS MADE HERE
-          </text>
+          <g className="drop">
+            <rect
+              className="ev-glass ev-glass--room"
+              x="1120"
+              y="180"
+              width="200"
+              height="58"
+            />
+            <line className="ev-line" x1="1150" y1="226" x2="1290" y2="226" />
+            <Person x={1162} y={226} s={0.8} tone="purple" />
+            <Person x={1200} y={226} s={0.8} tone="purple" />
+            <Person x={1240} y={226} s={0.8} tone="purple" />
+            <Person x={1278} y={226} s={0.8} tone="purple" />
+            <text className="ev-callout" x="1220" y="168" textAnchor="middle">
+              DECISIONS MADE HERE
+            </text>
+          </g>
         </g>
       </g>
 
-      {/* 05 · the next order: one of the organisation's centres of gravity, building what's next */}
+      {/* 05 · the next order: connected to the organisation's other markets, and building what's next */}
       <g className="vis vis--5">
         <g className="f f-5">
-          <path className="ev-arc ev-arc--own" d={ARC_C} />
-          <path className="ev-arc ev-arc--own" d={ARC_D} />
-          <Traveller path={ARC_C} kind="product" dur={3.2} delay={0.6} />
-          <Traveller path={ARC_D} kind="product" dur={3.8} delay={1.4} />
-          <rect className="ev-bld ev-far" x="890" y="462" width="70" height="98" />
-          <Windows x={900} y={474} cols={2} rows={3} w={18} h={16} gx={30} gy={26} />
-          <rect className="ev-bld ev-far" x="700" y="498" width="70" height="62" />
-          <Windows x={710} y={510} cols={2} rows={2} w={18} h={16} gx={30} gy={24} />
-          <text className="ev-note" x="830" y="448" textAnchor="middle">
+          <path
+            className="ev-arc ev-arc--own ev-arc--draw"
+            d={ARC_C}
+            pathLength={1}
+          />
+          <path
+            className="ev-arc ev-arc--own ev-arc--draw"
+            d={ARC_D}
+            pathLength={1}
+          />
+          <Traveller path={ARC_C} kind="product" dur={2.6} delay={0.8} />
+          <Traveller path={ARC_D} kind="product" dur={3.2} delay={1.4} />
+          <g className="rise">
+            <rect
+              className="ev-bld ev-far"
+              x="890"
+              y="462"
+              width="76"
+              height="98"
+            />
+            <Windows
+              x={901}
+              y={474}
+              cols={2}
+              rows={3}
+              w={20}
+              h={16}
+              gx={32}
+              gy={26}
+            />
+            <rect
+              className="ev-bld ev-far"
+              x="700"
+              y="498"
+              width="76"
+              height="62"
+            />
+            <Windows
+              x={711}
+              y={510}
+              cols={2}
+              rows={2}
+              w={20}
+              h={16}
+              gx={32}
+              gy={24}
+            />
+          </g>
+          <text
+            className="ev-place ev-place--far"
+            x="833"
+            y={G + 34}
+            textAnchor="middle"
+          >
             OTHER MARKETS
           </text>
-          {/* a crane: building what's next */}
-          <line className="ev-crane" x1="1538" y1={G} x2="1538" y2="60" />
-          <line className="ev-crane" x1="1500" y1="70" x2="1580" y2="70" />
-          <line className="ev-line" x1="1516" y1="70" x2="1516" y2="300" />
-          <rect className="ev-next" x="1512" y="420" width="44" height="140" />
-          <text className="ev-nextt" x="1534" y="406" textAnchor="middle">
+          {/* a crane beside the plot: building what's next */}
+          <g className="ev-cr">
+            <line className="ev-crane" x1="1584" y1={G} x2="1584" y2="300" />
+            <line className="ev-crane" x1="1494" y1="306" x2="1598" y2="306" />
+            <line className="ev-line" x1="1534" y1="306" x2="1534" y2="404" />
+            <rect className="ev-line" x="1526" y="404" width="16" height="10" />
+          </g>
+          <rect className="ev-next" x="1508" y="424" width="52" height="136" />
+          <text className="ev-nextt" x="1534" y="498" textAnchor="middle">
             NEXT
           </text>
         </g>
@@ -281,6 +536,7 @@ function Scene() {
 /* ---------------------------------------------------------------- the section */
 export function GccEvolution() {
   const root = useRef<HTMLElement | null>(null);
+  useStepScroll(root, STAGES.length);
   const [i, setI] = useState(0);
 
   useEffect(() => {
@@ -290,8 +546,11 @@ export function GccEvolution() {
     const read = () => {
       raf = 0;
       const r = el.getBoundingClientRect();
-      const p = Math.max(0, Math.min(0.999, -r.top / Math.max(1, r.height - window.innerHeight)));
-      setI(Math.floor(p * STAGES.length));
+      const p = Math.max(
+        0,
+        Math.min(1, -r.top / Math.max(1, r.height - window.innerHeight)),
+      );
+      setI(Math.round(p * (STAGES.length - 1)));
     };
     const on = () => {
       if (!raf) raf = requestAnimationFrame(read);
@@ -306,18 +565,29 @@ export function GccEvolution() {
     };
   }, []);
 
-  // a stage on the timeline scrolls the page to that stage — native scroll, never hijacked
+  // a stage on the timeline scrolls the page to that stage's snap point — native scroll, never hijacked
   const go = (k: number) => {
     const el = root.current;
     if (!el) return;
     const top = el.getBoundingClientRect().top + window.scrollY;
     const span = el.offsetHeight - window.innerHeight;
-    window.scrollTo({ top: top + ((k + 0.5) / STAGES.length) * span, behavior: "instant" });
+    window.scrollTo({
+      top: top + (k / (STAGES.length - 1)) * span,
+      behavior: "instant",
+    });
   };
 
   const s = STAGES[i];
   return (
-    <section id="evolve" ref={root} className="evo" data-stage={i + 1} data-tone="light" data-act="evolve" aria-labelledby="evo-h">
+    <section
+      id="evolve"
+      ref={root}
+      className="evo"
+      data-stage={i + 1}
+      data-tone="light"
+      data-act="evolve"
+      aria-labelledby="evo-h"
+    >
       <div className="evo__stage">
         <header className="evo__hd">
           <div className="evo__title">
@@ -329,27 +599,36 @@ export function GccEvolution() {
           </div>
           <div key={i} className="evo__cap" aria-live="polite">
             <p className="evo__n">
-              {s.n} — {s.title}
+              <span>{s.n}</span> {s.title}
             </p>
             <p className="evo__line">{s.line}</p>
             <p className="evo__note">{s.note}</p>
-            {i >= 3 ? (
-              <div className="evo__gap">
-                <p className="evo__gapk">The capability gap</p>
-                <p className="evo__gapp">
-                  The talent that sets up a centre isn’t always the talent that takes it to the next level. <b>ViaMagus Select</b> brings
-                  engineer-vetted specialist talent for what comes next.
-                </p>
-                <a href={SELECT_URL} target="_blank" rel="noopener noreferrer">
-                  Meet ViaMagus Select ↗<span className="sr-only"> (opens in a new tab)</span>
-                </a>
-              </div>
-            ) : null}
           </div>
         </header>
 
         <div className="evo__art">
           <Scene />
+          {/* the capability gap: an annotation in the sky above HQ, from the ownership shift */}
+          <aside
+            className={`evo__gap${i >= 3 ? " is-on" : ""}`}
+            aria-hidden={i < 3}
+          >
+            <p className="evo__gapk">The capability gap</p>
+            <p className="evo__gapp">
+              The talent that sets up a centre isn’t always the talent that
+              takes it to the next level. <b>ViaMagus Select</b> brings
+              engineer-vetted specialist talent for what comes next.
+            </p>
+            <a
+              href={SELECT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              tabIndex={i >= 3 ? 0 : -1}
+            >
+              Meet ViaMagus Select ↗
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          </aside>
         </div>
 
         {/* the five stages, set on the ground line */}
@@ -369,8 +648,19 @@ export function GccEvolution() {
             </li>
           ))}
         </ol>
-        <p className="evo__fine">A way of seeing it, not a rule — every centre’s path is different.</p>
+        <p className="evo__fine">
+          A way of seeing it, not a rule — every centre’s path is different.
+        </p>
       </div>
+      {/* one snap point per stage: each swipe moves exactly one stage (scroll-snap-stop: always) */}
+      {STAGES.map((x, k) => (
+        <span
+          key={x.n}
+          className="evo__snap"
+          style={{ top: `${k * 50}vh` }}
+          aria-hidden="true"
+        />
+      ))}
       <ol className="sr-only">
         {STAGES.map((x) => (
           <li key={x.n}>
