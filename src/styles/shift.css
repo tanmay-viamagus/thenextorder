@@ -33,7 +33,6 @@ body {
 .tblock dt,
 .form__k,
 .field > span,
-.sh__n,
 .eco__k,
 .pnl__n,
 .pnl__link {
@@ -227,71 +226,93 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   cursor: pointer;
 }
 
-/* ---------------------------------------------------------------- OPENING: the cut title in its field */
+/* ---------------------------------------------------------------- OPENING: a live clock, on black */
 .hero {
-  --cut-y: 58%;
   position: relative;
   min-height: 100svh;
   padding: calc(var(--hdr) + 22px) var(--gutter) 28px;
   display: grid;
   grid-template-rows: auto 1fr auto;
   overflow: hidden;
-  background: var(--paper);
+  background: var(--black);
+  color: var(--white);
 }
 
-.fld {
+.hero__clock {
   position: absolute;
-  inset: 0;
+  top: 50%;
+  right: max(-16vh, -9vw);
+  width: min(116vh, 66vw);
+  aspect-ratio: 1;
+  transform: translateY(-50%);
   pointer-events: none;
 }
 
-.fld__below,
-.fld__above {
+.lc,
+.lc__dial {
+  width: 100%;
+  height: 100%;
+}
+
+.lc {
+  position: relative;
+}
+
+.ck-face {
+  fill: #0a090e;
+  stroke: rgba(252, 253, 255, 0.1);
+  stroke-width: 2;
+}
+
+.ck-t {
+  stroke: rgba(252, 253, 255, 0.32);
+  stroke-width: 4;
+}
+
+.ck-t--h {
+  stroke: rgba(252, 253, 255, 0.9);
+  stroke-width: 11;
+}
+
+.ck-hand {
+  fill: var(--white);
+}
+
+.ck-sec,
+.ck-pin {
+  fill: var(--magenta);
+}
+
+.lc__read {
   position: absolute;
-  inset: 0 -120px 0 0;
-  background-size: var(--pitch) var(--pitch);
-  background-position: var(--gutter) 0;
-}
-
-/* the old order: identical units in ink */
-.fld__below {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72'%3E%3Crect x='14.5' y='14.5' width='43' height='43' fill='none' stroke='%230e0d12' stroke-opacity='.1'/%3E%3C/svg%3E");
-  clip-path: inset(var(--cut-y) 0 0 0);
-}
-
-/* above the line: the same units, shifted, drawn in purple; a few already lifted */
-.fld__above {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72'%3E%3Crect x='14.5' y='14.5' width='43' height='43' fill='none' stroke='%236608a9' stroke-opacity='.17'/%3E%3C/svg%3E");
-  clip-path: inset(0 0 calc(100% - var(--cut-y)) 0);
-  transform: translateX(calc(var(--s, 1) * var(--pitch) * 0.5));
-}
-
-.fc {
-  position: absolute;
-  left: calc(var(--gutter) + var(--c) * var(--pitch) + var(--pitch) * 0.2);
-  top: calc(var(--r) * var(--pitch) + var(--pitch) * 0.2);
-  width: calc(var(--w) * var(--pitch) - var(--pitch) * 0.4);
-  height: calc(var(--h) * var(--pitch) - var(--pitch) * 0.4);
-  background: var(--lilac);
-}
-
-.fc:nth-child(2) {
-  background: var(--magenta);
+  left: 50%;
+  top: 66%;
+  transform: translateX(-50%);
+  font: 500 clamp(0.8rem, 1vw, 1.05rem) / 1 var(--mono);
+  letter-spacing: 0.22em;
+  color: rgba(252, 253, 255, 0.62);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .hero__meta {
   position: relative;
-  color: var(--ink-2);
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(252, 253, 255, 0.66);
 }
 
-/* the shifted title: two copies, cut at one threshold */
+/* the cut title */
 .st {
   --s: 1;
   --cut: 1.27em;
   position: relative;
   align-self: center;
   margin: 3vh 0 4vh -0.05em;
-  font: 800 min(19.4vw, 31svh) / 0.8 var(--font);
+  font: 800 min(17.6vw, 29svh) / 0.8 var(--font);
   letter-spacing: -0.05em;
   text-transform: uppercase;
   user-select: none;
@@ -335,38 +356,34 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   transform-origin: left;
 }
 
-.st__edge {
-  position: absolute;
-  right: 0;
-  top: var(--cut);
-  font: 500 0.74rem/1 var(--mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: var(--purple);
-}
-
-.st__edge--a {
-  margin-top: -24px;
-}
-
-.st__edge--b {
-  margin-top: 12px;
-  color: var(--ink-2);
-}
-
-/* the close: the shift resolves */
 .st--still .st__cut {
   left: -0.1em;
   width: calc(100% + 0.2em);
 }
 
+/* in the hero the title keeps time: everything above the line ticks forward
+   each second and snaps back on the minute */
+.hero .st__below {
+  color: var(--white);
+}
+
+.hero .st__above {
+  color: var(--lilac);
+}
+
+.hero .st__cut {
+  height: 3px;
+  background: var(--magenta);
+}
+
+.st--tick .st__above {
+  transform: translateX(calc(var(--sec, 20) * 0.0042em));
+  transition: transform 0.24s cubic-bezier(0.3, 1.7, 0.5, 1);
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .js .hero .st__cut {
     animation: cut-draw 1s var(--ease) 0.1s both;
-  }
-  .js .st__edge {
-    animation: fade-in 0.8s var(--ease-out) 1s both;
   }
   .js .st--still .st__above {
     transform: translateX(0.12em);
@@ -377,22 +394,22 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .st--tick .st__above {
+    transition: none;
+  }
+}
+
 @keyframes cut-draw {
   from {
     transform: scaleX(0);
   }
 }
 
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-}
-
 .hero__foot {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(260px, 0.75fr);
+  grid-template-columns: minmax(0, 1fr) auto minmax(260px, 0.7fr);
   gap: 24px 40px;
   align-items: end;
 }
@@ -410,13 +427,12 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   flex-wrap: wrap;
 }
 
-.lede {
-  font-size: clamp(1.05rem, 1.3vw, 1.4rem);
-  line-height: 1.42;
-  max-width: 30em;
+.hero .btn--line {
+  border-color: var(--white);
+  color: var(--white);
 }
 
-/* until details are confirmed: one line, not a table of blanks */
+/* until details are confirmed: one honest line */
 .status {
   max-width: 340px;
   padding: 14px 16px;
@@ -435,11 +451,22 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   color: var(--purple);
 }
 
-.hero__foot .status {
+.hero .status {
   justify-self: end;
+  background: rgba(10, 9, 14, 0.8);
+  border-color: rgba(252, 253, 255, 0.4);
 }
 
-/* the drawing's title block */
+.hero .status__k {
+  color: var(--lilac);
+}
+
+.lede {
+  font-size: clamp(1.05rem, 1.3vw, 1.4rem);
+  line-height: 1.42;
+  max-width: 30em;
+}
+
 .tblock {
   border: 1.5px solid var(--ink);
   background: var(--sheet);
@@ -447,7 +474,7 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
 
 .tblock > div {
   display: grid;
-  grid-template-columns: 84px 1fr;
+  grid-template-columns: 110px 1fr;
   border-top: 1px solid var(--line-2);
 }
 
@@ -470,221 +497,311 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
 .tblock dd.is-pending {
   color: var(--ink-2);
   font-style: italic;
-  font-weight: 400;
 }
 
-/* ---------------------------------------------------------------- THE SHIFT: one artwork, three states, pinned */
-.sh {
+/* ---------------------------------------------------------------- THE ERAS: one hand, one revolution (pinned; native scroll) */
+.eras {
   position: relative;
-  height: 380vh;
+  height: 340vh;
   background: var(--paper);
 }
 
-.sh__stage {
+.eras__stage {
   position: sticky;
   top: 0;
   height: 100svh;
   display: grid;
-  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
-  align-items: center;
-  gap: 3vw;
-  padding: calc(var(--hdr) + 20px) 0 28px var(--gutter);
+  place-items: center;
+  padding: calc(var(--hdr) + 6px) var(--gutter) 10px;
   overflow: hidden;
 }
 
-.sh__copy {
+.eras__dial {
   position: relative;
-  min-height: 52vh;
+  height: calc(100svh - var(--hdr) - 26px);
+  max-width: 100%;
+  aspect-ratio: 1280 / 1200;
+  container-type: size;
 }
 
-.js .sh__st {
+.ec {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.ec-face {
+  fill: var(--sheet);
+  stroke: var(--ink);
+  stroke-width: 3;
+}
+
+.ec-sweep {
+  fill: rgba(102, 8, 169, 0.08);
+}
+
+.ec-bound {
+  stroke: var(--ink);
+  stroke-width: 3;
+}
+
+.ec-era {
+  font: 600 25px var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  fill: var(--ink);
+}
+
+.ec-t {
+  stroke: rgba(14, 13, 18, 0.22);
+  stroke-width: 6;
+  transition: stroke 0.25s;
+}
+
+.ec-t.is-a {
+  stroke: var(--ink);
+}
+
+.ec-t.is-b {
+  stroke: var(--purple);
+  stroke-width: 8;
+}
+
+.ec-t.is-c {
+  stroke: transparent;
+}
+
+.ec-vol {
+  fill: none;
+  stroke-width: 76;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.ec-vlab {
+  font: 600 19px var(--mono);
+  letter-spacing: 0.06em;
+  opacity: 0;
+}
+
+.ec-vlab--q {
+  font: 800 46px var(--font);
+}
+
+.ec-hand {
+  fill: var(--purple);
+}
+
+.ec-disc {
+  fill: var(--paper);
+  stroke: var(--ink);
+  stroke-width: 2;
+}
+
+.eras__copy {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 38%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.js .eras__st {
   position: absolute;
   left: 0;
   right: 0;
   top: 50%;
   opacity: 0;
-  transform: translateY(-40%);
+  transform: translateY(-42%);
   transition: opacity 0.45s, transform 0.7s var(--ease-out);
   pointer-events: none;
 }
 
-.sh[data-state="a"] .sh__st--a,
-.sh[data-state="b"] .sh__st--b,
-.sh[data-state="c"] .sh__st--c {
+.eras[data-era="a"] .eras__st--a,
+.eras[data-era="b"] .eras__st--b,
+.eras[data-era="c"] .eras__st--c {
   opacity: 1;
   transform: translateY(-50%);
   pointer-events: auto;
 }
 
-html:not(.js) .sh__st + .sh__st {
-  margin-top: 48px;
+html:not(.js) .eras__st + .eras__st {
+  margin-top: 24px;
 }
 
-.sh__n {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.eras__n {
+  font: 500 max(0.7rem, 1.25cqw) / 1 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: var(--purple);
-  margin-bottom: 22px;
+  margin-bottom: 1.6cqh;
 }
 
-.sh__n span {
-  display: inline-grid;
-  place-items: center;
-  min-width: 34px;
-  height: 34px;
-  padding: 0 6px;
-  border: 1.5px solid currentColor;
-}
-
-.sh__h {
-  font-size: clamp(2.4rem, 4.4vw, 5.6rem);
-  line-height: 0.94;
+.eras__h {
+  font-size: 4.3cqw;
+  line-height: 0.96;
   letter-spacing: -0.05em;
   font-weight: 700;
-  max-width: 8.5em;
 }
 
-.sh__ev {
-  margin-top: 28px;
-  padding-top: 14px;
-  border-top: 1.5px solid var(--ink);
-  max-width: 24em;
-  font-size: 0.95rem;
-  line-height: 1.45;
+.eras__ev {
+  margin-top: 2cqh;
+  font-size: max(0.78rem, 1.35cqw);
+  line-height: 1.4;
+  color: var(--ink-2);
 }
 
-.sh__ev b {
+.eras__ev b {
   display: block;
-  font-size: clamp(2.4rem, 3.4vw, 3.8rem);
+  font-size: 3.6cqw;
   line-height: 1;
   letter-spacing: -0.05em;
   color: var(--purple);
 }
 
-.sh__ev a {
-  display: inline-block;
+.eras__ev a {
+  display: block;
   margin-top: 4px;
-  font: 500 0.72rem/1.6 var(--mono);
+  font: 500 max(0.66rem, 1cqw) / 1.5 var(--mono);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ink-2);
   text-underline-offset: 3px;
 }
 
-.sh__coda {
-  margin-top: 26px;
-  font-size: clamp(1.1rem, 1.4vw, 1.5rem);
+.eras__coda {
+  margin-top: 2cqh;
+  font-size: max(0.85rem, 1.6cqw);
   line-height: 1.3;
   color: var(--ink-2);
-  max-width: 18em;
 }
 
-.sh__art {
-  align-self: center;
-  margin-right: -4vw;
-}
-
-.sa {
-  display: block;
-  width: 100%;
-  height: auto;
-  overflow: visible;
-}
-
-.sa--tall {
-  display: none;
-}
-
-.sa-c {
-  stroke: var(--ink);
-  stroke-width: 2;
-}
-
-.sa-cut {
-  stroke: var(--purple);
-  stroke-width: 5;
-  opacity: calc(var(--ab, 0) * (1 - var(--bc, 0) * 1.6));
-}
-
-/* names arrive only once the volumes have formed */
-.sa-vol {
-  opacity: calc((var(--bc, 0) - 0.65) * 2.9);
-}
-
-.sa-lab {
-  font: 600 21px var(--mono);
-  letter-spacing: 0.08em;
-}
-
-.sa-q {
-  font: 800 190px var(--font);
-}
-
-.sa-open__r {
-  fill: none;
-  stroke: var(--purple);
-  stroke-width: 3;
-  stroke-dasharray: 12 10;
-}
-
-.sh__progress {
+.eras__hint {
   position: absolute;
   left: var(--gutter);
-  bottom: 28px;
-  display: flex;
-  gap: 6px;
+  bottom: 22px;
   font: 500 0.72rem/1 var(--mono);
-}
-
-.sh__progress span {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 26px;
-  border-top: 2px solid var(--line-2);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--ink-2);
-  transition: border-color 0.3s, color 0.3s;
+  transition: opacity 0.4s;
 }
 
-.sh[data-state="a"] .sh__progress span:nth-child(1),
-.sh[data-state="b"] .sh__progress span:nth-child(2),
-.sh[data-state="c"] .sh__progress span:nth-child(3) {
-  border-color: var(--purple);
-  color: var(--purple);
+.eras:not([data-era="a"]) .eras__hint {
+  opacity: 0;
 }
 
-html:not(.js) .sh {
+html:not(.js) .eras {
   height: auto;
 }
 
-html:not(.js) .sh__stage {
+html:not(.js) .eras__stage {
   position: static;
   height: auto;
 }
 
-/* ---------------------------------------------------------------- THE PRACTICES: one system, three panels */
+/* ---------------------------------------------------------------- THREE HANDS, ONE CLOCK */
 .eco {
   background: var(--wall);
   color: var(--white);
   padding: clamp(80px, 12vh, 150px) var(--gutter) clamp(80px, 12vh, 140px);
 }
 
-.eco__hd {
-  margin-bottom: clamp(36px, 6vh, 64px);
+.eco__top {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(32px, 5vw, 96px);
+  align-items: center;
+  margin-bottom: clamp(48px, 8vh, 96px);
 }
 
 .eco__k {
   color: var(--sel-tint);
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .eco__h {
-  font-size: clamp(2.4rem, 5vw, 6rem);
-  line-height: 0.94;
-  letter-spacing: -0.05em;
+  font-size: clamp(3rem, 7.4vw, 9rem);
+  line-height: 0.88;
+  letter-spacing: -0.055em;
+  font-weight: 800;
+}
+
+.eco__lede {
+  margin-top: 28px;
+  font-size: clamp(1.15rem, 1.5vw, 1.6rem);
+  line-height: 1.4;
+  color: rgba(252, 253, 255, 0.86);
+  max-width: 22em;
+}
+
+.k-v,
+.k-s,
+.k-x {
   font-weight: 700;
-  max-width: 11em;
+}
+
+.k-v {
+  color: var(--vel-cyan);
+}
+
+.k-s {
+  color: var(--syn-bright);
+}
+
+.k-x {
+  color: var(--sel-amber);
+}
+
+.hc {
+  justify-self: end;
+  width: 100%;
+  max-width: 640px;
+  aspect-ratio: 1;
+}
+
+.hc__dial {
+  width: 100%;
+  height: 100%;
+}
+
+.hc-hand {
+  transition: opacity 0.35s;
+}
+
+.hc-hand--velocity rect,
+.hc-hand--velocity circle {
+  fill: var(--vel-cyan);
+}
+
+.hc-hand--synthia rect {
+  fill: var(--syn-bright);
+}
+
+.hc-hand--select rect {
+  fill: var(--sel-amber);
+}
+
+.hc[data-hl] .hc-hand {
+  opacity: 0.18;
+}
+
+.hc[data-hl="velocity"] .hc-hand--velocity,
+.hc[data-hl="synthia"] .hc-hand--synthia,
+.hc[data-hl="select"] .hc-hand--select {
+  opacity: 1;
+}
+
+.hc-pin {
+  fill: var(--black);
+  stroke: rgba(252, 253, 255, 0.25);
+  stroke-width: 2;
+}
+
+.hc-mark path {
+  fill: var(--white);
 }
 
 .pnls {
@@ -693,47 +810,35 @@ html:not(.js) .sh__stage {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-/* one line runs under all three — the system — and flows into the mark below */
-.pnls::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--vel-cyan) 0 33.333%, var(--syn-bright) 33.333% 66.666%, var(--sel-amber) 66.666%);
-}
-
-.pnls__line {
-  display: none;
-}
-
 .pnl {
   position: relative;
   container-type: inline-size;
-  min-height: min(90vh, 880px);
+  min-height: min(84vh, 820px);
   padding: 26px clamp(22px, 2.2vw, 36px) 36px;
   display: grid;
   grid-template-rows: auto auto auto 1fr auto auto;
   gap: 12px;
+  border-top: 5px solid;
+  transition: transform 0.5s var(--ease-out);
 }
 
 .pnl--velocity {
   background: var(--vel-bg);
+  border-top-color: var(--vel-cyan);
 }
 
 .pnl--synthia {
   background: var(--purple-darker);
+  border-top-color: var(--syn-bright);
 }
 
 .pnl--select {
   background: var(--sel-paper);
   color: var(--sel-ink);
+  border-top-color: var(--sel-amber);
 }
 
 .pnl__n {
-  padding-top: 12px;
-  border-top: 1.5px solid currentColor;
   opacity: 0.85;
 }
 
@@ -798,83 +903,35 @@ html:not(.js) .sh__stage {
   text-underline-offset: 3px;
 }
 
-.eco__end {
-  text-align: center;
-}
-
-.eco__lines {
-  display: block;
-  width: 100%;
-  height: clamp(120px, 18vh, 200px);
-  overflow: visible;
-}
-
-.cl {
-  fill: none;
-  stroke-width: 3;
-  vector-effect: non-scaling-stroke;
-}
-
-.cl--v {
-  stroke: var(--vel-cyan);
-}
-
-.cl--s {
-  stroke: var(--syn-bright);
-}
-
-.cl--x {
-  stroke: var(--sel-amber);
-}
-
-.eco__mark {
-  width: clamp(110px, 12vw, 170px);
-  margin: 8px auto 40px;
-  color: var(--white);
-}
-
 .eco__close {
+  margin: clamp(64px, 10vh, 120px) auto 0;
+  text-align: center;
   font-size: clamp(2.2rem, 4.8vw, 6rem);
   line-height: 0.96;
   letter-spacing: -0.05em;
   font-weight: 700;
   max-width: 13em;
-  margin: 0 auto;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .js .eco__end .cl {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-  }
-  .js .eco__end.is-in .cl {
-    stroke-dashoffset: 0;
-    transition: stroke-dashoffset 1.4s var(--ease);
-  }
-  .js .eco__end .eco__mark,
-  .js .eco__end .eco__close {
+  .js .eco__hd,
+  .js .eco__close {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
-  .js .eco__end.is-in .eco__mark,
-  .js .eco__end.is-in .eco__close {
+  .js .eco__hd.is-in,
+  .js .eco__close.is-in {
     opacity: 1;
     transform: none;
-    transition: opacity 0.8s 1.2s, transform 1s var(--ease-out) 1.2s;
-  }
-  .js .eco__end.is-in .eco__close {
-    transition-delay: 1.5s;
+    transition: opacity 0.9s var(--ease-out), transform 1.1s var(--ease-out);
   }
 }
 
-/* ---------------------------------------------------------------- CLOSING: the invitation */
+/* ---------------------------------------------------------------- CLOSING: the next hour */
 .close {
   position: relative;
   padding: clamp(80px, 12vh, 150px) var(--gutter);
-  background-color: var(--paper);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72'%3E%3Crect x='14.5' y='14.5' width='43' height='43' fill='none' stroke='%230e0d12' stroke-opacity='.07'/%3E%3C/svg%3E");
-  background-size: var(--pitch) var(--pitch);
-  background-position: var(--gutter) 0;
+  background: var(--paper);
 }
 
 .close__grid {
@@ -884,20 +941,55 @@ html:not(.js) .sh__stage {
   align-items: start;
 }
 
-.close .st {
-  font-size: min(10.4vw, 22svh);
-  margin: 3vh 0 5vh -0.05em;
+.close__k {
+  font: 500 0.78rem/1 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--purple);
 }
 
-.close__line {
-  font-size: clamp(1.5rem, 2.3vw, 2.6rem);
-  line-height: 1.05;
-  letter-spacing: -0.035em;
-  font-weight: 600;
+.cd {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 clamp(14px, 2.4vw, 40px);
+  margin: 14px 0 clamp(36px, 6vh, 64px);
+}
+
+.cd__u {
+  display: grid;
+  gap: 8px;
+}
+
+.cd__n {
+  font-size: clamp(3.8rem, 8.6vw, 10rem);
+  line-height: 0.86;
+  letter-spacing: -0.05em;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.cd__u.is-tba .cd__n {
+  font-weight: 300;
+  color: var(--line-2);
+}
+
+.cd__l {
+  font: 500 0.72rem/1 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.close__h {
+  font-size: clamp(2rem, 3.6vw, 4.2rem);
+  line-height: 0.96;
+  letter-spacing: -0.045em;
+  font-weight: 700;
+  max-width: 12em;
 }
 
 .close__who {
-  margin: 14px 0 0;
+  margin-top: 16px;
   font-size: 1.05rem;
   line-height: 1.45;
   color: var(--ink-2);
@@ -907,14 +999,6 @@ html:not(.js) .sh__stage {
 .close__who--b {
   margin: 8px 0 28px;
   font-size: 0.95rem;
-}
-
-.close .tblock {
-  max-width: 520px;
-}
-
-.close .tblock > div {
-  grid-template-columns: 110px 1fr;
 }
 
 /* ---------------------------------------------------------------- mechanisms */
@@ -1488,27 +1572,22 @@ html:not(.js) .sh__stage {
   .hero__foot {
     grid-template-columns: 1fr auto;
   }
-  .tblock--hero {
+  .hero .status {
     grid-column: 1 / -1;
-    max-width: 520px;
+    justify-self: start;
+  }
+  .eco__top {
+    grid-template-columns: 1fr;
+  }
+  .hc {
+    justify-self: center;
+    max-width: 560px;
   }
   .pnls {
     grid-template-columns: 1fr;
   }
   .pnl {
     min-height: 0;
-  }
-  .pnls::after {
-    display: none;
-  }
-  .pnl--velocity {
-    border-bottom: 4px solid var(--vel-cyan);
-  }
-  .pnl--synthia {
-    border-bottom: 4px solid var(--syn-bright);
-  }
-  .pnl--select {
-    border-bottom: 4px solid var(--sel-amber);
   }
   .close__grid {
     grid-template-columns: 1fr;
@@ -1522,7 +1601,6 @@ html:not(.js) .sh__stage {
 @media (max-width: 759px) {
   :root {
     --hdr: 3.6rem;
-    --pitch: 46px;
   }
   .hdr .btn--sm {
     min-height: 38px;
@@ -1535,21 +1613,40 @@ html:not(.js) .sh__stage {
   .hdr .vm-logo {
     font-size: 1.15rem;
   }
+  /* phones: the clock is its own object, above the title */
   .hero {
-    min-height: 92svh;
-    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .hero__meta {
+    order: 0;
+  }
+  .hero__clock {
+    order: 1;
+    position: relative;
+    top: auto;
+    right: auto;
+    width: min(72vw, 38svh);
+    margin: 3vh auto 0;
+    transform: none;
+  }
+  .hero .st {
+    order: 2;
+  }
+  .hero__foot {
+    order: 3;
+  }
+  .lc__read {
+    top: 64%;
   }
   .st {
     --cut: 2.06em;
     font-size: 27vw;
-    margin: 4vh 0 5vh -0.04em;
+    margin: 4vh 0 4vh -0.04em;
   }
   .st__l:first-child,
   .st__l:nth-child(2) {
     display: block;
-  }
-  .st__edge {
-    display: none;
   }
   .hero__foot {
     grid-template-columns: 1fr;
@@ -1558,89 +1655,82 @@ html:not(.js) .sh__stage {
   .hero__cta .btn {
     flex: 1 1 100%;
   }
-  .tblock--hero {
-    display: none;
+  .hero .status {
+    max-width: none;
   }
-  /* the shift, stacked: words above, artwork below, still one pinned frame */
-  .sh {
+  /* the eras: words above, the dial below, one pinned frame */
+  .eras {
     height: 300vh;
   }
-  .sh__stage {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
-    align-items: start;
-    gap: 8px;
-    padding: calc(var(--hdr) + 16px) var(--gutter) 16px;
+  .eras__stage {
+    place-items: end center;
+    padding: calc(var(--hdr) + 12px) 10px 4vh;
   }
-  .sh__copy {
-    min-height: 30svh;
+  .eras__dial {
+    width: 100%;
+    height: auto;
+    container-type: inline-size;
   }
-  .js .sh__st {
-    top: 0;
-    transform: translateY(12px);
+  .eras__copy {
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: calc(100% + 10px);
+    width: auto;
+    padding: 0 calc(var(--gutter) - 10px);
+    transform: none;
+    text-align: left;
+    min-height: 34svh;
   }
-  .sh[data-state="a"] .sh__st--a,
-  .sh[data-state="b"] .sh__st--b,
-  .sh[data-state="c"] .sh__st--c {
+  .js .eras__st {
+    top: auto;
+    bottom: 0;
+    transform: translateY(10px);
+  }
+  .eras[data-era="a"] .eras__st--a,
+  .eras[data-era="b"] .eras__st--b,
+  .eras[data-era="c"] .eras__st--c {
     transform: none;
   }
-  .sh__n {
-    margin-bottom: 12px;
+  .eras__n {
+    font-size: 0.72rem;
+    margin-bottom: 10px;
   }
-  .sh__h {
-    font-size: 10.5vw;
+  .eras__h {
+    font-size: 10vw;
   }
-  .sh__ev {
-    margin-top: 14px;
-    padding-top: 10px;
+  .eras__ev {
+    margin-top: 10px;
     font-size: 0.86rem;
   }
-  .sh__ev b {
+  .eras__ev b {
     font-size: 2rem;
   }
-  .sh__coda {
-    margin-top: 12px;
+  .eras__ev a {
+    font-size: 0.66rem;
+  }
+  .eras__coda {
+    margin-top: 10px;
     font-size: 1rem;
   }
-  .sh__art {
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 0;
-  }
-  .sa--wide {
+  .ec-era {
     display: none;
   }
-  .sa--tall {
-    display: block;
-    width: auto;
-    height: min(54svh, 120vw);
-    max-width: 100%;
-  }
-  .sa-lab {
-    font-size: 21px;
-    letter-spacing: 0.04em;
-  }
-  .sh__progress {
+  .eras__hint {
     display: none;
   }
   .eco {
     padding-left: 12px;
     padding-right: 12px;
   }
-  .eco__hd {
+  .eco__top {
     padding: 0 8px;
   }
   .pnl {
     padding: 22px 20px 28px;
   }
-  .close .st {
-    font-size: 25vw;
-    --cut: 2.06em;
-  }
-  .close .tblock > div {
-    grid-template-columns: 96px 1fr;
+  .cd__n {
+    font-size: 15vw;
   }
   .form {
     box-shadow: 6px 6px 0 var(--purple);
@@ -1651,7 +1741,7 @@ html:not(.js) .sh__stage {
   .ftr ul {
     margin-left: 0;
   }
-  /* thumb-zone CTA: after the hero, out of the way at the form */
+  /* thumb-zone CTA: after the hero, never over the dial, out of the way at the form */
   .bar {
     display: block;
     position: fixed;

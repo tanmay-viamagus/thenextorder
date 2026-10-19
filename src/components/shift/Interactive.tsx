@@ -14,12 +14,15 @@ export function ShiftTitle({
   cutLine,
   edges,
   still = false,
+  tick = false,
 }: {
   lines: string[];
   cutLine: number;
   edges?: [string, string];
   /** no pointer response (closing / register) */
   still?: boolean;
+  /** driven by the live clock's seconds (--sec on [data-clock-root]) instead of the pointer */
+  tick?: boolean;
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -44,7 +47,7 @@ export function ShiftTitle({
     const ro = new ResizeObserver(place);
     ro.observe(root);
     void document.fonts?.ready.then(place);
-    if (still) return () => ro.disconnect();
+    if (still || tick) return () => ro.disconnect();
 
     let raf = 0;
     let want = 1;
@@ -78,7 +81,7 @@ export function ShiftTitle({
       cancelAnimationFrame(raf);
       window.removeEventListener("pointermove", onMove);
     };
-  }, [cutLine, still]);
+  }, [cutLine, still, tick]);
 
   const block = (cls: string) => (
     <div className={`st__layer ${cls}`} aria-hidden="true">
@@ -91,7 +94,7 @@ export function ShiftTitle({
   );
 
   return (
-    <div className={`st${still ? " st--still" : ""}`} ref={ref} data-reveal={still ? "" : undefined}>
+    <div className={`st${still ? " st--still" : ""}${tick ? " st--tick" : ""}`} ref={ref} data-reveal={still ? "" : undefined}>
       {block("st__below")}
       {block("st__above")}
       <span className="st__cut" aria-hidden="true" />
@@ -171,7 +174,7 @@ export function Chrome() {
       const pastHero = hero ? hero.getBoundingClientRect().bottom < window.innerHeight * 0.4 : true;
       const atForm = form ? form.getBoundingClientRect().top < window.innerHeight * 0.9 : false;
       // the pinned artwork gets the whole screen: no bar over it
-      const sh = document.getElementById("shift")?.getBoundingClientRect();
+      const sh = document.getElementById("eras")?.getBoundingClientRect();
       const inShift = sh ? sh.top < window.innerHeight * 0.5 && sh.bottom > window.innerHeight * 0.5 : false;
       root.classList.toggle("show-bar", pastHero && !atForm && !inShift);
       let act = "";

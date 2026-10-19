@@ -76,8 +76,46 @@
   text-transform: uppercase;
 }
 
+/* the title opens on the live clock, as the site does */
+.fs--title {
+  background: var(--black);
+  color: var(--white);
+}
+
+.fs__clock {
+  position: absolute;
+  right: -120px;
+  top: 50%;
+  width: 1040px;
+  height: 1040px;
+  transform: translateY(-50%);
+}
+
+.fs__clock .lc__read {
+  font-size: 22px;
+}
+
+.fs--title .ft--below {
+  color: var(--white);
+}
+
+.fs--title .ft--above {
+  color: var(--lilac);
+}
+
+.fs--title .ft__cut {
+  background: var(--magenta);
+}
+
+.fs--title .fs__tl {
+  color: rgba(252, 253, 255, 0.66);
+}
+
+.fs--title .fs__bl {
+  color: var(--lilac);
+}
+
 /* paper scenes */
-.fs--title,
 .fs--old,
 .fs--inflection,
 .fs--scale {
@@ -590,8 +628,8 @@
 .fs__wipe {
   position: absolute;
   inset: 0;
-  background: var(--paper);
-  border-top: 4px solid var(--purple);
+  background: var(--black);
+  border-top: 4px solid var(--magenta);
   transform: translateY(101%);
 }
 
@@ -671,4 +709,107 @@
     animation-duration: 0.01s;
     animation-delay: 0s;
   }
+}
+
+
+/* converge: the three hands */
+.fs__hands {
+  position: absolute;
+  left: 50%;
+  top: 70px;
+  width: 640px;
+  height: 640px;
+  margin-left: -320px;
+}
+
+.fs__hands .hc {
+  max-width: none;
+}
+
+.fs--converge .fs__trio {
+  top: 770px;
+}
+
+.fs--converge .fs__names {
+  top: 900px;
+}
+
+/* the film's timing: a dial with one arc per scene, the playhead, a timecode */
+.fp__hud {
+  position: absolute;
+  right: 20px;
+  top: 18px;
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 16px 10px 10px;
+  background: rgba(10, 9, 14, 0.78);
+  border: 1px solid rgba(252, 253, 255, 0.2);
+  color: var(--white);
+  transition: opacity 0.5s;
+}
+
+.fp.is-idle .fp__hud {
+  opacity: 0.85;
+}
+
+.fd {
+  width: 84px;
+  height: 84px;
+}
+
+.fd-face {
+  fill: #0a090e;
+  stroke: rgba(252, 253, 255, 0.2);
+}
+
+.fd-seg {
+  fill: none;
+  stroke: rgba(252, 253, 255, 0.28);
+  stroke-width: 14;
+}
+
+.fd-seg.is-on {
+  stroke: var(--magenta);
+}
+
+.fd-dot {
+  fill: var(--white);
+}
+
+.fd-hand,
+.fd-pin {
+  fill: var(--white);
+}
+
+.fp__tc {
+  display: grid;
+  gap: 4px;
+  font: 500 13px/1.2 var(--mono);
+  letter-spacing: 0.06em;
+  color: rgba(252, 253, 255, 0.7);
+  font-variant-numeric: tabular-nums;
+}
+
+.fp__tc b {
+  font-size: 22px;
+  color: var(--white);
+}
+
+.fp__tc span {
+  text-transform: uppercase;
+  color: var(--lilac);
+}
+
+@media (max-width: 759px) {
+  .fp__hud {
+    left: 12px;
+    right: 12px;
+    top: 12px;
+  }
+}
+
+.fs .ec-era {
+  display: none;
 }

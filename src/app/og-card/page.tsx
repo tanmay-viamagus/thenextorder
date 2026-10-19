@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import type { CSSProperties } from "react";
 import { ViaMagusLogo } from "@/components/Brand";
+import { StillClock } from "@/components/clock/Clock";
 
 // Internal 1200×630 composition, screenshotted to public/og-image.jpg (see README).
 export const metadata: Metadata = { title: "OG card", robots: { index: false, follow: false } };
@@ -8,13 +8,9 @@ export const metadata: Metadata = { title: "OG card", robots: { index: false, fo
 export default function OgCard() {
   return (
     <div className="og">
-      <div className="fld" aria-hidden="true">
-        <div className="fld__below" />
-        <div className="fld__above">
-          <span className="fc" style={{ "--c": 13, "--r": 0, "--w": 2, "--h": 1 } as CSSProperties} />
-          <span className="fc" style={{ "--c": 16, "--r": 1, "--w": 1, "--h": 1 } as CSSProperties} />
-          <span className="fc" style={{ "--c": 3, "--r": 0, "--w": 1, "--h": 1 } as CSSProperties} />
-        </div>
+      <div className="og__clock">
+        {/* a minute before the hour */}
+        <StillClock h={11} m={59} s={8} />
       </div>
       <p className="og__k">An invitation from ViaMagus</p>
       <div className="og__t" aria-label="The NEXT Order">

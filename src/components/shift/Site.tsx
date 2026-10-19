@@ -1,56 +1,28 @@
-import type { CSSProperties } from "react";
-import { SelectWordmark, SynthiaLogo, VelocityWordmark, ViaMagusLogo, ViaMagusMark } from "@/components/Brand";
+import { SelectWordmark, SynthiaLogo, VelocityWordmark, ViaMagusLogo } from "@/components/Brand";
+import { Countdown, EraClock, HandsClock, LiveClock } from "@/components/clock/Clock";
 import { FilmButton } from "@/components/film/FilmOverlay";
-import { event, knownFacts, officialLinks, pending } from "@/content/event";
+import { event, knownFacts, officialLinks } from "@/content/event";
 import { convergence, invite, practices, shift } from "@/content/story";
 import { Chrome, Reveal, ShiftTitle } from "./Interactive";
 import { InviteForm } from "./InviteForm";
 import { SelectMech, SynthiaMech, VelocityMech } from "./Mechanisms";
-import { ShiftArt } from "./ShiftArt";
 
 const ext = { target: "_blank", rel: "noopener noreferrer" } as const;
 const NewTab = () => <span className="sr-only"> (opens in a new tab)</span>;
 
 const MECH = { velocity: VelocityMech, synthia: SynthiaMech, select: SelectMech };
 const MARK = { velocity: VelocityWordmark, synthia: () => <SynthiaLogo height={28} />, select: SelectWordmark };
+const HAND = { velocity: "The second hand", synthia: "The minute hand", select: "The hour hand" };
 
 const venue = [event.venue, event.city].filter(Boolean).join(", ") || null;
-const details: [string, string | null][] = [
-  ["Date", event.date],
-  ["Venue", venue],
-  ["Format", event.format],
-  ["Host", knownFacts.host],
-];
+const confirmed = [event.date, venue, event.format].filter(Boolean).join(" · ");
 
-/** Cells already lifted above the line in the hero field: [col, row, cols, rows]. */
-const LIFTED: [number, number, number, number][] = [
-  [15, 1, 2, 1],
-  [18, 1, 1, 1],
-  [12, 3, 1, 1],
-  [3, 1, 1, 1],
-  [8, 1, 1, 1],
-];
-
-const nothingYet = !event.date && !venue && !event.format;
-
-/** Confirmed details as a title block; until there are any, one honest line instead of a table of blanks. */
-function Details({ className = "" }: { className?: string }) {
-  if (nothingYet)
-    return (
-      <p className={`status ${className}`}>
-        <span className="status__k">Hosted by {knownFacts.host}</span>
-        Date, venue and format to be announced. Request an invitation to hear first.
-      </p>
-    );
+function Status() {
   return (
-    <dl className={`tblock ${className}`} aria-label="Event details">
-      {details.map(([k, v]) => (
-        <div key={k}>
-          <dt>{k}</dt>
-          <dd className={v ? undefined : "is-pending"}>{v ?? pending}</dd>
-        </div>
-      ))}
-    </dl>
+    <p className="status">
+      <span className="status__k">Hosted by {knownFacts.host}</span>
+      {confirmed || "Date, venue and format to be announced. Request an invitation to hear first."}
+    </p>
   );
 }
 
@@ -66,11 +38,11 @@ export function Site() {
       <header className="hdr">
         <ViaMagusLogo href={officialLinks.viamagus} />
         <nav className="hdr__nav" aria-label="Sections">
-          <a href="#shift" data-for="shift">
-            The shift
+          <a href="#eras" data-for="eras">
+            The eras
           </a>
           <a href="#practices" data-for="practices">
-            Build · Operate · Scale
+            Three hands
           </a>
         </nav>
         <div className="hdr__end">
@@ -84,21 +56,16 @@ export function Site() {
       </header>
 
       <main id="main">
-        {/* ------------------------------------------------ OPENING · attention */}
-        <section id="top" className="hero" data-tone="light" data-shift-root aria-labelledby="hero-h">
-          <div className="fld" aria-hidden="true">
-            <div className="fld__below" />
-            <div className="fld__above">
-              {LIFTED.map(([c, r, w, h], i) => (
-                <span key={i} className="fc" style={{ "--c": c, "--r": r, "--w": w, "--h": h } as CSSProperties} />
-              ))}
-            </div>
+        {/* ------------------------------------------------ OPENING · it's already running */}
+        <section id="top" className="hero" data-tone="dark" data-clock-root aria-labelledby="hero-h">
+          <div className="hero__clock">
+            <LiveClock />
           </div>
           <p className="hero__meta">An invitation from ViaMagus</p>
           <h1 id="hero-h" className="sr-only">
             The NEXT Order — an invitation from ViaMagus for India’s GCC leaders
           </h1>
-          <ShiftTitle lines={["THE ", "NEXT", "ORDER."]} cutLine={2} edges={["The next order ↑", "↓ The old order"]} />
+          <ShiftTitle lines={["THE ", "NEXT", "ORDER."]} cutLine={2} tick />
           <div className="hero__foot">
             <p className="hero__line">For India’s GCC leaders.</p>
             <div className="hero__cta">
@@ -106,66 +73,70 @@ export function Site() {
                 Request an invitation <span aria-hidden="true">→</span>
               </a>
               <FilmButton className="btn btn--line">
-                <span className="tri" aria-hidden="true" /> The film <span className="dim">30s</span>
+                <span className="tri" aria-hidden="true" /> The film <span className="dim">0:30</span>
               </FilmButton>
             </div>
-            <Details className="tblock--hero" />
+            <Status />
           </div>
         </section>
 
-        {/* ------------------------------------------------ THE SHIFT · curiosity → relevance */}
-        <section id="shift" className="sh" data-shift-scene data-state="a" data-tone="light" data-act="shift" aria-labelledby="shift-h">
-          <h2 id="shift-h" className="sr-only">
-            The shift
+        {/* ------------------------------------------------ THE ERAS · one hand, one revolution */}
+        <section id="eras" className="eras" data-era-scene data-era="a" data-tone="light" data-act="eras" aria-labelledby="eras-h">
+          <h2 id="eras-h" className="sr-only">
+            Three eras
           </h2>
-          <div className="sh__stage">
-            <div className="sh__copy">
-              {shift.map((s, i) => (
-                <div key={s.n} className={`sh__st sh__st--${"abc"[i]}`}>
-                  <p className="sh__n">
-                    <span>{s.n}</span> {s.era}
-                  </p>
-                  <h3 className="sh__h">{s.headline}</h3>
-                  {s.evidence ? (
-                    <p className="sh__ev">
-                      <b>{s.evidence.figure}</b> {s.evidence.finding}.{" "}
-                      <a href={s.evidence.url} {...ext}>
-                        {s.evidence.source}, {s.evidence.date}
-                        <NewTab />
-                      </a>
-                    </p>
-                  ) : null}
-                  {s.coda ? <p className="sh__coda">{s.coda}</p> : null}
-                </div>
-              ))}
+          <div className="eras__stage">
+            <div className="eras__dial">
+              <EraClock label="A clock face. One hand makes a full turn. From twelve to four, the old order: regular, identical ticks. From four to eight, the inflection point: the ticks crack out of line. From eight to twelve, the next order: the ticks fuse into owned arcs — product, platforms, decisions, capability — and one is left open." />
+              <div className="eras__copy">
+                {shift.map((s, i) => (
+                  <div key={s.n} className={`eras__st eras__st--${"abc"[i]}`}>
+                    <p className="eras__n">{s.era}</p>
+                    <h3 className="eras__h">{s.headline}</h3>
+                    {s.evidence ? (
+                      <p className="eras__ev">
+                        <b>{s.evidence.figure}</b> {s.evidence.finding}.{" "}
+                        <a href={s.evidence.url} {...ext}>
+                          {s.evidence.source}, {s.evidence.date}
+                          <NewTab />
+                        </a>
+                      </p>
+                    ) : null}
+                    {s.coda ? <p className="eras__coda">{s.coda}</p> : null}
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="sh__art">
-              <ShiftArt label="A grid of identical cells — the work as it was given — cracks along a line; everything above it slides, then the cells fuse into larger volumes: product, platforms, decisions, quality, capability, efficiency, with the original grid as the foundation and one volume left open." />
-            </div>
-            <div className="sh__progress" aria-hidden="true">
-              <span>I</span>
-              <span>II</span>
-              <span>III</span>
-            </div>
+            <p className="eras__hint" aria-hidden="true">
+              Scroll to turn the hand
+            </p>
           </div>
         </section>
 
-        {/* ------------------------------------------------ THE PRACTICES · context */}
+        {/* ------------------------------------------------ THREE HANDS, ONE CLOCK */}
         <section id="practices" className="eco" data-tone="dark" data-act="practices" aria-labelledby="eco-h">
-          <div className="eco__hd">
-            <p className="eco__k">Hosted by ViaMagus</p>
-            <h2 id="eco-h" className="eco__h">
-              One system for the next mandate.
-            </h2>
+          <div className="eco__top">
+            <div className="eco__hd" data-reveal>
+              <p className="eco__k">Hosted by ViaMagus</p>
+              <h2 id="eco-h" className="eco__h">
+                Three hands.
+                <br />
+                One clock.
+              </h2>
+              <p className="eco__lede">
+                <span className="k-v">Velocity AI</span> keeps the seconds. <span className="k-s">Synthia AI</span> keeps the minutes.{" "}
+                <span className="k-x">ViaMagus Select</span> keeps the hours.
+              </p>
+            </div>
+            <HandsClock label="A live clock in India time. Its second hand is Velocity AI, its minute hand Synthia AI and its hour hand ViaMagus Select, all pinned on the ViaMagus mark." />
           </div>
           <div className="pnls" data-reveal>
-            <span className="pnls__line" aria-hidden="true" />
             {practices.map((p) => {
               const Mech = MECH[p.key];
               const Mark = MARK[p.key];
               return (
-                <article key={p.key} className={`pnl pnl--${p.key}`} aria-labelledby={`${p.key}-h`}>
-                  <p className="pnl__n">{p.n}</p>
+                <article key={p.key} className={`pnl pnl--${p.key}`} data-practice={p.key} aria-labelledby={`${p.key}-h`}>
+                  <p className="pnl__n">{HAND[p.key]}</p>
                   <h3 id={`${p.key}-h`} className="pnl__verb">
                     {p.verb}.<span className="sr-only"> {p.name}</span>
                   </h3>
@@ -183,30 +154,23 @@ export function Site() {
               );
             })}
           </div>
-          <div className="eco__end" data-reveal>
-            <svg className="eco__lines" viewBox="0 0 1200 260" preserveAspectRatio="none" aria-hidden="true">
-              <path className="cl cl--v" d="M200 0 C 200 140, 600 120, 600 250" pathLength={1} />
-              <path className="cl cl--s" d="M600 0 V 250" pathLength={1} />
-              <path className="cl cl--x" d="M1000 0 C 1000 140, 600 120, 600 250" pathLength={1} />
-            </svg>
-            <ViaMagusMark className="eco__mark" />
-            <p className="eco__close">{convergence}</p>
-          </div>
+          <p className="eco__close" data-reveal>
+            {convergence}
+          </p>
         </section>
 
-        {/* ------------------------------------------------ CLOSING · action */}
-        <section id="register" className="close" data-tone="light" data-act="register" data-shift-root aria-labelledby="register-h">
+        {/* ------------------------------------------------ CLOSING · the next hour */}
+        <section id="register" className="close" data-tone="light" data-act="register" aria-labelledby="register-h">
           <div className="close__grid">
-            <div className="close__art">
-              <p className="hero__meta">An invitation from ViaMagus</p>
-              <h2 id="register-h" className="sr-only">
-                Request an invitation to The NEXT Order
+            <div className="close__copy">
+              <p className="close__k">The NEXT Order begins in</p>
+              <Countdown startsAt={event.startsAt} />
+              <h2 id="register-h" className="close__h">
+                Be in the room when it starts.
               </h2>
-              <ShiftTitle lines={["THE ", "NEXT", "ORDER."]} cutLine={2} still />
-              <p className="close__line">{invite.line}</p>
               <p className="close__who">{invite.what}</p>
               <p className="close__who close__who--b">{invite.who}</p>
-              <Details />
+              <Status />
             </div>
             <InviteForm source="site" />
           </div>

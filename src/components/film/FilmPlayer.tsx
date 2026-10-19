@@ -2,12 +2,22 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
-import { ViaMagusMark, SelectWordmark, SynthiaLogo, VelocityWordmark } from "@/components/Brand";
+import { SelectWordmark, SynthiaLogo, VelocityWordmark } from "@/components/Brand";
 import { SelectMech, SynthiaMech, VelocityMech } from "@/components/shift/Mechanisms";
-import { ShiftArt } from "@/components/shift/ShiftArt";
-import { FILM_DURATION, sceneAtTime, type FilmSceneId } from "@/content/film";
+import { EraClock, FilmDial, HandsClock, LiveClock } from "@/components/clock/Clock";
+import { FILM_DURATION, filmScenes, sceneAtTime, type FilmSceneId } from "@/content/film";
 import { convergence, shift } from "@/content/story";
 import { Score } from "./score";
+
+const LABEL = {
+  old: "The old order",
+  inflection: "The inflection point",
+  build: "Velocity AI · Build",
+  operate: "Synthia AI · Operate",
+  scale: "ViaMagus Select · Scale",
+  converge: "Three hands, one clock",
+  close: "The invitation",
+};
 
 function readStart() {
   const q = new URLSearchParams(window.location.search);
@@ -33,6 +43,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
   const [scene, setScene] = useState<FilmSceneId | "">("");
   const [idle, setIdle] = useState(false);
   const [host, setHost] = useState("");
+  const [hudT, setHudT] = useState(0);
   const playingRef = useRef(false);
 
   useEffect(() => {
@@ -67,6 +78,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
       setScene(id);
     };
     let raf = 0;
+    let hudLast = -1;
     let last = performance.now();
     const tick = (nowMs: number) => {
       raf = requestAnimationFrame(tick);
@@ -80,6 +92,10 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
           cur = "";
           score.current?.scheduleLoop(score.current.ctx.currentTime - c.t, 0);
         }
+      }
+      if (Math.floor(c.t * 10) !== hudLast) {
+        hudLast = Math.floor(c.t * 10);
+        setHudT(c.t);
       }
       const sc = sceneAtTime(c.t);
       if (sc.id !== cur) {
@@ -158,10 +174,14 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
 
   const d = (s: number): CSSProperties => ({ ["--d" as string]: `${s}s` });
   // the shift artwork on the film clock: held as given (03–06), then cracks and fuses (06–10)
-  const oldP = useCallback(() => 0, []);
+  // the eras dial on the film clock: 12→4 during the old order (03–06), 4→12 through the inflection (06–10)
+  const oldP = useCallback(() => {
+    const t = clock.current.t;
+    return Math.max(0, Math.min(0.33, ((t - 3) / 2.6) * 0.33));
+  }, []);
   const inflP = useCallback(() => {
     const t = clock.current.t;
-    return t < 6 ? 0 : Math.min(1, 0.1 + ((t - 6) / 3.6) * 0.9);
+    return t < 6 ? 0.33 : Math.min(1, 0.33 + ((t - 6) / 3.6) * 0.67);
   }, []);
 
   return (
@@ -169,6 +189,9 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
       <div className="fp__stage" aria-hidden="true">
         {/* 00–03 · The NEXT Order */}
         <section className="fs fs--title" data-id="title">
+          <div className="fs__clock">
+            <LiveClock />
+          </div>
           <p className="fs__mono fs__tl">An invitation from ViaMagus</p>
           <div className="fs__title">
             <div className="ft ft--below">
@@ -199,7 +222,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
             </p>
           </div>
           <div className="fs__plan">
-            <ShiftArt getProgress={oldP} label="" />
+            <EraClock getProgress={oldP} label="" />
           </div>
         </section>
 
@@ -221,7 +244,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
             </p>
           </div>
           <div className="fs__plan">
-            <ShiftArt getProgress={inflP} label="" />
+            <EraClock getProgress={inflP} label="" />
           </div>
         </section>
 
@@ -284,14 +307,11 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
 
         {/* 22–26 · convergence */}
         <section className="fs fs--converge" data-id="converge">
-          <svg viewBox="0 0 1920 1080" className="fs__lines">
-            <path className="cl cl--v" d="M260 -10 C 260 520, 960 420, 960 640" pathLength={1} />
-            <path className="cl cl--s" d="M960 -10 V 640" pathLength={1} />
-            <path className="cl cl--x" d="M1660 -10 C 1660 520, 960 420, 960 640" pathLength={1} />
-          </svg>
-          <ViaMagusMark className="fs__vm" />
+          <div className="fs__hands">
+            <HandsClock label="" />
+          </div>
           <p className="fs__trio a-up" style={d(1.6)}>
-            Build. Operate. Scale.
+            Three hands. One clock.
           </p>
           <p className="fs__mono fs__names a-up" style={d(2)}>
             Velocity AI · Synthia AI · ViaMagus Select
@@ -315,6 +335,13 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
         </section>
       </div>
 
+      <div className="fp__hud" aria-hidden="true">
+        <FilmDial scenes={filmScenes} t={hudT} duration={FILM_DURATION} />
+        <p className="fp__tc">
+          <b>00:{String(Math.floor(hudT)).padStart(2, "0")}</b> / 00:30
+          <span>{sceneAtTime(hudT).id === "title" ? "The NEXT Order" : (LABEL as Record<string, string>)[sceneAtTime(hudT).id]}</span>
+        </p>
+      </div>
       <div className="fp__controls">
         <button type="button" onClick={() => setPlaying((p) => !p)} aria-pressed={!playing}>
           {playing ? "Pause" : "Play"}

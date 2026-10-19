@@ -153,3 +153,22 @@ What held up: the cut title, the transformation, and the open "?" volume, which 
 - **Keyboard:** 29 focus stops with 0 problems at 1440 px.
 - **Registration:** both forms store to Neon, and `/register/response` and the CSV work. Test rows were deleted.
 - **Screenshots:** every scene and state at 1440×900 and 390×844, and film beats at 1920×1080, with no console errors.
+
+
+---
+
+## Round 8 — the clock
+
+**Feedback:** "still boring … looks AI made; use a clock or something to show the animation and timings."
+
+**What changed:**
+- **Identity:** the event now runs on a real clock that keeps India time. The paper-grid, mono-label look that read as templated is gone.
+- **The clock does the storytelling:** a live clock in the hero, a scroll-turned eras dial, the three practices as the three hands of one clock, a countdown at the close, and a timing dial in the film.
+
+**Verified:**
+- **Build:** `tsc`, `eslint` and `next build` pass.
+- **Accessibility:** axe WCAG 2.1 AA reports 0 violations on `/`, `/register` and `/film` at 1440 and 390 px.
+- **No JavaScript:** no hidden text.
+- **Keyboard:** 29 focus stops with 0 problems at 1440 px.
+- **Registration:** end-to-end test passed, and test rows were deleted.
+- **Screenshots:** every scene at both widths and every film beat at 1920×1080, with no console errors.
