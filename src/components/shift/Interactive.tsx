@@ -174,8 +174,11 @@ export function Chrome() {
       const pastHero = hero ? hero.getBoundingClientRect().bottom < window.innerHeight * 0.4 : true;
       const atForm = form ? form.getBoundingClientRect().top < window.innerHeight * 0.9 : false;
       // the pinned artwork gets the whole screen: no bar over it
-      const sh = document.getElementById("eras")?.getBoundingClientRect();
-      const inShift = sh ? sh.top < window.innerHeight * 0.5 && sh.bottom > window.innerHeight * 0.5 : false;
+      // the pinned scenes (the name board, the ring of years) get the whole screen
+      const inShift = ["name", "eras"].some((id) => {
+        const r = document.getElementById(id)?.getBoundingClientRect();
+        return r ? r.top < window.innerHeight * 0.5 && r.bottom > window.innerHeight * 0.5 : false;
+      });
       root.classList.toggle("show-bar", pastHero && !atForm && !inShift);
       let act = "";
       for (const a of document.querySelectorAll<HTMLElement>("[data-act]")) if (a.getBoundingClientRect().top < window.innerHeight * 0.5) act = a.dataset.act ?? "";
