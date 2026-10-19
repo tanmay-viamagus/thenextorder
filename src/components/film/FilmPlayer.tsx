@@ -26,7 +26,7 @@ function readStart() {
   const t = Number(q.get("t"));
   if (q.has("t") && Number.isFinite(t)) return { t: Math.min(FILM_DURATION - 0.01, Math.max(0, t)), paused: true };
   // reduced motion: open paused on the closing line
-  return { t: reduce ? 27 : 0, paused: reduce };
+  return { t: reduce ? FILM_DURATION - 3 : 0, paused: reduce };
 }
 
 /**
@@ -55,7 +55,7 @@ function FilmBar({ t, label }: { t: number; label: string }) {
     <div className="fbar">
       <p className="fbar__tc">
         <b>00:{String(Math.floor(t)).padStart(2, "0")}</b>
-        <span>/ 00:30</span>
+        <span>/ 00:{FILM_DURATION}</span>
         <em>{label}</em>
       </p>
       <div className="fbar__track">
@@ -217,10 +217,11 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
     };
   }, [toggleSound, onClose]);
 
-  // the ring of years on the film clock: the marker runs 2019 → 2030 during 06–09.4, crossing both boundaries
+  // the ring of years on the film clock: through the inflection scene the marker runs 2019 → 2030, crossing both boundaries
   const inflP = useCallback(() => {
+    const sc = filmScenes.find((x) => x.id === "inflection")!;
     const t = clock.current.t;
-    return t < 6 ? 0.2 : Math.min(1, 0.2 + ((t - 6) / 3.4) * 0.8);
+    return t < sc.start ? 0.2 : Math.min(1, 0.2 + ((t - sc.start) / 4.2) * 0.8);
   }, []);
 
   const d = (s: number): CSSProperties => ({ ["--d" as string]: `${s}s` });
@@ -254,15 +255,6 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
 
         {/* 03–06 · THE OLD ORDER: identical units, in lockstep */}
         <section className="fs fs--old" data-id="old">
-          <div className="march">
-            {[0, 1, 2].map((r) => (
-              <div key={r} className="march__row" style={{ ["--r" as string]: r } as CSSProperties}>
-                {Array.from({ length: 40 }, (_, i) => (
-                  <span key={i} />
-                ))}
-              </div>
-            ))}
-          </div>
           <p className="fs__yrs" />
           <div className="fs__copy">
             <p className="fs__mono fs__era k-in" style={d(0)}>
@@ -271,8 +263,14 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
             <p className="fs__h k-up" style={d(0.15)}>
               {shift[0].headline}
             </p>
-            <p className="fs__stat k-up" style={d(1.2)}>
-              <b>{shift[0].evidence!.figure}</b> {shift[0].evidence!.finding} · {shift[0].evidence!.source}, {shift[0].evidence!.date}
+            <p className="fs__line k-up" style={d(1.1)}>
+              {shift[0].line}
+            </p>
+            <p className="fs__stat k-up" style={d(2.4)}>
+              <b>{shift[0].evidence!.figure}</b> {shift[0].evidence!.finding}
+              <span>
+                {shift[0].evidence!.source}, {shift[0].evidence!.date}
+              </span>
             </p>
           </div>
         </section>
@@ -427,9 +425,8 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
         )}
       </div>
       <p className="sr-only">
-        A 30-second film. A ring of identical segments is cut by a magenta line and its upper half twists out of
-        alignment: The NEXT Order, for India’s GCC leaders. The old order, 2016 to 2019: the years count up over rows of
-        identical units in lockstep — built to execute; 1,700+ GCCs in India today (nasscom and Zinnov, FY2024). The
+        A 42-second film. A ring of identical segments is cut by a magenta line and its upper half twists out of
+        alignment: The NEXT Order, for India’s GCC leaders. The old order, 2016 to 2019: the years count up over — built to execute; 1,700+ GCCs in India today (nasscom and Zinnov, FY2024). The
         inflection point: on a ring of years the marker crosses 2020 and 2025, the years crack and then fuse — then the
         mandate grew; 92% of India-based GCCs now aim beyond cost arbitrage (EY GCC Pulse Survey 2025). Build: Velocity AI, behind it the first piece of the ViaMagus mark — three months becomes three to four weeks, a shippable
         submodule every Friday. Operate: Synthia AI — a draft is stamped signed by a named officer. Scale: ViaMagus Select

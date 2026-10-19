@@ -271,9 +271,9 @@
 /* ---------------------------------------------------------------- 03–06 · the old order: the years count up */
 .fs__yrs {
   position: absolute;
-  right: 110px;
-  top: 96px;
-  font: 800 280px/0.8 var(--font);
+  right: 120px;
+  bottom: 120px;
+  font: 800 300px/0.8 var(--font);
   letter-spacing: -0.05em;
   color: transparent;
   -webkit-text-stroke: 3px var(--ink);
@@ -286,7 +286,7 @@
 }
 
 .fs--old.is-on .fs__yrs {
-  animation: years 2.1s steps(3, end) calc(0.3s - var(--into, 0s)) both;
+  animation: years 3s steps(3, end) calc(0.4s - var(--into, 0s)) both;
 }
 
 @keyframes years {
@@ -303,40 +303,6 @@
   color: var(--ink);
 }
 
-.march {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 60px;
-  display: grid;
-  gap: 34px;
-}
-
-.march__row {
-  display: flex;
-  gap: 34px;
-  width: max-content;
-  padding-left: calc(var(--r) * 24px);
-}
-
-.march__row span {
-  width: 14px;
-  height: 64px;
-  background: var(--ink);
-  opacity: 0.85;
-}
-
-/* lockstep: every row steps left together, once a second */
-.fs--old.is-on .march__row {
-  animation: march 3s steps(3) calc(0s - var(--into, 0s)) both;
-}
-
-@keyframes march {
-  to {
-    transform: translateX(-144px);
-  }
-}
-
 .fs__copy {
   position: absolute;
   left: 120px;
@@ -345,8 +311,18 @@
 }
 
 .fs--old .fs__copy {
-  width: 1300px;
-  top: 250px;
+  width: 1250px;
+  top: 150px;
+}
+
+.fs__line {
+  margin-top: 34px;
+  font-size: 46px;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  max-width: 22em;
+  color: var(--ink);
 }
 
 .fs__era {
@@ -365,18 +341,32 @@
 }
 
 .fs__stat {
-  margin-top: 44px;
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: start;
+  align-items: center;
+  gap: 4px 22px;
+  margin-top: 56px;
   font-size: 36px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.fs__stat span {
+  grid-column: 2;
+  font: 500 20px/1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--ink-2);
 }
 
 .fs__stat b {
-  font-size: 64px;
+  grid-row: span 2;
+  font-size: 110px;
+  line-height: 0.9;
   color: var(--purple);
-  letter-spacing: -0.04em;
-  margin-right: 8px;
+  letter-spacing: -0.05em;
 }
 
 /* ---------------------------------------------------------------- 06–10 · the inflection point */
@@ -413,11 +403,11 @@
 }
 
 .fs--inflection.is-on .swap__a {
-  animation: swap-a 2.2s var(--ease-out) calc(0.15s - var(--into, 0s)) both;
+  animation: swap-a 3s var(--ease-out) calc(0.15s - var(--into, 0s)) both;
 }
 
 .fs--inflection.is-on .swap__b {
-  animation: k-up 0.8s var(--ease-out) calc(2.15s - var(--into, 0s)) both;
+  animation: k-up 0.8s var(--ease-out) calc(2.95s - var(--into, 0s)) both;
 }
 
 @keyframes swap-a {
@@ -1022,7 +1012,7 @@
 }
 
 .fs--close.is-on .fs__close {
-  animation: line-hold 2.3s var(--ease-out) calc(0.1s - var(--into, 0s)) both;
+  animation: line-hold 3.2s var(--ease-out) calc(0.1s - var(--into, 0s)) both;
 }
 
 @keyframes line-hold {
@@ -1042,7 +1032,18 @@
 }
 
 .fs--close.is-on .fs__end {
-  animation: end-hold 1.6s var(--ease-out) calc(2.35s - var(--into, 0s)) both;
+  animation: end-in 0.8s var(--ease-out) calc(3.3s - var(--into, 0s)) both;
+}
+
+@keyframes end-in {
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @keyframes end-hold {
@@ -1098,10 +1099,13 @@
 /* ---------------------------------------------------------------- the timing bar */
 .fp__hud {
   position: absolute;
-  left: 20px;
-  right: 20px;
-  top: 16px;
+  left: 16px;
+  right: 16px;
+  top: 12px;
   z-index: 9;
+  padding: 10px 14px 12px;
+  background: rgba(10, 9, 14, 0.82);
+  border: 1px solid rgba(252, 253, 255, 0.14);
   transition: opacity 0.5s;
 }
 
