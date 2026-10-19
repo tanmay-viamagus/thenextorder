@@ -109,73 +109,82 @@
   stroke-width: 11;
 }
 
-/* ---------------------------------------------------------------- 00–03 · the hook */
-.fs--title {
-  background: var(--black);
+/* ---------------------------------------------------------------- 00–03 · the hook: the ring, cut and shifted */
+@property --s {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
 }
 
-/* a macro dial: we start inside the clock face, then pull back */
-.mac {
+@property --yr {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 2001;
+}
+
+.fs__shiftring {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 2600px;
-  height: 2600px;
-  margin: -1300px 0 0 -1300px;
+  right: -250px;
+  top: 270px;
+  width: 950px;
 }
 
-.mac__face {
-  fill: #08070c;
+.fs .ring__lab {
+  display: none;
 }
 
-.mac__hand rect,
-.mac__hand circle,
-.mac__pin {
-  fill: var(--magenta);
+.fs--title .ring__svg {
+  --s: 0;
 }
 
-.fs--title.is-on .mac {
-  animation: mac-in 3s cubic-bezier(0.2, 0.7, 0.2, 1) calc(0s - var(--into, 0s)) both;
+.fs--title.is-on .ring__svg {
+  animation: twist 1.2s cubic-bezier(0.2, 0.9, 0.2, 1) calc(2.05s - var(--into, 0s)) both;
 }
 
-@keyframes mac-in {
+@keyframes twist {
   from {
-    transform: scale(1.35);
-    opacity: 0.45;
-  }
-  55% {
-    opacity: 1;
+    --s: 0;
   }
   to {
-    transform: scale(0.62);
-    opacity: 0.5;
+    --s: 1.25;
   }
 }
 
-.mac__hand {
-  transform-box: view-box;
-  transform-origin: 0 0;
+.fs--title .ring__new path:not(.ring__owned) {
+  stroke: rgba(252, 253, 255, 0.34);
 }
 
-/* a ticking sweep: one jump per second, landing on twelve */
-.fs--title.is-on .mac__hand {
-  animation: mac-tick 3s steps(1) calc(0s - var(--into, 0s)) both;
+.fs--title.is-on .ring__new path:not(.ring__owned) {
+  animation: relight 0.8s var(--ease) calc(2.1s - var(--into, 0s)) both;
 }
 
-@keyframes mac-tick {
-  0% {
-    transform: rotate(-18deg);
+@keyframes relight {
+  to {
+    stroke: var(--lilac);
   }
-  33% {
-    transform: rotate(-12deg);
+}
+
+.fs--title.is-on .ring__owned {
+  animation: ring-own 1s var(--ease) calc(2.3s - var(--into, 0s)) both;
+}
+
+.fs--title.is-on .ring__cut {
+  animation: ring-cut 0.8s var(--ease) calc(1.6s - var(--into, 0s)) both;
+}
+
+.fs--title.is-on .fs__shiftring {
+  animation: ring-in 1.4s var(--ease-out) calc(0s - var(--into, 0s)) both;
+}
+
+@keyframes ring-in {
+  from {
+    opacity: 0;
+    transform: scale(1.15) rotate(-20deg);
   }
-  66% {
-    transform: rotate(-6deg);
-  }
-  90%,
-  100% {
-    transform: rotate(0deg);
-  }
+}
+
+.fs--title {
+  background: var(--black);
 }
 
 .fs__tl {
@@ -270,7 +279,36 @@
   }
 }
 
-/* ---------------------------------------------------------------- 03–06 · the old order */
+/* ---------------------------------------------------------------- 03–06 · the old order: the years count up */
+.fs__yrs {
+  position: absolute;
+  right: 110px;
+  top: 96px;
+  font: 800 280px/0.8 var(--font);
+  letter-spacing: -0.05em;
+  color: transparent;
+  -webkit-text-stroke: 3px var(--ink);
+  counter-reset: yr var(--yr);
+  font-variant-numeric: tabular-nums;
+}
+
+.fs__yrs::before {
+  content: counter(yr);
+}
+
+.fs--old.is-on .fs__yrs {
+  animation: years 2.4s steps(18, end) calc(0.2s - var(--into, 0s)) both;
+}
+
+@keyframes years {
+  from {
+    --yr: 2001;
+  }
+  to {
+    --yr: 2019;
+  }
+}
+
 .fs--old {
   background: var(--paper);
   color: var(--ink);
@@ -280,7 +318,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 90px;
+  bottom: 60px;
   display: grid;
   gap: 34px;
 }
@@ -318,8 +356,8 @@
 }
 
 .fs--old .fs__copy {
-  width: 1700px;
-  top: 130px;
+  width: 1300px;
+  top: 250px;
 }
 
 .fs__era {
@@ -327,7 +365,7 @@
   padding-top: 18px;
   border-top: 3px solid currentColor;
   color: var(--purple);
-  width: 560px;
+  width: 760px;
 }
 
 .fs__h {
@@ -362,12 +400,12 @@
   position: absolute;
   right: 20px;
   top: 50%;
-  width: 1120px;
-  height: 914px;
+  width: 1240px;
+  height: 854px;
   transform: translateY(-50%);
 }
 
-.fs__dial .yc-today {
+.fs__dial .yc-era {
   display: none;
 }
 
@@ -968,11 +1006,19 @@
   }
 }
 
+.fs__begins {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 785px;
+  color: var(--lilac);
+}
+
 .fs__trio {
   position: absolute;
   left: 0;
   right: 0;
-  top: 800px;
+  top: 830px;
   font-size: 110px;
   letter-spacing: -0.05em;
   font-weight: 800;
@@ -982,7 +1028,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 950px;
+  top: 978px;
 }
 
 /* ---------------------------------------------------------------- 26–30 · the line, then the invitation */
@@ -1064,12 +1110,21 @@
 }
 
 .fs__endu {
-  display: inline-block;
-  padding: 18px 34px;
+  display: inline-grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 22px 44px 20px;
   background: var(--purple);
-  font-size: 44px;
+  border-bottom: 6px solid var(--magenta);
+  font-size: 48px;
   font-weight: 700;
   letter-spacing: -0.01em;
+}
+
+.fs__endurl {
+  font: 500 24px/1 var(--mono);
+  letter-spacing: 0.06em;
+  opacity: 0.85;
 }
 
 /* ---------------------------------------------------------------- the timing dial */

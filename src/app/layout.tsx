@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Archivo, Geist_Mono, Josefin_Sans, Outfit } from "next/font/google";
 import { description } from "@/content/story";
 import { siteUrl } from "@/lib/site-url";
+import { JsFlag } from "@/components/JsFlag";
 import "./globals.css";
 
 // Brand faces verified on the live ViaMagus sites — see docs/brand-audit.md.
@@ -46,13 +47,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   const fonts = [outfit, geistMono, josefin, archivo].map((f) => f.variable).join(" ");
   return (
     <html lang="en" className={fonts} suppressHydrationWarning>
-      <head>
-        {/* Flags JS before first paint so scroll-driven reveals never hide content without JS. */}
-        <script
-          dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }}
-        />
-      </head>
-      <body>{children}</body>
+      <body>
+        <JsFlag />
+        {children}
+      </body>
     </html>
   );
 }

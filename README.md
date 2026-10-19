@@ -6,12 +6,15 @@
    - Below the line, the old order: aligned and grey.
    - Above it, the next order: turned out of alignment, lilac, and partly fused into owned arcs.
    - Title and ring shift with the pointer, and the ring's centre plays the film ("See what's changing").
-2. **The year.** Twelve months, January at the top, 30° each, with a marker that travels the year as you scroll. A "Today" mark shows the real date.
-   - Jan–Apr, the old order: solid. *Built to execute*, with 1,700+ GCCs.
-   - May–Aug, the inflection point: shifted out of line. *Then the mandate grew*, with 92%.
-   - Sep–Dec, the next order: fused into owned blocks (Product, Platforms, Capability) plus one open "?". *Built to own, create and lead.*
-3. **Three hands. One clock.** Velocity AI, Synthia AI and ViaMagus Select. Each gets a diagram, "Explore it at the event" (preselects it on `/register`) and "Visit product ↗".
-4. **Closing.** "Find your place in the conversation", with the form.
+2. **The ring of years.** It runs 2001 to 2030, 12° per year, with 2001 at the top. A marker travels it as you scroll, and the running year is shown at the centre.
+   - **2001–2019, the old order:** solid years. *Built to execute*, with 1,700+ GCCs in India today.
+   - **The boundary at 2020:** "Old order ends · 2019 / Inflection · 2020".
+   - **2020–2024, the inflection point:** the years shift out of line. *Then the mandate grew*, with 92%.
+   - **The boundary at 2025:** "The next order begins 2025".
+   - **2025 onward, the next order:** the years fuse into owned blocks (Product, Platforms, Capability) and one open "?". *Built to own, create and lead.*
+   - These era dates are the story's framing, not data; the figures carry their own sources.
+3. **Three hands. One clock.** Velocity AI, Synthia AI and ViaMagus Select. Each gets a diagram, a colour-coded action to its own site ("Let's build", "Let's automate", "Let's hire") and "Bring a … to the room", which preselects it on `/register`.
+4. **Closing.** "Find your place in the conversation", with three steps (request, review, invitation) beside the form.
 
 There is one call to action everywhere: **Request your place**. It goes to `/register`, which opens at the top. Places are confirmed by invitation.
 
@@ -39,7 +42,7 @@ npm test           # LinkedIn URL validation
 - **One row per email:** registering again updates the existing row.
 - **Validation:** every field is validated on the client and again on the server. The LinkedIn link must be an https personal profile on linkedin.com (or a country subdomain), and is stored in canonical form. This checks the format only; it does not verify identity.
 - **Bot protection, all enforced server-side in `POST /api/register`:**
-  - Vercel BotID (invisible; `checkBotId()`).
+  - Vercel BotID (invisible; `checkBotId()`). If BotID itself fails on Vercel, the request is refused; off Vercel (local) it is skipped.
   - A hidden honeypot field.
   - A signed form token from `GET /api/register/token`. Submissions without it, with a forged one, or within 2.5 s are refused.
   - Per-IP rate limiting (6 attempts per 10 minutes), with IPs stored only as salted hashes.

@@ -222,3 +222,24 @@ What held up: the cut title, the transformation, and the open "?" volume, which 
   - burst from one connection: 429.
 - **Browser E2E:** the LinkedIn error keeps the other data and moves focus; the submission appears on `/register/response` and in the CSV.
 - **Build and audits:** `tsc`, `eslint` and the build pass. axe: 0 violations at 1440 and 390 px. No-JS: no hidden text.
+
+
+---
+
+## Round 11 — the ring of years, actions that say what they do, a film that tells it
+
+**What changed:**
+- **Year ring:** the 12-month ring is now 2001–2030, with marked boundaries at 2020 and 2025. The "Today" mark is removed.
+- **Centre:** shows the running year, then era · headline · a line a leader recognises · a sourced figure.
+- **Product actions:**
+  - "Let's build / Let's automate / Let's hire" (to each product's site), as colour-coded blocks.
+  - "Bring a … to the room" (to `/register` with the product preselected).
+- **Close:** three steps.
+- **Buttons:** one system — a purple block, an attached arrow cell, and a magenta base line on hover.
+- **Film:** opens on the cut ring twisting into the next order; the old order counts 2001→2019; the inflection runs the marker across 2020 and 2025.
+
+**Regression fixed:** the previous dead-CSS sweep matched `.ec…` prefixes and also removed `.eco__h`, `.eco__k`, `.eco__top`, `.eco__lede` and `.eco__close`, which flattened the "Three hands. One clock." heading. They are restored, and every selector was diffed against the earlier release.
+
+**Also fixed:** a console warning from the inline `<script>` in the layout, now a client flag component. BotID now fails closed on Vercel and is skipped off Vercel, instead of throwing a 500.
+
+**Verified:** `tsc`, `eslint`, `npm test` (2/2) and the build pass. axe reports 0 violations at 1440 and 390 px. No-JS: no hidden text. The server-side protection matrix passes on a local production build.

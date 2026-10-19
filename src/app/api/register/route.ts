@@ -8,8 +8,17 @@ import { saveRegistration, validate } from "@/lib/registrations";
  * token (timing), per-IP rate limiting, then field validation.
  */
 export async function POST(req: Request) {
-  const bot = await checkBotId();
-  if (bot.isBot) return Response.json({ ok: false, error: "We couldn’t verify this request. Please try again from your browser." }, { status: 403 });
+  // BotID only runs on Vercel. There, any failure to classify refuses the request (fail closed);
+  // on a local machine it is skipped so the form can be tested.
+  try {
+    const bot = await checkBotId();
+    if (bot.isBot) return Response.json({ ok: false, error: "We couldn’t verify this request. Please try again from your browser." }, { status: 403 });
+  } catch (e) {
+    if (process.env.VERCEL) {
+      console.error("botid check failed", e instanceof Error ? e.message : e);
+      return Response.json({ ok: false, error: "We couldn’t verify this request. Please try again in a moment." }, { status: 503 });
+    }
+  }
 
   let body: Record<string, unknown>;
   try {
