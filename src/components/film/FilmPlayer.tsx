@@ -3,13 +3,13 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { SelectWordmark, SynthiaLogo, VelocityWordmark } from "@/components/Brand";
-import { SelectMech, SynthiaMech, VelocityMech } from "@/components/shift/Mechanisms";
-import { EraClock, FilmDial, HandsClock, LiveClock } from "@/components/clock/Clock";
+import { EraClock, FilmDial } from "@/components/clock/Clock";
 import { FILM_DURATION, filmScenes, sceneAtTime, type FilmSceneId } from "@/content/film";
 import { convergence, shift } from "@/content/story";
 import { Score } from "./score";
 
-const LABEL = {
+const LABEL: Record<FilmSceneId, string> = {
+  title: "The NEXT Order",
   old: "The old order",
   inflection: "The inflection point",
   build: "Velocity AI · Build",
@@ -28,11 +28,24 @@ function readStart() {
   return { t: reduce ? 27 : 0, paused: reduce };
 }
 
+const rad = (a: number) => (a * Math.PI) / 180;
+const tickLines = (n: number, r: number, major: number, minor: number) =>
+  Array.from({ length: n }, (_, i) => {
+    const big = i % 5 === 0;
+    const a = (i * 360) / n;
+    const x0 = Math.sin(rad(a)) * r;
+    const y0 = -Math.cos(rad(a)) * r;
+    const x1 = Math.sin(rad(a)) * (r - (big ? major : minor));
+    const y1 = -Math.cos(rad(a)) * (r - (big ? major : minor));
+    return <line key={i} x1={x0.toFixed(1)} y1={y0.toFixed(1)} x2={x1.toFixed(1)} y2={y1.toFixed(1)} className={big ? "mt mt--h" : "mt"} />;
+  });
+
 /**
- * The film: the site's drawings on a 30-second clock, on a 1920×1080 stage
- * scaled to any screen. Full-page at /film (event screens) or as an overlay.
+ * The film — 30 s, 16:9, silent-first, loops. Directed for a room:
+ * one idea per beat, never more than a few words on screen, every product as
+ * one big legible transformation, and a payoff — three hands locking at twelve.
  * The clock decides which scene is on; each scene's motion is CSS that starts
- * when the scene does (its drawings reuse the site's own reveal states).
+ * when the scene does (--into lets the clock join a scene part-way).
  */
 export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overlay"; onClose?: () => void }) {
   const root = useRef<HTMLDivElement | null>(null);
@@ -73,7 +86,6 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
         const on = sc.dataset.id === id;
         sc.classList.toggle("is-on", on);
         if (on) sc.style.setProperty("--into", `${into.toFixed(3)}s`);
-        sc.querySelectorAll("[data-reveal]").forEach((r) => r.classList.toggle("is-in", on));
       });
       setScene(id);
     };
@@ -172,27 +184,31 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
     };
   }, [toggleSound, onClose]);
 
-  const d = (s: number): CSSProperties => ({ ["--d" as string]: `${s}s` });
-  // the shift artwork on the film clock: held as given (03–06), then cracks and fuses (06–10)
-  // the eras dial on the film clock: 12→4 during the old order (03–06), 4→12 through the inflection (06–10)
-  const oldP = useCallback(() => {
-    const t = clock.current.t;
-    return Math.max(0, Math.min(0.33, ((t - 3) / 2.6) * 0.33));
-  }, []);
+  // the eras dial on the film clock: the hand sweeps 4→12 during 06–08.6
   const inflP = useCallback(() => {
     const t = clock.current.t;
-    return t < 6 ? 0.33 : Math.min(1, 0.33 + ((t - 6) / 3.6) * 0.67);
+    return t < 6 ? 0.33 : Math.min(1, 0.33 + ((t - 6) / 2.6) * 0.67);
   }, []);
+
+  const d = (s: number): CSSProperties => ({ ["--d" as string]: `${s}s` });
 
   return (
     <div ref={root} className={`fp fp--${mode}${idle ? " is-idle" : ""}${playing ? "" : " is-paused"}`} data-scene={scene}>
       <div className="fp__stage" aria-hidden="true">
-        {/* 00–03 · The NEXT Order */}
+        {/* 00–03 · HOOK: a giant dial sweeps; the title lands on the third second */}
         <section className="fs fs--title" data-id="title">
-          <div className="fs__clock">
-            <LiveClock />
-          </div>
-          <p className="fs__mono fs__tl">An invitation from ViaMagus</p>
+          <svg className="mac" viewBox="-500 -500 1000 1000">
+            <circle r="497" className="mac__face" />
+            {tickLines(60, 480, 70, 30)}
+            <g className="mac__hand">
+              <rect x="-3" y="-490" width="6" height="590" />
+              <circle cy="-490" r="12" />
+            </g>
+            <circle r="18" className="mac__pin" />
+          </svg>
+          <p className="fs__mono fs__tl k-in" style={d(0.3)}>
+            An invitation from ViaMagus
+          </p>
           <div className="fs__title">
             <div className="ft ft--below">
               <span>THE NEXT</span>
@@ -204,134 +220,180 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
             </div>
             <span className="ft__cut" />
           </div>
-          <p className="fs__mono fs__bl">For India’s GCC leaders</p>
+          <p className="fs__mono fs__bl k-in" style={d(2.2)}>
+            For India’s GCC leaders
+          </p>
         </section>
 
-        {/* 03–06 · The Old Order */}
+        {/* 03–06 · THE OLD ORDER: identical units, in lockstep */}
         <section className="fs fs--old" data-id="old">
+          <div className="march">
+            {[0, 1, 2, 3].map((r) => (
+              <div key={r} className="march__row" style={{ ["--r" as string]: r } as CSSProperties}>
+                {Array.from({ length: 40 }, (_, i) => (
+                  <span key={i} />
+                ))}
+              </div>
+            ))}
+          </div>
           <div className="fs__copy">
-            <p className="fs__mono fs__era">I · {shift[0].era}</p>
-            <p className="fs__h a-up" style={d(0.2)}>
+            <p className="fs__mono fs__era k-in" style={d(0)}>
+              I · {shift[0].era}
+            </p>
+            <p className="fs__h k-up" style={d(0.15)}>
               {shift[0].headline}
             </p>
-            <p className="fs__fig a-up" style={d(0.9)}>
-              <b>{shift[0].evidence!.figure}</b> {shift[0].evidence!.finding}
+            <p className="fs__stat k-up" style={d(1.2)}>
+              <b>{shift[0].evidence!.figure}</b> GCCs in India · {shift[0].evidence!.source}, {shift[0].evidence!.date}
             </p>
-            <p className="fs__src a-up" style={d(1.1)}>
-              {shift[0].evidence!.source}, {shift[0].evidence!.date}
-            </p>
-          </div>
-          <div className="fs__plan">
-            <EraClock getProgress={oldP} label="" />
           </div>
         </section>
 
-        {/* 06–10 · The Inflection Point */}
+        {/* 06–10 · THE INFLECTION POINT: the dial cracks, then the number */}
         <section className="fs fs--inflection" data-id="inflection">
-          <div className="fs__copy">
-            <p className="fs__mono fs__era">II · {shift[1].era}</p>
-            <p className="fs__h a-up" style={d(0.2)}>
-              {shift[1].headline}
-            </p>
-            <p className="fs__fig a-up" style={d(0.9)}>
-              <b>{shift[1].evidence!.figure}</b> {shift[1].evidence!.finding}
-            </p>
-            <p className="fs__src a-up" style={d(1.1)}>
-              {shift[1].evidence!.source}, {shift[1].evidence!.date}
-            </p>
-            <p className="fs__next a-up" style={d(2.6)}>
-              {shift[2].headline}
-            </p>
-          </div>
-          <div className="fs__plan">
+          <div className="fs__dial">
             <EraClock getProgress={inflP} label="" />
           </div>
-        </section>
-
-        {/* 10–14 · BUILD */}
-        <section className="fs fs--build fs--practice" data-id="build">
           <div className="fs__copy">
-            <p className="fs__mono fs__era">Velocity AI</p>
-            <p className="fs__verb a-up" style={d(0.1)}>
-              Build.
+            <p className="fs__mono fs__era k-in" style={d(0)}>
+              II · {shift[1].era}
             </p>
-            <div className="fs__mark a-up" style={d(0.5)}>
-              <VelocityWordmark />
+            <div className="swap">
+              <p className="fs__h swap__a">{shift[1].headline}</p>
+              <div className="swap__b">
+                <p className="fs__big">{shift[1].evidence!.figure}</p>
+                <p className="fs__under">
+                  of India-based GCCs aim to deliver value beyond cost arbitrage.
+                  <span>
+                    {shift[1].evidence!.source}, {shift[1].evidence!.date}
+                  </span>
+                </p>
+              </div>
             </div>
-            <p className="fs__line a-up" style={d(0.8)}>
-              Three-month timelines become three-to-four weeks.
-            </p>
-          </div>
-          <div className="fs__mech">
-            <VelocityMech />
           </div>
         </section>
 
-        {/* 14–18 · OPERATE */}
-        <section className="fs fs--operate fs--practice" data-id="operate">
-          <div className="fs__copy">
-            <p className="fs__mono fs__era">Synthia AI</p>
-            <p className="fs__verb a-up" style={d(0.1)}>
-              Operate.
-            </p>
-            <div className="fs__mark a-up" style={d(0.5)}>
-              <SynthiaLogo height={44} />
-            </div>
-            <p className="fs__line a-up" style={d(0.8)}>
-              Every AI output is a draft until a named officer signs it.
-            </p>
+        {/* 10–14 · BUILD: three months becomes three-to-four weeks */}
+        <section className="fs fs--build fs--p" data-id="build">
+          <svg className="fs__ring" viewBox="-500 -500 1000 1000">
+            {tickLines(60, 480, 40, 18)}
+            <g className="ring__hand ring__hand--fast">
+              <rect x="-3" y="-470" width="6" height="520" />
+            </g>
+          </svg>
+          <p className="fs__mono fs__era k-in" style={d(0)}>
+            The second hand
+          </p>
+          <p className="fs__verb k-up" style={d(0.1)}>
+            Build.
+          </p>
+          <div className="xform">
+            <p className="xform__from">3 months</p>
+            <p className="xform__to">3–4 weeks</p>
           </div>
-          <div className="fs__mech">
-            <SynthiaMech />
-          </div>
-        </section>
-
-        {/* 18–22 · SCALE */}
-        <section className="fs fs--scale fs--practice" data-id="scale">
-          <div className="fs__copy">
-            <p className="fs__mono fs__era">ViaMagus Select</p>
-            <p className="fs__verb a-up" style={d(0.1)}>
-              Scale.
-            </p>
-            <div className="fs__mark a-up" style={d(0.5)}>
-              <SelectWordmark />
-            </div>
-            <p className="fs__line a-up" style={d(0.8)}>
-              The mandate is yours. So is the team.
-            </p>
-          </div>
-          <div className="fs__mech">
-            <SelectMech />
+          <div className="fs__sign k-up" style={d(2.5)}>
+            <VelocityWordmark />
+            <span>A shippable submodule, every Friday.</span>
           </div>
         </section>
 
-        {/* 22–26 · convergence */}
+        {/* 14–18 · OPERATE: the draft gets signed */}
+        <section className="fs fs--operate fs--p" data-id="operate">
+          <svg className="fs__ring" viewBox="-500 -500 1000 1000">
+            {tickLines(60, 480, 40, 18)}
+            <g className="ring__hand ring__hand--mid">
+              <rect x="-7" y="-420" width="14" height="470" />
+            </g>
+          </svg>
+          <p className="fs__mono fs__era k-in" style={d(0)}>
+            The minute hand
+          </p>
+          <p className="fs__verb k-up" style={d(0.1)}>
+            Operate.
+          </p>
+          <div className="doc">
+            <p className="doc__k">AI output</p>
+            <span className="doc__line" />
+            <span className="doc__line doc__line--s" />
+            <span className="doc__line" />
+            <p className="doc__draft">Draft</p>
+            <p className="doc__stamp">
+              Signed ✓<small>Named officer</small>
+            </p>
+          </div>
+          <div className="fs__sign k-up" style={d(2.5)}>
+            <SynthiaLogo height={46} />
+            <span>Every AI output is a draft until a named officer signs it.</span>
+          </div>
+        </section>
+
+        {/* 18–22 · SCALE: fifty CVs become three verdicts */}
+        <section className="fs fs--scale fs--p" data-id="scale">
+          <svg className="fs__ring" viewBox="-500 -500 1000 1000">
+            {tickLines(60, 480, 40, 18)}
+            <g className="ring__hand ring__hand--slow">
+              <rect x="-12" y="-300" width="24" height="350" />
+            </g>
+          </svg>
+          <p className="fs__mono fs__era k-in" style={d(0)}>
+            The hour hand
+          </p>
+          <p className="fs__verb k-up" style={d(0.1)}>
+            Scale.
+          </p>
+          <div className="count">
+            <p className="count__n" />
+            <p className="count__l">
+              <span className="count__a">CVs a search sends</span>
+              <span className="count__b">pass — each with a written verdict</span>
+            </p>
+          </div>
+          <div className="fs__sign k-up" style={d(2.5)}>
+            <SelectWordmark />
+            <span>The mandate is yours. So is the team.</span>
+          </div>
+        </section>
+
+        {/* 22–26 · PAYOFF: three hands lock at twelve */}
         <section className="fs fs--converge" data-id="converge">
-          <div className="fs__hands">
-            <HandsClock label="" />
-          </div>
-          <p className="fs__trio a-up" style={d(1.6)}>
+          <svg className="lock" viewBox="-500 -500 1000 1000">
+            <circle r="497" className="lock__face" />
+            {tickLines(60, 480, 46, 20)}
+            <circle r="497" className="lock__pulse" />
+            <g className="lock__h lock__h--select">
+              <rect x="-16" y="-260" width="32" height="300" rx="2" />
+            </g>
+            <g className="lock__h lock__h--synthia">
+              <rect x="-8" y="-400" width="16" height="440" rx="2" />
+            </g>
+            <g className="lock__h lock__h--velocity">
+              <rect x="-3" y="-462" width="6" height="540" />
+              <circle cy="-462" r="12" />
+            </g>
+            <circle r="78" className="lock__pin" />
+            <g transform="translate(-50 -20) scale(3.3)" className="lock__mark">
+              <path d="M0,0l6.7765,11.8958l6.7764,-11.8958z" />
+              <path d="M23.7177,0l-3.3881,5.9479l-3.3882,-5.9479l-6.7764,11.8955h20.3291z" />
+            </g>
+          </svg>
+          <p className="fs__trio k-up" style={d(2.75)}>
             Three hands. One clock.
           </p>
-          <p className="fs__mono fs__names a-up" style={d(2)}>
-            Velocity AI · Synthia AI · ViaMagus Select
+          <p className="fs__mono fs__names k-in" style={d(3.05)}>
+            <span className="k-v">Velocity AI</span> · <span className="k-s">Synthia AI</span> · <span className="k-x">ViaMagus Select</span>
           </p>
         </section>
 
-        {/* 26–30 · close, wiping back to paper for the loop */}
+        {/* 26–30 · the line, then the invitation; a hard cut back to the hook */}
         <section className="fs fs--close" data-id="close">
-          <p className="fs__close a-up" style={d(0.2)}>
-            {convergence}
-          </p>
-          <p className="fs__mono fs__cta a-up" style={d(1.2)}>
-            The NEXT Order · An invitation for India’s GCC leaders
-          </p>
-          {host ? (
-            <p className="fs__mono fs__url a-up" style={d(1.6)}>
-              Register · {host}/register
+          <p className="fs__close">{convergence}</p>
+          <div className="fs__end">
+            <p className="fs__mono fs__endk">An invitation from ViaMagus</p>
+            <p className="fs__endt">
+              <span>The NEXT</span> Order.
             </p>
-          ) : null}
-          <span className="fs__wipe" />
+            <p className="fs__endu">{host ? `${host}/register` : "Request your invitation"}</p>
+          </div>
         </section>
       </div>
 
@@ -339,9 +401,10 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
         <FilmDial scenes={filmScenes} t={hudT} duration={FILM_DURATION} />
         <p className="fp__tc">
           <b>00:{String(Math.floor(hudT)).padStart(2, "0")}</b> / 00:30
-          <span>{sceneAtTime(hudT).id === "title" ? "The NEXT Order" : (LABEL as Record<string, string>)[sceneAtTime(hudT).id]}</span>
+          <span>{LABEL[sceneAtTime(hudT).id]}</span>
         </p>
       </div>
+
       <div className="fp__controls">
         <button type="button" onClick={() => setPlaying((p) => !p)} aria-pressed={!playing}>
           {playing ? "Pause" : "Play"}
@@ -361,13 +424,14 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
         )}
       </div>
       <p className="sr-only">
-        A 30-second film. The NEXT Order. The old order: a strict grid of identical cells — the work you were given. The
-        inflection point: the grid cracks, everything above the line slides, and the cells fuse into owned volumes —
-        product, platforms, decisions, quality, capability; 92% of India-based GCCs aim to deliver value beyond cost
-        arbitrage (EY GCC Pulse Survey 2025). What will your centre own next? Build: Velocity AI — three-month timelines become three-to-four
-        weeks. Operate: Synthia AI — every AI output is a draft until a named officer signs it. Scale: ViaMagus Select — the
-        mandate is yours, so is the team. Three lines converge into the ViaMagus mark: build, operate, scale. Everything an
-        enterprise needs to become AI-native.
+        A 30-second film. A giant clock sweeps; The NEXT Order, for India’s GCC leaders. The old order: rows of identical
+        units in lockstep — the work you were given; 1,700+ GCCs in India (nasscom and Zinnov, FY2024). The inflection
+        point: the dial cracks — then the walls moved; 92% of India-based GCCs aim to deliver value beyond cost
+        arbitrage (EY GCC Pulse Survey 2025). Build: Velocity AI — three months becomes three to four weeks, a shippable
+        submodule every Friday. Operate: Synthia AI — a draft is stamped signed by a named officer. Scale: ViaMagus Select
+        — fifty CVs count down to three verdicts; the mandate is yours, so is the team. Three hands — cyan, violet and
+        amber — spin and lock together at twelve on the ViaMagus mark: three hands, one clock. Everything an enterprise
+        needs to become AI-native. The NEXT Order: request your invitation.
       </p>
     </div>
   );

@@ -1,4 +1,5 @@
 import { neon } from "@neondatabase/serverless";
+import { FOCUS, INTERESTS, SEATS } from "@/content/register";
 
 /**
  * Registrations live in the Neon Postgres database provisioned through the
@@ -13,17 +14,11 @@ export type Registration = {
   email: string;
   organisation: string;
   role: string;
+  interests: string | null;
+  focus: string | null;
   next_mandate: string | null;
   source: string | null;
 };
-
-export const ROLES = [
-  "GCC CEO / MD / senior executive",
-  "Site head / site leader",
-  "Technology / engineering leader",
-  "CHRO / HR / talent acquisition leader",
-  "Other",
-] as const;
 
 let _sql: ReturnType<typeof neon> | null = null;
 function sql() {
@@ -47,12 +42,19 @@ function ensureTable() {
       next_mandate text,
       source text
     )`;
+    await q`ALTER TABLE registrations ADD COLUMN IF NOT EXISTS interests text, ADD COLUMN IF NOT EXISTS focus text`;
     await q`CREATE UNIQUE INDEX IF NOT EXISTS registrations_email_key ON registrations (lower(email))`;
   })();
   return ready;
 }
 
-export type Input = { name: string; email: string; organisation: string; role: string; next_mandate: string; source: string };
+export type Input = { name: string; email: string; organisation: string; role: string; interests: string; focus: string; source: string };
+
+const list = (v: unknown, allowed: readonly string[]) =>
+  (Array.isArray(v) ? v : typeof v === "string" && v ? [v] : [])
+    .map((x) => String(x))
+    .filter((x) => allowed.includes(x))
+    .join(", ");
 
 export function validate(raw: Record<string, unknown>): { ok: true; data: Input } | { ok: false; errors: Record<string, string> } {
   const s = (k: string, max: number) => String(raw[k] ?? "").trim().slice(0, max);
@@ -61,25 +63,27 @@ export function validate(raw: Record<string, unknown>): { ok: true; data: Input 
     email: s("email", 200).toLowerCase(),
     organisation: s("organisation", 160),
     role: s("role", 80),
-    next_mandate: s("next_mandate", 1200),
+    interests: list(raw.interests, INTERESTS),
+    focus: list(raw.focus, FOCUS),
     source: s("source", 40) || "site",
   };
   const errors: Record<string, string> = {};
   if (!data.name) errors.name = "Please add your name.";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) errors.email = "Please add a valid work email.";
   if (!data.organisation) errors.organisation = "Please add your organisation.";
-  if (!(ROLES as readonly string[]).includes(data.role)) errors.role = "Please choose the seat closest to yours.";
+  if (!(SEATS as readonly string[]).includes(data.role)) errors.role = "Please choose your seat.";
   return Object.keys(errors).length ? { ok: false, errors } : { ok: true, data };
 }
 
 export async function saveRegistration(d: Input) {
   await ensureTable();
   const rows = (await sql()`
-    INSERT INTO registrations (name, email, organisation, role, next_mandate, source)
-    VALUES (${d.name}, ${d.email}, ${d.organisation}, ${d.role}, ${d.next_mandate || null}, ${d.source})
+    INSERT INTO registrations (name, email, organisation, role, interests, focus, source)
+    VALUES (${d.name}, ${d.email}, ${d.organisation}, ${d.role}, ${d.interests || null}, ${d.focus || null}, ${d.source})
     ON CONFLICT (lower(email)) DO UPDATE SET
       name = EXCLUDED.name, organisation = EXCLUDED.organisation, role = EXCLUDED.role,
-      next_mandate = COALESCE(EXCLUDED.next_mandate, registrations.next_mandate),
+      interests = COALESCE(EXCLUDED.interests, registrations.interests),
+      focus = COALESCE(EXCLUDED.focus, registrations.focus),
       source = EXCLUDED.source, updated_at = now()
     RETURNING (xmax = 0) AS inserted
   `) as { inserted: boolean }[];

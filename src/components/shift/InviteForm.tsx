@@ -2,53 +2,55 @@
 
 import { useState, type FormEvent } from "react";
 import { contactEmail } from "@/content/event";
-
-const ROLES = [
-  "GCC CEO / MD / senior executive",
-  "Site head / site leader",
-  "Technology / engineering leader",
-  "CHRO / HR / talent acquisition leader",
-  "Other",
-];
+import { FOCUS, INTERESTS, SEATS } from "@/content/register";
 
 type State = { kind: "idle" } | { kind: "sending" } | { kind: "done"; name: string; updated: boolean } | { kind: "failed"; message: string };
 
 /**
- * Request an invitation. Submissions are stored (POST /api/register → Neon
- * Postgres) and listed for the organisers at /register/response. Used on the
- * home page and on the shareable /register page; `source` records which.
+ * Request an invitation. Three typed fields; everything else is a tap.
+ * Submissions are stored (POST /api/register → Neon Postgres) and listed for
+ * the organisers at /register/response. `preset` preselects a practice
+ * (from /register?interest=velocity|synthia|select).
  */
-export function InviteForm({ source = "site", title = "Request an invitation" }: { source?: string; title?: string }) {
+export function InviteForm({ source = "site", preset }: { source?: string; preset?: string }) {
   const [state, setState] = useState<State>({ kind: "idle" });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
-    const data = Object.fromEntries(new FormData(form).entries());
-    // the same checks the server makes, so mistakes don't need a round trip
+    const fd = new FormData(form);
+    const v = (k: string) => String(fd.get(k) ?? "").trim();
     const local: Record<string, string> = {};
-    const v = (k: string) => String(data[k] ?? "").trim();
     if (!v("name")) local.name = "Please add your name.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v("email"))) local.email = "Please add a valid work email.";
     if (!v("organisation")) local.organisation = "Please add your organisation.";
-    if (!v("role")) local.role = "Please choose the seat closest to yours.";
+    if (!v("role")) local.role = "Please choose your seat.";
     if (Object.keys(local).length) {
       setErrors(local);
       form.querySelector<HTMLElement>(`[name="${Object.keys(local)[0]}"]`)?.focus();
       return;
     }
+    setErrors({});
     setState({ kind: "sending" });
     try {
       const res = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, source }),
+        body: JSON.stringify({
+          name: v("name"),
+          email: v("email"),
+          organisation: v("organisation"),
+          role: v("role"),
+          interests: fd.getAll("interests"),
+          focus: fd.getAll("focus"),
+          website: v("website"),
+          source,
+        }),
       });
       const json = (await res.json().catch(() => ({}))) as { ok?: boolean; updated?: boolean; errors?: Record<string, string>; error?: string };
       if (res.ok && json.ok) {
-        setErrors({});
-        setState({ kind: "done", name: String(data.name ?? "").trim().split(" ")[0], updated: !!json.updated });
+        setState({ kind: "done", name: v("name").split(" ")[0], updated: !!json.updated });
         return;
       }
       if (json.errors) {
@@ -65,73 +67,111 @@ export function InviteForm({ source = "site", title = "Request an invitation" }:
 
   const err = (k: string) =>
     errors[k] ? (
-      <span className="field__err" id={`${k}-err`}>
+      <span className="rf__err" id={`${k}-${source}-err`}>
         {errors[k]}
       </span>
     ) : null;
-  const a = (k: string) => ({ "aria-invalid": errors[k] ? true : undefined, "aria-describedby": errors[k] ? `${k}-err` : undefined });
+  const a = (k: string) => ({
+    "aria-invalid": errors[k] ? true : undefined,
+    "aria-describedby": errors[k] ? `${k}-${source}-err` : undefined,
+  });
 
   if (state.kind === "done") {
     return (
-      <div className="form form--sent" role="status" tabIndex={-1} ref={(el) => el?.focus()}>
-        <p className="form__k">{state.updated ? "Request updated" : "Request received"}</p>
-        <p className="form__h">Thank you{state.name ? `, ${state.name}` : ""}.</p>
-        <p>
+      <div className="rf rf--done" role="status" tabIndex={-1} ref={(el) => el?.focus()}>
+        <svg className="rf__tick" viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="32" cy="32" r="29" />
+          <path d="M19 33 l9 9 l17 -19" />
+        </svg>
+        <p className="rf__k">{state.updated ? "Request updated" : "Request received"}</p>
+        <p className="rf__h">Thank you{state.name ? `, ${state.name}` : ""}.</p>
+        <p className="rf__p">
           {state.updated
-            ? "We already had your request — we’ve updated it with these details."
-            : "Your request for an invitation to The NEXT Order is with the ViaMagus team."}
+            ? "We already had your request, and we’ve updated it with these details."
+            : "Your request is with the ViaMagus team. We’ll share the date and venue with you as soon as they’re confirmed."}
         </p>
-        <p className="form__small">
-          Questions in the meantime? Write to <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+        <p className="rf__small">
+          Questions in the meantime? <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
         </p>
       </div>
     );
   }
 
   const sending = state.kind === "sending";
+  const id = (k: string) => `${k}-${source}`;
   return (
-    <form className="form" onSubmit={submit} noValidate aria-labelledby={`form-h-${source}`} aria-busy={sending}>
-      <p className="form__k" id={`form-h-${source}`}>
-        {title}
-      </p>
+    <form className="rf" onSubmit={submit} noValidate aria-labelledby={id("rf-h")} aria-busy={sending}>
+      <div className="rf__head">
+        <p className="rf__k" id={id("rf-h")}>
+          Request an invitation
+        </p>
+        <p className="rf__time">About 30 seconds</p>
+      </div>
       <noscript>
-        <p className="form__fail">
+        <p className="rf__fail">
           This form needs JavaScript. To request an invitation, email <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
         </p>
       </noscript>
-      <label className="field">
-        <span>Name</span>
-        <input name="name" autoComplete="name" required maxLength={120} {...a("name")} />
-        {err("name")}
-      </label>
-      <label className="field">
-        <span>Work email</span>
-        <input name="email" type="email" autoComplete="email" inputMode="email" required maxLength={200} {...a("email")} />
-        {err("email")}
-      </label>
-      <label className="field">
+
+      <div className="rf__row">
+        <label className="rf__field">
+          <span>Name</span>
+          <input name="name" autoComplete="name" required maxLength={120} {...a("name")} />
+          {err("name")}
+        </label>
+        <label className="rf__field">
+          <span>Work email</span>
+          <input name="email" type="email" autoComplete="email" inputMode="email" required maxLength={200} {...a("email")} />
+          {err("email")}
+        </label>
+      </div>
+      <label className="rf__field">
         <span>Organisation</span>
         <input name="organisation" autoComplete="organization" required maxLength={160} {...a("organisation")} />
         {err("organisation")}
       </label>
-      <label className="field">
-        <span>Your seat</span>
-        <select name="role" required defaultValue="" {...a("role")}>
-          <option value="" disabled>
-            Choose one
-          </option>
-          {ROLES.map((r) => (
-            <option key={r}>{r}</option>
+
+      <fieldset className="rf__set" aria-describedby={errors.role ? `role-${source}-err` : undefined}>
+        <legend>Your seat</legend>
+        <div className="rf__chips">
+          {SEATS.map((s) => (
+            <label key={s} className="chip">
+              <input type="radio" name="role" value={s} required />
+              <span>{s}</span>
+            </label>
           ))}
-        </select>
+        </div>
         {err("role")}
-      </label>
-      <label className="field">
-        <span>
-          What is your centre taking on next? <em>Optional</em>
-        </span>
-        <textarea name="next_mandate" rows={3} maxLength={1200} />
-      </label>
+      </fieldset>
+
+      <fieldset className="rf__set">
+        <legend>
+          At the event, I’d like to explore <em>Optional · pick any</em>
+        </legend>
+        <div className="rf__chips">
+          {INTERESTS.map((s) => (
+            <label key={s} className={`chip chip--${s.split(" ")[0].toLowerCase()}`}>
+              <input type="checkbox" name="interests" value={s} defaultChecked={preset === s} />
+              <span>{s}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <fieldset className="rf__set">
+        <legend>
+          My centre is taking on <em>Optional</em>
+        </legend>
+        <div className="rf__chips">
+          {FOCUS.map((s) => (
+            <label key={s} className="chip">
+              <input type="checkbox" name="focus" value={s} />
+              <span>{s}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
       {/* honeypot — hidden from people and assistive tech */}
       <div className="hp" aria-hidden="true">
         <label>
@@ -139,14 +179,14 @@ export function InviteForm({ source = "site", title = "Request an invitation" }:
         </label>
       </div>
       {state.kind === "failed" ? (
-        <p className="form__fail" role="alert">
+        <p className="rf__fail" role="alert">
           {state.message} Please try again, or email <a href={`mailto:${contactEmail}?subject=${encodeURIComponent("The NEXT Order — invitation request")}`}>{contactEmail}</a>.
         </p>
       ) : null}
-      <button type="submit" className="btn btn--shift" disabled={sending}>
-        {sending ? "Sending…" : "Request an invitation"} <span aria-hidden="true">→</span>
+      <button type="submit" className="btn btn--shift rf__go" disabled={sending}>
+        {sending ? "Sending…" : "Request my invitation"} <span aria-hidden="true">→</span>
       </button>
-      <p className="form__small">Your details go only to the ViaMagus team, to manage invitations for this event.</p>
+      <p className="rf__small">Your details go only to the ViaMagus team, to manage invitations for this event.</p>
     </form>
   );
 }

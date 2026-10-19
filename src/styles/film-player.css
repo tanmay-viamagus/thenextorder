@@ -1,14 +1,14 @@
 /* ==========================================================================
-   The film — the site's drawings on a 30 s clock, on a 1920×1080 stage.
-   Sizes are stage pixels; the stage is scaled to fit (--k). Each scene's
-   motion is CSS that starts when the scene turns on; --into lets the clock
-   start a scene part-way (seeking, ?t=).
+   The film — 30 s on a 1920×1080 stage, scaled to fit (--k).
+   Directed for a room: one idea per beat, a few words at most, every product
+   as one big transformation, a payoff at 24.5 s. Each scene's motion starts
+   when the scene does; --into lets the clock join a scene part-way.
    ========================================================================== */
 .fp {
   position: fixed;
   inset: 0;
   background: var(--black);
-  color: var(--ink);
+  color: var(--white);
   overflow: hidden;
 }
 
@@ -31,6 +31,7 @@
   font-family: var(--font);
 }
 
+.fp.is-paused .fs,
 .fp.is-paused .fs * {
   animation-play-state: paused !important;
 }
@@ -38,31 +39,40 @@
 .fs {
   position: absolute;
   inset: 0;
-  opacity: 0;
+  overflow: hidden;
   visibility: hidden;
-  transition: opacity 0.35s, visibility 0s 0.35s;
-  padding: 96px 120px;
 }
 
 .fs.is-on {
-  opacity: 1;
   visibility: visible;
-  transition: opacity 0.35s;
 }
 
-/* motion helper: rises in when the scene starts */
-.fs .a-up {
+.fs .k-in,
+.fs .k-up {
   opacity: 0;
 }
 
-.fs.is-on .a-up {
-  animation: fs-up 0.9s var(--ease-out) calc(var(--d, 0s) - var(--into, 0s)) both;
+.fs.is-on .k-in {
+  animation: k-in 0.7s var(--ease-out) calc(var(--d, 0s) - var(--into, 0s)) both;
 }
 
-@keyframes fs-up {
+.fs.is-on .k-up {
+  animation: k-up 0.85s var(--ease-out) calc(var(--d, 0s) - var(--into, 0s)) both;
+}
+
+@keyframes k-in {
   from {
     opacity: 0;
-    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes k-up {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
   }
   to {
     opacity: 1;
@@ -71,80 +81,122 @@
 }
 
 .fs__mono {
-  font: 500 24px/1 var(--mono);
-  letter-spacing: 0.1em;
+  font: 500 26px/1.2 var(--mono);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
-/* the title opens on the live clock, as the site does */
+.k-v {
+  color: var(--vel-cyan);
+}
+
+.k-s {
+  color: var(--syn-bright);
+}
+
+.k-x {
+  color: var(--sel-amber);
+}
+
+/* tick marks shared by every dial */
+.mt {
+  stroke: rgba(252, 253, 255, 0.3);
+  stroke-width: 4;
+}
+
+.mt--h {
+  stroke: rgba(252, 253, 255, 0.92);
+  stroke-width: 11;
+}
+
+/* ---------------------------------------------------------------- 00–03 · the hook */
 .fs--title {
   background: var(--black);
-  color: var(--white);
 }
 
-.fs__clock {
+/* a macro dial: we start inside the clock face, then pull back */
+.mac {
   position: absolute;
-  right: -120px;
+  left: 50%;
   top: 50%;
-  width: 1040px;
-  height: 1040px;
-  transform: translateY(-50%);
+  width: 2600px;
+  height: 2600px;
+  margin: -1300px 0 0 -1300px;
 }
 
-.fs__clock .lc__read {
-  font-size: 22px;
+.mac__face {
+  fill: #08070c;
 }
 
-.fs--title .ft--below {
-  color: var(--white);
+.mac__hand rect,
+.mac__hand circle,
+.mac__pin {
+  fill: var(--magenta);
 }
 
-.fs--title .ft--above {
-  color: var(--lilac);
+.fs--title.is-on .mac {
+  animation: mac-in 3s cubic-bezier(0.2, 0.7, 0.2, 1) calc(0s - var(--into, 0s)) both;
 }
 
-.fs--title .ft__cut {
-  background: var(--magenta);
+@keyframes mac-in {
+  from {
+    transform: scale(1.35);
+    opacity: 0.45;
+  }
+  55% {
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.62);
+    opacity: 0.5;
+  }
 }
 
-.fs--title .fs__tl {
-  color: rgba(252, 253, 255, 0.66);
+.mac__hand {
+  transform-box: view-box;
+  transform-origin: 0 0;
 }
 
-.fs--title .fs__bl {
-  color: var(--lilac);
+/* a ticking sweep: one jump per second, landing on twelve */
+.fs--title.is-on .mac__hand {
+  animation: mac-tick 3s steps(1) calc(0s - var(--into, 0s)) both;
 }
 
-/* paper scenes */
-.fs--old,
-.fs--inflection,
-.fs--scale {
-  background-color: var(--paper);
-  background-image: linear-gradient(rgba(14, 13, 18, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(14, 13, 18, 0.06) 1px, transparent 1px);
-  background-size: 96px 96px;
-  color: var(--ink);
+@keyframes mac-tick {
+  0% {
+    transform: rotate(-18deg);
+  }
+  33% {
+    transform: rotate(-12deg);
+  }
+  66% {
+    transform: rotate(-6deg);
+  }
+  90%,
+  100% {
+    transform: rotate(0deg);
+  }
 }
 
-/* ---------------------------------------------------------------- 00–03 title */
 .fs__tl {
   position: absolute;
   left: 120px;
   top: 96px;
-  color: var(--ink-2);
+  color: rgba(252, 253, 255, 0.66);
 }
 
 .fs__bl {
   position: absolute;
   left: 120px;
-  bottom: 96px;
-  color: var(--purple);
+  bottom: 110px;
+  color: var(--lilac);
 }
 
 .fs__title {
   position: absolute;
   left: 110px;
-  top: 230px;
-  font: 800 330px/0.8 var(--font);
+  top: 300px;
+  font: 800 300px/0.8 var(--font);
   letter-spacing: -0.05em;
   --cut: 1.27em;
 }
@@ -155,235 +207,335 @@
 }
 
 .ft--below {
+  color: var(--white);
   clip-path: inset(var(--cut) -1em -0.2em -1em);
 }
 
 .ft--above {
   position: absolute;
   inset: 0;
-  color: var(--purple);
+  color: var(--lilac);
   clip-path: inset(-0.3em -1em calc(100% - var(--cut)) -1em);
 }
 
 .ft__cut {
   position: absolute;
   top: var(--cut);
-  left: -120px;
+  left: -110px;
   width: 1920px;
-  height: 4px;
+  height: 5px;
   margin-top: -2px;
-  background: var(--purple);
+  background: var(--magenta);
   transform-origin: left;
 }
 
+.fs--title .fs__title {
+  opacity: 0;
+}
+
+.fs--title.is-on .fs__title {
+  animation: slam 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) calc(1.95s - var(--into, 0s)) both;
+}
+
 .fs--title.is-on .ft__cut {
-  animation: fs-cut 0.9s var(--ease) calc(0.15s - var(--into, 0s)) both;
+  animation: cut 0.6s var(--ease) calc(1.85s - var(--into, 0s)) both;
 }
 
 .fs--title.is-on .ft--above {
-  animation: fs-shift 1s var(--ease) calc(1.05s - var(--into, 0s)) both;
+  animation: nudge 0.5s cubic-bezier(0.3, 1.8, 0.5, 1) calc(2.45s - var(--into, 0s)) both;
 }
 
-.fs--title.is-on .fs__tl,
-.fs--title.is-on .fs__bl {
-  animation: fs-up 0.8s var(--ease-out) calc(0.4s - var(--into, 0s)) both;
+@keyframes slam {
+  from {
+    opacity: 0;
+    transform: scale(1.12);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
 }
 
-@keyframes fs-cut {
+@keyframes cut {
   from {
     transform: scaleX(0);
   }
 }
 
-@keyframes fs-shift {
-  from {
-    transform: none;
-  }
+@keyframes nudge {
   to {
-    transform: translateX(0.12em);
+    transform: translateX(0.1em);
   }
 }
 
-/* ---------------------------------------------------------------- shared two-column scenes */
-.fs--old,
-.fs--inflection,
-.fs--practice {
+/* ---------------------------------------------------------------- 03–06 · the old order */
+.fs--old {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.march {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 90px;
   display: grid;
-  grid-template-columns: 720px 1fr;
-  gap: 90px;
-  align-items: center;
+  gap: 34px;
+}
+
+.march__row {
+  display: flex;
+  gap: 34px;
+  width: max-content;
+  padding-left: calc(var(--r) * 24px);
+}
+
+.march__row span {
+  width: 14px;
+  height: 64px;
+  background: var(--ink);
+  opacity: 0.85;
+}
+
+/* lockstep: every row steps left together, once a second */
+.fs--old.is-on .march__row {
+  animation: march 3s steps(3) calc(0s - var(--into, 0s)) both;
+}
+
+@keyframes march {
+  to {
+    transform: translateX(-144px);
+  }
+}
+
+.fs__copy {
+  position: absolute;
+  left: 120px;
+  top: 150px;
+  width: 1100px;
+}
+
+.fs--old .fs__copy {
+  width: 1700px;
+  top: 130px;
 }
 
 .fs__era {
-  margin-bottom: 40px;
+  margin-bottom: 36px;
   padding-top: 18px;
   border-top: 3px solid currentColor;
   color: var(--purple);
+  width: 560px;
 }
 
 .fs__h {
-  font-size: 128px;
-  line-height: 0.92;
-  letter-spacing: -0.05em;
-  font-weight: 700;
-}
-
-.fs__fig {
-  margin-top: 44px;
-  font-size: 40px;
-  line-height: 1.2;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-}
-
-.fs__fig b {
-  display: block;
-  font-size: 170px;
+  font-size: 150px;
   line-height: 0.9;
-  letter-spacing: -0.05em;
-  color: var(--purple);
+  letter-spacing: -0.055em;
+  font-weight: 800;
 }
 
-.fs__src {
-  margin-top: 18px;
-  font: 500 22px/1 var(--mono);
-  letter-spacing: 0.06em;
+.fs__stat {
+  margin-top: 44px;
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--ink-2);
 }
 
-/* the shift artwork at stage scale (never the phone layout inside the stage) */
-.fs .sa--wide {
-  display: block;
+.fs__stat b {
+  font-size: 64px;
+  color: var(--purple);
+  letter-spacing: -0.04em;
+  margin-right: 8px;
 }
 
-.fs .sa--tall {
+/* ---------------------------------------------------------------- 06–10 · the inflection point */
+.fs--inflection {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.fs__dial {
+  position: absolute;
+  right: 60px;
+  top: 50%;
+  width: 1000px;
+  height: 940px;
+  transform: translateY(-50%);
+}
+
+.fs__dial .ec-era {
   display: none;
 }
 
-.fs__next {
-  margin-top: 40px;
-  font-size: 54px;
-  line-height: 1.05;
-  letter-spacing: -0.035em;
-  font-weight: 700;
+.fs--inflection .fs__copy {
+  width: 820px;
+  top: 220px;
+}
+
+.swap {
+  position: relative;
+}
+
+.swap__a,
+.swap__b {
+  opacity: 0;
+}
+
+.fs--inflection.is-on .swap__a {
+  animation: swap-a 2.2s var(--ease-out) calc(0.15s - var(--into, 0s)) both;
+}
+
+.fs--inflection.is-on .swap__b {
+  animation: k-up 0.8s var(--ease-out) calc(2.15s - var(--into, 0s)) both;
+}
+
+@keyframes swap-a {
+  0% {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  20%,
+  85% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+}
+
+.swap__b {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.fs__big {
+  font-size: 330px;
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  font-weight: 800;
   color: var(--purple);
 }
 
-/* the plan drawings, re-timed for the film */
-.fs .plan text {
-  font-size: 14px;
+.fs__under {
+  margin-top: 26px;
+  font-size: 44px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  max-width: 15em;
 }
 
-.fs .plan .pl-lab {
-  font-size: 13px;
+.fs__under span {
+  display: block;
+  margin-top: 16px;
+  font: 500 22px/1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
 }
 
-.fs .plan [pathLength] {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-}
-
-.fs.is-on .plan [pathLength] {
-  animation: fs-draw 1s var(--ease) calc(var(--d, 0s) * 0.6 - var(--into, 0s)) both;
-}
-
-@keyframes fs-draw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-.fs .plan .pl-desk,
-.fs .plan .pl-own,
-.fs .plan .pl-arrow circle,
-.fs .plan text {
-  opacity: 0;
-  transition: none;
-}
-
-.fs.is-on .plan .pl-desk,
-.fs.is-on .plan .pl-own,
-.fs.is-on .plan .pl-arrow circle,
-.fs.is-on .plan text {
-  animation: fs-fade 0.5s calc(0.9s - var(--into, 0s)) both;
-}
-
-@keyframes fs-fade {
-  to {
-    opacity: 1;
-  }
-}
-
-.fs--inflection .plan .pl-wall--shift {
-  stroke-dasharray: none;
-  stroke-dashoffset: 0;
-  transform-box: view-box;
-  transform-origin: 420px 380px;
-  transform: scale(0.6);
-}
-
-.fs--inflection.is-on .plan .pl-wall--shift {
-  animation: fs-walls 1.8s var(--ease) calc(0.4s - var(--into, 0s)) both;
-}
-
-@keyframes fs-walls {
-  from {
-    transform: scale(0.6);
-  }
-  to {
-    transform: none;
-  }
-}
-
-/* ---------------------------------------------------------------- the three practices */
-/* the verb gets its own full-width row; copy and mechanism share the row below */
-.fs--practice {
-  grid-template-columns: 640px 1fr;
-  grid-template-rows: auto auto auto auto;
-  align-content: center;
-  align-items: start;
-  row-gap: 0;
-}
-
-.fs--practice .fs__copy {
-  display: contents;
-}
-
-.fs--practice .fs__era,
-.fs--practice .fs__verb {
-  grid-column: 1 / -1;
-}
-
-.fs--practice .fs__verb {
-  margin-bottom: 40px;
-}
-
-.fs--practice .fs__mark,
-.fs--practice .fs__line {
-  grid-column: 1;
-}
-
-.fs--practice .fs__mark {
-  margin-top: 0;
-}
-
-.fs--practice .fs__mech {
-  grid-column: 2;
-  grid-row: 3 / 5;
+/* ---------------------------------------------------------------- 10–22 · the three practices */
+.fs--p {
+  padding: 120px;
 }
 
 .fs--build {
   background: var(--vel-bg);
-  color: var(--white);
 }
 
 .fs--operate {
   background: var(--purple-darker);
-  color: var(--white);
 }
 
 .fs--scale {
+  background: var(--sel-paper);
   color: var(--sel-ink);
+}
+
+.fs--scale .mt {
+  stroke: rgba(14, 13, 18, 0.25);
+}
+
+.fs--scale .mt--h {
+  stroke: rgba(14, 13, 18, 0.7);
+}
+
+/* each practice sits in front of its own hand, turning */
+.fs__ring {
+  position: absolute;
+  right: -240px;
+  top: 50%;
+  width: 1200px;
+  height: 1200px;
+  margin-top: -600px;
+  opacity: 0.5;
+}
+
+.ring__hand {
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+
+.ring__hand--fast rect {
+  fill: var(--vel-cyan);
+}
+
+.ring__hand--mid rect {
+  fill: var(--syn-bright);
+}
+
+.ring__hand--slow rect {
+  fill: var(--sel-amber);
+}
+
+.fs--build.is-on .ring__hand {
+  animation: spin 4s linear calc(0s - var(--into, 0s)) both;
+}
+
+.fs--operate.is-on .ring__hand {
+  animation: spin-q 4s linear calc(0s - var(--into, 0s)) both;
+}
+
+.fs--scale.is-on .ring__hand {
+  animation: spin-e 4s linear calc(0s - var(--into, 0s)) both;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-q {
+  from {
+    transform: rotate(-30deg);
+  }
+  to {
+    transform: rotate(60deg);
+  }
+}
+
+@keyframes spin-e {
+  from {
+    transform: rotate(20deg);
+  }
+  to {
+    transform: rotate(45deg);
+  }
+}
+
+.fs--p .fs__era {
+  width: 520px;
 }
 
 .fs--build .fs__era {
@@ -399,7 +551,7 @@
 }
 
 .fs__verb {
-  font-size: 230px;
+  font-size: 250px;
   line-height: 0.8;
   letter-spacing: -0.06em;
   font-weight: 800;
@@ -424,158 +576,395 @@
   letter-spacing: -0.045em;
 }
 
-.fs__mark {
-  margin-top: 34px;
-  min-height: 48px;
+.fs__sign {
+  position: absolute;
+  left: 120px;
+  bottom: 110px;
   display: flex;
   align-items: center;
-}
-
-.fs__mark .wm-velocity,
-.fs__mark .wm-select {
-  font-size: 46px;
-}
-
-.fs__mark .wm-synthia {
-  height: 48px;
-}
-
-.fs__line {
-  margin-top: 34px;
-  font-size: 46px;
-  line-height: 1.12;
-  letter-spacing: -0.025em;
+  gap: 32px;
+  font-size: 42px;
   font-weight: 600;
-  max-width: 15em;
+  letter-spacing: -0.02em;
 }
 
-/* the mechanisms at stage scale */
-.fs .mech figcaption {
-  display: none;
+.fs__sign .wm-velocity,
+.fs__sign .wm-select {
+  font-size: 48px;
 }
 
-.fs .vm {
-  gap: 48px;
+.fs__sign .wm-synthia {
+  height: 46px;
 }
 
-.fs .vm__axis {
-  font-size: 18px;
+.fs__sign > span {
+  padding-left: 32px;
+  border-left: 2px solid currentColor;
+  opacity: 0.92;
 }
 
-.fs .vm__lab {
-  font-size: 22px;
-}
-
-.fs .vm__bar {
-  height: 90px;
-}
-
-.fs .vm__ship {
-  bottom: -48px;
-  font-size: 20px;
-  left: calc((var(--i) + 1) * 8.333% - 20px);
-}
-
-.fs .vm__ship::before {
-  height: 110px;
-}
-
-.fs .sm__t {
-  font-size: 40px;
-}
-
-.fs .sm__n,
-.fs .sm__tag {
-  font-size: 18px;
-}
-
-.fs .sm__step {
-  padding-top: 44px;
-  gap: 18px;
-}
-
-.fs .sm__step::before {
-  width: 20px;
-  height: 20px;
-  top: -11px;
-}
-
-.fs .sm {
-  border-top-width: 3px;
-}
-
-.fs .sm__token {
-  width: 26px;
-  height: 26px;
-  top: -14px;
-}
-
-.fs .xm__grid {
-  gap: 10px;
-}
-
-.fs .xm__legend {
-  gap: 30px;
-}
-
-.fs .xm__legend li {
-  font-size: 26px;
-}
-
-.fs .xm__legend b {
-  font-size: 84px;
-}
-
-.fs .xm__c.is-pass::after {
-  font-size: 30px;
-}
-
-/* ---------------------------------------------------------------- 22–26 convergence */
-.fs--converge {
-  background: var(--black);
-  color: var(--white);
-  text-align: center;
-}
-
-.fs__lines {
+/* BUILD: "3 months" struck, "3–4 weeks" lands */
+.xform {
   position: absolute;
-  inset: 0;
-  width: 1920px;
-  height: 1080px;
+  left: 120px;
+  top: 540px;
+  display: flex;
+  align-items: baseline;
+  gap: 60px;
 }
 
-.fs__lines .cl {
-  stroke-width: 5;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-}
-
-.fs--converge.is-on .cl {
-  animation: fs-draw 1.4s var(--ease) calc(0.1s - var(--into, 0s)) both;
-}
-
-.fs__vm {
-  position: absolute;
-  left: 50%;
-  top: 600px;
-  width: 300px;
-  margin-left: -150px;
-  color: var(--white);
+.xform__from {
+  position: relative;
+  font-size: 120px;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: rgba(252, 253, 255, 0.9);
   opacity: 0;
 }
 
-.fs--converge.is-on .fs__vm {
-  animation: fs-mark 1s var(--ease-out) calc(1.25s - var(--into, 0s)) both;
+.xform__from::after {
+  content: "";
+  position: absolute;
+  left: -6px;
+  right: -6px;
+  top: 55%;
+  height: 8px;
+  background: var(--magenta);
+  transform: scaleX(0);
+  transform-origin: left;
 }
 
-@keyframes fs-mark {
+.xform__to {
+  font-size: 190px;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  color: var(--vel-cyan);
+  opacity: 0;
+}
+
+.fs--build.is-on .xform__from {
+  animation: from-dim 2.4s var(--ease-out) calc(0.5s - var(--into, 0s)) both;
+}
+
+.fs--build.is-on .xform__from::after {
+  animation: strike 0.35s var(--ease) calc(1.3s - var(--into, 0s)) both;
+}
+
+.fs--build.is-on .xform__to {
+  animation: slam 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) calc(1.6s - var(--into, 0s)) both;
+}
+
+@keyframes strike {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes from-dim {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  20%,
+  45% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0.35;
+  }
+}
+
+/* OPERATE: a draft, then the stamp */
+.doc {
+  position: absolute;
+  left: 1240px;
+  top: 360px;
+  width: 560px;
+  height: 420px;
+  padding: 44px;
+  background: #fcfbf8;
+  color: var(--ink);
+  transform: rotate(-2deg);
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+}
+
+.fs--operate.is-on .doc {
+  animation: doc-in 0.7s var(--ease-out) calc(0.45s - var(--into, 0s)) both;
+}
+
+@keyframes doc-in {
   from {
     opacity: 0;
-    transform: translateY(30px) scale(0.9);
+    transform: translateY(80px) rotate(4deg);
   }
   to {
     opacity: 1;
-    transform: none;
+    transform: rotate(-2deg);
+  }
+}
+
+.doc__k {
+  font: 600 22px/1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  margin-bottom: 36px;
+}
+
+.doc__line {
+  display: block;
+  height: 18px;
+  margin-bottom: 22px;
+  background: rgba(14, 13, 18, 0.12);
+}
+
+.doc__line--s {
+  width: 70%;
+}
+
+.doc__draft {
+  position: absolute;
+  left: 44px;
+  bottom: 44px;
+  padding: 10px 18px;
+  border: 3px solid var(--ink-2);
+  font: 700 30px/1 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.fs--operate.is-on .doc__draft {
+  animation: from-dim 2.6s linear calc(0.6s - var(--into, 0s)) both;
+}
+
+.doc__stamp {
+  position: absolute;
+  right: 36px;
+  bottom: 40px;
+  display: grid;
+  justify-items: center;
+  padding: 18px 30px 14px;
+  border: 6px solid var(--purple);
+  color: var(--purple);
+  font: 800 64px/1 var(--font);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  transform: rotate(-9deg);
+  opacity: 0;
+}
+
+.doc__stamp small {
+  margin-top: 6px;
+  font: 600 18px/1 var(--mono);
+  letter-spacing: 0.12em;
+}
+
+.fs--operate.is-on .doc__stamp {
+  animation: stamp 0.45s cubic-bezier(0.3, 1.6, 0.4, 1) calc(1.75s - var(--into, 0s)) both;
+}
+
+@keyframes stamp {
+  from {
+    opacity: 0;
+    transform: rotate(-9deg) scale(2.2);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(-9deg) scale(1);
+  }
+}
+
+/* SCALE: fifty becomes three */
+@property --n {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 50;
+}
+
+.count {
+  position: absolute;
+  left: 1160px;
+  top: 300px;
+  display: grid;
+  gap: 18px;
+}
+
+.count__n {
+  --n: 50;
+  counter-reset: n var(--n);
+  font: 800 380px/0.8 var(--font-archivo), var(--font);
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+}
+
+.count__n::after {
+  content: counter(n);
+}
+
+.fs--scale.is-on .count__n {
+  animation: count 1.6s cubic-bezier(0.6, 0, 0.2, 1) calc(0.6s - var(--into, 0s)) both;
+}
+
+@keyframes count {
+  from {
+    --n: 50;
+  }
+  to {
+    --n: 3;
+  }
+}
+
+.count__l {
+  position: relative;
+  height: 52px;
+  font-size: 44px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.count__a,
+.count__b {
+  position: absolute;
+  left: 0;
+  white-space: nowrap;
+}
+
+.count__b {
+  opacity: 0;
+}
+
+.fs--scale.is-on .count__a {
+  animation: label-out 0.4s calc(2.1s - var(--into, 0s)) both;
+}
+
+.fs--scale.is-on .count__b {
+  animation: k-up 0.6s var(--ease-out) calc(2.2s - var(--into, 0s)) both;
+}
+
+@keyframes label-out {
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+/* ---------------------------------------------------------------- 22–26 · the payoff: three hands lock at twelve */
+.fs--converge {
+  background: var(--black);
+  text-align: center;
+}
+
+.lock {
+  position: absolute;
+  left: 50%;
+  top: 60px;
+  width: 700px;
+  height: 700px;
+  margin-left: -350px;
+  overflow: visible;
+}
+
+.lock__face {
+  fill: #0a090e;
+  stroke: rgba(252, 253, 255, 0.12);
+  stroke-width: 2;
+}
+
+.lock__pulse {
+  fill: none;
+  stroke: var(--white);
+  stroke-width: 6;
+  opacity: 0;
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+
+.lock__h {
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+
+.lock__h--velocity rect,
+.lock__h--velocity circle {
+  fill: var(--vel-cyan);
+}
+
+.lock__h--synthia rect {
+  fill: var(--syn-bright);
+}
+
+.lock__h--select rect {
+  fill: var(--sel-amber);
+}
+
+.lock__pin {
+  fill: var(--black);
+  stroke: rgba(252, 253, 255, 0.3);
+  stroke-width: 2;
+}
+
+.lock__mark path {
+  fill: var(--white);
+}
+
+/* each hand spins at its own speed, then all three settle on twelve at 2.5 s */
+.fs--converge.is-on .lock__h--velocity {
+  animation: lock-v 2.5s cubic-bezier(0.15, 0.6, 0.15, 1) calc(0s - var(--into, 0s)) both;
+}
+
+.fs--converge.is-on .lock__h--synthia {
+  animation: lock-s 2.5s cubic-bezier(0.15, 0.6, 0.15, 1) calc(0s - var(--into, 0s)) both;
+}
+
+.fs--converge.is-on .lock__h--select {
+  animation: lock-x 2.5s cubic-bezier(0.15, 0.6, 0.15, 1) calc(0s - var(--into, 0s)) both;
+}
+
+@keyframes lock-v {
+  from {
+    transform: rotate(-1260deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes lock-s {
+  from {
+    transform: rotate(-470deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes lock-x {
+  from {
+    transform: rotate(-200deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.fs--converge.is-on .lock__pulse {
+  animation: pulse 1s var(--ease-out) calc(2.5s - var(--into, 0s)) forwards;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.25);
   }
 }
 
@@ -584,63 +973,168 @@
   left: 0;
   right: 0;
   top: 800px;
-  font-size: 96px;
-  letter-spacing: -0.045em;
-  font-weight: 700;
+  font-size: 110px;
+  letter-spacing: -0.05em;
+  font-weight: 800;
 }
 
 .fs__names {
   position: absolute;
   left: 0;
   right: 0;
-  top: 940px;
-  color: rgba(252, 253, 255, 0.75);
+  top: 950px;
 }
 
-/* ---------------------------------------------------------------- 26–30 close */
+/* ---------------------------------------------------------------- 26–30 · the line, then the invitation */
 .fs--close {
   background: var(--black);
-  color: var(--white);
   display: grid;
-  align-content: center;
-  justify-items: center;
+  place-items: center;
   text-align: center;
-  gap: 48px;
+}
+
+.fs__close,
+.fs__end {
+  grid-area: 1 / 1;
+  opacity: 0;
 }
 
 .fs__close {
-  font-size: 128px;
-  line-height: 0.96;
-  letter-spacing: -0.05em;
-  font-weight: 700;
+  font-size: 140px;
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+  font-weight: 800;
   max-width: 13em;
 }
 
-.fs__cta {
-  color: var(--sel-tint);
+.fs--close.is-on .fs__close {
+  animation: line-hold 2.3s var(--ease-out) calc(0.1s - var(--into, 0s)) both;
 }
 
-.fs__url {
-  color: rgba(252, 253, 255, 0.75);
-}
-
-/* the threshold rises and returns the screen to paper: the loop begins again */
-.fs__wipe {
-  position: absolute;
-  inset: 0;
-  background: var(--black);
-  border-top: 4px solid var(--magenta);
-  transform: translateY(101%);
-}
-
-.fs--close.is-on .fs__wipe {
-  animation: fs-wipe 0.9s var(--ease) calc(3.1s - var(--into, 0s)) both;
-}
-
-@keyframes fs-wipe {
-  to {
+@keyframes line-hold {
+  0% {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  18%,
+  82% {
+    opacity: 1;
     transform: none;
   }
+  100% {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+.fs--close.is-on .fs__end {
+  animation: end-hold 1.6s var(--ease-out) calc(2.35s - var(--into, 0s)) both;
+}
+
+@keyframes end-hold {
+  0% {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+  25%,
+  88% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.fs__endk {
+  color: rgba(252, 253, 255, 0.66);
+}
+
+.fs__endt {
+  margin: 26px 0 30px;
+  font-size: 200px;
+  line-height: 0.85;
+  letter-spacing: -0.055em;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.fs__endt span {
+  color: var(--lilac);
+}
+
+.fs__endu {
+  display: inline-block;
+  padding: 18px 34px;
+  background: var(--purple);
+  font-size: 44px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* ---------------------------------------------------------------- the timing dial */
+.fp__hud {
+  position: absolute;
+  right: 20px;
+  top: 18px;
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 16px 10px 10px;
+  background: rgba(10, 9, 14, 0.78);
+  border: 1px solid rgba(252, 253, 255, 0.2);
+  color: var(--white);
+  transition: opacity 0.5s;
+}
+
+.fp.is-idle .fp__hud {
+  opacity: 0.8;
+}
+
+.fd {
+  width: 84px;
+  height: 84px;
+}
+
+.fd-face {
+  fill: #0a090e;
+  stroke: rgba(252, 253, 255, 0.2);
+}
+
+.fd-seg {
+  fill: none;
+  stroke: rgba(252, 253, 255, 0.28);
+  stroke-width: 14;
+}
+
+.fd-seg.is-on {
+  stroke: var(--magenta);
+}
+
+.fd-dot,
+.fd-hand,
+.fd-pin {
+  fill: var(--white);
+}
+
+.fp__tc {
+  display: grid;
+  gap: 4px;
+  font: 500 13px/1.2 var(--mono);
+  letter-spacing: 0.06em;
+  color: rgba(252, 253, 255, 0.7);
+  font-variant-numeric: tabular-nums;
+}
+
+.fp__tc b {
+  font-size: 22px;
+  color: var(--white);
+}
+
+.fp__tc span {
+  text-transform: uppercase;
+  color: var(--lilac);
 }
 
 /* ---------------------------------------------------------------- controls */
@@ -693,6 +1187,11 @@
 }
 
 @media (max-width: 759px) {
+  .fp__hud {
+    left: 12px;
+    right: 12px;
+    top: 12px;
+  }
   .fp__controls {
     left: 12px;
     right: 12px;
@@ -701,115 +1200,24 @@
   }
 }
 
+/* reduced motion: every scene shows its final state, no sweeps */
 @media (prefers-reduced-motion: reduce) {
-  .fs.is-on .a-up,
-  .fs.is-on .plan [pathLength],
-  .fs.is-on .cl,
-  .fs.is-on .fs__vm {
-    animation-duration: 0.01s;
-    animation-delay: 0s;
+  .fs.is-on *,
+  .fs.is-on *::after {
+    animation-duration: 0.01s !important;
+    animation-delay: 0s !important;
   }
 }
 
-
-/* converge: the three hands */
-.fs__hands {
-  position: absolute;
-  left: 50%;
-  top: 70px;
-  width: 640px;
-  height: 640px;
-  margin-left: -320px;
-}
-
-.fs__hands .hc {
-  max-width: none;
-}
-
-.fs--converge .fs__trio {
-  top: 770px;
-}
-
-.fs--converge .fs__names {
-  top: 900px;
-}
-
-/* the film's timing: a dial with one arc per scene, the playhead, a timecode */
-.fp__hud {
-  position: absolute;
-  right: 20px;
-  top: 18px;
-  z-index: 9;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 10px 16px 10px 10px;
-  background: rgba(10, 9, 14, 0.78);
-  border: 1px solid rgba(252, 253, 255, 0.2);
-  color: var(--white);
-  transition: opacity 0.5s;
-}
-
-.fp.is-idle .fp__hud {
-  opacity: 0.85;
-}
-
-.fd {
-  width: 84px;
-  height: 84px;
-}
-
-.fd-face {
-  fill: #0a090e;
-  stroke: rgba(252, 253, 255, 0.2);
-}
-
-.fd-seg {
-  fill: none;
-  stroke: rgba(252, 253, 255, 0.28);
-  stroke-width: 14;
-}
-
-.fd-seg.is-on {
-  stroke: var(--magenta);
-}
-
-.fd-dot {
-  fill: var(--white);
-}
-
-.fd-hand,
-.fd-pin {
-  fill: var(--white);
-}
-
-.fp__tc {
-  display: grid;
-  gap: 4px;
-  font: 500 13px/1.2 var(--mono);
-  letter-spacing: 0.06em;
-  color: rgba(252, 253, 255, 0.7);
-  font-variant-numeric: tabular-nums;
-}
-
-.fp__tc b {
-  font-size: 22px;
-  color: var(--white);
-}
-
-.fp__tc span {
-  text-transform: uppercase;
-  color: var(--lilac);
-}
-
-@media (max-width: 759px) {
-  .fp__hud {
-    left: 12px;
-    right: 12px;
-    top: 12px;
+@media (prefers-reduced-motion: reduce) {
+  .fs--close .fs__close,
+  .fs--inflection .swap__a {
+    animation: none !important;
+    opacity: 0 !important;
   }
-}
-
-.fs .ec-era {
-  display: none;
+  .fs--close .fs__end,
+  .fs--inflection .swap__b {
+    animation: none !important;
+    opacity: 1 !important;
+  }
 }

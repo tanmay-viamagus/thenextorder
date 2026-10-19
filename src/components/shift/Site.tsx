@@ -58,25 +58,28 @@ export function Site() {
       <main id="main">
         {/* ------------------------------------------------ OPENING · it's already running */}
         <section id="top" className="hero" data-tone="dark" data-clock-root aria-labelledby="hero-h">
-          <div className="hero__clock">
-            <LiveClock />
-          </div>
-          <p className="hero__meta">An invitation from ViaMagus</p>
-          <h1 id="hero-h" className="sr-only">
-            The NEXT Order — an invitation from ViaMagus for India’s GCC leaders
-          </h1>
-          <ShiftTitle lines={["THE ", "NEXT", "ORDER."]} cutLine={2} tick />
-          <div className="hero__foot">
+          <div className="hero__l">
+            <p className="hero__meta">An invitation from ViaMagus</p>
+            <h1 id="hero-h" className="sr-only">
+              The NEXT Order — an invitation from ViaMagus for India’s GCC leaders
+            </h1>
+            <ShiftTitle lines={["THE ", "NEXT", "ORDER."]} cutLine={2} tick />
             <p className="hero__line">For India’s GCC leaders.</p>
             <div className="hero__cta">
               <a className="btn btn--shift" href="/register">
                 Request an invitation <span aria-hidden="true">→</span>
               </a>
-              <FilmButton className="btn btn--line">
-                <span className="tri" aria-hidden="true" /> The film <span className="dim">0:30</span>
+              <FilmButton className="playlink">
+                <span className="playlink__i" aria-hidden="true">
+                  <span className="tri" />
+                </span>
+                Watch the film <span className="playlink__t">0:30</span>
               </FilmButton>
             </div>
-            <Status />
+            <p className="hero__note">{confirmed || "Date & venue to be announced"} · Hosted by {knownFacts.host}</p>
+          </div>
+          <div className="hero__r">
+            <LiveClock />
           </div>
         </section>
 
@@ -143,13 +146,19 @@ export function Site() {
                   <div className="pnl__mark" aria-hidden="true">
                     <Mark />
                   </div>
+                  <p className="pnl__for">{p.for}</p>
                   <div className="pnl__mech">
                     <Mech />
                   </div>
                   <p className="pnl__line">“{p.line}”</p>
-                  <a className="pnl__link" href={p.href} {...ext}>
-                    {p.source} ↗<NewTab />
-                  </a>
+                  <div className="pnl__acts">
+                    <a className="pnl__go" href={`/register?interest=${p.key}`}>
+                      Explore it at the event <span aria-hidden="true">→</span>
+                    </a>
+                    <a className="pnl__link" href={p.href} {...ext}>
+                      {p.source} ↗<NewTab />
+                    </a>
+                  </div>
                 </article>
               );
             })}
