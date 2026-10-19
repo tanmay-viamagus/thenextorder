@@ -3,7 +3,7 @@ import { FILM_DURATION, filmScenes } from "@/content/film";
 /**
  * An optional score, synthesised live with Web Audio — no audio files.
  * A kick on every scene, hats under the three practices, a riser into the
- * convergence, a sub-bass boom when the mark lands, a pad under the close.
+ * convergence, a sub-bass boom when the three pieces lock into the mark, a pad under the close.
  * The film never depends on it.
  */
 export class Score {
@@ -119,7 +119,7 @@ export class Score {
     }
     // hats under the three practices
     for (let t = scene("build").start; t < scene("scale").end; t += 0.25) if (ok(t)) this.hit(at(t), 0.08, 8000, "highpass", 0.04);
-    // the three hands lock at twelve 2.5 s into the convergence: riser into it, boom on it
+    // the three pieces lock into the mark 2.5 s into the convergence: riser into it, boom on it
     const lockAt = scene("converge").start + 2.5;
     if (ok(lockAt - 2.2)) this.riser(at(lockAt - 2.2), 2.2);
     if (ok(lockAt)) this.boom(at(lockAt));

@@ -119,26 +119,3 @@ export function HandsClock({ label, hl }: { label: string; hl?: string }) {
     </div>
   );
 }
-
-/* ---------------------------------------------------------------- the film's timing dial */
-/** A dial for the 30 s film: one arc per scene, the hand as the playhead. */
-export function FilmDial({ scenes, t, duration }: { scenes: { id: string; start: number; end: number }[]; t: number; duration: number }) {
-  const A = (s: number) => (s / duration) * 360;
-  return (
-    <svg className="fd" viewBox="-130 -130 260 260" aria-hidden="true">
-      <circle r="118" className="fd-face" />
-      {scenes.map((s) => (
-        <path key={s.id} d={arc(A(s.start) + 1.5, A(s.end) - 1.5, 104)} className={`fd-seg${t >= s.start && t < s.end ? " is-on" : ""}`} />
-      ))}
-      {scenes.map((s) => {
-        const [x, y] = pt(A(s.start), 124);
-        return <circle key={s.id} cx={f(x)} cy={f(y)} r="3" className="fd-dot" />;
-      })}
-      <g transform={`rotate(${f(A(t))})`}>
-        <rect x="-2" y="-112" width="4" height="122" className="fd-hand" />
-      </g>
-      <circle r="7" className="fd-pin" />
-    </svg>
-  );
-}
-
