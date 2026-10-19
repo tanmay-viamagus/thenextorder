@@ -1,6 +1,8 @@
-# The film — storyboard (30 s, 16:9, loops, readable without sound)
+# The film — storyboard (42 s, 16:9, loops, readable without sound)
 
 The film is browser-rendered at `/film`, not a video file. It plays on a 1920×1080 stage that scales to any screen. It reuses the site's own artwork: the shifting grid and the three practice diagrams. The timeline lives in `src/content/film.ts`, and the motion in `src/styles/film-player.css`.
+
+Timings: title 0–4 · old order 4–9 · inflection 9–15 · Build 15–20 · Operate 20–25 · Scale 25–30 · payoff 30–36 · close 36–42. Each beat holds long enough to read from the back of a room.
 
 Directed for a room: one idea per beat, a few words at most, every product as one big transformation, and a payoff.
 

@@ -1,10 +1,10 @@
 import { SelectWordmark, SynthiaLogo, VelocityWordmark, ViaMagusLogo } from "@/components/Brand";
 import { HandsClock } from "@/components/clock/Clock";
-import { ShiftRing } from "@/components/clock/ShiftRing";
 import { YearCycle } from "@/components/clock/YearCycle";
 import { FilmButton } from "@/components/film/FilmOverlay";
 import { event, knownFacts, officialLinks } from "@/content/event";
 import { convergence, cta, invite, practices, shift } from "@/content/story";
+import { FILM_DURATION } from "@/content/film";
 import { Chrome, Reveal, ShiftTitle } from "./Interactive";
 import { InviteForm } from "./InviteForm";
 import { SelectMech, SynthiaMech, VelocityMech } from "./Mechanisms";
@@ -16,6 +16,7 @@ const MECH = { velocity: VelocityMech, synthia: SynthiaMech, select: SelectMech 
 const MARK = { velocity: VelocityWordmark, synthia: () => <SynthiaLogo height={28} />, select: SelectWordmark };
 const HAND = { velocity: "The second hand", synthia: "The minute hand", select: "The hour hand" };
 
+const filmLength = `${Math.floor(FILM_DURATION / 60)}:${String(FILM_DURATION % 60).padStart(2, "0")}`;
 const venue = [event.venue, event.city].filter(Boolean).join(", ") || null;
 const confirmed = [event.date, venue, event.format].filter(Boolean).join(" · ");
 
@@ -32,17 +33,17 @@ export function Site() {
       <header className="hdr">
         <ViaMagusLogo href={officialLinks.viamagus} />
         <nav className="hdr__nav" aria-label="Sections">
+          <a href="#name" data-for="name">
+            GCC → ?
+          </a>
           <a href="#eras" data-for="eras">
             The eras
           </a>
           <a href="#practices" data-for="practices">
-            Three hands
+            The practices
           </a>
         </nav>
         <div className="hdr__end">
-          <FilmButton className="hdr__film">
-            <span className="tri" aria-hidden="true" /> Film
-          </FilmButton>
           <a className="btn btn--shift btn--sm hdr__cta" href="/register">
             {cta.primary} <span className="btn__arr" aria-hidden="true">→</span>
           </a>
@@ -66,8 +67,39 @@ export function Site() {
             </div>
             <p className="hero__note">{confirmed || "Date & venue to be announced"} · Hosted by {knownFacts.host}</p>
           </div>
-          <div className="hero__r">
-            <ShiftRing />
+        </section>
+
+        {/* ------------------------------------------------ THE NAME · GCC → GIC → ? */}
+        <section id="name" className="nm" data-tone="dark" data-act="name" aria-labelledby="nm-h">
+          <p className="nm__k">First, a question of names</p>
+          <h2 id="nm-h" className="sr-only">
+            It was the GCC. Then the GIC. What comes next?
+          </h2>
+          <ol className="nm__row" data-reveal aria-hidden="true">
+            <li className="nm__w nm__w--a">
+              <span className="nm__was">It was</span>
+              <b>GCC</b>
+              <span className="nm__def">Global Capability Centre</span>
+            </li>
+            <li className="nm__arr">→</li>
+            <li className="nm__w nm__w--b">
+              <span className="nm__was">Then</span>
+              <b>GIC</b>
+              <span className="nm__def">Global In-house Centre — or Innovation Centre, depending on who you ask</span>
+            </li>
+            <li className="nm__arr">→</li>
+            <li className="nm__w nm__w--c">
+              <span className="nm__was">Next</span>
+              <b>?</b>
+              <span className="nm__def">Not written yet</span>
+            </li>
+          </ol>
+          <div className="nm__foot" data-reveal>
+            <p className="nm__h">The name will follow the mandate.</p>
+            <p className="nm__p">
+              No one has agreed what global centres will be called next — and a new name won’t change what a centre does. What it
+              owns will. That is the conversation.
+            </p>
           </div>
         </section>
 
@@ -168,6 +200,33 @@ export function Site() {
           <p className="eco__close" data-reveal>
             {convergence}
           </p>
+        </section>
+
+        {/* ------------------------------------------------ THE FILM · near the end */}
+        <section id="film" className="fl" data-tone="dark" aria-labelledby="fl-h">
+          <FilmButton className="fl__poster">
+            <span className="fl__mark" aria-hidden="true">
+              <svg viewBox="-0.6 -0.6 31.7 13.1">
+                <path className="fl__p fl__p--v" d="M0,0 L6.7765,11.8958 L13.5529,0 Z" />
+                <path className="fl__p fl__p--s" d="M16.9414,0 L20.3296,5.9479 L20.3396,11.8955 L10.165,11.8955 Z" />
+                <path className="fl__p fl__p--x" d="M23.7177,0 L30.4941,11.8955 L20.3196,11.8955 L20.3296,5.9479 Z" />
+              </svg>
+            </span>
+            <span className="fl__play" aria-hidden="true">
+              <span className="tri" />
+            </span>
+            <span className="sr-only">Play the film</span>
+          </FilmButton>
+          <div className="fl__copy">
+            <p className="fl__k">The film · {filmLength}</p>
+            <h2 id="fl-h" className="fl__h">
+              See what’s changing.
+            </h2>
+            <p className="fl__txt">The old order, the shift, and three practices that become one ViaMagus. No sound needed.</p>
+            <FilmButton className="fl__btn">
+              <span className="tri" aria-hidden="true" /> Play the film
+            </FilmButton>
+          </div>
         </section>
 
         {/* ------------------------------------------------ CLOSING · the next hour */}

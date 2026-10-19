@@ -149,7 +149,7 @@ export function ShiftRing({ still = false }: { still?: boolean }) {
         <button type="button" className="ring__play" onClick={() => window.dispatchEvent(new Event(OPEN_FILM))}>
           <span className="ring__tri" aria-hidden="true" />
           <span className="ring__pl">See what’s changing</span>
-          <span className="ring__pt">Film · 0:30</span>
+          <span className="ring__pt">The film</span>
         </button>
       )}
     </div>
