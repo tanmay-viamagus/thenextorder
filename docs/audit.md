@@ -243,3 +243,19 @@ What held up: the cut title, the transformation, and the open "?" volume, which 
 **Also fixed:** a console warning from the inline `<script>` in the layout, now a client flag component. BotID now fails closed on Vercel and is skipped off Vercel, instead of throwing a 500.
 
 **Verified:** `tsc`, `eslint`, `npm test` (2/2) and the build pass. axe reports 0 violations at 1440 and 390 px. No-JS: no hidden text. The server-side protection matrix passes on a local production build.
+
+
+---
+
+## Round 12 — site-leader audit
+
+**Reviewed:** the full journey (hero → the question → evolution → practices → film → form → footer) at 1440 and 390 px, read as a GCC site leader skimming.
+
+**Fixed:**
+1. **Duplicate CTA in the hero:** the header "Request your place" now appears only once the hero's own button has scrolled away.
+2. **The practices shown twice:** the practices intro is compact, with the clock as a small signature. It is removed on tablet and phone, because the film section's showcase already carries it.
+3. **Cryptic nav label:** "GCC → ?" is now "The question".
+4. **Redundant link text:** the raw URL line under each product's action button is removed.
+5. **Vague form chip:** "The conversation" is now "The wider conversation".
+
+**Verified:** build, tests, axe (0 violations), keyboard focus, no-JS and a registration end to end. Test rows were deleted.

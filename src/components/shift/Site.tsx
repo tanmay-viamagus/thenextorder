@@ -36,7 +36,7 @@ export function Site() {
         <ViaMagusLogo href={officialLinks.viamagus} />
         <nav className="hdr__nav" aria-label="Sections">
           <a href="#name" data-for="name">
-            GCC → ?
+            The question
           </a>
           <a href="#evolve" data-for="evolve">
             How a GCC evolves
@@ -127,7 +127,6 @@ export function Site() {
                         →
                       </span>
                     </a>
-                    <p className="pnl__src">{p.source}</p>
                   </div>
                 </article>
               );
