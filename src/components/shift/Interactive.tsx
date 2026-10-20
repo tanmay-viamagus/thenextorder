@@ -180,6 +180,8 @@ export function Chrome() {
         return r ? r.top < window.innerHeight * 0.5 && r.bottom > window.innerHeight * 0.5 : false;
       });
       root.classList.toggle("show-bar", pastHero && !atForm && !inShift);
+      // the header's call to action waits until the hero's own has scrolled away — never two at once
+      root.classList.toggle("past-hero", hero ? hero.getBoundingClientRect().bottom < window.innerHeight * 0.25 : true);
       let act = "";
       for (const a of document.querySelectorAll<HTMLElement>("[data-act]")) if (a.getBoundingClientRect().top < window.innerHeight * 0.5) act = a.dataset.act ?? "";
       root.dataset.act = act;
