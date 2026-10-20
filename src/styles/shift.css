@@ -5326,3 +5326,180 @@ html:not(.js) .evo__art .evo__gap {
     font-size: 0.78rem;
   }
 }
+
+/* ==========================================================================
+   The evolution, told: a camera, decision rights, a ledger, "you are here"
+   ========================================================================== */
+
+/* the camera — moves in on each stage's action; pulls back for the journey (02) and the whole organisation (05) */
+.cam {
+  transform-box: view-box;
+  transform-origin: 800px 300px;
+  transition: transform 1.15s cubic-bezier(0.65, 0, 0.25, 1);
+}
+
+.evo[data-stage="1"] .cam {
+  transform-origin: 330px 380px;
+  transform: scale(1.22);
+}
+
+.evo[data-stage="3"] .cam {
+  transform-origin: 1000px 400px;
+  transform: scale(1.22);
+}
+
+.evo[data-stage="4"] .cam {
+  transform-origin: 1150px 330px;
+  transform: scale(1.12);
+}
+
+.evo__art {
+  overflow: hidden;
+}
+
+/* decisions: the boardroom floor at headquarters, from the start */
+.ev-board {
+  fill: rgba(242, 208, 255, 0.5);
+  stroke: var(--purple);
+  stroke-width: 1.6;
+}
+
+.ev-lead {
+  stroke: var(--purple);
+  stroke-width: 1.4;
+}
+
+.ev-hqdec {
+  transition: opacity 0.4s;
+}
+
+/* from the ownership shift the label gives way to the capability-gap note above HQ */
+.evo[data-stage="4"] .ev-hqdec,
+.evo[data-stage="5"] .ev-hqdec {
+  opacity: 0;
+}
+
+/* the ledger: what changed at this stage */
+.evo__cap {
+  height: auto;
+  min-height: 0;
+}
+
+.evo__ledger {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 0 24px;
+  margin-top: 12px;
+}
+
+.evo__ledger > div {
+  display: grid;
+  gap: 4px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line-2);
+}
+
+.evo__ledger dt {
+  font: 500 0.66rem/1 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.evo__ledger dd {
+  font-size: 1rem;
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+.evo__ledger .is-new {
+  border-top-color: var(--purple);
+}
+
+.evo__ledger .is-new dd {
+  color: var(--purple);
+}
+
+.evo__ledger .is-new dt::after {
+  content: " · changed";
+  color: var(--purple);
+}
+
+/* "you are here": where many centres stand today */
+.evo__t {
+  grid-template-rows: auto auto;
+}
+
+.evo__here {
+  grid-column: 1 / -1;
+  justify-self: start;
+  margin-top: 6px;
+  padding: 3px 7px;
+  border: 1px solid var(--purple);
+  font: 600 0.62rem/1.2 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--purple);
+}
+
+.evo__t.is-on .evo__here {
+  background: var(--purple);
+  color: var(--white);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cam {
+    transition: none !important;
+  }
+}
+
+/* phones: the existing pan is the camera; ledger stacks compactly */
+@media (max-width: 759px) {
+  .cam {
+    transform: none !important;
+  }
+  .evo__ledger {
+    gap: 0 12px;
+    margin-top: 8px;
+  }
+  .evo__ledger dd {
+    font-size: 0.82rem;
+  }
+  .evo__ledger .is-new dt::after {
+    content: "";
+  }
+  .evo__here {
+    display: none;
+  }
+}
+
+.evo[data-stage="3"] .ev-hqdec {
+  opacity: 0;
+}
+
+@media (max-width: 759px) {
+  .evo__art {
+    display: flex;
+    flex-direction: column;
+  }
+  .evo__art .evo__gap {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: auto;
+    margin: 4px var(--gutter) 6px;
+    padding: 0 0 0 10px;
+    background: none;
+  }
+  .evo__art .evo__gap:not(.is-on) {
+    display: none;
+  }
+  .evo__art .evo__gap a {
+    min-height: 28px;
+  }
+  .evo__art .ev {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+  }
+}
