@@ -1,27 +1,49 @@
-import { SelectWordmark, SynthiaLogo, VelocityWordmark, ViaMagusLogo } from "@/components/Brand";
+import {
+  SelectWordmark,
+  SynthiaLogo,
+  VelocityWordmark,
+  ViaMagusLogo,
+} from "@/components/Brand";
 import { HandsClock } from "@/components/clock/Clock";
 import { FilmButton } from "@/components/film/FilmOverlay";
-import { event, knownFacts, officialLinks } from "@/content/event";
-import { convergence, cta, invite, practices } from "@/content/story";
+import { knownFacts, officialLinks, statusLine } from "@/content/event";
+import {
+  convergence,
+  cta,
+  invite,
+  positioning,
+  practices,
+  theme,
+} from "@/content/story";
 import { FILM_DURATION } from "@/content/film";
 import { Chrome, Reveal, ShiftTitle } from "./Interactive";
 import { InviteForm } from "./InviteForm";
 import { GccEvolution } from "./GccEvolution";
 import { NameBoard } from "./NameBoard";
+import { Theme } from "./Theme";
 import { Showcase } from "./Showcase";
 import { SelectMech, SynthiaMech, VelocityMech } from "./Mechanisms";
 
 const ext = { target: "_blank", rel: "noopener noreferrer" } as const;
 const NewTab = () => <span className="sr-only"> (opens in a new tab)</span>;
 
-const MECH = { velocity: VelocityMech, synthia: SynthiaMech, select: SelectMech };
-const MARK = { velocity: VelocityWordmark, synthia: () => <SynthiaLogo height={28} />, select: SelectWordmark };
-const HAND = { velocity: "The second hand", synthia: "The minute hand", select: "The hour hand" };
+const MECH = {
+  velocity: VelocityMech,
+  synthia: SynthiaMech,
+  select: SelectMech,
+};
+const MARK = {
+  velocity: VelocityWordmark,
+  synthia: () => <SynthiaLogo height={28} />,
+  select: SelectWordmark,
+};
+const HAND = {
+  velocity: "The second hand",
+  synthia: "The minute hand",
+  select: "The hour hand",
+};
 
 const filmLength = `${Math.floor(FILM_DURATION / 60)}:${String(FILM_DURATION % 60).padStart(2, "0")}`;
-const venue = [event.venue, event.city].filter(Boolean).join(", ") || null;
-const confirmed = [event.date, venue, event.format].filter(Boolean).join(" · ");
-
 
 export function Site() {
   return (
@@ -35,6 +57,9 @@ export function Site() {
       <header className="hdr">
         <ViaMagusLogo href={officialLinks.viamagus} />
         <nav className="hdr__nav" aria-label="Sections">
+          <a href="#theme" data-for="theme">
+            The theme
+          </a>
           <a href="#name" data-for="name">
             The question
           </a>
@@ -47,31 +72,52 @@ export function Site() {
         </nav>
         <div className="hdr__end">
           <a className="btn btn--shift btn--sm hdr__cta" href="/register">
-            {cta.primary} <span className="btn__arr" aria-hidden="true">→</span>
+            {cta.primary}{" "}
+            <span className="btn__arr" aria-hidden="true">
+              →
+            </span>
           </a>
         </div>
       </header>
 
       <main id="main">
         {/* ------------------------------------------------ OPENING · it's already running */}
-        <section id="top" className="hero" data-tone="dark" data-shift-root aria-labelledby="hero-h">
+        <section
+          id="top"
+          className="hero"
+          data-tone="dark"
+          data-shift-root
+          aria-labelledby="hero-h"
+        >
           <div className="hero__l">
             <p className="hero__meta">An invitation from ViaMagus</p>
             <h1 id="hero-h" className="sr-only">
-              The NEXT Order — an invitation from ViaMagus for India’s GCC leaders
+              The NEXT Order — an invitation from ViaMagus for Hyderabad’s GCC
+              leaders
             </h1>
             <ShiftTitle lines={["THE ", "NEXT", "ORDER."]} cutLine={2} />
-            <p className="hero__line">For the leaders shaping what India’s GCCs become next.</p>
+            <p className="hero__line">
+              For the leaders shaping what Hyderabad’s GCCs become next.
+            </p>
             <div className="hero__cta">
               <a className="btn btn--shift btn--lg" href="/register">
-                {cta.primary} <span className="btn__arr" aria-hidden="true">→</span>
+                {cta.primary}{" "}
+                <span className="btn__arr" aria-hidden="true">
+                  →
+                </span>
               </a>
             </div>
-            <p className="hero__note">{confirmed || "Date & venue to be announced"} · Hosted by {knownFacts.host}</p>
+            <p className="hero__note">
+              {statusLine()} · Hosted by {knownFacts.host} · Ecosystem partner{" "}
+              {knownFacts.partner}
+            </p>
           </div>
         </section>
 
         {/* ------------------------------------------------ THE NAME · GCC → GIC → ? (split-flap, pinned) */}
+        {/* ------------------------------------------------ THE THEME · what the room will explore */}
+        <Theme />
+
         <NameBoard />
 
         {/* ------------------------------------------------ HOW A GCC EVOLVES · five stages (pinned)
@@ -79,7 +125,13 @@ export function Site() {
         <GccEvolution />
 
         {/* ------------------------------------------------ THREE HANDS, ONE CLOCK */}
-        <section id="practices" className="eco" data-tone="dark" data-act="practices" aria-labelledby="eco-h">
+        <section
+          id="practices"
+          className="eco"
+          data-tone="dark"
+          data-act="practices"
+          aria-labelledby="eco-h"
+        >
           <div className="eco__top">
             <div className="eco__hd" data-reveal>
               <p className="eco__k">Hosted by ViaMagus</p>
@@ -89,9 +141,11 @@ export function Site() {
                 One clock.
               </h2>
               <p className="eco__lede">
-                <span className="k-v">Velocity AI</span> keeps the seconds. <span className="k-s">Synthia AI</span> keeps the minutes.{" "}
+                <span className="k-v">Velocity AI</span> keeps the seconds.{" "}
+                <span className="k-s">Synthia AI</span> keeps the minutes.{" "}
                 <span className="k-x">ViaMagus Select</span> keeps the hours.
               </p>
+              <p className="eco__hands">{positioning.lede}</p>
             </div>
             <HandsClock label="A live clock in India time. Its second hand is Velocity AI, its minute hand Synthia AI and its hour hand ViaMagus Select, all pinned on the ViaMagus mark." />
           </div>
@@ -100,7 +154,12 @@ export function Site() {
               const Mech = MECH[p.key];
               const Mark = MARK[p.key];
               return (
-                <article key={p.key} className={`pnl pnl--${p.key}`} data-practice={p.key} aria-labelledby={`${p.key}-h`}>
+                <article
+                  key={p.key}
+                  className={`pnl pnl--${p.key}`}
+                  data-practice={p.key}
+                  aria-labelledby={`${p.key}-h`}
+                >
                   <p className="pnl__n">{HAND[p.key]}</p>
                   <h3 id={`${p.key}-h`} className="pnl__verb">
                     {p.verb}.<span className="sr-only"> {p.name}</span>
@@ -119,9 +178,15 @@ export function Site() {
                       <span className="pnl__goarr" aria-hidden="true">
                         ↗
                       </span>
-                      <span className="sr-only"> — {p.name} (opens in a new tab)</span>
+                      <span className="sr-only">
+                        {" "}
+                        — {p.name} (opens in a new tab)
+                      </span>
                     </a>
-                    <a className="pnl__room" href={`/register?interest=${p.key}`}>
+                    <a
+                      className="pnl__room"
+                      href={`/register?interest=${p.key}`}
+                    >
                       <span>{p.room}</span>
                       <span className="pnl__arr" aria-hidden="true">
                         →
@@ -132,13 +197,30 @@ export function Site() {
               );
             })}
           </div>
+          {/* for the leaders themselves */}
+          <div className="prog" data-reveal>
+            <p className="prog__k">{positioning.programme.k}</p>
+            <p className="prog__t">{positioning.programme.title}</p>
+            <p className="prog__l">{positioning.programme.line}</p>
+            <a className="prog__a" href="/register?interest=programme">
+              <span>Ask about it at the event</span>
+              <span className="pnl__arr" aria-hidden="true">
+                →
+              </span>
+            </a>
+          </div>
           <p className="eco__close" data-reveal>
             {convergence}
           </p>
         </section>
 
         {/* ------------------------------------------------ THE FILM · near the end */}
-        <section id="film" className="fl" data-tone="dark" aria-labelledby="fl-h">
+        <section
+          id="film"
+          className="fl"
+          data-tone="dark"
+          aria-labelledby="fl-h"
+        >
           <div className="fl__head">
             <div>
               <p className="fl__k">The film · {filmLength}</p>
@@ -147,7 +229,10 @@ export function Site() {
               </h2>
             </div>
             <div className="fl__side">
-              <p className="fl__txt">The old order, the shift, and three practices that become one ViaMagus. No sound needed.</p>
+              <p className="fl__txt">
+                The old order, the shift, and three practices that become one
+                ViaMagus. No sound needed.
+              </p>
               <FilmButton className="fl__btn">
                 <span className="fl__btnplay" aria-hidden="true">
                   <span className="tri" />
@@ -162,7 +247,13 @@ export function Site() {
         </section>
 
         {/* ------------------------------------------------ CLOSING · the next hour */}
-        <section id="request" className="close" data-tone="light" data-act="register" aria-labelledby="register-h">
+        <section
+          id="request"
+          className="close"
+          data-tone="light"
+          data-act="register"
+          aria-labelledby="register-h"
+        >
           <div className="close__grid">
             <div className="close__copy">
               <p className="close__k">The NEXT Order</p>
@@ -170,29 +261,39 @@ export function Site() {
                 Find your place in the conversation.
               </h2>
               <p className="close__who">{invite.what}</p>
+              <p className="close__who">{invite.theme}</p>
               <p className="close__who close__who--b">{invite.who}</p>
+              <ul className="close__exp">
+                {theme.expect.map((e) => (
+                  <li key={e.n}>{e.t}</li>
+                ))}
+              </ul>
               <ol className="steps">
                 <li>
                   <b>01</b>
                   <span>
-                    <strong>Request your place</strong> — about 30 seconds, mostly taps.
+                    <strong>Request your place</strong> — about 30 seconds,
+                    mostly taps.
                   </span>
                 </li>
                 <li>
                   <b>02</b>
                   <span>
-                    <strong>The ViaMagus team reviews every request</strong>, including the LinkedIn profile you share.
+                    <strong>The ViaMagus team reviews every request</strong>,
+                    including the LinkedIn profile you share.
                   </span>
                 </li>
                 <li>
                   <b>03</b>
                   <span>
-                    <strong>Invitations go out</strong> with the date, venue and format once they’re confirmed.
+                    <strong>Invitations go out</strong> with the date, venue and
+                    format once they’re confirmed.
                   </span>
                 </li>
               </ol>
               <p className="close__note">
-                {confirmed || "Date, venue and format to be announced"} · Hosted by {knownFacts.host}
+                {statusLine()} · Hosted by {knownFacts.host} · Ecosystem partner{" "}
+                {knownFacts.partner}
               </p>
             </div>
             <InviteForm source="site" />
@@ -202,20 +303,26 @@ export function Site() {
 
       <footer className="ftr" data-tone="dark">
         <ViaMagusLogo href={officialLinks.viamagus} />
+        <p className="ftr__partner">
+          Ecosystem partner · <b>{knownFacts.partner}</b>
+        </p>
         <ul>
           <li>
             <a href={officialLinks.velocity} {...ext}>
-              Velocity AI<NewTab />
+              Velocity AI
+              <NewTab />
             </a>
           </li>
           <li>
             <a href={officialLinks.synthia} {...ext}>
-              Synthia AI<NewTab />
+              Synthia AI
+              <NewTab />
             </a>
           </li>
           <li>
             <a href={officialLinks.select} {...ext}>
-              ViaMagus Select<NewTab />
+              ViaMagus Select
+              <NewTab />
             </a>
           </li>
           <li>
@@ -229,7 +336,10 @@ export function Site() {
 
       <div className="bar">
         <a className="btn btn--shift" href="/register">
-          {cta.primary} <span className="btn__arr" aria-hidden="true">→</span>
+          {cta.primary}{" "}
+          <span className="btn__arr" aria-hidden="true">
+            →
+          </span>
         </a>
       </div>
     </>

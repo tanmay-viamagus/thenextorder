@@ -154,7 +154,7 @@ export function NameBoard() {
       ))}
       <div className="nb__stage" aria-hidden="true">
         <div className="nb__top">
-          <p className="nb__k">First, a question of names</p>
+          <p className="nb__k">A question of names</p>
           <ol className="nb__steps">
             {["GCC", "GIC", "?"].map((w, k) => (
               <li
