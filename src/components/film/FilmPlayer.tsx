@@ -249,7 +249,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
             <span className="ft__cut" />
           </div>
           <p className="fs__mono fs__bl k-in" style={d(2.2)}>
-            For India’s GCC leaders
+            For Hyderabad’s GCC leaders
           </p>
         </section>
 
@@ -426,7 +426,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
       </div>
       <p className="sr-only">
         A 42-second film. A ring of identical segments is cut by a magenta line and its upper half twists out of
-        alignment: The NEXT Order, for India’s GCC leaders. The old order, 2016 to 2019: the years count up over — built to execute; 1,700+ GCCs in India today (nasscom and Zinnov, FY2024). The
+        alignment: The NEXT Order, for Hyderabad’s GCC leaders. The old order, 2016 to 2019: the years count up over — built to execute; 1,700+ GCCs in India today (nasscom and Zinnov, FY2024). The
         inflection point: on a ring of years the marker crosses 2020 and 2025, the years crack and then fuse — then the
         mandate grew; 92% of India-based GCCs now aim beyond cost arbitrage (EY GCC Pulse Survey 2025). Build: Velocity AI, behind it the first piece of the ViaMagus mark — three months becomes three to four weeks, a shippable
         submodule every Friday. Operate: Synthia AI — a draft is stamped signed by a named officer. Scale: ViaMagus Select

@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import { ViaMagusLogo } from "@/components/Brand";
 import { InviteForm } from "@/components/shift/InviteForm";
 import { Showcase } from "@/components/shift/Showcase";
-import { event, knownFacts } from "@/content/event";
+import { knownFacts, statusLine } from "@/content/event";
 import { INTEREST_BY_KEY } from "@/content/register";
+import { invite } from "@/content/story";
 
 const title = "Register | The NEXT Order — ViaMagus";
-const description = "Request your invitation to The NEXT Order — a ViaMagus event for India’s GCC leaders on where global centres go next.";
+const description =
+  "Request your place at The NEXT Order — a ViaMagus event for Hyderabad’s GCC leaders on how AI is reshaping talent, technology and leadership.";
 
 export const metadata: Metadata = {
   title,
@@ -16,10 +18,11 @@ export const metadata: Metadata = {
   twitter: { title, description },
 };
 
-const venue = [event.venue, event.city].filter(Boolean).join(", ");
-const confirmed = [event.date, venue, event.format].filter(Boolean).join(" · ");
-
-export default async function Register({ searchParams }: { searchParams: Promise<{ interest?: string }> }) {
+export default async function Register({
+  searchParams,
+}: {
+  searchParams: Promise<{ interest?: string }>;
+}) {
   const { interest } = await searchParams;
   const preset = interest ? INTEREST_BY_KEY[interest] : undefined;
   return (
@@ -34,20 +37,23 @@ export default async function Register({ searchParams }: { searchParams: Promise
           </a>
         </div>
         <div className="reg__id">
-          <p className="reg__k">An invitation for India’s GCC leaders</p>
+          <p className="reg__k">An invitation for Hyderabad’s GCC leaders</p>
           <p className="reg__t" aria-hidden="true">
             <span>The NEXT</span> <span>Order.</span>
           </p>
         </div>
         <Showcase />
         <div className="reg__when">
-          <p className="reg__k">{confirmed || "Date & venue to be announced"}</p>
-          <p className="reg__host">Hosted by {knownFacts.host}</p>
+          <p className="reg__k">{statusLine()}</p>
+          <p className="reg__host">
+            Hosted by {knownFacts.host} · with {knownFacts.partner}
+          </p>
         </div>
       </aside>
       <main className="reg__main">
         <h1 className="reg__h">Find your place in the conversation.</h1>
-        <p className="reg__lede">A ViaMagus event on where global centres go next: what they own, the value they create and the capabilities they’ll need.</p>
+        <p className="reg__lede">{invite.what}</p>
+        <p className="reg__lede reg__lede--theme">{invite.theme}</p>
         <InviteForm source="register" preset={preset} />
       </main>
     </div>

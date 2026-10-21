@@ -14,7 +14,7 @@
 export type Evidence = { figure: string; finding: string; source: string; date: string; url: string };
 
 export const description =
-  "An invitation from ViaMagus to India’s GCC leaders: a conversation about where global centres go next — what they own, the value they create and the capabilities they’ll need.";
+  "An invitation from ViaMagus to Hyderabad’s GCC leaders: a conversation about where global centres go next — what they own, the value they create and the capabilities they’ll need — and how AI and the coming wave of superintelligence are reshaping talent, technology and leadership.";
 
 export const tagline = "Where was your centre, where is it now — and where could it go next?";
 
@@ -124,7 +124,53 @@ export const convergence = "Everything an enterprise needs to become AI‑native
 export const cta = { primary: "Request your place", submit: "Request my place" };
 
 export const invite = {
-  line: "An invitation for India’s GCC leaders.",
+  line: "An invitation for Hyderabad’s GCC leaders.",
   who: "For GCC CEOs and MDs, site leaders, technology and engineering leaders, CHROs and talent leaders.",
   what: "A ViaMagus event on where global centres go next: what they own, the value they create and the capabilities they’ll need.",
+  /** added from the event brief */
+  theme:
+    "This edition explores how AI and the coming wave of superintelligence are reshaping talent, technology and leadership — for GCC leaders and decision-makers across Hyderabad.",
+};
+
+/* ---------------------------------------------------------------- the theme (from the event brief) */
+export const theme = {
+  kicker: "What the room will explore",
+  headline: "The next decade is being decided now.",
+  lede: "AI — and the coming wave of superintelligence — is reshaping how GCCs hire, build and lead. The NEXT Order brings Hyderabad’s GCC leaders together to think it through.",
+  horizon: ["Today", "+10 years", "+20 years"],
+  shifts: [
+    {
+      k: "talent",
+      word: "Talent",
+      line: "Roles are changing. New ones are emerging.",
+      note: "Which roles your centre will need — and which it will grow into.",
+    },
+    {
+      k: "technology",
+      word: "Technology",
+      line: "Agentic workforces, led by people.",
+      note: "Rethinking how technology gets built when agents do the work and humans lead and oversee it.",
+    },
+    {
+      k: "leadership",
+      word: "Leadership",
+      line: "Sound decisions about AI.",
+      note: "How leaders adapt to make AI decisions they can stand behind.",
+    },
+  ],
+  expect: [
+    { n: "01", t: "Leadership discussions", d: "Candid conversations between the people running Hyderabad’s GCCs." },
+    { n: "02", t: "Preparing for the next 10–20 years", d: "Perspectives on how GCCs are getting ready for what comes next." },
+    { n: "03", t: "Networking across Hyderabad’s GCCs", d: "Time with leaders and decision-makers from across Hyderabad’s GCC community." },
+  ],
+};
+
+/* ---------------------------------------------------------------- how ViaMagus fits (from the event brief) */
+export const positioning = {
+  lede: "ViaMagus builds technology platforms and solutions for large MNCs and GCCs. ViaMagus Select brings the talent and hiring support to scale them.",
+  programme: {
+    k: "For leaders",
+    title: "The AI leadership programme",
+    line: "Upskilling today’s leaders to become confident AI decision-makers.",
+  },
 };

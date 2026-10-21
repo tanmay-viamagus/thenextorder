@@ -21,7 +21,8 @@ export type EventDetails = {
 
 export const event: EventDetails = {
   date: null,
-  city: null,
+  // confirmed in the event brief (Oct 2026); the venue is still being finalised
+  city: "Hyderabad",
   venue: null,
   format: null,
   speakers: [],
@@ -38,8 +39,10 @@ export const pending = "To be announced";
 
 /** What is already true about the event, from the brief. */
 export const knownFacts = {
-  audience: "India’s GCC leaders",
+  audience: "Hyderabad’s GCC leaders",
   host: "ViaMagus",
+  /** ecosystem partner — local visibility and credibility in Hyderabad’s GCC community */
+  partner: "Hyderabad Mavericks",
   featuring: "Velocity AI · Synthia AI · ViaMagus Select",
 };
 
@@ -65,3 +68,15 @@ export const officialLinks = {
   synthia: "https://viamagus.com/synthia-ai",
   select: "https://www.viamagusselect.ai/",
 } as const;
+
+/** One honest line: what is confirmed, and what is still to be announced. e.g. "Hyderabad · Date & venue to be announced". */
+export function statusLine(e: EventDetails = event): string {
+  const parts: string[] = [];
+  if (e.city) parts.push(e.city);
+  if (e.date && e.venue) parts.push(e.date, e.venue);
+  else if (e.date) parts.push(e.date, "Venue to be announced");
+  else if (e.venue) parts.push(e.venue, "Date to be announced");
+  else parts.push("Date & venue to be announced");
+  if (e.format) parts.push(e.format);
+  return parts.join(" · ");
+}

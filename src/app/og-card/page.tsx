@@ -24,7 +24,7 @@ export default function OgCard() {
         <span className="og__cut" aria-hidden="true" />
       </div>
       <div className="og__foot">
-        <p className="og__q">An invitation for India’s GCC leaders.</p>
+        <p className="og__q">An invitation for Hyderabad’s GCC leaders.</p>
         <ViaMagusLogo />
       </div>
     </div>

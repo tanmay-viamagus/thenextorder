@@ -7,6 +7,11 @@
    - Below the line, the old order: aligned and grey.
    - Above it, the next order: turned out of alignment, lilac, and partly fused into owned arcs.
    - Title and ring shift with the pointer, and the ring's centre plays the film ("See what's changing").
+1c. **The theme** (from the event brief): "The next decade is being decided now." A horizon (today → +10 → +20 years), three shifts with line drawings, and "In the room":
+   - **Talent:** roles changing, new ones emerging.
+   - **Technology:** agentic workforces, led and overseen by people.
+   - **Leadership:** sound AI decisions.
+   - **In the room:** leadership discussions, preparing for the next 10–20 years, and networking across Hyderabad's GCCs.
 2. **How a GCC evolves.** One editorial line illustration on ivory that evolves through five stages, driven by scroll (pinned, native) or the timeline set on the ground line:
    - **01 The origin:** a recognisable headquarters with people at its entrance, and an empty plot in India.
    - **02 The arrival:** a modest India centre, joined to HQ by "the mandate", with a brief travelling along it.
@@ -54,6 +59,14 @@ npm test           # LinkedIn URL validation
 - **Where to read them:** `/register/response`, or download the CSV there. Cells are protected against spreadsheet-formula injection.
 - **Changing the password:** `vercel env rm RESPONSES_PASSWORD` and then `vercel env add RESPONSES_PASSWORD`, followed by a redeploy.
 - **Shared database:** development, preview and production all write to the same database. Delete test rows before launch.
+
+## Event facts (confirmed)
+
+- **City:** Hyderabad.
+- **Audience:** Hyderabad's GCC leaders and decision-makers.
+- **Ecosystem partner:** Hyderabad Mavericks.
+- **Positioning:** ViaMagus builds technology platforms and solutions for large MNCs and GCCs; ViaMagus Select provides talent and hiring support; the AI leadership programme upskills current leaders into AI decision-makers.
+- **Still to be announced:** date, venue and format.
 
 ## Before sharing
 
