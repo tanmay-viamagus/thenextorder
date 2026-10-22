@@ -6332,3 +6332,40 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
     padding-right: 10px;
   }
 }
+
+/* ---------------------------------------------------------------- audit: the film as a band, the facts above the form, the event in the footer */
+.fl {
+  padding-top: clamp(56px, 9vh, 96px);
+  padding-bottom: clamp(56px, 9vh, 96px);
+}
+
+.fl .fl__head {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.close__when {
+  margin-top: 14px;
+  font: 600 0.78rem/1.5 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--purple);
+}
+
+.ftr__event {
+  display: grid;
+  gap: 6px;
+}
+
+.ftr__name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--white);
+}
+
+.ftr__partner a {
+  color: var(--lilac);
+  text-transform: none;
+}

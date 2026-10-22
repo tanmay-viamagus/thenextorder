@@ -40,7 +40,7 @@ export function Evening() {
       <div className="evg__hd" data-reveal>
         <div className="evg__hl">
           <p className="evg__k">
-            <span className="chap">06</span>The evening
+            <span className="chap">02</span>The evening
           </p>
           <h2 id="evg-h" className="evg__h">
             Thursday 3 December.
