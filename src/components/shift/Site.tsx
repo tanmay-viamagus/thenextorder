@@ -116,7 +116,7 @@ export function Site() {
           </div>
         </section>
 
-        {/* ------------------------------------------------ THE NAME · GCC → GIC → ? (split-flap, pinned) */}
+        {/* ------------------------------------------------ THE NAME · GIC → GCC → ? (split-flap, plays in view) */}
         {/* ------------------------------------------------ THE THEME · what the room will explore */}
         <Theme />
 

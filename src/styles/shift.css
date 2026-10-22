@@ -3831,7 +3831,7 @@ html:not(.js) .eras__stage {
 }
 
 /* ==========================================================================
-   GCC → GIC → ?
+   GIC → GCC → ?
    ========================================================================== */
 .nm {
   position: relative;
@@ -3936,7 +3936,7 @@ html:not(.js) .eras__stage {
   max-width: 30em;
 }
 
-/* arrives once, in sequence: GCC, then GIC, then the open question */
+/* arrives once, in sequence: GIC, then GCC, then the open question */
 @media (prefers-reduced-motion: no-preference) {
   .js .nm__row > * {
     opacity: 0;
@@ -4162,7 +4162,7 @@ html:not(.js) .eras__stage {
 
 
 /* ==========================================================================
-   GCC → GIC → ? — a split-flap board, pinned while you scroll
+   GIC → GCC → ? — a split-flap board that plays when it comes into view
    ========================================================================== */
 .nb {
   position: relative;
@@ -5119,8 +5119,7 @@ html {
   scroll-snap-type: y proximity;
 }
 
-.evo__snap,
-.nb__snap {
+.evo__snap {
   position: absolute;
   left: 0;
   width: 1px;
@@ -5135,21 +5134,13 @@ html {
   height: 300vh;
 }
 
-.nb {
-  height: 200vh;
-}
-
 @media (max-width: 759px) {
   .evo {
     height: 300vh;
   }
-  .nb {
-    height: 200vh;
-  }
 }
 
-html:not(.js) .evo__snap,
-html:not(.js) .nb__snap {
+html:not(.js) .evo__snap {
   display: none;
 }
 
@@ -6400,4 +6391,16 @@ html[data-act="evolve"] .hdr__nav a[data-for="evolve"]::after {
 /* the line ends at the hand-over */
 .bot__st--transfer::before {
   display: none;
+}
+
+/* ---------------------------------------------------------------- the name board: one screen, no pinning */
+.nb,
+html:not(.js) .nb {
+  height: auto;
+}
+
+.nb__stage {
+  position: relative;
+  min-height: 100svh;
+  height: auto;
 }
