@@ -6,9 +6,11 @@ import { theme } from "@/content/story";
 /**
  * Why this event — the headline is the interface. "AI is reshaping how GCCs
  * hire, build and lead": each verb is a button; the active one is cut by the
- * magenta line from the title, and its topics (from the brochure) are set
- * large beneath. While on screen it moves through the three on its own; a
- * click takes over. Reduced motion: no auto-advance. No JS: all three show.
+ * magenta line from the title. All three sets of topics (from the brochure)
+ * are always on screen — nothing waits on the animation; the active column
+ * is simply brighter. While on screen it moves through the three on its own;
+ * pointing at a column or clicking a verb takes over. Reduced motion: no
+ * auto-advance.
  */
 const HOLD = 2600;
 
@@ -17,18 +19,13 @@ export function Theme() {
   const [i, setI] = useState(0);
   const [auto, setAuto] = useState(true);
   const [seen, setSeen] = useState(false);
-  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const el = root.current;
     if (!el) return;
     const io = new IntersectionObserver(([e]) => setSeen(e.isIntersecting), { threshold: 0.45 });
     io.observe(el);
-    const t = window.setTimeout(() => setReady(true), 0);
-    return () => {
-      io.disconnect();
-      window.clearTimeout(t);
-    };
+    return () => io.disconnect();
   }, []);
 
   useEffect(() => {
@@ -61,7 +58,7 @@ export function Theme() {
     <section
       id="theme"
       ref={root}
-      className={`why${ready ? " is-live" : ""}${auto && seen ? " is-auto" : ""}`}
+      className={`why${auto && seen ? " is-auto" : ""}`}
       data-tone="light"
       data-act="theme"
       aria-labelledby="why-h"
@@ -87,23 +84,23 @@ export function Theme() {
         ))}
       </div>
 
-      <div className="why__panels">
+      <div className="why__cols">
         {theme.shifts.map((s, k) => (
           <div
             key={s.k}
             id={`why-p-${s.k}`}
-            className={`why__p${k === i ? " is-on" : ""}`}
-            aria-hidden={ready && k !== i ? true : undefined}
+            className={`why__col${k === i ? " is-on" : ""}`}
+            onPointerEnter={(e) => {
+              if (e.pointerType === "mouse") pick(k);
+            }}
           >
             <p className="why__pk">
               <span>0{k + 1}</span>
               {s.word}
             </p>
             <ul className="why__tops">
-              {s.topics.map((t, j) => (
-                <li key={t} style={{ ["--j" as string]: j }}>
-                  {t}
-                </li>
+              {s.topics.map((t) => (
+                <li key={t}>{t}</li>
               ))}
             </ul>
           </div>

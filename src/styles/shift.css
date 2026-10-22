@@ -5922,92 +5922,84 @@ html:not(.js) .why__bar {
   display: none;
 }
 
-/* the topics: one shift at a time, set large */
-.why__panels {
+/* the topics: all three always on screen; the active column is brighter */
+.why__cols {
   display: grid;
-  margin-top: clamp(28px, 4vh, 44px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 0;
 }
 
-.why__p {
-  grid-area: 1 / 1;
-  display: grid;
-  grid-template-columns: minmax(150px, 0.5fr) minmax(0, 2fr);
-  gap: 16px clamp(24px, 4vw, 72px);
-  align-items: start;
-}
-
-.why.is-live .why__p {
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.18s, visibility 0s 0.18s;
-}
-
-.why.is-live .why__p.is-on {
-  visibility: visible;
-  opacity: 1;
-  transition: opacity 0.25s;
-}
-
-html:not(.js) .why__p {
-  grid-area: auto;
-  padding: 22px 0;
-  border-top: 1px solid var(--line-2);
+.why__col {
+  padding: 22px clamp(0px, 1.2vw, 18px) 8px 0;
 }
 
 .why__pk {
   display: flex;
   align-items: baseline;
-  gap: 14px;
-  padding-top: 0.6em;
-  font: 600 0.78rem/1 var(--mono);
+  gap: 12px;
+  font: 600 0.76rem/1 var(--mono);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--purple);
+  color: var(--ink-2);
+  transition: color 0.3s;
 }
 
 .why__pk span {
-  font-size: 2.4rem;
+  font-size: 1.9rem;
   letter-spacing: -0.04em;
   font-weight: 500;
-  color: var(--ink);
 }
 
 .why__tops {
   display: grid;
+  margin-top: 16px;
   padding: 0;
   list-style: none;
 }
 
 .why__tops li {
-  padding: 12px 0;
+  padding: 10px 0;
   border-bottom: 1px solid var(--line);
-  font-size: clamp(1.5rem, 2.8vw, 2.9rem);
-  line-height: 1.08;
-  letter-spacing: -0.035em;
+  font-size: clamp(1.15rem, 1.6vw, 1.6rem);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
   font-weight: 700;
+  color: var(--ink-2);
+  transition: color 0.3s;
 }
 
 .why__tops li:first-child {
   border-top: 1px solid var(--line);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .why.is-live .why__p.is-on .why__tops li {
-    animation: sc-up 0.4s var(--ease-out) both;
-    animation-delay: calc(0.04s + var(--j) * 0.05s);
-  }
+.why__col.is-on .why__pk {
+  color: var(--purple);
+}
+
+.why__col.is-on .why__tops li {
+  color: var(--ink);
+}
+
+/* the bar sits on the columns: one segment over each */
+.why__bar {
+  margin-top: clamp(36px, 6vh, 64px);
 }
 
 @media (max-width: 760px) {
-  .why__p {
+  .why__cols {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 0;
+    margin-top: 32px;
   }
-  .why__pk {
-    padding-top: 0;
+  .why__bar {
+    display: none;
   }
-  .why__pk span {
-    font-size: 1.6rem;
+  .why__col {
+    border-top: 1px solid var(--line-2);
+  }
+  .why__col.is-on {
+    border-top: 1px solid var(--purple);
   }
 }
 
