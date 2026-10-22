@@ -1,7 +1,7 @@
 /**
  * Verified event facts only.
  *
- * Every field stays `null` until ViaMagus confirms it; the UI then shows the
+ * Every field stays `null` until Viamagus confirms it; the UI then shows the
  * neutral fallback instead of a guessed value. Filling these in is the single
  * biggest lever on whether a GCC leader says yes — see docs/self-audit.md.
  */
@@ -35,7 +35,7 @@ export const event: EventDetails = {
   registrationUrl: null,
 };
 
-/** Until a dedicated RSVP exists, interest goes to the official ViaMagus contact section. */
+/** Until a dedicated RSVP exists, interest goes to the official Viamagus contact section. */
 export const interestUrl = "https://viamagus.com/#contact";
 
 /** The contact address published on viamagus.com (verified Oct 2026). The invitation form addresses requests here. */
@@ -46,10 +46,10 @@ export const pending = "To be announced";
 /** What is already true about the event, from the brief. */
 export const knownFacts = {
   audience: "Hyderabad’s GCC leaders",
-  host: "ViaMagus",
+  host: "Viamagus",
   /** ecosystem partner — local visibility and credibility in Hyderabad’s GCC community */
   partner: "Hyderabad Mavericks",
-  featuring: "Velocity AI · Synthia AI · ViaMagus Select",
+  featuring: "Velocity AI · Synthia AI · Viamagus Select",
   /** the brochure’s line on the partner */
   partnerLine:
     "Hyderabad Mavericks is a group of leaders supporting Hyderabad as a thriving ecosystem for GCC growth, innovation and start-ups.",

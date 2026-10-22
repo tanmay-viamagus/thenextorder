@@ -86,7 +86,7 @@ export function Site() {
               <Facts />
             </p>
             <h1 id="hero-h" className="sr-only">
-              The NEXT Order — an invitation from ViaMagus for Hyderabad’s GCC
+              The NEXT Order — an invitation from Viamagus for Hyderabad’s GCC
               leaders
             </h1>
             <ShiftTitle lines={["THE ", "NEXT", "ORDER."]} cutLine={2} />
@@ -132,14 +132,14 @@ export function Site() {
           <div className="eco__top">
             <div className="eco__hd" data-reveal>
               <p className="eco__k">
-                <span className="chap">03</span>The answer · Hosted by ViaMagus
+                <span className="chap">03</span>The answer · Hosted by Viamagus
               </p>
               <h2 id="eco-h" className="eco__h">
                 Hire. Build. Operate.
               </h2>
               <p className="eco__lede">
                 Three connected practices that help an enterprise become
-                AI-native: <span className="k-x">ViaMagus Select</span> for
+                AI-native: <span className="k-x">Viamagus Select</span> for
                 technology talent, <span className="k-v">Velocity AI</span> for
                 AI-speed product engineering, and{" "}
                 <span className="k-s">Synthia AI</span> for governed AI
@@ -257,7 +257,7 @@ export function Site() {
             <div className="fl__side">
               <p className="fl__txt">
                 The old order, the shift, and three practices that become one
-                ViaMagus. No sound needed.
+                Viamagus. No sound needed.
               </p>
               <FilmButton className="fl__btn">
                 <span className="fl__btnplay" aria-hidden="true">
@@ -304,7 +304,7 @@ export function Site() {
                 <li>
                   <b>02</b>
                   <span>
-                    <strong>The ViaMagus team reviews every request</strong>,
+                    <strong>The Viamagus team reviews every request</strong>,
                     including the LinkedIn profile you share.
                   </span>
                 </li>
@@ -350,7 +350,7 @@ export function Site() {
           </li>
           <li>
             <a href={officialLinks.select} {...ext}>
-              ViaMagus Select
+              Viamagus Select
               <NewTab />
             </a>
           </li>

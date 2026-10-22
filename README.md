@@ -1,9 +1,9 @@
-# The NEXT Order — ViaMagus event microsite
+# The NEXT Order — Viamagus event microsite
 
 **Concept: the shift.**
 
 1. **Opening.** "THE NEXT ORDER", full width, cut by a magenta line across the screen; one line, one action, the details.
-1a. **One story — current state → problem → answer → the event** (chapters 01–05, alternating light and dark): **01 Then** · how a GCC evolved, ending at "the next order" (light) → **02 What's new** · the problem (midnight): "AI is reshaping how GCCs hire, build and lead" — each verb a button, its topics always visible, and under each column "Answered by …" linking down to the practice; it ends "Three shifts need three answers. Here's what ViaMagus brings ↓" → **03 The answer** · hosted by ViaMagus (paper): *Hire. Build. Operate.* — three equal panels, ViaMagus Select (technology talent), Velocity AI (AI-speed product engineering), Synthia AI (governed AI workflows and business processes), then Build-Operate-Transfer and AI training — closing "See it, and the people behind it, on 3 December ↓" → the film band and **04 The evening** (midnight, the doorway in full) → **05 Your place** (light). The GIC → GCC → ? board (`NameBoard.tsx`) is kept in the repo but not on the page.
+1a. **One story — current state → problem → answer → the event** (chapters 01–05, alternating light and dark): **01 Then** · how a GCC evolved, ending at "the next order" (light) → **02 What's new** · the problem (midnight): "AI is reshaping how GCCs hire, build and lead" — each verb a button, its topics always visible, and under each column "Answered by …" linking down to the practice; it ends "Three shifts need three answers. Here's what Viamagus brings ↓" → **03 The answer** · hosted by Viamagus (paper): *Hire. Build. Operate.* — three equal panels, Viamagus Select (technology talent), Velocity AI (AI-speed product engineering), Synthia AI (governed AI workflows and business processes), then Build-Operate-Transfer and AI training — closing "See it, and the people behind it, on 3 December ↓" → the film band and **04 The evening** (midnight, the doorway in full) → **05 Your place** (light). The GIC → GCC → ? board (`NameBoard.tsx`) is kept in the repo but not on the page.
    - Below the line, the old order: aligned and grey.
    - Above it, the next order: turned out of alignment, lilac, and partly fused into owned arcs.
    - Title and ring shift with the pointer, and the ring's centre plays the film ("See what's changing").
@@ -19,8 +19,8 @@
    - **04 The ownership shift:** a tower signed Product · Platforms · Engineering, a glass room on the roof ("Decisions made here"), and purple products flowing back to HQ.
    - **05 The next order:** links to other markets, and a crane building what's NEXT.
 
-   The stage in focus is sharp and earlier ones step back. From 04 the caption closes with the capability gap and one link to ViaMagus Select. On phones the camera pans across the scene. It is a conceptual journey, not a rule. The earlier ring of years (`components/clock/YearCycle.tsx`) is kept for later.
-3. **Three hands. One clock.** Velocity AI, Synthia AI and ViaMagus Select. Each gets a diagram, a colour-coded action to its own site ("Let's build", "Let's automate", "Let's hire") and "Bring a … to the room", which preselects it on `/register`.
+   The stage in focus is sharp and earlier ones step back. From 04 the caption closes with the capability gap and one link to Viamagus Select. On phones the camera pans across the scene. It is a conceptual journey, not a rule. The earlier ring of years (`components/clock/YearCycle.tsx`) is kept for later.
+3. **Three hands. One clock.** Velocity AI, Synthia AI and Viamagus Select. Each gets a diagram, a colour-coded action to its own site ("Let's build", "Let's automate", "Let's hire") and "Bring a … to the room", which preselects it on `/register`.
 3b. **The film**, near the end only: "See what's changing" with a play button, above the practices playing as a story (progress bars, the three-hands clock, each practice's transformation); it restarts at Build when it comes into view.
 4. **Closing.** "Find your place in the conversation", with three steps (request, review, invitation) beside the form.
 
@@ -65,7 +65,7 @@ npm test           # LinkedIn URL validation
 - **City:** Hyderabad.
 - **Audience:** Hyderabad's GCC leaders and decision-makers.
 - **Ecosystem partner:** Hyderabad Mavericks.
-- **Positioning:** ViaMagus builds technology platforms and solutions for large MNCs and GCCs; ViaMagus Select provides talent and hiring support; the AI leadership programme upskills current leaders into AI decision-makers.
+- **Positioning:** Viamagus builds technology platforms and solutions for large MNCs and GCCs; Viamagus Select provides talent and hiring support; the AI leadership programme upskills current leaders into AI decision-makers.
 - **Still to be announced:** date, venue and format.
 
 ## Before sharing

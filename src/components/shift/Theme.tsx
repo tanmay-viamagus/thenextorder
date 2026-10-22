@@ -111,7 +111,7 @@ export function Theme() {
         ))}
       </div>
 
-      <Handoff to="practices">Three shifts need three answers. What does ViaMagus bring?</Handoff>
+      <Handoff to="practices">Three shifts need three answers. What does Viamagus bring?</Handoff>
     </section>
   );
 }

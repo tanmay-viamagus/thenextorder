@@ -4,7 +4,7 @@
    the line shifts. It runs through the hero (type + field), the pinned scene
    (the cells crack, slide and fuse into owned volumes), the practices (one
    line through three panels) and the close (the shift resolves).
-   Drawing paper, ink, ViaMagus purple; mono annotations; square corners.
+   Drawing paper, ink, Viamagus purple; mono annotations; square corners.
    Every scene reads without motion or JavaScript.
    ========================================================================== */
 :root {
@@ -5575,7 +5575,7 @@ html[data-act="evolve"] .hdr__nav a[data-for="evolve"]::after {
 
 /* motion: once, on arrival — today is there, the arrow runs, then next arrives */
 
-/* ---------------------------------------------------------------- ViaMagus Select · the BOT model */
+/* ---------------------------------------------------------------- Viamagus Select · the BOT model */
 
 /* the timeline: three phases on one line, transfer at the end */
 
@@ -6871,3 +6871,51 @@ html:not(.js) .why__v {
   }
 }
 
+
+/* the register panel on short screens: the scene tightens to fit above the
+   date line instead of running into it — and, at the very least, it is cut
+   off before the line rather than written over it */
+.reg__show .sc,
+.reg__show .sc__stage {
+  min-height: 0;
+}
+
+.reg__show .sc {
+  overflow: hidden;
+}
+
+@media (min-width: 1081px) and (max-height: 800px) {
+  .reg__show {
+    gap: 14px;
+    padding-top: 20px;
+    padding-bottom: 22px;
+  }
+  .reg__show .sc {
+    gap: 16px;
+  }
+  .reg__show .sc__verb {
+    margin: 4px 0 8px -0.04em;
+    font-size: min(14cqi, 4.2rem);
+  }
+  .reg__show .sc__line {
+    font-size: 1.02rem;
+  }
+  .reg__show .sc__src {
+    display: none;
+  }
+  .reg__show .sc__clock .hc {
+    max-width: min(440px, 52vh);
+  }
+}
+
+@media (min-width: 1081px) and (max-height: 660px) {
+  .reg__show .reg__t {
+    font-size: clamp(2rem, 3.2vw, 3.4rem);
+  }
+  .reg__show .sc__bar {
+    min-height: 36px;
+  }
+  .reg__show .sc__line {
+    display: none;
+  }
+}

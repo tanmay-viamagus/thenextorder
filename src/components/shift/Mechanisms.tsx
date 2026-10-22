@@ -57,7 +57,7 @@ export function SynthiaMech() {
   );
 }
 
-/** ViaMagus Select — "A search sends 50 CVs. We bring 4 worth an engineer’s time. 3 pass." */
+/** Viamagus Select — "A search sends 50 CVs. We bring 4 worth an engineer’s time. 3 pass." */
 export function SelectMech() {
   // the 4 brought forward and the 3 that pass, spread through the field
   const brought = [7, 19, 30, 44];

@@ -15,8 +15,8 @@ const LABEL: Record<FilmSceneId, string> = {
   inflection: "The inflection point",
   build: "Velocity AI · Build",
   operate: "Synthia AI · Operate",
-  scale: "ViaMagus Select · Hire",
-  converge: "Three practices, one ViaMagus",
+  scale: "Viamagus Select · Hire",
+  converge: "Three practices, one Viamagus",
   close: "The invitation",
 };
 
@@ -30,7 +30,7 @@ function readStart() {
 }
 
 /**
- * The ViaMagus mark, cut into three exact pieces — one per practice. They meet
+ * The Viamagus mark, cut into three exact pieces — one per practice. They meet
  * along their shared edges and, reassembled, are the mark itself
  * (viamagus.com/viamagus-logo.svg). The two right pieces overlap by a hair at
  * x = 20.33 so the seam never shows.
@@ -76,7 +76,7 @@ function FilmBar({ t, label }: { t: number; label: string }) {
  * The film — 30 s, 16:9, silent-first, loops. Directed for a room:
  * one idea per beat, never more than a few words on screen, every product as
  * one big legible transformation, and a payoff — the three practices, as three
- * pieces of the ViaMagus mark, fly in and lock together into the logo.
+ * pieces of the Viamagus mark, fly in and lock together into the logo.
  * The clock decides which scene is on; each scene's motion is CSS that starts
  * when the scene does (--into lets the clock join a scene part-way).
  */
@@ -235,7 +235,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
             <ShiftRing still />
           </div>
           <p className="fs__mono fs__tl k-in" style={d(0.3)}>
-            An invitation from ViaMagus
+            An invitation from Viamagus
           </p>
           <div className="fs__title">
             <div className="ft ft--below">
@@ -343,11 +343,11 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
           </div>
         </section>
 
-        {/* 18–22 · HIRE (ViaMagus Select): fifty CVs become three verdicts */}
+        {/* 18–22 · HIRE (Viamagus Select): fifty CVs become three verdicts */}
         <section className="fs fs--scale fs--p" data-id="scale">
           <Piece k="select" className="fs__piece fs__piece--select" />
           <p className="fs__mono fs__era k-in" style={d(0)}>
-            03 / 03 · ViaMagus Select
+            03 / 03 · Viamagus Select
           </p>
           <p className="fs__verb k-up" style={d(0.1)}>
             Hire.
@@ -365,7 +365,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
           </div>
         </section>
 
-        {/* 22–26 · PAYOFF: three pieces fly in and lock into the ViaMagus mark */}
+        {/* 22–26 · PAYOFF: three pieces fly in and lock into the Viamagus mark */}
         <section className="fs fs--converge" data-id="converge">
           <svg className="asm" viewBox="-0.6 -0.6 31.7 13.1">
             <path className="asm__p asm__p--velocity" d={PIECE.velocity.d} />
@@ -379,10 +379,10 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
           </svg>
           <p className="asm__word">viamagus</p>
           <p className="fs__trio k-up" style={d(2.95)}>
-            Three practices. One ViaMagus.
+            Three practices. One Viamagus.
           </p>
           <p className="fs__mono fs__names k-in" style={d(3.2)}>
-            <span className="k-v">Velocity AI</span> · <span className="k-s">Synthia AI</span> · <span className="k-x">ViaMagus Select</span>
+            <span className="k-v">Velocity AI</span> · <span className="k-s">Synthia AI</span> · <span className="k-x">Viamagus Select</span>
           </p>
         </section>
 
@@ -390,7 +390,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
         <section className="fs fs--close" data-id="close">
           <p className="fs__close">{convergence}</p>
           <div className="fs__end">
-            <p className="fs__mono fs__endk">An invitation from ViaMagus</p>
+            <p className="fs__mono fs__endk">An invitation from Viamagus</p>
             <p className="fs__endt">
               <span>The NEXT</span> Order.
             </p>
@@ -428,11 +428,11 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
         A 42-second film. A ring of identical segments is cut by a magenta line and its upper half twists out of
         alignment: The NEXT Order, for Hyderabad’s GCC leaders. The old order, 2016 to 2019: the years count up over — built to execute; 1,700+ GCCs in India today (nasscom and Zinnov, FY2024). The
         inflection point: on a ring of years the marker crosses 2020 and 2025, the years crack and then fuse — then the
-        mandate grew; 92% of India-based GCCs now aim beyond cost arbitrage (EY GCC Pulse Survey 2025). Build: Velocity AI, behind it the first piece of the ViaMagus mark — three months becomes three to four weeks, a shippable
-        submodule every Friday. Operate: Synthia AI — a draft is stamped signed by a named officer. Hire: ViaMagus Select
+        mandate grew; 92% of India-based GCCs now aim beyond cost arbitrage (EY GCC Pulse Survey 2025). Build: Velocity AI, behind it the first piece of the Viamagus mark — three months becomes three to four weeks, a shippable
+        submodule every Friday. Operate: Synthia AI — a draft is stamped signed by a named officer. Hire: Viamagus Select
         — fifty CVs count down to three verdicts; the mandate is yours, so is the team. Three pieces — cyan, violet and
-        amber, one per practice — fly in from three directions and lock together into the ViaMagus mark: three
-        practices, one ViaMagus. Everything an enterprise
+        amber, one per practice — fly in from three directions and lock together into the Viamagus mark: three
+        practices, one Viamagus. Everything an enterprise
         needs to become AI-native. The NEXT Order: request your place.
       </p>
     </div>

@@ -4,7 +4,7 @@
  *
  * Shaped by the corrected GCC strategy notes (internal; not published):
  * the story is a centre's evolving mandate and value — not AI; centres
- * differ, so the next state is a question, not a prescription; ViaMagus
+ * differ, so the next state is a question, not a prescription; Viamagus
  * Select is framed by the mandate it serves, never by CV supply.
  *
  * Figures are quoted from their publishers (docs/next-order-research.md);
@@ -14,7 +14,7 @@
 export type Evidence = { figure: string; finding: string; source: string; date: string; url: string };
 
 export const description =
-  "The NEXT Order: an invite-only evening for Hyderabad’s GCC leaders and decision-makers on the next order of talent, technology and leadership. Thursday 3 December 2026, from 3:30 PM, at T-Hub, Hyderabad. Organised by ViaMagus with Hyderabad Mavericks.";
+  "The NEXT Order: an invite-only evening for Hyderabad’s GCC leaders and decision-makers on the next order of talent, technology and leadership. Thursday 3 December 2026, from 3:30 PM, at T-Hub, Hyderabad. Organised by Viamagus with Hyderabad Mavericks.";
 
 export const tagline = "Where was your centre, where is it now — and where could it go next?";
 
@@ -82,7 +82,7 @@ export const practices: {
     key: "select",
     n: "C",
     verb: "Hire",
-    name: "ViaMagus Select",
+    name: "Viamagus Select",
     cap: "Technology talent",
     for: "For centres building capability they don’t have yet.",
     // viamagusselect.ai (hero headline)
@@ -131,10 +131,10 @@ export const cta = { primary: "Request your place", submit: "Request my place" }
 export const invite = {
   line: "An invitation for Hyderabad’s GCC leaders.",
   who: "For GCC heads and site leaders; CTOs, CIOs and engineering leaders; CHROs and talent leaders.",
-  what: "A ViaMagus event on where global centres go next: what they own, the value they create and the capabilities they’ll need.",
+  what: "A Viamagus event on where global centres go next: what they own, the value they create and the capabilities they’ll need.",
   /** the what, in one sentence — used where there's room for only one */
   summary:
-    "An invite-only evening at T-Hub, Hyderabad, for GCC leaders and decision-makers — on how AI is reshaping how GCCs hire, build and lead.",
+    "An invite-only evening at T-Hub, Hyderabad, for GCC leaders and decision-makers — on how AI is reshaping the way GCCs hire, build and lead.",
   /** added from the event brief */
   theme:
     "This edition explores how AI and the coming wave of superintelligence are reshaping talent, technology and leadership — for GCC leaders and decision-makers across Hyderabad.",
@@ -147,15 +147,15 @@ export const theme = {
   lede: "Every stage so far changed what a centre owns. The next one changes how it hires, builds and leads — over the next 10 to 20 years.",
   /** the headline's three verbs, each with the brochure's topics — nothing more */
   shifts: [
-    { k: "talent", word: "Talent", verb: "Hire", topics: ["Roles that are changing", "Roles that are emerging", "Skills GCCs will need"], answer: { by: "ViaMagus Select and Build-Operate-Transfer", href: "#pnl-select" } },
+    { k: "talent", word: "Talent", verb: "Hire", topics: ["Roles that are changing", "Roles that are emerging", "Skills GCCs will need"], answer: { by: "Viamagus Select and Build-Operate-Transfer", href: "#pnl-select" } },
     { k: "technology", word: "Technology", verb: "Build", topics: ["Building systems with AI", "Agentic workforces", "Human oversight"], answer: { by: "Velocity AI", href: "#pnl-velocity" } },
     { k: "leadership", word: "Leadership", verb: "Lead", topics: ["How leaders adapt", "Becoming AI decision-makers"], answer: { by: "Synthia AI and AI training", href: "#pnl-synthia" } },
   ],
 };
 
-/* ---------------------------------------------------------------- how ViaMagus fits (from the event brief) */
+/* ---------------------------------------------------------------- how Viamagus fits (from the event brief) */
 export const positioning = {
-  lede: "ViaMagus builds technology platforms and solutions for large MNCs and GCCs. ViaMagus Select brings the talent and hiring support to scale them.",
+  lede: "Viamagus builds technology platforms and solutions for large MNCs and GCCs. Viamagus Select brings the talent and hiring support to scale them.",
   programme: {
     k: "For leaders and teams",
     title: "AI training",

@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-/** Official ViaMagus mark (viamagus.com/viamagus-logo.svg), inherits currentColor. */
+/** Official Viamagus mark (viamagus.com/viamagus-logo.svg), inherits currentColor. */
 export function ViaMagusMark({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 30.4941 11.8959" aria-hidden="true" focusable="false">
@@ -10,7 +10,7 @@ export function ViaMagusMark({ className }: { className?: string }) {
   );
 }
 
-/** Mark + "viamagus" in Josefin Sans 500 — the lockup used across ViaMagus sites. */
+/** Mark + "viamagus" in Josefin Sans 500 — the lockup used across Viamagus sites. */
 export function ViaMagusLogo({ href, className = "" }: { href?: string; className?: string }) {
   const inner = (
     <>
@@ -19,11 +19,11 @@ export function ViaMagusLogo({ href, className = "" }: { href?: string; classNam
     </>
   );
   return href ? (
-    <a className={`vm-logo ${className}`} href={href} aria-label="ViaMagus">
+    <a className={`vm-logo ${className}`} href={href} aria-label="Viamagus">
       {inner}
     </a>
   ) : (
-    <span className={`vm-logo ${className}`} role="img" aria-label="ViaMagus">
+    <span className={`vm-logo ${className}`} role="img" aria-label="Viamagus">
       {inner}
     </span>
   );
@@ -48,10 +48,10 @@ export function SynthiaLogo({ height = 40 }: { height?: number }) {
   );
 }
 
-/** ViaMagus Select wordmark, following .wordmark on viamagusselect.ai (Archivo 700 + "select" 400 @ 62%). */
+/** Viamagus Select wordmark, following .wordmark on viamagusselect.ai (Archivo 700 + "select" 400 @ 62%). */
 export function SelectWordmark() {
   return (
-    <span className="wm-select" role="img" aria-label="ViaMagus Select">
+    <span className="wm-select" role="img" aria-label="Viamagus Select">
       <b>Viamagus</b> <span>select</span>
     </span>
   );

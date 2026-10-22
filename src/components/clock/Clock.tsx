@@ -49,8 +49,8 @@ function Ticks({ r = 460, major = 46, minor = 18 }: { r?: number; major?: number
 /* ---------------------------------------------------------------- three hands, one clock */
 /**
  * A real clock (IST) whose three hands are the three practices:
- * Velocity AI the second hand, Synthia AI the minute hand, ViaMagus Select
- * the hour hand — pinned on the ViaMagus mark. [data-hl] on the wrapper
+ * Velocity AI the second hand, Synthia AI the minute hand, Viamagus Select
+ * the hour hand — pinned on the Viamagus mark. [data-hl] on the wrapper
  * highlights one hand (set by hovering its panel).
  */
 export function HandsClock({ label, hl }: { label: string; hl?: string }) {
