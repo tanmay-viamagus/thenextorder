@@ -21,6 +21,7 @@ import { InviteForm } from "./InviteForm";
 import { GccEvolution } from "./GccEvolution";
 import { NameBoard } from "./NameBoard";
 import { Theme } from "./Theme";
+import { Evening } from "./Evening";
 import { Showcase } from "./Showcase";
 import { SelectMech, SynthiaMech, VelocityMech } from "./Mechanisms";
 
@@ -58,16 +59,16 @@ export function Site() {
         <ViaMagusLogo href={officialLinks.viamagus} />
         <nav className="hdr__nav" aria-label="Sections">
           <a href="#theme" data-for="theme">
-            The theme
+            Why this event
           </a>
-          <a href="#name" data-for="name">
-            The question
+          <a href="#evening" data-for="evening">
+            The evening
           </a>
           <a href="#evolve" data-for="evolve">
             How a GCC evolves
           </a>
           <a href="#practices" data-for="practices">
-            The practices
+            The hosts
           </a>
         </nav>
         <div className="hdr__end">
@@ -91,7 +92,7 @@ export function Site() {
         >
           <div className="hero__l">
             <p className="hero__meta">
-              A ViaMagus leadership event · Hyderabad
+              Organised by ViaMagus · with {knownFacts.partner}
             </p>
             <h1 id="hero-h" className="sr-only">
               The NEXT Order — an invitation from ViaMagus for Hyderabad’s GCC
@@ -99,8 +100,8 @@ export function Site() {
             </h1>
             <ShiftTitle lines={["THE ", "NEXT", "ORDER."]} cutLine={2} />
             <p className="hero__line">
-              How AI is reshaping talent, technology and leadership — for the
-              leaders shaping what Hyderabad’s GCCs become next.
+              The next order of talent, technology and leadership — for
+              Hyderabad’s GCC leaders and decision-makers.
             </p>
             <div className="hero__cta">
               <a className="btn btn--shift btn--lg" href="/register">
@@ -111,15 +112,18 @@ export function Site() {
               </a>
             </div>
             <p className="hero__note">
-              {statusLine()} · With {knownFacts.partner}
+              An invite-only evening · {statusLine()}
             </p>
           </div>
         </section>
 
-        {/* ------------------------------------------------ THE NAME · GIC → GCC → ? (split-flap, plays in view) */}
-        {/* ------------------------------------------------ THE THEME · what the room will explore */}
+        {/* ------------------------------------------------ WHY THIS EVENT · the theme */}
         <Theme />
 
+        {/* ------------------------------------------------ THE EVENING · agenda and details (from the brochure) */}
+        <Evening />
+
+        {/* ------------------------------------------------ THE NAME · GIC → GCC → ? (split-flap, plays in view) */}
         <NameBoard />
 
         {/* ------------------------------------------------ HOW A GCC EVOLVES · five stages (pinned)
@@ -199,19 +203,7 @@ export function Site() {
               );
             })}
           </div>
-          {/* for the leaders themselves */}
-          <div className="prog" data-reveal>
-            <p className="prog__k">{positioning.programme.k}</p>
-            <p className="prog__t">{positioning.programme.title}</p>
-            <p className="prog__l">{positioning.programme.line}</p>
-            <a className="prog__a" href="/register?interest=programme">
-              <span>Ask about it at the event</span>
-              <span className="pnl__arr" aria-hidden="true">
-                →
-              </span>
-            </a>
-          </div>
-          {/* ViaMagus Select's BOT model */}
+          {/* select — Build-Operate-Transfer */}
           <div className="bot" data-reveal>
             <p className="bot__k">{positioning.bot.k}</p>
             <p className="bot__t">{positioning.bot.title}</p>
@@ -230,7 +222,19 @@ export function Site() {
               ))}
             </ol>
             <a className="bot__a" href="/register?interest=bot">
-              <span>Ask about BOT at the event</span>
+              <span>Ask about Build-Operate-Transfer</span>
+              <span className="pnl__arr" aria-hidden="true">
+                →
+              </span>
+            </a>
+          </div>
+          {/* for the leaders themselves */}
+          <div className="prog" data-reveal>
+            <p className="prog__k">{positioning.programme.k}</p>
+            <p className="prog__t">{positioning.programme.title}</p>
+            <p className="prog__l">{positioning.programme.line}</p>
+            <a className="prog__a" href="/register?interest=programme">
+              <span>Ask about it at the event</span>
               <span className="pnl__arr" aria-hidden="true">
                 →
               </span>
@@ -310,8 +314,8 @@ export function Site() {
                 <li>
                   <b>03</b>
                   <span>
-                    <strong>Invitations go out</strong> with the date, venue and
-                    format once they’re confirmed.
+                    <strong>Invitations go out</strong> to confirmed guests, with
+                    everything you need for 3 December at T-Hub.
                   </span>
                 </li>
               </ol>

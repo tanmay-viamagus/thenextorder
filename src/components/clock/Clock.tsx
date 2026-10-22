@@ -62,15 +62,22 @@ export function HandsClock({ label, hl }: { label: string; hl?: string }) {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
     const [hh, mm, ss] = ["h", "m", "s"].map((k) => el.querySelector<SVGGElement>(`[data-hand="${k}"]`)!);
     let raf = 0;
+    let visible = false;
     const draw = () => {
-      raf = requestAnimationFrame(draw);
+      raf = visible ? requestAnimationFrame(draw) : 0;
       const { h, m, s, ms } = ist();
       const sec = reduce.matches ? s : s - 1 + tick(ms);
       ss.setAttribute("transform", `rotate(${f(sec * 6)})`);
       mm.setAttribute("transform", `rotate(${f((m + s / 60) * 6)})`);
       hh.setAttribute("transform", `rotate(${f(((h % 12) + m / 60) * 30)})`);
     };
-    raf = requestAnimationFrame(draw);
+    draw();
+    // only run while the clock is on screen
+    const io = new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting;
+      if (visible && !raf) raf = requestAnimationFrame(draw);
+    });
+    io.observe(el);
     // hovering or focusing a practice lights its hand (unless a parent drives it)
     const sec = hl === undefined ? el.closest("section") : null;
     const wrap = el.parentElement!;
@@ -88,6 +95,7 @@ export function HandsClock({ label, hl }: { label: string; hl?: string }) {
     sec?.addEventListener("focusout", off);
     return () => {
       cancelAnimationFrame(raf);
+      io.disconnect();
       sec?.removeEventListener("pointerover", on);
       sec?.removeEventListener("focusin", on);
       sec?.removeEventListener("pointerout", off);

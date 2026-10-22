@@ -3,6 +3,7 @@
 **Concept: the shift.**
 
 1. **Opening.** "THE NEXT ORDER", full width, cut by a magenta line across the screen; one line, one action, the details.
+1a. **Why this event · The evening** (from the brochure, Oct 2026). The three shifts drawn as today → next, with the brochure's topics and who brings each to the room; who it's for; what to expect. Then the evening: a doorway of light that opens, the tentative agenda as a lit line from 3:30 PM to the dinner (book launch with a cover reveal, Synthia AI live demo), and beside it who organises it — Viamagus and Hyderabad Mavericks, one line each. The date and place are in the heading, not repeated.
 1b. **GIC → GCC → ?** A split-flap board that plays once it is on screen (no pinning, no extra swipes): Global In-house Centre, renamed Global Capability Centre, then the middle letter flips once more to a magenta "?" — not written yet. The order follows the documented history (captive centre → GIC → GCC).
    - Below the line, the old order: aligned and grey.
    - Above it, the next order: turned out of alignment, lilac, and partly fused into owned arcs.
@@ -70,7 +71,7 @@ npm test           # LinkedIn URL validation
 
 ## Before sharing
 
-1. **Fill in `src/content/event.ts`:** date, city and venue, format, and speakers. Until then the site shows "To be announced" and invents nothing. Details in the internal event plan that are still marked "to finalise" are not published.
+1. **`src/content/event.ts`** holds the confirmed facts from the brochure (Thursday 3 December 2026, from 3:30 PM, T-Hub, Hyderabad, by invitation) and the tentative agenda. Speakers and panel topics are still to be announced; add them there when confirmed. Details in the internal event plan that are still marked "to finalise" are not published.
 2. **Site URL:** canonical links, the sitemap and OG URLs use `NEXT_PUBLIC_SITE_URL`, falling back to the Vercel production URL. Set it if a custom domain is added.
 3. **Sign-off:** the strategy follows the corrected GCC strategy notes (internal; a local copy lives at `docs/strategy-notes.md`, which is git-ignored because this repo is public). Every figure and product quote has its source next to it in `src/content/story.ts`.
 

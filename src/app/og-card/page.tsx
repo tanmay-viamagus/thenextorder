@@ -11,7 +11,7 @@ export default function OgCard() {
       <div className="og__clock">
         <ShiftRing />
       </div>
-      <p className="og__k">An invitation from ViaMagus</p>
+      <p className="og__k">An invite-only evening · 3 December 2026 · T-Hub, Hyderabad</p>
       <div className="og__t" aria-label="The NEXT Order">
         <div className="og__l og__l--below">
           <span>THE NEXT</span>
@@ -24,7 +24,7 @@ export default function OgCard() {
         <span className="og__cut" aria-hidden="true" />
       </div>
       <div className="og__foot">
-        <p className="og__q">An invitation for Hyderabad’s GCC leaders.</p>
+        <p className="og__q">The next order of talent, technology and leadership.</p>
         <ViaMagusLogo />
       </div>
     </div>

@@ -8,6 +8,10 @@
 export type EventDetails = {
   /** e.g. "Thursday, 12 March 2027" */
   date: string | null;
+  /** e.g. "From 3:30 PM" */
+  time: string | null;
+  /** ISO start, for calendars and structured data */
+  start: string | null;
   /** e.g. "Bengaluru" */
   city: string | null;
   venue: string | null;
@@ -19,12 +23,14 @@ export type EventDetails = {
   registrationUrl: string | null;
 };
 
+// confirmed in the event brochure (Oct 2026)
 export const event: EventDetails = {
-  date: null,
-  // confirmed in the event brief (Oct 2026); the venue is still being finalised
+  date: "Thursday 3 December 2026",
+  time: "From 3:30 PM",
+  start: "2026-12-03T15:30:00+05:30",
   city: "Hyderabad",
-  venue: null,
-  format: null,
+  venue: "T-Hub",
+  format: "By invitation",
   speakers: [],
   registrationUrl: null,
 };
@@ -44,7 +50,32 @@ export const knownFacts = {
   /** ecosystem partner — local visibility and credibility in Hyderabad’s GCC community */
   partner: "Hyderabad Mavericks",
   featuring: "Velocity AI · Synthia AI · ViaMagus Select",
+  /** the brochure’s line on the partner */
+  partnerLine:
+    "Hyderabad Mavericks is a group of leaders supporting Hyderabad as a thriving ecosystem for GCC growth, innovation and start-ups.",
 };
+
+/** Organised by — one line each, no pitch. Sits with the agenda. */
+export const organisers = [
+  { role: "Organised by", name: "Viamagus", line: "Builds technology platforms and solutions for large MNCs and GCCs." },
+  {
+    role: "Ecosystem partner",
+    name: "Hyderabad Mavericks",
+    line: "A group of leaders supporting Hyderabad as a thriving ecosystem for GCC growth, innovation and start-ups.",
+  },
+];
+
+/** The tentative agenda, from the brochure. Only the start is timed; the rest is announced later. */
+export const agenda: { k: string; t: string; time?: string; d?: string; tag?: string }[] = [
+  { k: "arrive", time: "3:30 PM", t: "Arrivals, registration and networking" },
+  { k: "welcome", t: "Welcome and introduction" },
+  { k: "panel-1", t: "Leadership panel I" },
+  { k: "panel-2", t: "Leadership panel II" },
+  { k: "demo", t: "Synthia AI, live demo", tag: "Live" },
+  { k: "book", t: "Book launch", d: "A book on the future of the workforce in the age of AI, with a cover reveal.", tag: "Cover reveal" },
+  { k: "dinner", t: "Cocktails and networking dinner" },
+];
+export const agendaNote = "Tentative. Timings, panel topics and speakers to be announced.";
 
 export function whenWhere(e: EventDetails = event): string | null {
   const parts = [e.date, [e.venue, e.city].filter(Boolean).join(", ")].filter(Boolean);
@@ -69,14 +100,16 @@ export const officialLinks = {
   select: "https://www.viamagusselect.ai/",
 } as const;
 
-/** One honest line: what is confirmed, and what is still to be announced. e.g. "Hyderabad · Date & venue to be announced". */
+/** One line: when and where, e.g. "Thursday 3 December 2026 · From 3:30 PM · T-Hub, Hyderabad". Unconfirmed parts say so. */
 export function statusLine(e: EventDetails = event): string {
+  const place = [e.venue, e.city].filter(Boolean).join(", ");
   const parts: string[] = [];
-  if (e.city) parts.push(e.city);
-  if (e.date && e.venue) parts.push(e.date, e.venue);
-  else if (e.date) parts.push(e.date, "Venue to be announced");
-  else if (e.venue) parts.push(e.venue, "Date to be announced");
-  else parts.push("Date & venue to be announced");
-  if (e.format) parts.push(e.format);
+  if (e.date) parts.push(e.date);
+  if (e.time) parts.push(e.time);
+  if (e.venue) parts.push(place);
+  else {
+    if (e.city) parts.push(e.city);
+    parts.push(e.date ? "Venue to be announced" : "Date & venue to be announced");
+  }
   return parts.join(" · ");
 }

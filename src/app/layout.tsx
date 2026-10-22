@@ -17,7 +17,7 @@ const josefin = Josefin_Sans({
 // ViaMagus Select's own face, used only for its wordmark and panel.
 const archivo = Archivo({ subsets: ["latin"], variable: "--font-archivo", display: "swap", preload: false });
 
-const title = "The NEXT Order — an invitation for Hyderabad’s GCC leaders | ViaMagus";
+const title = "The NEXT Order — 3 December 2026, T-Hub Hyderabad | ViaMagus";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl()),
   title,
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     url: "/",
     siteName: "The NEXT Order · ViaMagus",
     locale: "en_IN",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "The NEXT Order — an invitation from ViaMagus for Hyderabad’s GCC leaders" }],
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "The NEXT Order — an invite-only evening for Hyderabad’s GCC leaders, 3 December 2026 at T-Hub, Hyderabad" }],
   },
   twitter: { card: "summary_large_image", title, description, images: ["/og-image.jpg"] },
 };

@@ -172,22 +172,41 @@ export function Theme() {
               </p>
               <p className="th__line">{s.line}</p>
               <p className="th__note">{s.note}</p>
+              <ul className="th__topics">
+                {s.topics.map((t) => (
+                  <li key={t}>{t}</li>
+                ))}
+              </ul>
+              <p className="th__host">
+                <span>At the event</span>
+                <b>{s.host.name}</b> {s.host.line}
+              </p>
             </li>
           );
         })}
       </ol>
 
       <div className="th__room" data-reveal>
-        <p className="th__k">In the room</p>
-        <ol className="th__exp">
-          {theme.expect.map((e) => (
-            <li key={e.n}>
-              <b>{e.n}</b>
-              <span className="th__et">{e.t}</span>
-              <span className="th__ed">{e.d}</span>
-            </li>
-          ))}
-        </ol>
+        <div className="th__col">
+          <p className="th__k">Who it’s for</p>
+          <ul className="th__who">
+            {theme.who.map((w) => (
+              <li key={w}>{w}</li>
+            ))}
+          </ul>
+        </div>
+        <div className="th__col">
+          <p className="th__k">What to expect</p>
+          <ol className="th__exp">
+            {theme.expect.map((e) => (
+              <li key={e.n}>
+                <b>{e.n}</b>
+                <span className="th__et">{e.t}</span>
+                <span className="th__ed">{e.d}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   );
