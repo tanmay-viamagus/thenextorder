@@ -666,7 +666,7 @@ export function GccEvolution() {
         <header className="evo__hd">
           <div className="evo__title">
             <p className="evo__k">
-              <span className="chap">03</span>How a GCC evolves
+              <span className="chap">01</span>How a GCC evolves
             </p>
             <h2 id="evo-h" className="evo__h">
               From a presence in India <br />
