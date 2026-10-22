@@ -211,6 +211,31 @@ export function Site() {
               </span>
             </a>
           </div>
+          {/* ViaMagus Select's BOT model */}
+          <div className="bot" data-reveal>
+            <p className="bot__k">{positioning.bot.k}</p>
+            <p className="bot__t">{positioning.bot.title}</p>
+            <p className="bot__l">{positioning.bot.line}</p>
+            <ol className="bot__s">
+              {positioning.bot.steps.map((st, k) => (
+                <li
+                  key={st.k}
+                  className={`bot__st bot__st--${st.k}`}
+                  style={{ ["--k" as string]: k }}
+                >
+                  <span className="bot__when">{st.when}</span>
+                  <span className="bot__word">{st.word}</span>
+                  <span className="bot__d">{st.d}</span>
+                </li>
+              ))}
+            </ol>
+            <a className="bot__a" href="/register?interest=bot">
+              <span>Ask about BOT at the event</span>
+              <span className="pnl__arr" aria-hidden="true">
+                →
+              </span>
+            </a>
+          </div>
           <p className="eco__close" data-reveal>
             {convergence}
           </p>
