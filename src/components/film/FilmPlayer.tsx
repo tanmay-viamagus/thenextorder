@@ -15,7 +15,7 @@ const LABEL: Record<FilmSceneId, string> = {
   inflection: "The inflection point",
   build: "Velocity AI · Build",
   operate: "Synthia AI · Operate",
-  scale: "ViaMagus Select · Scale",
+  scale: "ViaMagus Select · Hire",
   converge: "Three practices, one ViaMagus",
   close: "The invitation",
 };
@@ -343,14 +343,14 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
           </div>
         </section>
 
-        {/* 18–22 · SCALE: fifty CVs become three verdicts */}
+        {/* 18–22 · HIRE (ViaMagus Select): fifty CVs become three verdicts */}
         <section className="fs fs--scale fs--p" data-id="scale">
           <Piece k="select" className="fs__piece fs__piece--select" />
           <p className="fs__mono fs__era k-in" style={d(0)}>
             03 / 03 · ViaMagus Select
           </p>
           <p className="fs__verb k-up" style={d(0.1)}>
-            Scale.
+            Hire.
           </p>
           <div className="count">
             <p className="count__n" />
@@ -429,7 +429,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
         alignment: The NEXT Order, for Hyderabad’s GCC leaders. The old order, 2016 to 2019: the years count up over — built to execute; 1,700+ GCCs in India today (nasscom and Zinnov, FY2024). The
         inflection point: on a ring of years the marker crosses 2020 and 2025, the years crack and then fuse — then the
         mandate grew; 92% of India-based GCCs now aim beyond cost arbitrage (EY GCC Pulse Survey 2025). Build: Velocity AI, behind it the first piece of the ViaMagus mark — three months becomes three to four weeks, a shippable
-        submodule every Friday. Operate: Synthia AI — a draft is stamped signed by a named officer. Scale: ViaMagus Select
+        submodule every Friday. Operate: Synthia AI — a draft is stamped signed by a named officer. Hire: ViaMagus Select
         — fifty CVs count down to three verdicts; the mandate is yours, so is the team. Three pieces — cyan, violet and
         amber, one per practice — fly in from three directions and lock together into the ViaMagus mark: three
         practices, one ViaMagus. Everything an enterprise

@@ -6648,37 +6648,9 @@ html:not(.js) .why__v {
   border-bottom: 1.5px solid currentColor;
 }
 
-/* every practice names the shift it answers, in the problem's own mark */
-.pnl__n {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 6px 14px;
-}
 
-.ans {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 8px;
-}
 
-.ans b {
-  position: relative;
-  font: 800 1.15rem/1 var(--font);
-  letter-spacing: -0.02em;
-  text-transform: lowercase;
-}
 
-.ans b::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -4px;
-  height: 2px;
-  background: var(--magenta);
-}
 
 /* the dark panels keep their own light ink now the section sits on paper */
 .pnl--velocity,
@@ -6690,4 +6662,22 @@ html:not(.js) .why__v {
 .pnl--select {
   background: var(--sheet);
   box-shadow: inset 1px 0 0 var(--line), inset -1px 0 0 var(--line), inset 0 -1px 0 var(--line);
+}
+
+/* what the evening is for, under the date */
+.evn__table {
+  max-width: 34em;
+  margin: 16px 0 4px;
+  font-size: clamp(1rem, 1.25vw, 1.2rem);
+  line-height: 1.5;
+  color: rgba(252, 253, 255, 0.74);
+}
+
+/* the answer: no clock beside the heading now */
+.eco__top {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.eco__lede {
+  max-width: 34em;
 }

@@ -57,7 +57,7 @@ export const shift: { n: string; years: string; era: string; headline: string; l
   },
 ];
 
-/* ---------------------------------------------------------------- the three practices (equal weight) */
+/* ---------------------------------------------------------------- the three practices (equal weight): hire → build → operate */
 export type PracticeKey = "velocity" | "synthia" | "select";
 
 export const practices: {
@@ -65,6 +65,8 @@ export const practices: {
   n: string;
   verb: string;
   name: string;
+  /** what it is, in one phrase */
+  cap: string;
   /** who it's for, in a GCC leader's terms */
   for: string;
   /** verbatim from the official page */
@@ -77,10 +79,25 @@ export const practices: {
   source: string;
 }[] = [
   {
+    key: "select",
+    n: "C",
+    verb: "Hire",
+    name: "ViaMagus Select",
+    cap: "Technology talent",
+    for: "For centres building capability they don’t have yet.",
+    // viamagusselect.ai (hero headline)
+    line: "The mandate is yours. So is the team.",
+    room: "Bring a hiring brief to the room",
+    go: "Let’s hire",
+    href: "https://www.viamagusselect.ai/",
+    source: "viamagusselect.ai",
+  },
+  {
     key: "velocity",
     n: "A",
     verb: "Build",
     name: "Velocity AI",
+    cap: "AI-speed product engineering",
     for: "For centres taking on product ownership.",
     // viamagus.com/velocity-ai: "Three-month timelines become three-to-four weeks, with a shippable submodule delivered every single Friday."
     line: "Three-month timelines become three-to-four weeks.",
@@ -94,6 +111,7 @@ export const practices: {
     n: "B",
     verb: "Operate",
     name: "Synthia AI",
+    cap: "Governed AI workflows and business processes",
     for: "For centres running processes for the enterprise.",
     // viamagus.com/synthia-ai
     line: "Every AI output is a draft until a named officer signs it.",
@@ -101,19 +119,6 @@ export const practices: {
     go: "Let’s automate",
     href: "https://viamagus.com/synthia-ai",
     source: "viamagus.com/synthia-ai",
-  },
-  {
-    key: "select",
-    n: "C",
-    verb: "Scale",
-    name: "ViaMagus Select",
-    for: "For centres building capability they don’t have yet.",
-    // viamagusselect.ai (hero headline)
-    line: "The mandate is yours. So is the team.",
-    room: "Bring a hiring brief to the room",
-    go: "Let’s hire",
-    href: "https://www.viamagusselect.ai/",
-    source: "viamagusselect.ai",
   },
 ];
 
