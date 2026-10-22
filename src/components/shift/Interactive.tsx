@@ -162,6 +162,11 @@ export function Chrome() {
     const scenes = [...document.querySelectorAll<HTMLElement>("[data-tone]")];
     const hero = document.getElementById("top");
     const form = document.getElementById("request");
+    const chapters = [...document.querySelectorAll<HTMLElement>(".story li[data-for]")].map((li) => ({
+      li,
+      a: li.querySelector("a"),
+      el: document.getElementById(li.dataset.for ?? ""),
+    }));
     let raf = 0;
     const update = () => {
       raf = 0;
@@ -185,6 +190,25 @@ export function Chrome() {
       let act = "";
       for (const a of document.querySelectorAll<HTMLElement>("[data-act]")) if (a.getBoundingClientRect().top < window.innerHeight * 0.5) act = a.dataset.act ?? "";
       root.dataset.act = act;
+      // the story line: which chapter you're in, and how far into it
+      const mark = window.innerHeight * 0.5;
+      const tops = chapters.map((c) => c.el?.getBoundingClientRect().top ?? Infinity);
+      let ch = -1;
+      tops.forEach((t, k) => {
+        if (t < mark) ch = k;
+      });
+      for (let k = 0; k < tops.length - 1; k++) {
+        const f = Math.min(1, Math.max(0, (mark - tops[k]) / (tops[k + 1] - tops[k])));
+        root.style.setProperty(`--sf${k}`, f.toFixed(3));
+      }
+      const into = ch >= 0 && ch < tops.length - 1 ? Number(root.style.getPropertyValue(`--sf${ch}`)) : 0;
+      root.style.setProperty("--sp", ch < 0 ? "0" : Math.min(1, (ch + into) / (tops.length - 1)).toFixed(3));
+      chapters.forEach((c, k) => {
+        c.li?.classList.toggle("is-on", k === ch);
+        c.li?.classList.toggle("is-done", k < ch);
+        if (k === ch) c.a?.setAttribute("aria-current", "location");
+        else c.a?.removeAttribute("aria-current");
+      });
     };
     const on = () => {
       if (!raf) raf = requestAnimationFrame(update);

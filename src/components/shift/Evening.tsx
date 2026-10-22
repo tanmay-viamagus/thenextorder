@@ -1,5 +1,6 @@
 import { agenda, agendaNote, contactEmail, event, organisers } from "@/content/event";
 import { ViaMagusMark } from "@/components/Brand";
+import { Handoff } from "./Story";
 
 /**
  * The evening — from the brochure. One grid: the date and a doorway of light
@@ -87,6 +88,7 @@ export function Evening() {
           </p>
         </aside>
       </div>
+      <Handoff to="request">Places are by invitation. Will you be in the room?</Handoff>
     </section>
   );
 }

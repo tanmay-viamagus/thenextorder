@@ -20,6 +20,7 @@ import { InviteForm } from "./InviteForm";
 import { GccEvolution } from "./GccEvolution";
 import { Theme } from "./Theme";
 import { Evening } from "./Evening";
+import { Handoff, StoryNav, StoryStrip } from "./Story";
 import { SelectMech, SynthiaMech, VelocityMech } from "./Mechanisms";
 
 const ext = { target: "_blank", rel: "noopener noreferrer" } as const;
@@ -59,20 +60,7 @@ export function Site() {
 
       <header className="hdr">
         <ViaMagusLogo href={officialLinks.viamagus} />
-        <nav className="hdr__nav" aria-label="Sections">
-          <a href="#evolve" data-for="evolve">
-            How GCCs evolved
-          </a>
-          <a href="#theme" data-for="theme">
-            What’s new
-          </a>
-          <a href="#practices" data-for="practices">
-            The answer
-          </a>
-          <a href="#evening" data-for="evening">
-            3 December
-          </a>
-        </nav>
+        <StoryNav />
         <div className="hdr__end">
           <a className="btn btn--shift btn--sm hdr__cta" href="/register">
             {cta.primary}{" "}
@@ -81,6 +69,7 @@ export function Site() {
             </span>
           </a>
         </div>
+        <StoryStrip />
       </header>
 
       <main id="main">
@@ -124,6 +113,9 @@ export function Site() {
         {/* ------------------------------------------------ HOW A GCC EVOLVES · five stages (pinned)
             The ring of years (YearCycle) is kept in components/clock for later use. */}
         <GccEvolution />
+        <div className="handoff-band" data-tone="light">
+          <Handoff to="theme">Stage five is still being written. What’s changing now?</Handoff>
+        </div>
 
         {/* ------------------------------------------------ WHY THIS EVENT · the theme */}
         <Theme />
@@ -244,12 +236,6 @@ export function Site() {
           <p className="eco__close" data-reveal>
             {convergence}
           </p>
-          <p className="eco__next" data-reveal>
-            <a href="#evening">
-              See it, and the people behind it, on 3 December{" "}
-              <span aria-hidden="true">↓</span>
-            </a>
-          </p>
         </section>
 
         {/* ------------------------------------------------ THE FILM · near the end */}
@@ -262,7 +248,7 @@ export function Site() {
           <div className="fl__head">
             <div>
               <p className="fl__k">
-                The film · {filmLength}
+                The story so far · {filmLength}
               </p>
               <h2 id="fl-h" className="fl__h">
                 See what’s changing.
@@ -281,6 +267,7 @@ export function Site() {
               </FilmButton>
             </div>
           </div>
+          <Handoff to="evening">Where do GCC leaders work this out together?</Handoff>
         </section>
 
         {/* ------------------------------------------------ THE EVENING · what happens, and who is behind it */}
