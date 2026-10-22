@@ -137,14 +137,14 @@ export const invite = {
 
 /* ---------------------------------------------------------------- the theme (from the event brief) */
 export const theme = {
-  kicker: "Why this event",
+  kicker: "What’s new",
   headline: "AI is reshaping how GCCs hire, build and lead.",
-  lede: "One evening for Hyderabad’s GCC leaders on how centres are thinking about the next 10 to 20 years.",
+  lede: "Every stage so far changed what a centre owns. The next one changes how it hires, builds and leads — over the next 10 to 20 years.",
   /** the headline's three verbs, each with the brochure's topics — nothing more */
   shifts: [
-    { k: "talent", word: "Talent", verb: "Hire", topics: ["Roles that are changing", "Roles that are emerging", "Skills GCCs will need"] },
-    { k: "technology", word: "Technology", verb: "Build", topics: ["Building systems with AI", "Agentic workforces", "Human oversight"] },
-    { k: "leadership", word: "Leadership", verb: "Lead", topics: ["How leaders adapt", "Becoming AI decision-makers"] },
+    { k: "talent", word: "Talent", verb: "Hire", topics: ["Roles that are changing", "Roles that are emerging", "Skills GCCs will need"], answer: { by: "ViaMagus Select and Build-Operate-Transfer", href: "#pnl-select" } },
+    { k: "technology", word: "Technology", verb: "Build", topics: ["Building systems with AI", "Agentic workforces", "Human oversight"], answer: { by: "Velocity AI", href: "#pnl-velocity" } },
+    { k: "leadership", word: "Leadership", verb: "Lead", topics: ["How leaders adapt", "Becoming AI decision-makers"], answer: { by: "Synthia AI and AI training", href: "#pnl-synthia" } },
   ],
 };
 

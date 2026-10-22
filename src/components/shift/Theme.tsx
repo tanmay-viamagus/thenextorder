@@ -103,15 +103,18 @@ export function Theme() {
                 <li key={t}>{t}</li>
               ))}
             </ul>
+            <a className="why__ans" href={s.answer.href}>
+              <span>Answered by</span> {s.answer.by} <i aria-hidden="true">↓</i>
+            </a>
           </div>
         ))}
       </div>
 
       {/* the bridge to the next chapter */}
       <p className="why__bridge" data-reveal>
-        The next order isn’t written yet.{" "}
-        <a href="#evening">
-          One evening to start writing it <span aria-hidden="true">↓</span>
+        Three shifts need three answers.{" "}
+        <a href="#practices">
+          Here’s what ViaMagus brings <span aria-hidden="true">↓</span>
         </a>
       </p>
     </section>
