@@ -72,7 +72,6 @@ export const agenda: { k: string; t: string; time?: string; d?: string; tag?: st
   { k: "panel-1", t: "Leadership panel I" },
   { k: "panel-2", t: "Leadership panel II" },
   { k: "demo", t: "Synthia AI, live demo", tag: "Live" },
-  { k: "book", t: "Book launch", d: "A book on the future of the workforce in the age of AI, with a cover reveal.", tag: "Cover reveal" },
   { k: "dinner", t: "Cocktails and networking dinner" },
 ];
 export const agendaNote = "Tentative. Timings, panel topics and speakers to be announced.";

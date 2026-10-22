@@ -5611,8 +5611,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
 
 /* the line, lit from the top: afternoon into the evening */
 
-/* the book, under wraps */
-
 /* organised by — beside the agenda, one line each */
 
 /* ==========================================================================
@@ -6222,45 +6220,6 @@ html:not(.js) .why__bar {
   border: 1px solid var(--magenta);
   color: var(--magenta);
   white-space: nowrap;
-}
-
-/* the book, under wraps */
-.evn-book {
-  position: relative;
-  display: block;
-  width: 34px;
-  height: 46px;
-  transform: rotate(-5deg);
-}
-
-.evn-book__spine {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 5px;
-  background: #3a0a63;
-}
-
-.evn-book__cover {
-  position: absolute;
-  inset: 0 0 0 5px;
-  display: grid;
-  align-content: center;
-  gap: 4px;
-  padding: 0 5px;
-  background: linear-gradient(150deg, var(--purple), #2f0050);
-}
-
-.evn-book__t {
-  height: 4px;
-  background: var(--lilac);
-  filter: blur(2px);
-}
-
-.evn-book__t--s {
-  width: 60%;
-  opacity: 0.7;
 }
 
 /* who is behind it */
