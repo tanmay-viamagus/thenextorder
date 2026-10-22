@@ -5674,53 +5674,20 @@ html:not(.js) .evo__art .evo__gap {
   max-width: 24em;
 }
 
-/* in the room */
-.th__room {
-  margin-top: clamp(56px, 9vh, 100px);
-  padding-top: 26px;
-  border-top: 1px solid var(--line-2);
-}
 
-.th__exp {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(20px, 3vw, 48px);
-}
 
-.th__exp li {
-  display: grid;
-  gap: 8px;
-  align-content: start;
-}
 
-.th__exp b {
-  font: 600 0.78rem/1 var(--mono);
-  color: var(--purple);
-}
 
-.th__et {
-  font-size: clamp(1.15rem, 1.5vw, 1.5rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
 
-.th__ed {
-  font-size: 0.98rem;
-  line-height: 1.5;
-  color: var(--ink-2);
-  max-width: 24em;
-}
 
 /* motion: once, on arrival */
 @media (prefers-reduced-motion: no-preference) {
   .js .th__hd[data-reveal],
-  .js .th__room[data-reveal],
   .js .th__s[data-reveal] {
     opacity: 0;
     transform: translateY(26px);
   }
   .js .th__hd.is-in,
-  .js .th__room.is-in,
   .js .th__s.is-in {
     opacity: 1;
     transform: none;
@@ -5751,8 +5718,7 @@ html:not(.js) .evo__art .evo__gap {
     grid-template-areas: "k" "h" "l";
     gap: 14px;
   }
-  .th__shifts,
-  .th__exp {
+  .th__shifts {
     grid-template-columns: 1fr;
     gap: 36px;
   }
@@ -6458,35 +6424,10 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   font-weight: 700;
 }
 
-.th__room {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-  gap: clamp(28px, 4vw, 64px);
-}
 
-.th__room .th__exp {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
 
-.th__who {
-  display: grid;
-  gap: 10px;
-  padding: 0;
-  list-style: none;
-}
 
-.th__who li {
-  font-size: clamp(1.05rem, 1.3vw, 1.3rem);
-  font-weight: 700;
-  letter-spacing: -0.015em;
-}
 
-@media (max-width: 900px) {
-  .th__room,
-  .th__room .th__exp {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* ---------------------------------------------------------------- the evening */
 .evg {

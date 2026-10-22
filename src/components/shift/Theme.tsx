@@ -186,28 +186,6 @@ export function Theme() {
         })}
       </ol>
 
-      <div className="th__room" data-reveal>
-        <div className="th__col">
-          <p className="th__k">Who it’s for</p>
-          <ul className="th__who">
-            {theme.who.map((w) => (
-              <li key={w}>{w}</li>
-            ))}
-          </ul>
-        </div>
-        <div className="th__col">
-          <p className="th__k">What to expect</p>
-          <ol className="th__exp">
-            {theme.expect.map((e) => (
-              <li key={e.n}>
-                <b>{e.n}</b>
-                <span className="th__et">{e.t}</span>
-                <span className="th__ed">{e.d}</span>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </div>
     </section>
   );
 }
