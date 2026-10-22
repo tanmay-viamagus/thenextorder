@@ -173,8 +173,6 @@ export const theme = {
       next: "One sound call, owned by a leader.",
     },
   ],
-  /** from the brochure */
-  who: ["GCC heads and site leaders", "CTOs, CIOs and engineering leaders", "CHROs and talent leaders"],
   expect: [
     { n: "01", t: "Leadership panels and discussions", d: "Two leadership panels. Topics and speakers to be announced." },
     { n: "02", t: "Networking with Hyderabad’s GCC leaders", d: "From arrivals at 3:30 PM through cocktails and the networking dinner." },
