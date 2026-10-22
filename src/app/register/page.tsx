@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ViaMagusLogo } from "@/components/Brand";
+import { MavericksLogo, ViaMagusLogo } from "@/components/Brand";
 import { InviteForm } from "@/components/shift/InviteForm";
 import { agenda, knownFacts, statusLine } from "@/content/event";
 import { INTEREST_BY_KEY } from "@/content/register";
@@ -41,14 +41,17 @@ export default async function Register({
             <span>The NEXT</span> <span>Order.</span>
           </p>
         </div>
-        {/* the evening, as the brochure gives it — no products here */}
+        {/* the agenda, as the final brochure gives it — no products here */}
         <div className="reg__agenda">
-          <p className="reg__k">The evening · tentative</p>
+          <p className="reg__k">Tentative agenda</p>
           <ol>
             {agenda.map((a) => (
               <li key={a.k}>
                 <span className="reg__at">{a.time ?? ""}</span>
-                {a.t}
+                <span>
+                  {a.kind ? <span className="reg__kind">{a.kind}</span> : null}
+                  {a.t}
+                </span>
               </li>
             ))}
           </ol>
@@ -56,7 +59,8 @@ export default async function Register({
         <div className="reg__when">
           <p className="reg__k">{statusLine()}</p>
           <p className="reg__host">
-            Hosted by {knownFacts.host} · with {knownFacts.partner}
+            Organised by {knownFacts.host} · In collaboration with
+            <MavericksLogo className="reg__mav" height={18} />
           </p>
         </div>
       </aside>

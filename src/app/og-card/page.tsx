@@ -11,7 +11,7 @@ export default function OgCard() {
       <div className="og__clock">
         <ShiftRing />
       </div>
-      <p className="og__k">An invite-only evening · 3 December 2026 · T-Hub, Hyderabad</p>
+      <p className="og__k">An invite-only symposium · 3 December 2026 · T-Hub, Hyderabad</p>
       <div className="og__t" aria-label="The NEXT Order">
         <div className="og__l og__l--below">
           <span>THE NEXT</span>

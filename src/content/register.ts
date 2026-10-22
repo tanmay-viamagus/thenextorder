@@ -2,7 +2,7 @@
 
 export const SEATS = ["CEO / MD", "Site leader", "Technology leader", "HR & talent leader", "Other"] as const;
 
-/** What the visitor wants to explore — the evening's three conversations (from the brochure). */
+/** What the visitor wants to explore — the symposium's three conversations (from the brochure). */
 export const INTERESTS = ["Talent: how GCCs hire", "Technology: how GCCs build", "Leadership: how GCCs lead", "The wider conversation"] as const;
 
 export const INTEREST_BY_KEY: Record<string, (typeof INTERESTS)[number]> = {

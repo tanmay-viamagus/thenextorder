@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { ViaMagusLogo } from "@/components/Brand";
+import { MavericksLogo, ViaMagusLogo } from "@/components/Brand";
 import { contactEmail, event, knownFacts, officialLinks, statusLine } from "@/content/event";
 import { cta, invite } from "@/content/story";
 import { Chrome, Reveal, ShiftTitle } from "./Interactive";
@@ -73,15 +73,19 @@ export function Site() {
               </a>
             </div>
             <p className="hero__note">
-              An invite-only evening for Hyderabad’s GCC leaders · Organised
-              by {knownFacts.host} with {knownFacts.partner}
+              An invite-only symposium for Hyderabad’s GCC leaders and
+              decision-makers
+            </p>
+            <p className="hero__partner">
+              <span>In collaboration with</span>
+              <MavericksLogo className="hero__mav" height={22} />
             </p>
           </div>
         </section>
 
 
 
-        {/* ------------------------------------------------ HOW A GCC EVOLVES · five stages (pinned)
+        {/* ------------------------------------------------ HOW GCCS ARE EVOLVING · four stages (pinned)
             The ring of years (YearCycle) is kept in components/clock for later use. */}
         <GccEvolution />
         <div className="handoff-band" data-tone="light">
@@ -152,9 +156,12 @@ export function Site() {
             {statusLine()} · {event.format}
           </p>
           <p className="ftr__partner">
-            Organised by <b>{knownFacts.host}</b> · Ecosystem partner{" "}
-            <b>{knownFacts.partner}</b> ·{" "}
+            Organised by <b>{knownFacts.host}</b> ·{" "}
             <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+          </p>
+          <p className="ftr__partner ftr__mav">
+            <span>Ecosystem partner</span>
+            <MavericksLogo className="ftr__mavlogo" height={20} />
           </p>
         </div>
         <ul>

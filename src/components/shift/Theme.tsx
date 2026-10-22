@@ -72,10 +72,14 @@ export function Theme() {
         <p className="why__lede">{theme.lede}</p>
       </div>
 
-      <h2 id="why-h" className="why__h" data-reveal>
+      <h2 id="why-h" className="why__q" data-reveal>
+        {theme.question[0]} <span>{theme.question[1]}</span>
+      </h2>
+
+      <p className="why__h" data-reveal>
         AI is reshaping how GCCs <span className="why__nw">{verb(0)},</span> {verb(1)} and{" "}
         <span className="why__nw">{verb(2)}.</span>
-      </h2>
+      </p>
 
       <div className="why__bar" aria-hidden="true">
         {theme.shifts.map((s, k) => (
@@ -108,15 +112,29 @@ export function Theme() {
         ))}
       </div>
 
-      {/* why it fits: the room, the horizon, the evening — all from the brochure */}
-      <dl className="why__fit" data-reveal>
-        {theme.fit.map((f) => (
-          <div key={f.k}>
-            <dt>{f.k}</dt>
-            <dd>{f.d}</dd>
-          </div>
-        ))}
-      </dl>
+      {/* who it's for and what to expect — the brochure's two lists */}
+      <div className="why__lists" data-reveal>
+        <div>
+          <h3 className="why__lh">Who is this for</h3>
+          <ul>
+            {theme.who.map((x) => (
+              <li key={x}>{x}</li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3 className="why__lh">What to expect</h3>
+          <ul>
+            {theme.expect.map((x) => (
+              <li key={x}>{x}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <p className="why__close" data-reveal>
+        {theme.close[0]} <span>{theme.close[1]}</span>
+      </p>
 
       <Handoff to="request">Places are by invitation. Will you be in the room?</Handoff>
     </section>

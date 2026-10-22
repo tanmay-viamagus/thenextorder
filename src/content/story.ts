@@ -14,7 +14,7 @@
 export type Evidence = { figure: string; finding: string; source: string; date: string; url: string };
 
 export const description =
-  "The NEXT Order: an invite-only evening for Hyderabad’s GCC leaders and decision-makers on the next order of talent, technology and leadership. Thursday 3 December 2026, from 3:30 PM, at T-Hub, Hyderabad. Organised by Viamagus with Hyderabad Mavericks.";
+  "The NEXT Order: an invite-only symposium for Hyderabad’s GCC leaders and decision-makers on the next order of talent, technology and leadership. Thursday 3 December 2026, from 3:30 PM, at T-Hub, Hyderabad. Organised by Viamagus with Hyderabad Mavericks.";
 
 export const tagline = "Where was your centre, where is it now — and where could it go next?";
 
@@ -69,7 +69,7 @@ export const invite = {
   what: "A Viamagus event on where global centres go next: what they own, the value they create and the capabilities they’ll need.",
   /** the what, in one sentence — used where there's room for only one */
   summary:
-    "An invite-only evening at T-Hub, Hyderabad, for GCC leaders and decision-makers — on how AI is reshaping the way GCCs hire, build and lead.",
+    "An invite-only symposium at T-Hub, Hyderabad, for GCC leaders and decision-makers — on how AI is reshaping the way GCCs hire, build and lead.",
   /** added from the event brief */
   theme:
     "This edition explores how AI and the coming wave of superintelligence are reshaping talent, technology and leadership — for GCC leaders and decision-makers across Hyderabad.",
@@ -78,19 +78,23 @@ export const invite = {
 /* ---------------------------------------------------------------- the theme (from the event brief) */
 export const theme = {
   kicker: "Why attend",
+  /** the final brochure's "Why this event", verbatim */
+  question: ["Your centre was built to execute.", "What will it own next?"],
   headline: "AI is reshaping how GCCs hire, build and lead.",
-  lede: "Every stage so far changed what a centre owns. The next one changes how it hires, builds and leads — over the next 10 to 20 years.",
+  lede: "A conversation on how centres are thinking about the next 10 to 20 years.",
   /** the headline's three verbs, each with the brochure's topics — nothing more */
   shifts: [
     { k: "talent", word: "Talent", verb: "Hire", topics: ["Roles that are changing", "Roles that are emerging", "Skills GCCs will need"] },
     { k: "technology", word: "Technology", verb: "Build", topics: ["Building systems with AI", "Agentic workforces", "Human oversight"] },
     { k: "leadership", word: "Leadership", verb: "Lead", topics: ["How leaders adapt", "Becoming AI decision-makers"] },
   ],
-  /** why it fits — the room, the horizon and the evening, from the brochure and the agenda */
-  fit: [
-    { k: "The room", d: "GCC heads and site leaders; CTOs, CIOs and engineering leaders; CHROs and talent leaders. By invitation." },
-    { k: "The horizon", d: "Not the next quarter: how GCCs hire, build and lead over the next 10 to 20 years." },
-    { k: "The evening", d: "Two leadership panels and a live AI demo, then cocktails and a networking dinner at T-Hub." },
+  who: ["GCC heads and site leaders", "CTOs, CIOs and engineering leaders", "CHROs and talent leaders"],
+  expect: [
+    "Leadership panels and discussions",
+    "A practical playbook for responsible AI",
+    "Networking with Hyderabad’s GCC leaders",
+    "Leave with a sharper case for HQ",
   ],
+  close: ["Every centre’s plan is different.", "That is the conversation."],
 };
 

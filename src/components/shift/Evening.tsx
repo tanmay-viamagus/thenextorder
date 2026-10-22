@@ -1,5 +1,5 @@
 import { agenda, agendaNote, contactEmail, event, organisers } from "@/content/event";
-import { ViaMagusMark } from "@/components/Brand";
+import { MavericksLogo, ViaMagusMark } from "@/components/Brand";
 import { Handoff } from "./Story";
 import { FilmButton } from "@/components/film/FilmOverlay";
 import { FILM_DURATION } from "@/content/film";
@@ -31,7 +31,7 @@ export function Evening() {
       <header className="evn__hd" data-reveal>
         <div className="evn__title">
           <p className="evn__k">
-            <span className="chap">02</span>The evening
+            <span className="chap">02</span>The symposium
           </p>
           <h2 id="evn-h" className="evn__h">
             Thursday 3 December.
@@ -79,8 +79,8 @@ export function Evening() {
                 <span className="evn__time">{a.time ?? ""}</span>
                 <span className="evn__dot" aria-hidden="true" />
                 <span className="evn__what">
+                  {a.kind ? <span className="evn__kind">{a.kind}</span> : null}
                   <span className="evn__t">{a.t}</span>
-                  {a.d ? <span className="evn__d">{a.d}</span> : null}
                 </span>
                 <span className="evn__side">
                   {a.tag ? <em className="evn__tag">{a.tag}</em> : null}
@@ -90,14 +90,20 @@ export function Evening() {
           </ol>
         </div>
 
-        <aside className="evn__orgs" aria-label="Who is behind the evening" data-reveal>
+        <aside className="evn__orgs" aria-label="Who is behind the symposium" data-reveal>
           <p className="evn__lab">Who is behind it</p>
           {organisers.map((o, k) => (
             <div key={o.name} className="evn__org">
               <p className="evn__role">{o.role}</p>
               <p className="evn__name">
-                {k === 0 ? <ViaMagusMark className="evn__mark" /> : null}
-                {o.name}
+                {o.logo === "mavericks" ? (
+                  <MavericksLogo className="evn__logo" height={26} />
+                ) : (
+                  <>
+                    {k === 0 ? <ViaMagusMark className="evn__mark" /> : null}
+                    {o.name}
+                  </>
+                )}
               </p>
               <p className="evn__oline">{o.line}</p>
             </div>
@@ -107,7 +113,7 @@ export function Evening() {
           </p>
         </aside>
       </div>
-      <Handoff to="theme">What makes it worth the evening?</Handoff>
+      <Handoff to="theme">Why should your centre be in the room?</Handoff>
     </section>
   );
 }
