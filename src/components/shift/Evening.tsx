@@ -1,6 +1,5 @@
 import { agenda, agendaNote, contactEmail, organisers } from "@/content/event";
 import { ViaMagusMark } from "@/components/Brand";
-import { cta } from "@/content/story";
 
 /**
  * The evening — from the brochure. A doorway of light that opens as the
@@ -40,12 +39,13 @@ export function Evening() {
     <section id="evening" className="evg" data-tone="dark" data-act="evening" aria-labelledby="evg-h">
       <div className="evg__hd" data-reveal>
         <div className="evg__hl">
-          <p className="evg__k">The evening</p>
+          <p className="evg__k">
+            <span className="chap">06</span>The evening
+          </p>
           <h2 id="evg-h" className="evg__h">
             Thursday 3 December.
             <span>From 3:30 PM · T-Hub, Hyderabad</span>
           </h2>
-          <p className="evg__lede">An invite-only evening for Hyderabad’s GCC leaders and decision-makers.</p>
         </div>
         <Doorway />
       </div>
@@ -84,12 +84,6 @@ export function Evening() {
               <p className="evg__oline">{o.line}</p>
             </div>
           ))}
-          <a className="btn btn--shift evg__btn" href="/register">
-            {cta.primary}{" "}
-            <span className="btn__arr" aria-hidden="true">
-              →
-            </span>
-          </a>
           <p className="evg__mail">
             Questions? <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
           </p>

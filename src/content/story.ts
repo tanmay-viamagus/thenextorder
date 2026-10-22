@@ -139,43 +139,12 @@ export const invite = {
 export const theme = {
   kicker: "Why this event",
   headline: "AI is reshaping how GCCs hire, build and lead.",
-  lede: "One evening for Hyderabad’s GCC leaders on how centres are thinking about the next 10 to 20 years — as AI and the coming wave of superintelligence reshape talent, technology and leadership.",
-  horizon: ["Today", "+10 years", "+20 years"],
+  lede: "One evening for Hyderabad’s GCC leaders on how centres are thinking about the next 10 to 20 years.",
+  /** the headline's three verbs, each with the brochure's topics — nothing more */
   shifts: [
-    {
-      k: "talent",
-      word: "Talent",
-      line: "Roles are changing. New ones are emerging.",
-      note: "Which roles your centre will need — and which it will grow into.",
-      topics: ["Roles that are changing", "Roles that are emerging", "Skills GCCs will need"],
-      host: { name: "select by Viamagus", line: "Talent partner for GCCs" },
-      today: "The roles you hire for",
-      next: "Roles change. New ones appear.",
-    },
-    {
-      k: "technology",
-      word: "Technology",
-      line: "Agentic workforces, led by people.",
-      note: "Rethinking how technology gets built when agents do the work and humans lead and oversee it.",
-      topics: ["Building systems with AI", "Agentic workforces", "Human oversight"],
-      host: { name: "Synthia AI and Velocity AI", line: "Two ways to put AI to work" },
-      today: "People do the work",
-      next: "Agents do the work. People lead it.",
-    },
-    {
-      k: "leadership",
-      word: "Leadership",
-      line: "Sound decisions about AI.",
-      note: "How leaders adapt to make AI decisions they can stand behind.",
-      topics: ["How leaders adapt", "Becoming AI decision-makers"],
-      host: { name: "AI upskilling", line: "For GCC leaders" },
-      today: "Many AI options",
-      next: "One sound call, owned by a leader.",
-    },
-  ],
-  expect: [
-    { n: "01", t: "Leadership panels and discussions", d: "Two leadership panels. Topics and speakers to be announced." },
-    { n: "02", t: "Networking with Hyderabad’s GCC leaders", d: "From arrivals at 3:30 PM through cocktails and the networking dinner." },
+    { k: "talent", word: "Talent", verb: "Hire", topics: ["Roles that are changing", "Roles that are emerging", "Skills GCCs will need"] },
+    { k: "technology", word: "Technology", verb: "Build", topics: ["Building systems with AI", "Agentic workforces", "Human oversight"] },
+    { k: "leadership", word: "Leadership", verb: "Lead", topics: ["How leaders adapt", "Becoming AI decision-makers"] },
   ],
 };
 

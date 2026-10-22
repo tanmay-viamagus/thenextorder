@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import {
   SelectWordmark,
   SynthiaLogo,
@@ -13,7 +14,6 @@ import {
   invite,
   positioning,
   practices,
-  theme,
 } from "@/content/story";
 import { FILM_DURATION } from "@/content/film";
 import { Chrome, Reveal, ShiftTitle } from "./Interactive";
@@ -61,14 +61,14 @@ export function Site() {
           <a href="#theme" data-for="theme">
             Why this event
           </a>
-          <a href="#evening" data-for="evening">
-            The evening
-          </a>
           <a href="#evolve" data-for="evolve">
             How a GCC evolves
           </a>
           <a href="#practices" data-for="practices">
             The hosts
+          </a>
+          <a href="#evening" data-for="evening">
+            The evening
           </a>
         </nav>
         <div className="hdr__end">
@@ -92,7 +92,14 @@ export function Site() {
         >
           <div className="hero__l">
             <p className="hero__meta">
-              Organised by ViaMagus · with {knownFacts.partner}
+              {statusLine()
+                .split(" · ")
+                .map((part, k) => (
+                  <Fragment key={part}>
+                    {k ? " · " : ""}
+                    <span className="hero__metap">{part}</span>
+                  </Fragment>
+                ))}
             </p>
             <h1 id="hero-h" className="sr-only">
               The NEXT Order — an invitation from ViaMagus for Hyderabad’s GCC
@@ -100,8 +107,8 @@ export function Site() {
             </h1>
             <ShiftTitle lines={["THE ", "NEXT", "ORDER."]} cutLine={2} />
             <p className="hero__line">
-              The next order of talent, technology and leadership — for
-              Hyderabad’s GCC leaders and decision-makers.
+              An invite-only evening for Hyderabad’s GCC leaders on how AI is
+              reshaping the way GCCs hire, build and lead.
             </p>
             <div className="hero__cta">
               <a className="btn btn--shift btn--lg" href="/register">
@@ -112,16 +119,14 @@ export function Site() {
               </a>
             </div>
             <p className="hero__note">
-              An invite-only evening · {statusLine()}
+              By invitation · Organised by {knownFacts.host} with{" "}
+              {knownFacts.partner}
             </p>
           </div>
         </section>
 
         {/* ------------------------------------------------ WHY THIS EVENT · the theme */}
         <Theme />
-
-        {/* ------------------------------------------------ THE EVENING · agenda and details (from the brochure) */}
-        <Evening />
 
         {/* ------------------------------------------------ THE NAME · GIC → GCC → ? (split-flap, plays in view) */}
         <NameBoard />
@@ -140,7 +145,9 @@ export function Site() {
         >
           <div className="eco__top">
             <div className="eco__hd" data-reveal>
-              <p className="eco__k">Hosted by ViaMagus</p>
+              <p className="eco__k">
+                <span className="chap">04</span>Hosted by ViaMagus
+              </p>
               <h2 id="eco-h" className="eco__h">
                 Three hands.
                 <br />
@@ -203,42 +210,42 @@ export function Site() {
               );
             })}
           </div>
-          {/* select — Build-Operate-Transfer */}
-          <div className="bot" data-reveal>
-            <p className="bot__k">{positioning.bot.k}</p>
-            <p className="bot__t">{positioning.bot.title}</p>
-            <p className="bot__l">{positioning.bot.line}</p>
-            <ol className="bot__s">
-              {positioning.bot.steps.map((st, k) => (
-                <li
-                  key={st.k}
-                  className={`bot__st bot__st--${st.k}`}
-                  style={{ ["--k" as string]: k }}
-                >
-                  <span className="bot__when">{st.when}</span>
-                  <span className="bot__word">{st.word}</span>
-                  <span className="bot__d">{st.d}</span>
-                </li>
-              ))}
-            </ol>
-            <a className="bot__a" href="/register?interest=bot">
-              <span>Ask about Build-Operate-Transfer</span>
-              <span className="pnl__arr" aria-hidden="true">
-                →
-              </span>
-            </a>
-          </div>
-          {/* for the leaders themselves */}
-          <div className="prog" data-reveal>
-            <p className="prog__k">{positioning.programme.k}</p>
-            <p className="prog__t">{positioning.programme.title}</p>
-            <p className="prog__l">{positioning.programme.line}</p>
-            <a className="prog__a" href="/register?interest=programme">
-              <span>Ask about it at the event</span>
-              <span className="pnl__arr" aria-hidden="true">
-                →
-              </span>
-            </a>
+          {/* two more ways in — the same grid, the same language as the panels */}
+          <div className="more" data-reveal>
+            <article className="more__c more__c--bot" aria-labelledby="bot-h">
+              <p className="pnl__n">{positioning.bot.k}</p>
+              <h3 id="bot-h" className="more__t">
+                {positioning.bot.title}
+              </h3>
+              <ol className="more__steps">
+                {positioning.bot.steps.map((st) => (
+                  <li key={st.k}>
+                    <span className="more__when">{st.when}</span>
+                    <b>{st.word}</b>
+                    <span>{st.d}</span>
+                  </li>
+                ))}
+              </ol>
+              <a className="pnl__room" href="/register?interest=bot">
+                <span>Ask about Build-Operate-Transfer</span>
+                <span className="pnl__arr" aria-hidden="true">
+                  →
+                </span>
+              </a>
+            </article>
+            <article className="more__c more__c--prog" aria-labelledby="prog-h">
+              <p className="pnl__n">{positioning.programme.k}</p>
+              <h3 id="prog-h" className="more__t">
+                {positioning.programme.title}.
+              </h3>
+              <p className="more__l">{positioning.programme.line}</p>
+              <a className="pnl__room" href="/register?interest=programme">
+                <span>Ask about AI training</span>
+                <span className="pnl__arr" aria-hidden="true">
+                  →
+                </span>
+              </a>
+            </article>
           </div>
           <p className="eco__close" data-reveal>
             {convergence}
@@ -254,7 +261,9 @@ export function Site() {
         >
           <div className="fl__head">
             <div>
-              <p className="fl__k">The film · {filmLength}</p>
+              <p className="fl__k">
+                <span className="chap">05</span>The film · {filmLength}
+              </p>
               <h2 id="fl-h" className="fl__h">
                 See what’s changing.
               </h2>
@@ -277,7 +286,10 @@ export function Site() {
           </div>
         </section>
 
-        {/* ------------------------------------------------ CLOSING · the next hour */}
+        {/* ------------------------------------------------ THE EVENING · agenda and organisers (from the brochure) */}
+        <Evening />
+
+        {/* ------------------------------------------------ CLOSING · your place */}
         <section
           id="request"
           className="close"
@@ -287,15 +299,13 @@ export function Site() {
         >
           <div className="close__grid">
             <div className="close__copy">
-              <p className="close__k">The NEXT Order</p>
+              <p className="close__k">
+                <span className="chap">07</span>Your place
+              </p>
               <h2 id="register-h" className="close__h">
                 Find your place in the conversation.
               </h2>
-              <p className="close__who">{invite.summary}</p>
-              <p className="close__who close__who--b">{invite.who}</p>
-              <p className="close__exp">
-                {theme.expect.map((e) => e.t).join(" · ")}
-              </p>
+              <p className="close__who">{invite.who}</p>
               <ol className="steps">
                 <li>
                   <b>01</b>
@@ -319,10 +329,6 @@ export function Site() {
                   </span>
                 </li>
               </ol>
-              <p className="close__note">
-                {statusLine()} · Hosted by {knownFacts.host} with{" "}
-                {knownFacts.partner}
-              </p>
             </div>
             <InviteForm source="site" />
           </div>
