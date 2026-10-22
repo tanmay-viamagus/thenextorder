@@ -39,6 +39,10 @@ export function Evening() {
               </span>
             ))}
           </p>
+          <p className="evn__table">
+            On the table: how GCCs hire, build and lead as AI reshapes them, over
+            the next 10 to 20 years.
+          </p>
         </div>
         <Doorway />
       </header>

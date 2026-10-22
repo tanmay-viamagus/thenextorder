@@ -5,7 +5,6 @@ import {
   VelocityWordmark,
   ViaMagusLogo,
 } from "@/components/Brand";
-import { HandsClock } from "@/components/clock/Clock";
 import { FilmButton } from "@/components/film/FilmOverlay";
 import { contactEmail, event, knownFacts, officialLinks, statusLine } from "@/content/event";
 import {
@@ -36,15 +35,6 @@ const MARK = {
   synthia: () => <SynthiaLogo height={28} />,
   select: SelectWordmark,
 };
-/** which of the three shifts each practice answers */
-const ANSWERS = { velocity: "build", synthia: "lead", select: "hire" };
-
-const HAND = {
-  velocity: "The second hand",
-  synthia: "The minute hand",
-  select: "The hour hand",
-};
-
 const filmLength = `${Math.floor(FILM_DURATION / 60)}:${String(FILM_DURATION % 60).padStart(2, "0")}`;
 
 /** The date, time and place, broken only between the parts. */
@@ -112,8 +102,7 @@ export function Site() {
             </h1>
             <ShiftTitle lines={["THE ", "NEXT", "ORDER."]} cutLine={2} />
             <p className="hero__line">
-              An invite-only evening for Hyderabad’s GCC leaders on how AI is
-              reshaping the way GCCs hire, build and lead.
+              The next order of talent, technology and leadership.
             </p>
             <div className="hero__cta">
               <a className="btn btn--shift btn--lg" href="/register">
@@ -124,8 +113,8 @@ export function Site() {
               </a>
             </div>
             <p className="hero__note">
-              By invitation · Organised by {knownFacts.host} with{" "}
-              {knownFacts.partner}
+              An invite-only evening for Hyderabad’s GCC leaders · Organised
+              by {knownFacts.host} with {knownFacts.partner}
             </p>
           </div>
         </section>
@@ -140,7 +129,7 @@ export function Site() {
         <Theme />
 
 
-        {/* ------------------------------------------------ THREE HANDS, ONE CLOCK */}
+        {/* ------------------------------------------------ THE ANSWER · hire → build → operate */}
         <section
           id="practices"
           className="eco"
@@ -154,20 +143,17 @@ export function Site() {
                 <span className="chap">03</span>The answer · Hosted by ViaMagus
               </p>
               <h2 id="eco-h" className="eco__h">
-                Three hands.
-                <br />
-                One clock.
+                Hire. Build. Operate.
               </h2>
               <p className="eco__lede">
-                For each shift, a practice.{" "}
-                <span className="k-x">ViaMagus Select</span> for how you
-                hire. <span className="k-v">Velocity AI</span> for how you
-                build. <span className="k-s">Synthia AI</span> for how you
-                lead with AI.
+                Three connected practices that help an enterprise become
+                AI-native: <span className="k-x">ViaMagus Select</span> for
+                technology talent, <span className="k-v">Velocity AI</span> for
+                AI-speed product engineering, and{" "}
+                <span className="k-s">Synthia AI</span> for governed AI
+                workflows.
               </p>
-              <p className="eco__hands">{positioning.lede}</p>
             </div>
-            <HandsClock label="A live clock in India time. Its second hand is Velocity AI, its minute hand Synthia AI and its hour hand ViaMagus Select, all pinned on the ViaMagus mark." />
           </div>
           <div className="pnls" data-reveal>
             {practices.map((p) => {
@@ -181,12 +167,7 @@ export function Site() {
                   data-practice={p.key}
                   aria-labelledby={`${p.key}-h`}
                 >
-                  <p className="pnl__n">
-                    <span>{HAND[p.key]}</span>
-                    <span className="ans">
-                      Answers <b>{ANSWERS[p.key]}</b>
-                    </span>
-                  </p>
+                  <p className="pnl__n">{p.cap}</p>
                   <h3 id={`${p.key}-h`} className="pnl__verb">
                     {p.verb}.<span className="sr-only"> {p.name}</span>
                   </h3>
@@ -226,12 +207,7 @@ export function Site() {
           {/* two more ways in — the same grid, the same language as the panels */}
           <div className="more" data-reveal>
             <article className="more__c more__c--bot" aria-labelledby="bot-h">
-              <p className="pnl__n">
-                <span>{positioning.bot.k}</span>
-                <span className="ans">
-                  Answers <b>hire</b>
-                </span>
-              </p>
+              <p className="pnl__n">{positioning.bot.k}</p>
               <h3 id="bot-h" className="more__t">
                 {positioning.bot.title}
               </h3>
@@ -252,12 +228,7 @@ export function Site() {
               </a>
             </article>
             <article className="more__c more__c--prog" aria-labelledby="prog-h">
-              <p className="pnl__n">
-                <span>{positioning.programme.k}</span>
-                <span className="ans">
-                  Answers <b>lead</b>
-                </span>
-              </p>
+              <p className="pnl__n">{positioning.programme.k}</p>
               <h3 id="prog-h" className="more__t">
                 {positioning.programme.title}.
               </h3>

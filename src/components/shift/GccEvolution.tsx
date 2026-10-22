@@ -54,7 +54,6 @@ export const STAGES = [
   },
 ] as const;
 
-const SELECT_URL = "https://www.viamagusselect.ai/";
 const G = 560; // ground
 
 /* ---------------------------------------------------------------- drawing parts */
@@ -703,27 +702,6 @@ export function GccEvolution() {
 
         <div className="evo__art">
           <Scene />
-          {/* the capability gap: an annotation in the sky above HQ, from the ownership shift */}
-          <aside
-            className={`evo__gap${i >= 3 ? " is-on" : ""}`}
-            aria-hidden={i < 3}
-          >
-            <p className="evo__gapk">The capability gap</p>
-            <p className="evo__gapp">
-              The talent that sets up a centre isn’t always the talent that
-              takes it to the next level. <b>ViaMagus Select</b> brings
-              engineer-vetted specialist talent for what comes next.
-            </p>
-            <a
-              href={SELECT_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              tabIndex={i >= 3 ? 0 : -1}
-            >
-              Meet ViaMagus Select ↗
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>
-          </aside>
         </div>
 
         {/* the five stages, set on the ground line */}
