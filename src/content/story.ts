@@ -14,7 +14,7 @@
 export type Evidence = { figure: string; finding: string; source: string; date: string; url: string };
 
 export const description =
-  "An invitation from ViaMagus to Hyderabad’s GCC leaders: a conversation about where global centres go next — what they own, the value they create and the capabilities they’ll need — and how AI and the coming wave of superintelligence are reshaping talent, technology and leadership.";
+  "The NEXT Order: an invite-only evening for Hyderabad’s GCC leaders and decision-makers on the next order of talent, technology and leadership. Thursday 3 December 2026, from 3:30 PM, at T-Hub, Hyderabad. Organised by ViaMagus with Hyderabad Mavericks.";
 
 export const tagline = "Where was your centre, where is it now — and where could it go next?";
 
@@ -125,11 +125,11 @@ export const cta = { primary: "Request your place", submit: "Request my place" }
 
 export const invite = {
   line: "An invitation for Hyderabad’s GCC leaders.",
-  who: "For GCC CEOs and MDs, site leaders, technology and engineering leaders, CHROs and talent leaders.",
+  who: "For GCC heads and site leaders; CTOs, CIOs and engineering leaders; CHROs and talent leaders.",
   what: "A ViaMagus event on where global centres go next: what they own, the value they create and the capabilities they’ll need.",
   /** the what, in one sentence — used where there's room for only one */
   summary:
-    "A ViaMagus leadership event in Hyderabad on how AI and the coming wave of superintelligence are reshaping talent, technology and leadership — and where global centres go next.",
+    "An invite-only evening at T-Hub, Hyderabad, for GCC leaders and decision-makers — on how AI is reshaping how GCCs hire, build and lead.",
   /** added from the event brief */
   theme:
     "This edition explores how AI and the coming wave of superintelligence are reshaping talent, technology and leadership — for GCC leaders and decision-makers across Hyderabad.",
@@ -137,9 +137,9 @@ export const invite = {
 
 /* ---------------------------------------------------------------- the theme (from the event brief) */
 export const theme = {
-  kicker: "What the room will explore",
-  headline: "The next decade is being decided now.",
-  lede: "AI — and the coming wave of superintelligence — is reshaping how GCCs hire, build and lead. The NEXT Order brings Hyderabad’s GCC leaders together to think it through.",
+  kicker: "Why this event",
+  headline: "AI is reshaping how GCCs hire, build and lead.",
+  lede: "One evening for Hyderabad’s GCC leaders on how centres are thinking about the next 10 to 20 years — as AI and the coming wave of superintelligence reshape talent, technology and leadership.",
   horizon: ["Today", "+10 years", "+20 years"],
   shifts: [
     {
@@ -147,6 +147,8 @@ export const theme = {
       word: "Talent",
       line: "Roles are changing. New ones are emerging.",
       note: "Which roles your centre will need — and which it will grow into.",
+      topics: ["Roles that are changing", "Roles that are emerging", "Skills GCCs will need"],
+      host: { name: "select by Viamagus", line: "Talent partner for GCCs" },
       today: "The roles you hire for",
       next: "Roles change. New ones appear.",
     },
@@ -155,6 +157,8 @@ export const theme = {
       word: "Technology",
       line: "Agentic workforces, led by people.",
       note: "Rethinking how technology gets built when agents do the work and humans lead and oversee it.",
+      topics: ["Building systems with AI", "Agentic workforces", "Human oversight"],
+      host: { name: "Synthia AI and Velocity AI", line: "Two ways to put AI to work" },
       today: "People do the work",
       next: "Agents do the work. People lead it.",
     },
@@ -163,14 +167,17 @@ export const theme = {
       word: "Leadership",
       line: "Sound decisions about AI.",
       note: "How leaders adapt to make AI decisions they can stand behind.",
+      topics: ["How leaders adapt", "Becoming AI decision-makers"],
+      host: { name: "AI upskilling", line: "For GCC leaders" },
       today: "Many AI options",
       next: "One sound call, owned by a leader.",
     },
   ],
+  /** from the brochure */
+  who: ["GCC heads and site leaders", "CTOs, CIOs and engineering leaders", "CHROs and talent leaders"],
   expect: [
-    { n: "01", t: "Leadership discussions", d: "Candid conversations between the people running Hyderabad’s GCCs." },
-    { n: "02", t: "Preparing for the next 10–20 years", d: "Perspectives on how GCCs are getting ready for what comes next." },
-    { n: "03", t: "Networking across Hyderabad’s GCCs", d: "Time with leaders and decision-makers from across Hyderabad’s GCC community." },
+    { n: "01", t: "Leadership panels and discussions", d: "Two leadership panels. Topics and speakers to be announced." },
+    { n: "02", t: "Networking with Hyderabad’s GCC leaders", d: "From arrivals at 3:30 PM through cocktails and the networking dinner." },
   ],
 };
 
@@ -179,18 +186,18 @@ export const positioning = {
   lede: "ViaMagus builds technology platforms and solutions for large MNCs and GCCs. ViaMagus Select brings the talent and hiring support to scale them.",
   programme: {
     k: "For leaders",
-    title: "The AI leadership programme",
-    line: "Upskilling today’s leaders to become confident AI decision-makers.",
+    title: "AI training",
+    line: "Upskills leaders to become AI decision-makers.",
   },
-  /* ViaMagus Select’s BOT model — wording from viamagusselect.ai (the eight-week programme, 12 months, month 13) */
+  /* Build-Operate-Transfer — the brochure’s words */
   bot: {
-    k: "ViaMagus Select · The BOT model",
-    title: "Build. Operate. Transfer.",
-    line: "A team for your centre, built by ViaMagus Select and handed over to you.",
+    k: "select · Build-Operate-Transfer",
+    title: "The GCC before your GCC.",
+    line: "We stand up and run your India team until your GCC is ready, then it transfers to you.",
     steps: [
-      { k: "build", word: "Build", when: "8 weeks", d: "Engineers trained in an eight-week AI-native programme." },
-      { k: "operate", word: "Operate", when: "12 months", d: "The team works with you while it stays with ViaMagus Select." },
-      { k: "transfer", word: "Transfer", when: "Month 13", d: "The team moves onto your payroll — no conversion fee." },
+      { k: "build", word: "Build", when: "8 weeks", d: "We stand up your India team — engineers AI-native in eight weeks." },
+      { k: "operate", word: "Operate", when: "Until you’re ready", d: "We run it until your GCC is ready." },
+      { k: "transfer", word: "Transfer", when: "Then", d: "It transfers to you." },
     ],
   },
 };

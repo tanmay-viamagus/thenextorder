@@ -2346,7 +2346,7 @@ html:not(.js) .eras__stage {
   position: absolute;
   inset: 0;
   transform-origin: left;
-  animation: sc-fill 5.4s linear forwards;
+  animation: sc-fill 3.8s linear forwards;
 }
 
 .sc__bar--velocity .sc__fill {
@@ -2395,22 +2395,19 @@ html:not(.js) .eras__stage {
 }
 
 .sc .hc[data-hl] .hc-hand {
-  transition: opacity 0.5s, filter 0.5s;
+  transition: opacity 0.5s;
 }
 
 .sc .hc[data-hl="velocity"] .hc-hand--velocity {
   opacity: 1;
-  filter: drop-shadow(0 0 10px var(--vel-cyan));
 }
 
 .sc .hc[data-hl="synthia"] .hc-hand--synthia {
   opacity: 1;
-  filter: drop-shadow(0 0 12px var(--syn-bright));
 }
 
 .sc .hc[data-hl="select"] .hc-hand--select {
   opacity: 1;
-  filter: drop-shadow(0 0 12px var(--sel-amber));
 }
 
 /* the story: each line arrives in turn */
@@ -2431,11 +2428,11 @@ html:not(.js) .eras__stage {
 }
 
 .sc__story > :nth-child(5) {
-  animation-delay: 2.1s;
+  animation-delay: 0.9s;
 }
 
 .sc__story > :nth-child(6) {
-  animation-delay: 2.3s;
+  animation-delay: 1s;
 }
 
 @keyframes sc-up {
@@ -2539,7 +2536,7 @@ html:not(.js) .eras__stage {
   font-weight: 600;
   letter-spacing: -0.03em;
   color: rgba(252, 253, 255, 0.85);
-  animation: bt-dim 1.4s var(--ease-out) 0.5s both;
+  animation: bt-dim 0.9s var(--ease-out) 0.25s both;
 }
 
 .bt__from::after {
@@ -2551,7 +2548,7 @@ html:not(.js) .eras__stage {
   height: 4px;
   background: var(--magenta);
   transform-origin: left;
-  animation: bt-strike 0.35s var(--ease) 0.9s both;
+  animation: bt-strike 0.3s var(--ease) 0.5s both;
 }
 
 .bt__to {
@@ -2559,7 +2556,7 @@ html:not(.js) .eras__stage {
   font-weight: 800;
   letter-spacing: -0.05em;
   color: var(--vel-cyan);
-  animation: bt-slam 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) 1.15s both;
+  animation: bt-slam 0.45s cubic-bezier(0.2, 1.4, 0.4, 1) 0.65s both;
 }
 
 @keyframes bt-dim {
@@ -2600,7 +2597,7 @@ html:not(.js) .eras__stage {
   color: var(--ink);
   transform: rotate(-2deg);
   box-shadow: 0 24px 40px -20px rgba(0, 0, 0, 0.7);
-  animation: bt-doc 0.6s var(--ease-out) 0.3s both;
+  animation: bt-doc 0.5s var(--ease-out) 0.15s both;
 }
 
 @keyframes bt-doc {
@@ -2636,7 +2633,7 @@ html:not(.js) .eras__stage {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ink-2);
-  animation: bt-dim 1.8s linear 0.6s both;
+  animation: bt-dim 1s linear 0.35s both;
 }
 
 .bt__stamp {
@@ -2649,7 +2646,7 @@ html:not(.js) .eras__stage {
   font: 800 1.5rem/1 var(--font);
   text-transform: uppercase;
   transform: rotate(-9deg);
-  animation: bt-stamp 0.45s cubic-bezier(0.3, 1.6, 0.4, 1) 1.3s both;
+  animation: bt-stamp 0.4s cubic-bezier(0.3, 1.6, 0.4, 1) 0.8s both;
 }
 
 @keyframes bt-stamp {
@@ -2672,7 +2669,7 @@ html:not(.js) .eras__stage {
   letter-spacing: -0.05em;
   color: var(--sel-amber);
   font-variant-numeric: tabular-nums;
-  animation: count 1.4s cubic-bezier(0.6, 0, 0.2, 1) 0.6s both;
+  animation: count 0.9s cubic-bezier(0.6, 0, 0.2, 1) 0.3s both;
 }
 
 .bt__n::after {
@@ -2695,11 +2692,11 @@ html:not(.js) .eras__stage {
 }
 
 .bt__a {
-  animation: bt-out 0.35s 1.9s both;
+  animation: bt-out 0.3s 1.15s both;
 }
 
 .bt__b {
-  animation: sc-up 0.5s var(--ease-out) 2s both;
+  animation: sc-up 0.45s var(--ease-out) 1.25s both;
 }
 
 @keyframes bt-out {
@@ -6403,4 +6400,504 @@ html:not(.js) .nb {
   position: relative;
   min-height: 100svh;
   height: auto;
+}
+
+/* ==========================================================================
+   The brochure — why this event, the evening, the hosts, the partner
+   ========================================================================== */
+html[data-act="evening"] .hdr__nav a[data-for="evening"]::after,
+html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
+  transform: none;
+}
+
+/* why this event: the topics under each shift, and who brings it to the room */
+.th__topics {
+  display: grid;
+  gap: 6px;
+  margin-top: 16px;
+  padding: 0;
+  list-style: none;
+}
+
+.th__topics li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 0.98rem;
+  font-weight: 500;
+}
+
+.th__topics li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  background: var(--purple);
+}
+
+.th__host {
+  display: grid;
+  gap: 2px;
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--line-2);
+  font-size: 0.94rem;
+  color: var(--ink-2);
+}
+
+.th__host span {
+  font: 600 0.7rem/1.4 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--purple);
+}
+
+.th__host b {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.th__room {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: clamp(28px, 4vw, 64px);
+}
+
+.th__room .th__exp {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.th__who {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  list-style: none;
+}
+
+.th__who li {
+  font-size: clamp(1.05rem, 1.3vw, 1.3rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+@media (max-width: 900px) {
+  .th__room,
+  .th__room .th__exp {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------------------------------------------------------------- the evening */
+.evg {
+  position: relative;
+  padding: clamp(84px, 13vh, 150px) var(--gutter) clamp(84px, 12vh, 140px);
+  background: #050408;
+  color: var(--white);
+  overflow: hidden;
+}
+
+.evg__hd {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  align-items: end;
+  gap: clamp(24px, 4vw, 64px);
+}
+
+.evg__k,
+.evg__pk {
+  font: 600 0.76rem/1 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lilac);
+}
+
+.evg__h {
+  margin-top: 18px;
+  font-size: var(--h-display);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  font-weight: 800;
+}
+
+.evg__h span {
+  display: block;
+  margin-top: 14px;
+  font-size: 0.42em;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--lilac);
+}
+
+.evg__lede {
+  margin-top: 22px;
+  max-width: 30em;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: rgba(252, 253, 255, 0.76);
+}
+
+/* the doorway: a lit opening, its door swinging in, light across the floor */
+.evg-door {
+  position: relative;
+  justify-self: center;
+  width: min(100%, 300px);
+  aspect-ratio: 3 / 4;
+  perspective: 900px;
+}
+
+.evg-door__glow {
+  position: absolute;
+  inset: -20% -40%;
+  background: radial-gradient(40% 45% at 50% 50%, rgba(160, 80, 230, 0.32), transparent 70%);
+}
+
+.evg-door__open {
+  position: absolute;
+  left: 34%;
+  width: 32%;
+  top: 8%;
+  bottom: 28%;
+  background: linear-gradient(180deg, #e9c6fb 0%, #f6e8ff 60%, #ffffff 100%);
+  box-shadow: 0 0 60px rgba(233, 198, 251, 0.45);
+}
+
+.evg-door__leaf {
+  position: absolute;
+  left: 34%;
+  width: 32%;
+  top: 8%;
+  bottom: 28%;
+  background: linear-gradient(90deg, #1b1622, #0c0a10);
+  border: 1px solid rgba(252, 253, 255, 0.14);
+  transform-origin: left center;
+  transform: rotateY(-68deg);
+}
+
+.evg-door__floor {
+  position: absolute;
+  left: -30%;
+  right: -30%;
+  top: 72%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(252, 253, 255, 0.28), transparent);
+}
+
+.evg-door__beam {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 72%;
+  bottom: -6%;
+  background: linear-gradient(180deg, rgba(246, 232, 255, 0.5), transparent 90%);
+  clip-path: polygon(34% 0, 66% 0, 100% 100%, 0 100%);
+}
+
+/* the agenda and the facts */
+.evg__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr);
+  gap: clamp(32px, 5vw, 88px);
+  align-items: start;
+  margin-top: clamp(56px, 9vh, 96px);
+}
+
+.evg__pk span {
+  display: block;
+  margin-top: 10px;
+  font: 400 0.92rem/1.4 var(--font);
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgba(252, 253, 255, 0.6);
+}
+
+.evg__agenda {
+  position: relative;
+  max-width: 720px;
+  margin-top: 28px;
+  padding: 0;
+  list-style: none;
+}
+
+/* the line, lit from the top: afternoon into the evening */
+.evg__agenda::before {
+  content: "";
+  position: absolute;
+  left: 100px;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--white), var(--lilac) 45%, rgba(102, 8, 169, 0.9) 85%, rgba(102, 8, 169, 0.3));
+}
+
+.evg__it {
+  position: relative;
+  display: grid;
+  grid-template-columns: 72px 16px minmax(0, 1fr) auto;
+  gap: 0 22px;
+  align-items: start;
+  padding: 14px 0;
+}
+
+.evg__time {
+  padding-top: 5px;
+  font: 600 0.78rem/1.2 var(--mono);
+  letter-spacing: 0.08em;
+  color: var(--lilac);
+  text-align: right;
+}
+
+.evg__dot {
+  margin-top: 7px;
+  margin-left: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--lilac);
+  background: #050408;
+}
+
+.evg__it--arrive .evg__dot {
+  background: var(--white);
+  border-color: var(--white);
+  box-shadow: 0 0 0 6px rgba(252, 253, 255, 0.12);
+}
+
+.evg__body {
+  display: grid;
+  gap: 6px;
+}
+
+.evg__t {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 12px;
+  font-size: clamp(1.15rem, 1.6vw, 1.55rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.evg__tag {
+  font: 600 0.66rem/1 var(--mono);
+  font-style: normal;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 8px;
+  border: 1px solid var(--magenta);
+  color: var(--magenta);
+}
+
+.evg__d {
+  max-width: 28em;
+  font-size: 0.98rem;
+  line-height: 1.45;
+  color: rgba(252, 253, 255, 0.66);
+}
+
+/* the book, under wraps */
+.evg-book {
+  position: relative;
+  display: block;
+  width: 64px;
+  height: 86px;
+  margin-top: 2px;
+  transform: rotate(-4deg);
+}
+
+.evg-book__spine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+  background: #3a0a63;
+}
+
+.evg-book__cover {
+  position: absolute;
+  inset: 0 0 0 8px;
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  padding: 0 10px;
+  background: linear-gradient(150deg, var(--purple), #2f0050);
+  overflow: hidden;
+}
+
+.evg-book__t {
+  height: 6px;
+  background: var(--lilac);
+  filter: blur(3px);
+}
+
+.evg-book__t--s {
+  width: 60%;
+  opacity: 0.7;
+}
+
+.evg-book__band {
+  position: absolute;
+  left: -6px;
+  right: -6px;
+  top: 58%;
+  padding: 3px 0;
+  background: var(--magenta);
+  color: #050408;
+  font: 700 0.6rem/1 var(--mono);
+  letter-spacing: 0.1em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.evg__card {
+  position: sticky;
+  top: calc(var(--hdr) + 24px);
+  padding: 28px;
+  border: 1px solid rgba(252, 253, 255, 0.16);
+  border-top: 3px solid var(--lilac);
+  background: rgba(252, 253, 255, 0.03);
+}
+
+.evg__btn {
+  width: 100%;
+  margin-top: 24px;
+  justify-content: space-between;
+}
+
+.evg__mail {
+  margin-top: 14px;
+  font-size: 0.92rem;
+  color: rgba(252, 253, 255, 0.66);
+}
+
+.evg__mail a {
+  color: var(--lilac);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .evg__hd[data-reveal] .evg-door__leaf {
+    transform: rotateY(0deg);
+  }
+  .js .evg__hd[data-reveal] .evg-door__open,
+  .js .evg__hd[data-reveal] .evg-door__beam,
+  .js .evg__hd[data-reveal] .evg-door__glow {
+    opacity: 0.15;
+  }
+  .js .evg__hd.is-in .evg-door__leaf {
+    transform: rotateY(-68deg);
+    transition: transform 1.6s var(--ease-out) 0.4s;
+  }
+  .js .evg__hd.is-in .evg-door__open,
+  .js .evg__hd.is-in .evg-door__beam,
+  .js .evg__hd.is-in .evg-door__glow {
+    opacity: 1;
+    transition: opacity 1.4s var(--ease-out) 0.6s;
+  }
+  .js .evg__it[data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  .js .evg__it.is-in {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.6s var(--ease-out) calc(var(--i) * 0.06s), transform 0.8s var(--ease-out) calc(var(--i) * 0.06s);
+  }
+  .js .evg__card[data-reveal] {
+    opacity: 0;
+  }
+  .js .evg__card.is-in {
+    opacity: 1;
+    transition: opacity 0.8s var(--ease-out) 0.2s;
+  }
+}
+
+@media (max-width: 960px) {
+  .evg__hd,
+  .evg__grid {
+    grid-template-columns: 1fr;
+  }
+  .evg-door {
+    order: -1;
+    justify-self: start;
+    width: 150px;
+  }
+  .evg__card {
+    position: static;
+  }
+}
+
+@media (max-width: 560px) {
+  .evg__agenda::before {
+    left: 6px;
+  }
+  .evg__it {
+    grid-template-columns: 14px minmax(0, 1fr) auto;
+    gap: 4px 16px;
+  }
+  .evg__time {
+    grid-column: 2;
+    grid-row: 1;
+    padding-top: 0;
+    text-align: left;
+  }
+  .evg__time:empty {
+    display: none;
+  }
+  .evg__dot {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+  .evg__it--arrive .evg__dot {
+    margin-top: 2px;
+  }
+  .evg__body {
+    grid-column: 2;
+  }
+  .evg-book {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    width: 48px;
+    height: 64px;
+  }
+}
+
+/* organised by — beside the agenda, one line each */
+.evg__org {
+  display: grid;
+  gap: 8px;
+  padding-bottom: 20px;
+}
+
+.evg__org + .evg__org {
+  padding-top: 20px;
+  border-top: 1px solid rgba(252, 253, 255, 0.12);
+}
+
+.evg__role {
+  font: 600 0.7rem/1 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(252, 253, 255, 0.6);
+}
+
+.evg__name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.evg__mark {
+  width: 34px;
+  height: auto;
+  color: var(--white);
+}
+
+.evg__oline {
+  font-size: 0.96rem;
+  line-height: 1.45;
+  color: rgba(252, 253, 255, 0.7);
 }
