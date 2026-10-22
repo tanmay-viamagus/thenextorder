@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { theme } from "@/content/story";
-import { Handoff } from "./Story";
+import { ChapterLabel, Handoff } from "./Story";
 
 /**
  * Why attend — the headline is the interface. "AI is reshaping how GCCs
@@ -66,8 +66,7 @@ export function Theme() {
     >
       <div className="why__top" data-reveal>
         <p className="th__k">
-          <span className="chap">03</span>
-          {theme.kicker}
+          <ChapterLabel id="theme" />
         </p>
         <p className="why__lede">{theme.lede}</p>
       </div>
@@ -136,7 +135,7 @@ export function Theme() {
         {theme.close[0]} <span>{theme.close[1]}</span>
       </p>
 
-      <Handoff to="request">Places are by invitation. Will you be in the room?</Handoff>
+      <Handoff to="request" lead="Places are by invitation." ask="Will you be in the room?" />
     </section>
   );
 }

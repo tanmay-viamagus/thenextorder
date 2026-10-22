@@ -1,6 +1,6 @@
 import { agenda, agendaNote, contactEmail, event, organisers } from "@/content/event";
 import { MavericksLogo, ViaMagusMark } from "@/components/Brand";
-import { Handoff } from "./Story";
+import { ChapterLabel, Handoff } from "./Story";
 import { FilmButton } from "@/components/film/FilmOverlay";
 import { FILM_DURATION } from "@/content/film";
 
@@ -31,7 +31,7 @@ export function Evening() {
       <header className="evn__hd" data-reveal>
         <div className="evn__title">
           <p className="evn__k">
-            <span className="chap">02</span>The symposium
+            <ChapterLabel id="evening" />
           </p>
           <h2 id="evn-h" className="evn__h">
             Thursday 3 December.
@@ -113,7 +113,7 @@ export function Evening() {
           </p>
         </aside>
       </div>
-      <Handoff to="theme">Why should your centre be in the room?</Handoff>
+      <Handoff to="theme" lead="Panels, a talk, a live demo and dinner." ask="Why should your centre be in the room?" />
     </section>
   );
 }

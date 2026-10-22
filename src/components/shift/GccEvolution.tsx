@@ -1,6 +1,7 @@
 "use client";
 
 import { useStepScroll } from "./useStepScroll";
+import { ChapterLabel } from "./Story";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 /**
@@ -662,7 +663,7 @@ export function GccEvolution() {
         <header className="evo__hd">
           <div className="evo__title">
             <p className="evo__k">
-              <span className="chap">01</span>How GCCs are evolving
+              <ChapterLabel id="evolve" />
             </p>
             <h2 id="evo-h" className="evo__h">
               From a presence in India <br />

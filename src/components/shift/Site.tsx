@@ -7,7 +7,7 @@ import { InviteForm } from "./InviteForm";
 import { GccEvolution } from "./GccEvolution";
 import { Theme } from "./Theme";
 import { Evening } from "./Evening";
-import { Handoff, StoryNav, StoryStrip } from "./Story";
+import { ChapterLabel, Handoff, StoryNav, StoryStrip } from "./Story";
 
 /** The date, time and place, broken only between the parts. */
 function Facts({ extra }: { extra?: string | null }) {
@@ -89,7 +89,7 @@ export function Site() {
             The ring of years (YearCycle) is kept in components/clock for later use. */}
         <GccEvolution />
         <div className="handoff-band" data-tone="light">
-          <Handoff to="evening">The next order is being written now. Where will your centre be?</Handoff>
+          <Handoff to="evening" lead="The next order is being written now." ask="Where will your centre be?" />
         </div>
 
 
@@ -110,7 +110,7 @@ export function Site() {
           <div className="close__grid">
             <div className="close__copy">
               <p className="close__k">
-                <span className="chap">04</span>Your place
+                <ChapterLabel id="request" />
               </p>
               <h2 id="register-h" className="close__h">
                 Find your place in the conversation.
