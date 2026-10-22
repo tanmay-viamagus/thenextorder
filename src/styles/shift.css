@@ -6391,13 +6391,13 @@ html:not(.js) .why__bar {
 }
 
 .evo__k,
-.evn__k,
+.eco__k,
 .close__k {
   color: var(--purple);
 }
 
 .th__k,
-.eco__k,
+.evn__k,
 .fl__k {
   color: var(--lilac);
 }
@@ -6534,85 +6534,7 @@ html:not(.js) .why__v {
   }
 }
 
-/* NEXT — the evening on paper; the doorway is a small night scene */
-.evn {
-  background: var(--paper);
-  color: var(--ink);
-}
-
-.evn__hd {
-  border-bottom-color: var(--line-2);
-}
-
-.evn__lab {
-  color: var(--purple);
-  border-bottom-color: var(--line-2);
-}
-
-.evn__lab span {
-  color: var(--ink-2);
-}
-
-.evn__sub {
-  color: var(--purple);
-}
-
-.evn-door {
-  background: #07060b;
-  overflow: hidden;
-}
-
-.evn__list::before {
-  background: linear-gradient(180deg, var(--ink), var(--purple) 60%, rgba(102, 8, 169, 0.5));
-}
-
-.evn__row {
-  border-bottom-color: var(--line);
-}
-
-.evn__time {
-  color: var(--purple);
-}
-
-.evn__dot {
-  border-color: var(--purple);
-  background: var(--paper);
-}
-
-.evn__row--arrive .evn__dot {
-  background: var(--ink);
-  border-color: var(--ink);
-  box-shadow: 0 0 0 6px rgba(14, 13, 18, 0.08);
-}
-
-.evn__d,
-.evn__oline,
-.evn__mail {
-  color: var(--ink-2);
-}
-
-.evn__tag {
-  border-color: var(--purple);
-  color: var(--purple);
-}
-
-.evn__org {
-  border-bottom-color: var(--line);
-}
-
-.evn__role {
-  color: var(--ink-2);
-}
-
-.evn__mark {
-  color: var(--ink);
-}
-
-.evn__mail a {
-  color: var(--purple);
-}
-
-/* the film is the hosts' last word, on the same ground */
+/* the film leads into the evening, on the same dark ground */
 .fl {
   background: var(--wall);
   border-top: 1px solid rgba(252, 253, 255, 0.1);
@@ -6642,4 +6564,130 @@ html:not(.js) .why__v {
   .evn-door__beam {
     clip-path: polygon(44% 0, 56% 0, 78% 100%, 22% 100%);
   }
+}
+
+/* ==========================================================================
+   Current state → problem → answer → the event
+   ========================================================================== */
+
+/* the problem points to its answer */
+.why__ans {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+  margin-top: 18px;
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--white);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(252, 253, 255, 0.3);
+  padding-bottom: 4px;
+  transition: border-color 0.3s;
+}
+
+.why__ans span {
+  font: 600 0.68rem/1 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lilac);
+}
+
+.why__ans i {
+  font-style: normal;
+  color: var(--lilac);
+}
+
+@media (hover: hover) {
+  .why__ans:hover {
+    border-color: var(--lilac);
+  }
+}
+
+/* THE ANSWER — the practices on paper */
+.eco {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.eco__lede {
+  color: var(--ink);
+  max-width: 26em;
+}
+
+.eco__hands {
+  color: var(--ink-2);
+}
+
+.eco .k-v {
+  color: #00747a;
+}
+
+.eco .k-s {
+  color: #7a1fc9;
+}
+
+.eco .k-x {
+  color: #8f5a00;
+}
+
+.eco__close {
+  color: var(--ink);
+}
+
+.eco__next {
+  margin-top: 22px;
+  text-align: center;
+}
+
+.eco__next a {
+  font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+  font-weight: 700;
+  color: var(--purple);
+  text-decoration: none;
+  border-bottom: 1.5px solid currentColor;
+}
+
+/* every practice names the shift it answers, in the problem's own mark */
+.pnl__n {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px 14px;
+}
+
+.ans {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.ans b {
+  position: relative;
+  font: 800 1.15rem/1 var(--font);
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
+}
+
+.ans b::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 2px;
+  background: var(--magenta);
+}
+
+/* the dark panels keep their own light ink now the section sits on paper */
+.pnl--velocity,
+.pnl--synthia {
+  color: var(--white);
+}
+
+/* the ivory panel, set apart from the paper it now sits on */
+.pnl--select {
+  background: var(--sheet);
+  box-shadow: inset 1px 0 0 var(--line), inset -1px 0 0 var(--line), inset 0 -1px 0 var(--line);
 }

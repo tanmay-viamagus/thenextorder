@@ -36,6 +36,9 @@ const MARK = {
   synthia: () => <SynthiaLogo height={28} />,
   select: SelectWordmark,
 };
+/** which of the three shifts each practice answers */
+const ANSWERS = { velocity: "build", synthia: "lead", select: "hire" };
+
 const HAND = {
   velocity: "The second hand",
   synthia: "The minute hand",
@@ -68,16 +71,16 @@ export function Site() {
         <ViaMagusLogo href={officialLinks.viamagus} />
         <nav className="hdr__nav" aria-label="Sections">
           <a href="#evolve" data-for="evolve">
-            Then
+            How GCCs evolved
           </a>
           <a href="#theme" data-for="theme">
-            Now
-          </a>
-          <a href="#evening" data-for="evening">
-            Next: 3 Dec
+            What’s new
           </a>
           <a href="#practices" data-for="practices">
-            The hosts
+            The answer
+          </a>
+          <a href="#evening" data-for="evening">
+            3 December
           </a>
         </nav>
         <div className="hdr__end">
@@ -136,21 +139,19 @@ export function Site() {
         {/* ------------------------------------------------ WHY THIS EVENT · the theme */}
         <Theme />
 
-        {/* ------------------------------------------------ THE EVENING · what happens, and who is behind it */}
-        <Evening />
 
         {/* ------------------------------------------------ THREE HANDS, ONE CLOCK */}
         <section
           id="practices"
           className="eco"
-          data-tone="dark"
+          data-tone="light"
           data-act="practices"
           aria-labelledby="eco-h"
         >
           <div className="eco__top">
             <div className="eco__hd" data-reveal>
               <p className="eco__k">
-                <span className="chap">04</span>Hosted by ViaMagus
+                <span className="chap">03</span>The answer · Hosted by ViaMagus
               </p>
               <h2 id="eco-h" className="eco__h">
                 Three hands.
@@ -158,9 +159,11 @@ export function Site() {
                 One clock.
               </h2>
               <p className="eco__lede">
-                <span className="k-v">Velocity AI</span> keeps the seconds.{" "}
-                <span className="k-s">Synthia AI</span> keeps the minutes.{" "}
-                <span className="k-x">ViaMagus Select</span> keeps the hours.
+                For each shift, a practice.{" "}
+                <span className="k-x">ViaMagus Select</span> for how you
+                hire. <span className="k-v">Velocity AI</span> for how you
+                build. <span className="k-s">Synthia AI</span> for how you
+                lead with AI.
               </p>
               <p className="eco__hands">{positioning.lede}</p>
             </div>
@@ -173,11 +176,17 @@ export function Site() {
               return (
                 <article
                   key={p.key}
+                  id={`pnl-${p.key}`}
                   className={`pnl pnl--${p.key}`}
                   data-practice={p.key}
                   aria-labelledby={`${p.key}-h`}
                 >
-                  <p className="pnl__n">{HAND[p.key]}</p>
+                  <p className="pnl__n">
+                    <span>{HAND[p.key]}</span>
+                    <span className="ans">
+                      Answers <b>{ANSWERS[p.key]}</b>
+                    </span>
+                  </p>
                   <h3 id={`${p.key}-h`} className="pnl__verb">
                     {p.verb}.<span className="sr-only"> {p.name}</span>
                   </h3>
@@ -217,7 +226,12 @@ export function Site() {
           {/* two more ways in — the same grid, the same language as the panels */}
           <div className="more" data-reveal>
             <article className="more__c more__c--bot" aria-labelledby="bot-h">
-              <p className="pnl__n">{positioning.bot.k}</p>
+              <p className="pnl__n">
+                <span>{positioning.bot.k}</span>
+                <span className="ans">
+                  Answers <b>hire</b>
+                </span>
+              </p>
               <h3 id="bot-h" className="more__t">
                 {positioning.bot.title}
               </h3>
@@ -238,7 +252,12 @@ export function Site() {
               </a>
             </article>
             <article className="more__c more__c--prog" aria-labelledby="prog-h">
-              <p className="pnl__n">{positioning.programme.k}</p>
+              <p className="pnl__n">
+                <span>{positioning.programme.k}</span>
+                <span className="ans">
+                  Answers <b>lead</b>
+                </span>
+              </p>
               <h3 id="prog-h" className="more__t">
                 {positioning.programme.title}.
               </h3>
@@ -253,6 +272,12 @@ export function Site() {
           </div>
           <p className="eco__close" data-reveal>
             {convergence}
+          </p>
+          <p className="eco__next" data-reveal>
+            <a href="#evening">
+              See it, and the people behind it, on 3 December{" "}
+              <span aria-hidden="true">↓</span>
+            </a>
           </p>
         </section>
 
@@ -286,6 +311,9 @@ export function Site() {
             </div>
           </div>
         </section>
+
+        {/* ------------------------------------------------ THE EVENING · what happens, and who is behind it */}
+        <Evening />
 
         {/* ------------------------------------------------ CLOSING · your place */}
         <section
