@@ -3441,211 +3441,16 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
 /* ==========================================================================
    Why this event — the headline is the interface
    ========================================================================== */
-.why {
-  position: relative;
-  padding: clamp(84px, 13vh, 150px) var(--gutter) clamp(84px, 12vh, 140px);
-  background: var(--paper);
-  color: var(--ink);
-  overflow: hidden;
-}
-
-.why__top {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 24px 48px;
-  flex-wrap: wrap;
-}
-
-.why__top .th__k {
-  margin-bottom: 0;
-}
-
-.why__lede {
-  max-width: 30em;
-  font-size: clamp(1rem, 1.2vw, 1.2rem);
-  line-height: 1.5;
-  color: var(--ink-2);
-}
-
-.why__h {
-  max-width: 13.5em;
-  margin-top: clamp(28px, 5vh, 56px);
-  font-size: clamp(2.7rem, 6.6vw, 8rem);
-  line-height: 0.96;
-  letter-spacing: -0.055em;
-  font-weight: 800;
-}
 
 /* the verbs: outlines until chosen; the chosen one is cut by the title's line */
-.why__v {
-  position: relative;
-  display: inline-block;
-  padding: 0 0.04em;
-  margin: 0 -0.04em;
-  border: 0;
-  background: none;
-  font: inherit;
-  letter-spacing: inherit;
-  /* waiting verbs: pale ink (an outline would show the font's overlapping contours) */
-  color: rgba(14, 13, 18, 0.5);
-  cursor: pointer;
-  transition: color 0.3s var(--ease-out);
-}
-
-.why__v::after {
-  content: "";
-  position: absolute;
-  left: -0.06em;
-  right: -0.06em;
-  top: 54%;
-  height: max(3px, 0.045em);
-  background: var(--magenta);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s var(--ease-out);
-}
-
-.why__v.is-on {
-  color: var(--purple);
-}
-
-.why__v.is-on::after {
-  transform: scaleX(1);
-}
-
-@media (hover: hover) {
-  .why__v:not(.is-on):hover {
-    color: rgba(14, 13, 18, 0.66);
-  }
-}
-
-.why__v:focus-visible {
-  outline: 3px solid var(--purple);
-  outline-offset: 6px;
-}
 
 /* no script: the sentence reads as plain, filled text */
-html:not(.js) .why__v {
-  color: var(--ink);
-  cursor: default;
-}
 
 /* progress: three segments, the live one filling while it plays by itself */
-.why__bar {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: clamp(36px, 6vh, 64px);
-}
-
-.why__bar span {
-  position: relative;
-  height: 2px;
-  background: var(--line);
-  overflow: hidden;
-}
-
-.why__bar span.is-done,
-.why__bar span.is-on {
-  background: var(--line-2);
-}
-
-.why__bar i {
-  position: absolute;
-  inset: 0;
-  background: var(--purple);
-  transform-origin: left;
-}
-
-.why.is-auto .why__bar i {
-  animation: sc-fill 2.6s linear forwards;
-}
-
-html:not(.js) .why__bar {
-  display: none;
-}
 
 /* the topics: all three always on screen; the active column is brighter */
-.why__cols {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: 0;
-}
-
-.why__col {
-  padding: 22px clamp(0px, 1.2vw, 18px) 8px 0;
-}
-
-.why__pk {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  font: 600 0.76rem/1 var(--mono);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-2);
-  transition: color 0.3s;
-}
-
-.why__pk span {
-  font-size: 1.9rem;
-  letter-spacing: -0.04em;
-  font-weight: 500;
-}
-
-.why__tops {
-  display: grid;
-  margin-top: 16px;
-  padding: 0;
-  list-style: none;
-}
-
-.why__tops li {
-  padding: 10px 0;
-  border-bottom: 1px solid var(--line);
-  font-size: clamp(1.15rem, 1.6vw, 1.6rem);
-  line-height: 1.15;
-  letter-spacing: -0.025em;
-  font-weight: 700;
-  color: var(--ink-2);
-  transition: color 0.3s;
-}
-
-.why__tops li:first-child {
-  border-top: 1px solid var(--line);
-}
-
-.why__col.is-on .why__pk {
-  color: var(--purple);
-}
-
-.why__col.is-on .why__tops li {
-  color: var(--ink);
-}
 
 /* the bar sits on the columns: one segment over each */
-.why__bar {
-  margin-top: clamp(36px, 6vh, 64px);
-}
-
-@media (max-width: 760px) {
-  .why__cols {
-    grid-template-columns: 1fr;
-    gap: 0;
-    margin-top: 32px;
-  }
-  .why__bar {
-    display: none;
-  }
-  .why__col {
-    border-top: 1px solid var(--line-2);
-  }
-  .why__col.is-on {
-    border-top: 1px solid var(--purple);
-  }
-}
 
 /* ==========================================================================
    The evening — one grid
@@ -3997,10 +3802,6 @@ html:not(.js) .why__bar {
   line-height: 1.1;
 }
 
-.why__nw {
-  white-space: nowrap;
-}
-
 @media (max-width: 600px) {
   .evn__sub {
     flex-direction: column;
@@ -4053,12 +3854,7 @@ html:not(.js) .why__bar {
   letter-spacing: -0.05em;
 }
 
-.why__h {
-  font-size: var(--h-feature);
-}
-
 /* one rhythm for the chapters that scroll freely */
-.why,
 .evn,
 .close {
   padding-top: clamp(88px, 13vh, 150px);
@@ -4261,78 +4057,11 @@ html:not(.js) .why__bar {
 }
 
 /* why attend: the brochure's question, set large; the theme beneath it */
-.why__q {
-  margin-top: clamp(28px, 5vh, 56px);
-  max-width: 24ch;
-  font-size: var(--h-section);
-  font-weight: 800;
-  line-height: 0.98;
-  letter-spacing: -0.05em;
-}
-
-.why__q span {
-  display: block;
-  color: var(--purple);
-}
-
-.why .why__h {
-  margin-top: clamp(28px, 5vh, 52px);
-  font-size: clamp(1.7rem, 3.4vw, 3.4rem);
-}
-
-.why__lists {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 32px clamp(24px, 4vw, 72px);
-  margin-top: clamp(56px, 9vh, 96px);
-}
-
-.why__lh {
-  padding-bottom: 14px;
-  border-bottom: 2px solid var(--ink);
-  font: 500 0.75rem/1 var(--mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--purple);
-}
-
-.why__lists ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.why__lists li {
-  padding: 13px 0;
-  border-bottom: 1px solid var(--line-2);
-  font-size: clamp(1.05rem, 1.4vw, 1.3rem);
-  font-weight: 600;
-  letter-spacing: -0.015em;
-}
-
-.why__close {
-  margin-top: clamp(56px, 9vh, 96px);
-  font-size: clamp(1.8rem, 3.6vw, 3.4rem);
-  font-weight: 700;
-  line-height: 1.04;
-  letter-spacing: -0.04em;
-}
-
-.why__close span {
-  display: block;
-  color: var(--purple);
-}
 
 /* every tap target at least 44px */
 .btn--sm,
 .chip span {
   min-height: 44px;
-}
-
-.why__v::before {
-  content: "";
-  position: absolute;
-  inset: min(-0.12em, -9px) -0.04em;
 }
 
 .hdr .vm-logo {
@@ -4352,9 +4081,6 @@ html:not(.js) .why__bar {
   }
   .hero__mav {
     height: 20px;
-  }
-  .why__lists {
-    grid-template-columns: minmax(0, 1fr);
   }
   /* nothing set below 12px */
   .evo__ledger dt,
@@ -4619,7 +4345,6 @@ html:not(.js) .why__bar {
   margin-top: 0;
 }
 
-.why,
 .evn {
   padding-bottom: var(--chapter-end);
 }
@@ -4727,7 +4452,6 @@ html:not(.js) .why__bar {
     transition: none;
   }
 }
-
 
 /* ==========================================================================
    V2 opening (/v2) — one centred column: the shape, the title, one line,
@@ -4932,3 +4656,163 @@ html:not(.js) .why__bar {
   visibility: visible;
 }
 
+
+/* ==========================================================================
+   03 Why attend — the brochure's "Why this event", on one grid
+   ========================================================================== */
+.wa {
+  --wa-gap: clamp(64px, 10vh, 112px);
+  padding: clamp(88px, 13vh, 150px) var(--gutter) var(--chapter-end);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.wa .th__k {
+  margin: 0;
+}
+
+/* the question, and the theme beside it */
+.wa__head {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 24px clamp(24px, 3vw, 56px);
+  margin-top: clamp(22px, 3.4vh, 36px);
+}
+
+.wa__h {
+  font-size: var(--h-section);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+}
+
+.wa__h span {
+  display: block;
+  color: var(--purple);
+}
+
+.wa__lede {
+  max-width: 34ch;
+  font-size: clamp(1.02rem, 1.25vw, 1.2rem);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.wa__lede strong {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* three columns, and everything below sits on the same three */
+.wa__cols,
+.wa__pair {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px clamp(24px, 3vw, 56px);
+  margin: var(--wa-gap) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wa__col,
+.wa__pair > div {
+  padding-top: 22px;
+  border-top: 1px solid var(--line-2);
+}
+
+.wa__pair > div:last-child {
+  grid-column: span 2;
+}
+
+.wa__n {
+  font: 500 0.75rem/1 var(--mono);
+  letter-spacing: 0.1em;
+  color: var(--ink-2);
+}
+
+.wa__t {
+  margin-top: 14px;
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.wa__t span {
+  color: var(--magenta);
+}
+
+.wa__k {
+  font: 600 0.76rem/1 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--purple);
+}
+
+.wa__list {
+  display: grid;
+  gap: 12px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wa__list li {
+  position: relative;
+  padding-left: 22px;
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  line-height: 1.4;
+}
+
+/* the brochure's square bullet */
+.wa__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 7px;
+  height: 7px;
+  background: var(--purple);
+}
+
+.wa__close {
+  margin-top: var(--wa-gap);
+  font-size: clamp(1.8rem, 3.2vw, 3.1rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.wa__close span {
+  display: block;
+  color: var(--purple);
+}
+
+@media (max-width: 900px) {
+  .wa__head {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+  .wa__cols {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .wa__pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .wa__pair > div:last-child {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 759px) {
+  .wa {
+    --wa-gap: 56px;
+  }
+  .wa__cols,
+  .wa__pair {
+    gap: 32px;
+  }
+}

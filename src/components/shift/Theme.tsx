@@ -1,129 +1,59 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
 import { theme } from "@/content/story";
 import { ChapterLabel, Handoff } from "./Story";
 
 /**
- * Why attend — the headline is the interface. "AI is reshaping how GCCs
- * hire, build and lead": each verb is a button; the active one is cut by the
- * magenta line from the title. All three sets of topics (from the brochure)
- * are always on screen — nothing waits on the animation; the active column
- * is simply brighter. While on screen it moves through the three on its own;
- * pointing at a column or clicking a verb takes over. Reduced motion: no
- * auto-advance.
+ * Why attend — the final brochure's "Why this event" page, set for the
+ * screen: one question as the headline, the theme beside it, the three
+ * conversations as three equal columns, who it's for and what to expect,
+ * and the brochure's closing line. Nothing moves and nothing is greyed out:
+ * everything here is meant to be read.
  */
-const HOLD = 2600;
-
 export function Theme() {
-  const root = useRef<HTMLElement | null>(null);
-  const [i, setI] = useState(0);
-  const [auto, setAuto] = useState(true);
-  const [seen, setSeen] = useState(false);
-
-  useEffect(() => {
-    const el = root.current;
-    if (!el) return;
-    const io = new IntersectionObserver(([e]) => setSeen(e.isIntersecting), { threshold: 0.45 });
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!seen || !auto || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const t = window.setInterval(() => setI((n) => (n + 1) % theme.shifts.length), HOLD);
-    return () => window.clearInterval(t);
-  }, [seen, auto, i]);
-
-  const pick = (k: number) => {
-    setI(k);
-    setAuto(false);
-  };
-
-  const verb = (k: number) => {
-    const s = theme.shifts[k];
-    return (
-      <button
-        type="button"
-        className={`why__v${k === i ? " is-on" : ""}`}
-        aria-pressed={k === i}
-        aria-controls={`why-p-${s.k}`}
-        onClick={() => pick(k)}
-      >
-        {s.verb.toLowerCase()}
-      </button>
-    );
-  };
-
   return (
-    <section
-      id="theme"
-      ref={root}
-      className={`why${auto && seen ? " is-auto" : ""}`}
-      data-tone="light"
-      data-act="theme"
-      aria-labelledby="why-h"
-    >
-      <div className="why__top" data-reveal>
-        <p className="th__k">
-          <ChapterLabel id="theme" />
-        </p>
-        <p className="why__lede">{theme.lede}</p>
-      </div>
-
-      <h2 id="why-h" className="why__q" data-reveal>
-        {theme.question[0]} <span>{theme.question[1]}</span>
-      </h2>
-
-      <p className="why__h" data-reveal>
-        AI is reshaping how GCCs <span className="why__nw">{verb(0)},</span> {verb(1)} and{" "}
-        <span className="why__nw">{verb(2)}.</span>
+    <section id="theme" className="wa" data-tone="light" data-act="theme" aria-labelledby="wa-h">
+      <p className="th__k" data-reveal>
+        <ChapterLabel id="theme" />
       </p>
 
-      <div className="why__bar" aria-hidden="true">
-        {theme.shifts.map((s, k) => (
-          <span key={s.k} className={k === i ? "is-on" : k < i ? "is-done" : ""}>
-            {k === i ? <i key={`${i}-${auto}`} /> : null}
-          </span>
-        ))}
+      <div className="wa__head" data-reveal>
+        <h2 id="wa-h" className="wa__h">
+          {theme.question[0]} <span>{theme.question[1]}</span>
+        </h2>
+        <p className="wa__lede">
+          <strong>{theme.headline}</strong> {theme.lede}
+        </p>
       </div>
 
-      <div className="why__cols">
+      {/* the three conversations, as the brochure lists them */}
+      <ol className="wa__cols" data-reveal>
         {theme.shifts.map((s, k) => (
-          <div
-            key={s.k}
-            id={`why-p-${s.k}`}
-            className={`why__col${k === i ? " is-on" : ""}`}
-            onPointerEnter={(e) => {
-              if (e.pointerType === "mouse") pick(k);
-            }}
-          >
-            <p className="why__pk">
-              <span>0{k + 1}</span>
+          <li key={s.k} className="wa__col">
+            <p className="wa__n">0{k + 1}</p>
+            <h3 className="wa__t">
               {s.word}
-            </p>
-            <ul className="why__tops">
+              <span aria-hidden="true">.</span>
+            </h3>
+            <ul className="wa__list">
               {s.topics.map((t) => (
                 <li key={t}>{t}</li>
               ))}
             </ul>
-          </div>
+          </li>
         ))}
-      </div>
+      </ol>
 
-      {/* who it's for and what to expect — the brochure's two lists */}
-      <div className="why__lists" data-reveal>
+      <div className="wa__pair" data-reveal>
         <div>
-          <h3 className="why__lh">Who is this for</h3>
-          <ul>
+          <h3 className="wa__k">Who is this for</h3>
+          <ul className="wa__list">
             {theme.who.map((x) => (
               <li key={x}>{x}</li>
             ))}
           </ul>
         </div>
         <div>
-          <h3 className="why__lh">What to expect</h3>
-          <ul>
+          <h3 className="wa__k">What to expect</h3>
+          <ul className="wa__list">
             {theme.expect.map((x) => (
               <li key={x}>{x}</li>
             ))}
@@ -131,7 +61,7 @@ export function Theme() {
         </div>
       </div>
 
-      <p className="why__close" data-reveal>
+      <p className="wa__close" data-reveal>
         {theme.close[0]} <span>{theme.close[1]}</span>
       </p>
 
