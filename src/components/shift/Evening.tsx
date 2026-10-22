@@ -1,90 +1,98 @@
-import { agenda, agendaNote, contactEmail, organisers } from "@/content/event";
+import { agenda, agendaNote, contactEmail, event, organisers } from "@/content/event";
 import { ViaMagusMark } from "@/components/Brand";
 
 /**
- * The evening — from the brochure. A doorway of light that opens as the
- * section arrives (the brochure's cover), the tentative agenda as a lit line
- * running from 3:30 PM into the dinner, and who is behind the evening beside
- * it (the date and place are already in the heading — not repeated).
- * Only the start is timed; the rest stays "to be announced".
+ * The evening — from the brochure. One grid: the date and a doorway of light
+ * (the brochure's cover) on top; below, under one rule, the tentative agenda
+ * as evenly spaced rows on a single line, and who is behind the evening
+ * beside it, starting on the same line. Only the start is timed.
  */
 function Doorway() {
   return (
-    <div className="evg-door" aria-hidden="true">
-      <span className="evg-door__glow" />
-      <span className="evg-door__open" />
-      <span className="evg-door__leaf" />
-      <span className="evg-door__floor" />
-      <span className="evg-door__beam" />
+    <div className="evn-door" aria-hidden="true">
+      <span className="evn-door__glow" />
+      <span className="evn-door__open" />
+      <span className="evn-door__leaf" />
+      <span className="evn-door__floor" />
+      <span className="evn-door__beam" />
     </div>
   );
 }
 
-/** The book, still under wraps: a cover that stays blurred until the night. */
+/** The book, still under wraps. */
 function Book() {
   return (
-    <span className="evg-book" aria-hidden="true">
-      <span className="evg-book__spine" />
-      <span className="evg-book__cover">
-        <span className="evg-book__t" />
-        <span className="evg-book__t evg-book__t--s" />
+    <span className="evn-book" aria-hidden="true">
+      <span className="evn-book__spine" />
+      <span className="evn-book__cover">
+        <span className="evn-book__t" />
+        <span className="evn-book__t evn-book__t--s" />
       </span>
-      <span className="evg-book__band">3 Dec</span>
     </span>
   );
 }
 
 export function Evening() {
+  const sub = [event.time, [event.venue, event.city].filter(Boolean).join(", "), event.format].filter(Boolean);
   return (
-    <section id="evening" className="evg" data-tone="dark" data-act="evening" aria-labelledby="evg-h">
-      <div className="evg__hd" data-reveal>
-        <div className="evg__hl">
-          <p className="evg__k">
-            <span className="chap">02</span>The evening
+    <section id="evening" className="evn" data-tone="dark" data-act="evening" aria-labelledby="evn-h">
+      <header className="evn__hd" data-reveal>
+        <div className="evn__title">
+          <p className="evn__k">
+            <span className="chap">03</span>The evening
           </p>
-          <h2 id="evg-h" className="evg__h">
+          <h2 id="evn-h" className="evn__h">
             Thursday 3 December.
-            <span>From 3:30 PM · T-Hub, Hyderabad</span>
           </h2>
+          <p className="evn__sub">
+            {sub.map((x, k) => (
+              <span key={x}>
+                {k ? <i aria-hidden="true">·</i> : null}
+                {x}
+              </span>
+            ))}
+          </p>
         </div>
         <Doorway />
-      </div>
+      </header>
 
-      <div className="evg__grid">
-        <div className="evg__plan">
-          <p className="evg__pk">
-            Tentative agenda <span>{agendaNote.replace(/^Tentative\. /, "")}</span>
+      <div className="evn__body">
+        <div className="evn__agenda">
+          <p className="evn__lab">
+            Tentative agenda
+            <span>{agendaNote.replace(/^Tentative\. /, "")}</span>
           </p>
-          <ol className="evg__agenda">
+          <ol className="evn__list">
             {agenda.map((a, k) => (
-              <li key={a.k} className={`evg__it evg__it--${a.k}`} data-reveal style={{ ["--i" as string]: k }}>
-                <span className="evg__time">{a.time ?? ""}</span>
-                <span className="evg__dot" aria-hidden="true" />
-                <span className="evg__body">
-                  <span className="evg__t">
-                    {a.t}
-                    {a.tag ? <em className="evg__tag">{a.tag}</em> : null}
-                  </span>
-                  {a.d ? <span className="evg__d">{a.d}</span> : null}
+              <li key={a.k} className={`evn__row evn__row--${a.k}`} data-reveal style={{ ["--i" as string]: k }}>
+                <span className="evn__time">{a.time ?? ""}</span>
+                <span className="evn__dot" aria-hidden="true" />
+                <span className="evn__what">
+                  <span className="evn__t">{a.t}</span>
+                  {a.d ? <span className="evn__d">{a.d}</span> : null}
                 </span>
-                {a.k === "book" ? <Book /> : null}
+                <span className="evn__side">
+                  {a.k === "book" ? <Book /> : null}
+                  {a.tag ? <em className="evn__tag">{a.tag}</em> : null}
+                </span>
               </li>
             ))}
           </ol>
         </div>
 
-        <aside className="evg__card" data-reveal aria-label="Organised by">
+        <aside className="evn__orgs" aria-label="Who is behind the evening" data-reveal>
+          <p className="evn__lab">Who is behind it</p>
           {organisers.map((o, k) => (
-            <div key={o.name} className={`evg__org evg__org--${k}`}>
-              <p className="evg__role">{o.role}</p>
-              <p className="evg__name">
-                {k === 0 ? <ViaMagusMark className="evg__mark" /> : null}
+            <div key={o.name} className="evn__org">
+              <p className="evn__role">{o.role}</p>
+              <p className="evn__name">
+                {k === 0 ? <ViaMagusMark className="evn__mark" /> : null}
                 {o.name}
               </p>
-              <p className="evg__oline">{o.line}</p>
+              <p className="evn__oline">{o.line}</p>
             </div>
           ))}
-          <p className="evg__mail">
+          <p className="evn__mail">
             Questions? <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
           </p>
         </aside>

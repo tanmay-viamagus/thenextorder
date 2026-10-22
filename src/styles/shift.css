@@ -810,7 +810,6 @@ html:not(.js) .eras__stage {
   max-width: 32em;
 }
 
-
 /* ---------------------------------------------------------------- mechanisms */
 .mech {
   position: relative;
@@ -3644,7 +3643,6 @@ html:not(.js) .eras__stage {
   font-weight: 700;
 }
 
-
 .close__h {
   margin-top: 10px;
 }
@@ -5468,12 +5466,6 @@ html:not(.js) .evo__art .evo__gap {
 /* ==========================================================================
    The theme — what the room will explore (from the event brief)
    ========================================================================== */
-.th {
-  position: relative;
-  padding: clamp(90px, 13vh, 160px) var(--gutter) clamp(80px, 12vh, 140px);
-  background: var(--paper);
-  color: var(--ink);
-}
 
 .th__k {
   font: 500 0.74rem/1 var(--mono);
@@ -5483,65 +5475,9 @@ html:not(.js) .evo__art .evo__gap {
   margin-bottom: 18px;
 }
 
-.th__hd {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  grid-template-areas: "k k" "h l";
-  gap: 0 clamp(32px, 5vw, 96px);
-  align-items: end;
-}
-
-.th__hd .th__k {
-  grid-area: k;
-}
-
-.th__h {
-  grid-area: h;
-  font-size: clamp(2.6rem, 5vw, 6rem);
-  line-height: 0.92;
-  letter-spacing: -0.05em;
-  font-weight: 800;
-}
-
-.th__lede {
-  grid-area: l;
-  font-size: clamp(1.05rem, 1.3vw, 1.35rem);
-  line-height: 1.5;
-  color: var(--ink-2);
-  max-width: 30em;
-}
-
-
-
-
-
-
-
 /* the three shifts */
 
 /* motion: once, on arrival */
-@media (prefers-reduced-motion: no-preference) {
-  .js .th__hd[data-reveal] {
-    opacity: 0;
-    transform: translateY(26px);
-  }
-  .js .th__hd.is-in {
-    opacity: 1;
-    transform: none;
-    transition: opacity 0.8s var(--ease-out) calc(var(--i, 0) * 0.12s), transform 1s var(--ease-out) calc(var(--i, 0) * 0.12s);
-  }
-  
-  
-}
-
-@media (max-width: 900px) {
-  .th__hd {
-    grid-template-columns: 1fr;
-    grid-template-areas: "k" "h" "l";
-    gap: 14px;
-  }
-  
-}
 
 /* ---------------------------------------------------------------- the AI leadership programme */
 .eco__hands {
@@ -5552,8 +5488,6 @@ html:not(.js) .evo__art .evo__gap {
 }
 
 /* ---------------------------------------------------------------- the close: what to expect */
-
-
 
 .ftr__partner {
   font: 500 0.74rem/1.4 var(--mono);
@@ -5588,7 +5522,6 @@ html[data-act="evolve"] .hdr__nav a[data-for="evolve"]::after {
   --h-heading: clamp(2.4rem, 4.2vw, 4.8rem);
 }
 
-.th__h,
 .eco__h,
 .fl__h {
   font-size: var(--h-display);
@@ -5621,7 +5554,6 @@ html[data-act="evolve"] .hdr__nav a[data-for="evolve"]::after {
 
 /* the close: one paragraph, one line of expectations */
 
-
 /* the close: one measure for every line in the column */
 .close__copy > * {
   max-width: 30rem;
@@ -5641,13 +5573,11 @@ html[data-act="evolve"] .hdr__nav a[data-for="evolve"]::after {
 
 /* options and the call */
 
-
 /* motion: once, on arrival — today is there, the arrow runs, then next arrives */
 
 /* ---------------------------------------------------------------- ViaMagus Select · the BOT model */
 
 /* the timeline: three phases on one line, transfer at the end */
-
 
 /* the line ends at the hand-over */
 
@@ -5674,411 +5604,16 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
 /* why this event: the topics under each shift, and who brings it to the room */
 
 /* ---------------------------------------------------------------- the evening */
-.evg {
-  position: relative;
-  padding: clamp(84px, 13vh, 150px) var(--gutter) clamp(84px, 12vh, 140px);
-  background: #050408;
-  color: var(--white);
-  overflow: hidden;
-}
-
-.evg__hd {
-  display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-  align-items: end;
-  gap: clamp(24px, 4vw, 64px);
-}
-
-.evg__k,
-.evg__pk {
-  font: 600 0.76rem/1 var(--mono);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--lilac);
-}
-
-.evg__h {
-  margin-top: 18px;
-  font-size: var(--h-display);
-  line-height: 0.95;
-  letter-spacing: -0.045em;
-  font-weight: 800;
-}
-
-.evg__h span {
-  display: block;
-  margin-top: 14px;
-  font-size: 0.42em;
-  line-height: 1.1;
-  letter-spacing: -0.025em;
-  color: var(--lilac);
-}
-
 
 /* the doorway: a lit opening, its door swinging in, light across the floor */
-.evg-door {
-  position: relative;
-  justify-self: center;
-  width: min(100%, 300px);
-  aspect-ratio: 3 / 4;
-  perspective: 900px;
-}
-
-.evg-door__glow {
-  position: absolute;
-  inset: -20% -40%;
-  background: radial-gradient(40% 45% at 50% 50%, rgba(160, 80, 230, 0.32), transparent 70%);
-}
-
-.evg-door__open {
-  position: absolute;
-  left: 34%;
-  width: 32%;
-  top: 8%;
-  bottom: 28%;
-  background: linear-gradient(180deg, #e9c6fb 0%, #f6e8ff 60%, #ffffff 100%);
-  box-shadow: 0 0 60px rgba(233, 198, 251, 0.45);
-}
-
-.evg-door__leaf {
-  position: absolute;
-  left: 34%;
-  width: 32%;
-  top: 8%;
-  bottom: 28%;
-  background: linear-gradient(90deg, #1b1622, #0c0a10);
-  border: 1px solid rgba(252, 253, 255, 0.14);
-  transform-origin: left center;
-  transform: rotateY(-68deg);
-}
-
-.evg-door__floor {
-  position: absolute;
-  left: -30%;
-  right: -30%;
-  top: 72%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(252, 253, 255, 0.28), transparent);
-}
-
-.evg-door__beam {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  top: 72%;
-  bottom: -6%;
-  background: linear-gradient(180deg, rgba(246, 232, 255, 0.5), transparent 90%);
-  clip-path: polygon(34% 0, 66% 0, 100% 100%, 0 100%);
-}
 
 /* the agenda and the facts */
-.evg__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr);
-  gap: clamp(32px, 5vw, 88px);
-  align-items: start;
-  margin-top: clamp(56px, 9vh, 96px);
-}
-
-.evg__pk span {
-  display: block;
-  margin-top: 10px;
-  font: 400 0.92rem/1.4 var(--font);
-  letter-spacing: 0;
-  text-transform: none;
-  color: rgba(252, 253, 255, 0.6);
-}
-
-.evg__agenda {
-  position: relative;
-  max-width: 720px;
-  margin-top: 28px;
-  padding: 0;
-  list-style: none;
-}
 
 /* the line, lit from the top: afternoon into the evening */
-.evg__agenda::before {
-  content: "";
-  position: absolute;
-  left: 100px;
-  top: 10px;
-  bottom: 10px;
-  width: 2px;
-  background: linear-gradient(180deg, var(--white), var(--lilac) 45%, rgba(102, 8, 169, 0.9) 85%, rgba(102, 8, 169, 0.3));
-}
-
-.evg__it {
-  position: relative;
-  display: grid;
-  grid-template-columns: 72px 16px minmax(0, 1fr) auto;
-  gap: 0 22px;
-  align-items: start;
-  padding: 14px 0;
-}
-
-.evg__time {
-  padding-top: 5px;
-  font: 600 0.78rem/1.2 var(--mono);
-  letter-spacing: 0.08em;
-  color: var(--lilac);
-  text-align: right;
-}
-
-.evg__dot {
-  margin-top: 7px;
-  margin-left: 0;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  border: 2px solid var(--lilac);
-  background: #050408;
-}
-
-.evg__it--arrive .evg__dot {
-  background: var(--white);
-  border-color: var(--white);
-  box-shadow: 0 0 0 6px rgba(252, 253, 255, 0.12);
-}
-
-.evg__body {
-  display: grid;
-  gap: 6px;
-}
-
-.evg__t {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 6px 12px;
-  font-size: clamp(1.15rem, 1.6vw, 1.55rem);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-.evg__tag {
-  font: 600 0.66rem/1 var(--mono);
-  font-style: normal;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 5px 8px;
-  border: 1px solid var(--magenta);
-  color: var(--magenta);
-}
-
-.evg__d {
-  max-width: 28em;
-  font-size: 0.98rem;
-  line-height: 1.45;
-  color: rgba(252, 253, 255, 0.66);
-}
 
 /* the book, under wraps */
-.evg-book {
-  position: relative;
-  display: block;
-  width: 64px;
-  height: 86px;
-  margin-top: 2px;
-  transform: rotate(-4deg);
-}
-
-.evg-book__spine {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 8px;
-  background: #3a0a63;
-}
-
-.evg-book__cover {
-  position: absolute;
-  inset: 0 0 0 8px;
-  display: grid;
-  align-content: center;
-  gap: 6px;
-  padding: 0 10px;
-  background: linear-gradient(150deg, var(--purple), #2f0050);
-  overflow: hidden;
-}
-
-.evg-book__t {
-  height: 6px;
-  background: var(--lilac);
-  filter: blur(3px);
-}
-
-.evg-book__t--s {
-  width: 60%;
-  opacity: 0.7;
-}
-
-.evg-book__band {
-  position: absolute;
-  left: -6px;
-  right: -6px;
-  top: 58%;
-  padding: 3px 0;
-  background: var(--magenta);
-  color: #050408;
-  font: 700 0.6rem/1 var(--mono);
-  letter-spacing: 0.1em;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.evg__card {
-  position: sticky;
-  top: calc(var(--hdr) + 24px);
-  padding: 28px;
-  border: 1px solid rgba(252, 253, 255, 0.16);
-  border-top: 3px solid var(--lilac);
-  background: rgba(252, 253, 255, 0.03);
-}
-
-.evg__btn {
-  width: 100%;
-  margin-top: 24px;
-  justify-content: space-between;
-}
-
-.evg__mail {
-  margin-top: 14px;
-  font-size: 0.92rem;
-  color: rgba(252, 253, 255, 0.66);
-}
-
-.evg__mail a {
-  color: var(--lilac);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .js .evg__hd[data-reveal] .evg-door__leaf {
-    transform: rotateY(0deg);
-  }
-  .js .evg__hd[data-reveal] .evg-door__open,
-  .js .evg__hd[data-reveal] .evg-door__beam,
-  .js .evg__hd[data-reveal] .evg-door__glow {
-    opacity: 0.15;
-  }
-  .js .evg__hd.is-in .evg-door__leaf {
-    transform: rotateY(-68deg);
-    transition: transform 1.6s var(--ease-out) 0.4s;
-  }
-  .js .evg__hd.is-in .evg-door__open,
-  .js .evg__hd.is-in .evg-door__beam,
-  .js .evg__hd.is-in .evg-door__glow {
-    opacity: 1;
-    transition: opacity 1.4s var(--ease-out) 0.6s;
-  }
-  .js .evg__it[data-reveal] {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  .js .evg__it.is-in {
-    opacity: 1;
-    transform: none;
-    transition: opacity 0.6s var(--ease-out) calc(var(--i) * 0.06s), transform 0.8s var(--ease-out) calc(var(--i) * 0.06s);
-  }
-  .js .evg__card[data-reveal] {
-    opacity: 0;
-  }
-  .js .evg__card.is-in {
-    opacity: 1;
-    transition: opacity 0.8s var(--ease-out) 0.2s;
-  }
-}
-
-@media (max-width: 960px) {
-  .evg__hd,
-  .evg__grid {
-    grid-template-columns: 1fr;
-  }
-  .evg-door {
-    order: -1;
-    justify-self: start;
-    width: 150px;
-  }
-  .evg__card {
-    position: static;
-  }
-}
-
-@media (max-width: 560px) {
-  .evg__agenda::before {
-    left: 6px;
-  }
-  .evg__it {
-    grid-template-columns: 14px minmax(0, 1fr) auto;
-    gap: 4px 16px;
-  }
-  .evg__time {
-    grid-column: 2;
-    grid-row: 1;
-    padding-top: 0;
-    text-align: left;
-  }
-  .evg__time:empty {
-    display: none;
-  }
-  .evg__dot {
-    grid-column: 1;
-    grid-row: 1 / span 2;
-  }
-  .evg__it--arrive .evg__dot {
-    margin-top: 2px;
-  }
-  .evg__body {
-    grid-column: 2;
-  }
-  .evg-book {
-    grid-column: 3;
-    grid-row: 1 / span 2;
-    width: 48px;
-    height: 64px;
-  }
-}
 
 /* organised by — beside the agenda, one line each */
-.evg__org {
-  display: grid;
-  gap: 8px;
-  padding-bottom: 20px;
-}
-
-.evg__org + .evg__org {
-  padding-top: 20px;
-  border-top: 1px solid rgba(252, 253, 255, 0.12);
-}
-
-.evg__role {
-  font: 600 0.7rem/1 var(--mono);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(252, 253, 255, 0.6);
-}
-
-.evg__name {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 1.35rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.evg__mark {
-  width: 34px;
-  height: auto;
-  color: var(--white);
-}
-
-.evg__oline {
-  font-size: 0.96rem;
-  line-height: 1.45;
-  color: rgba(252, 253, 255, 0.7);
-}
 
 /* ==========================================================================
    One document — numbered chapters, Hire / Build / Lead, two more ways in
@@ -6099,105 +5634,8 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
 }
 
 /* why this event: the headline's three verbs, set large */
-.th__rows {
-  margin-top: clamp(56px, 9vh, 104px);
-  padding: 0;
-  list-style: none;
-  border-bottom: 1px solid var(--line-2);
-}
-
-.th__row {
-  display: grid;
-  grid-template-columns: minmax(110px, 0.55fr) minmax(0, 2fr) minmax(0, 1fr);
-  align-items: center;
-  gap: 0 clamp(20px, 3vw, 56px);
-  padding: clamp(14px, 2.6vh, 28px) 0;
-  border-top: 1px solid var(--line-2);
-}
-
-.th__idx {
-  font: 600 0.76rem/1 var(--mono);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--purple);
-}
-
-.th__verb {
-  font-size: clamp(4rem, 11.5vw, 12rem);
-  line-height: 0.84;
-  letter-spacing: -0.065em;
-  font-weight: 800;
-  white-space: nowrap;
-  transition: transform 0.6s var(--ease-out);
-}
-
-.th__fill {
-  /* room for the last glyph, which the tight tracking pushes past the box */
-  padding-right: 0.08em;
-  margin-right: -0.08em;
-  color: var(--ink);
-}
-
-.th__dot {
-  color: var(--purple);
-}
-
-.th__tops {
-  display: grid;
-  gap: 8px;
-  padding: 0;
-  list-style: none;
-  font-size: clamp(0.98rem, 1.1vw, 1.1rem);
-  line-height: 1.35;
-  color: var(--ink-2);
-}
-
-@media (hover: hover) {
-  .th__row:hover .th__verb {
-    transform: translateX(0.04em);
-  }
-  .th__row:hover .th__tops {
-    color: var(--ink);
-  }
-}
 
 /* each verb arrives as an outline and fills with ink, left to right */
-@media (prefers-reduced-motion: no-preference) {
-  .js .th__row[data-reveal] .th__fill {
-    color: transparent;
-    -webkit-text-stroke: 1.5px var(--ink);
-    background: linear-gradient(90deg, var(--ink) 50%, transparent 50%) 100% 0 / 200% 100% no-repeat;
-    -webkit-background-clip: text;
-    background-clip: text;
-  }
-  .js .th__row.is-in .th__fill {
-    background-position: 0 0;
-    transition: background-position 1.3s var(--ease) calc(0.25s + var(--i) * 0.18s);
-  }
-  .js .th__row[data-reveal] .th__dot,
-  .js .th__row[data-reveal] .th__tops {
-    opacity: 0;
-  }
-  .js .th__row.is-in .th__dot {
-    opacity: 1;
-    transition: opacity 0.3s calc(1.3s + var(--i) * 0.18s);
-  }
-  .js .th__row.is-in .th__tops {
-    opacity: 1;
-    transition: opacity 0.7s var(--ease-out) calc(0.6s + var(--i) * 0.18s);
-  }
-}
-
-@media (max-width: 760px) {
-  .th__row {
-    grid-template-columns: 1fr;
-    gap: 10px;
-    padding: 22px 0 24px;
-  }
-  .th__verb {
-    font-size: clamp(4.2rem, 24vw, 6.4rem);
-  }
-}
 
 /* two more ways in: the panel grid continues, in the panels' own language */
 .more {
@@ -6315,22 +5753,8 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   white-space: nowrap;
 }
 
-.evg__hd {
-  align-items: center;
-}
-
-.evg-door {
-  width: min(100%, 240px);
-}
-
 .close__who {
   max-width: 28rem;
-}
-
-@media (max-width: 560px) {
-  .evg__it {
-    padding-right: 10px;
-  }
 }
 
 /* ---------------------------------------------------------------- audit: the film as a band, the facts above the form, the event in the footer */
@@ -6368,4 +5792,629 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
 .ftr__partner a {
   color: var(--lilac);
   text-transform: none;
+}
+
+/* ==========================================================================
+   Why this event — the headline is the interface
+   ========================================================================== */
+.why {
+  position: relative;
+  padding: clamp(84px, 13vh, 150px) var(--gutter) clamp(84px, 12vh, 140px);
+  background: var(--paper);
+  color: var(--ink);
+  overflow: hidden;
+}
+
+.why__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 24px 48px;
+  flex-wrap: wrap;
+}
+
+.why__top .th__k {
+  margin-bottom: 0;
+}
+
+.why__lede {
+  max-width: 30em;
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.why__h {
+  max-width: 13.5em;
+  margin-top: clamp(28px, 5vh, 56px);
+  font-size: clamp(2.7rem, 6.6vw, 8rem);
+  line-height: 0.96;
+  letter-spacing: -0.055em;
+  font-weight: 800;
+}
+
+/* the verbs: outlines until chosen; the chosen one is cut by the title's line */
+.why__v {
+  position: relative;
+  display: inline-block;
+  padding: 0 0.04em;
+  margin: 0 -0.04em;
+  border: 0;
+  background: none;
+  font: inherit;
+  letter-spacing: inherit;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink);
+  cursor: pointer;
+  transition: color 0.45s var(--ease-out);
+}
+
+.why__v::after {
+  content: "";
+  position: absolute;
+  left: -0.06em;
+  right: -0.06em;
+  top: 54%;
+  height: max(3px, 0.045em);
+  background: var(--magenta);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease-out);
+}
+
+.why__v.is-on {
+  color: var(--purple);
+  -webkit-text-stroke: 0;
+}
+
+.why__v.is-on::after {
+  transform: scaleX(1);
+}
+
+@media (hover: hover) {
+  .why__v:not(.is-on):hover {
+    color: rgba(14, 13, 18, 0.12);
+  }
+}
+
+.why__v:focus-visible {
+  outline: 3px solid var(--purple);
+  outline-offset: 6px;
+}
+
+/* no script: the sentence reads as plain, filled text */
+html:not(.js) .why__v {
+  color: var(--ink);
+  -webkit-text-stroke: 0;
+  cursor: default;
+}
+
+/* progress: three segments, the live one filling while it plays by itself */
+.why__bar {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: clamp(36px, 6vh, 64px);
+}
+
+.why__bar span {
+  position: relative;
+  height: 2px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.why__bar span.is-done,
+.why__bar span.is-on {
+  background: var(--line-2);
+}
+
+.why__bar i {
+  position: absolute;
+  inset: 0;
+  background: var(--purple);
+  transform-origin: left;
+}
+
+.why.is-auto .why__bar i {
+  animation: sc-fill 4.2s linear forwards;
+}
+
+html:not(.js) .why__bar {
+  display: none;
+}
+
+/* the topics: one shift at a time, set large */
+.why__panels {
+  display: grid;
+  margin-top: clamp(28px, 4vh, 44px);
+}
+
+.why__p {
+  grid-area: 1 / 1;
+  display: grid;
+  grid-template-columns: minmax(150px, 0.5fr) minmax(0, 2fr);
+  gap: 16px clamp(24px, 4vw, 72px);
+  align-items: start;
+}
+
+.why.is-live .why__p {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s, visibility 0s 0.3s;
+}
+
+.why.is-live .why__p.is-on {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.4s;
+}
+
+html:not(.js) .why__p {
+  grid-area: auto;
+  padding: 22px 0;
+  border-top: 1px solid var(--line-2);
+}
+
+.why__pk {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding-top: 0.6em;
+  font: 600 0.78rem/1 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--purple);
+}
+
+.why__pk span {
+  font-size: 2.4rem;
+  letter-spacing: -0.04em;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.why__tops {
+  display: grid;
+  padding: 0;
+  list-style: none;
+}
+
+.why__tops li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: clamp(1.5rem, 2.8vw, 2.9rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+}
+
+.why__tops li:first-child {
+  border-top: 1px solid var(--line);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .why.is-live .why__p.is-on .why__tops li {
+    animation: sc-up 0.6s var(--ease-out) both;
+    animation-delay: calc(0.08s + var(--j) * 0.08s);
+  }
+}
+
+@media (max-width: 760px) {
+  .why__p {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .why__pk {
+    padding-top: 0;
+  }
+  .why__pk span {
+    font-size: 1.6rem;
+  }
+  .why__v {
+    -webkit-text-stroke-width: 1.2px;
+  }
+}
+
+/* ==========================================================================
+   The evening — one grid
+   ========================================================================== */
+.evn {
+  position: relative;
+  padding: clamp(84px, 12vh, 140px) var(--gutter) clamp(84px, 12vh, 140px);
+  background: #050408;
+  color: var(--white);
+  overflow: hidden;
+}
+
+.evn__hd {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  align-items: end;
+  gap: 32px;
+  padding-bottom: clamp(32px, 5vh, 56px);
+  border-bottom: 1px solid rgba(252, 253, 255, 0.18);
+}
+
+.evn__k,
+.evn__lab {
+  font: 600 0.76rem/1 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lilac);
+}
+
+.evn__h {
+  margin-top: 18px;
+  font-size: var(--h-display);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  font-weight: 800;
+}
+
+.evn__sub {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 0;
+  margin-top: 16px;
+  font-size: clamp(1.15rem, 2vw, 1.9rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--lilac);
+}
+
+.evn__sub span {
+  white-space: nowrap;
+}
+
+.evn__sub i {
+  margin: 0 0.45em;
+  font-style: normal;
+  opacity: 0.6;
+}
+
+/* the doorway: a lit opening, its door swinging in, light across the floor */
+.evn-door {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  perspective: 900px;
+}
+
+.evn-door__glow {
+  position: absolute;
+  inset: -25% -45%;
+  background: radial-gradient(40% 45% at 50% 55%, rgba(160, 80, 230, 0.3), transparent 70%);
+}
+
+.evn-door__open,
+.evn-door__leaf {
+  position: absolute;
+  left: 36%;
+  width: 28%;
+  top: 6%;
+  bottom: 26%;
+}
+
+.evn-door__open {
+  background: linear-gradient(180deg, #e9c6fb 0%, #f6e8ff 60%, #ffffff 100%);
+  box-shadow: 0 0 60px rgba(233, 198, 251, 0.45);
+}
+
+.evn-door__leaf {
+  background: linear-gradient(90deg, #1b1622, #0c0a10);
+  border: 1px solid rgba(252, 253, 255, 0.14);
+  transform-origin: left center;
+  transform: rotateY(-68deg);
+}
+
+.evn-door__floor {
+  position: absolute;
+  left: -20%;
+  right: -20%;
+  top: 74%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(252, 253, 255, 0.28), transparent);
+}
+
+.evn-door__beam {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 74%;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(246, 232, 255, 0.45), transparent 95%);
+  clip-path: polygon(36% 0, 64% 0, 100% 100%, 0 100%);
+}
+
+/* the body: agenda and who is behind it, starting on the same line */
+.evn__body {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+  gap: clamp(32px, 5vw, 88px);
+  padding-top: clamp(32px, 5vh, 56px);
+}
+
+.evn__lab {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(252, 253, 255, 0.18);
+}
+
+.evn__lab span {
+  font: 400 0.88rem/1.3 var(--font);
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgba(252, 253, 255, 0.58);
+}
+
+/* every row the same: time · marker · what · side */
+.evn__list {
+  position: relative;
+  padding: 0;
+  list-style: none;
+}
+
+.evn__list::before {
+  content: "";
+  position: absolute;
+  left: 103px;
+  top: 34px;
+  bottom: 34px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--white), var(--lilac) 40%, rgba(102, 8, 169, 0.95) 85%);
+}
+
+.evn__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 80px 48px minmax(0, 1fr) auto;
+  align-items: center;
+  min-height: 68px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(252, 253, 255, 0.09);
+}
+
+.evn__time {
+  font: 600 0.78rem/1 var(--mono);
+  letter-spacing: 0.08em;
+  color: var(--lilac);
+}
+
+.evn__dot {
+  justify-self: center;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--lilac);
+  background: #050408;
+}
+
+.evn__row--arrive .evn__dot {
+  width: 14px;
+  height: 14px;
+  background: var(--white);
+  border-color: var(--white);
+  box-shadow: 0 0 0 6px rgba(252, 253, 255, 0.12);
+}
+
+.evn__what {
+  display: grid;
+  gap: 4px;
+}
+
+.evn__t {
+  font-size: clamp(1.1rem, 1.5vw, 1.45rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.evn__d {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: rgba(252, 253, 255, 0.62);
+}
+
+.evn__side {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-left: 16px;
+}
+
+.evn__tag {
+  font: 600 0.64rem/1 var(--mono);
+  font-style: normal;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 8px;
+  border: 1px solid var(--magenta);
+  color: var(--magenta);
+  white-space: nowrap;
+}
+
+/* the book, under wraps */
+.evn-book {
+  position: relative;
+  display: block;
+  width: 34px;
+  height: 46px;
+  transform: rotate(-5deg);
+}
+
+.evn-book__spine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: #3a0a63;
+}
+
+.evn-book__cover {
+  position: absolute;
+  inset: 0 0 0 5px;
+  display: grid;
+  align-content: center;
+  gap: 4px;
+  padding: 0 5px;
+  background: linear-gradient(150deg, var(--purple), #2f0050);
+}
+
+.evn-book__t {
+  height: 4px;
+  background: var(--lilac);
+  filter: blur(2px);
+}
+
+.evn-book__t--s {
+  width: 60%;
+  opacity: 0.7;
+}
+
+/* who is behind it */
+.evn__org {
+  display: grid;
+  gap: 8px;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(252, 253, 255, 0.09);
+}
+
+.evn__role {
+  font: 600 0.68rem/1 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(252, 253, 255, 0.58);
+}
+
+.evn__name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.evn__mark {
+  width: 32px;
+  height: auto;
+  color: var(--white);
+}
+
+.evn__oline {
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: rgba(252, 253, 255, 0.7);
+}
+
+.evn__mail {
+  padding-top: 18px;
+  font-size: 0.92rem;
+  color: rgba(252, 253, 255, 0.62);
+}
+
+.evn__mail a {
+  color: var(--lilac);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .evn__hd[data-reveal] .evn-door__leaf {
+    transform: rotateY(0deg);
+  }
+  .js .evn__hd[data-reveal] .evn-door__open,
+  .js .evn__hd[data-reveal] .evn-door__beam,
+  .js .evn__hd[data-reveal] .evn-door__glow {
+    opacity: 0.15;
+  }
+  .js .evn__hd.is-in .evn-door__leaf {
+    transform: rotateY(-68deg);
+    transition: transform 1.6s var(--ease-out) 0.3s;
+  }
+  .js .evn__hd.is-in .evn-door__open,
+  .js .evn__hd.is-in .evn-door__beam,
+  .js .evn__hd.is-in .evn-door__glow {
+    opacity: 1;
+    transition: opacity 1.4s var(--ease-out) 0.5s;
+  }
+  .js .evn__row[data-reveal],
+  .js .evn__orgs[data-reveal] {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  .js .evn__row.is-in,
+  .js .evn__orgs.is-in {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.6s var(--ease-out) calc(var(--i, 0) * 0.05s), transform 0.8s var(--ease-out) calc(var(--i, 0) * 0.05s);
+  }
+}
+
+@media (max-width: 960px) {
+  .evn__body {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .evn__hd {
+    grid-template-columns: minmax(0, 1fr) 92px;
+    gap: 12px;
+  }
+  .evn__list::before {
+    left: 6px;
+  }
+  .evn__row {
+    grid-template-columns: 14px minmax(0, 1fr) auto;
+    gap: 2px 16px;
+    min-height: 60px;
+  }
+  .evn__dot {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+  .evn__time {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .evn__time:empty {
+    display: none;
+  }
+  .evn__what {
+    grid-column: 2;
+  }
+  .evn__side {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    padding-left: 0;
+  }
+  .evn__tag {
+    font-size: 0.58rem;
+  }
+}
+
+.evn__lab,
+.evn__lab span {
+  line-height: 1.1;
+}
+
+.why__nw {
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .evn__sub {
+    flex-direction: column;
+    gap: 2px;
+  }
+  .evn__sub i {
+    display: none;
+  }
 }

@@ -67,14 +67,14 @@ export function Site() {
       <header className="hdr">
         <ViaMagusLogo href={officialLinks.viamagus} />
         <nav className="hdr__nav" aria-label="Sections">
+          <a href="#evolve" data-for="evolve">
+            How a GCC evolves
+          </a>
           <a href="#theme" data-for="theme">
             Why this event
           </a>
           <a href="#evening" data-for="evening">
             The evening
-          </a>
-          <a href="#evolve" data-for="evolve">
-            How a GCC evolves
           </a>
           <a href="#practices" data-for="practices">
             The hosts
@@ -127,16 +127,17 @@ export function Site() {
           </div>
         </section>
 
-        {/* ------------------------------------------------ WHY THIS EVENT · the theme */}
-        <Theme />
-
-        {/* ------------------------------------------------ THE EVENING · what happens, and who is behind it */}
-        <Evening />
 
 
         {/* ------------------------------------------------ HOW A GCC EVOLVES · five stages (pinned)
             The ring of years (YearCycle) is kept in components/clock for later use. */}
         <GccEvolution />
+
+        {/* ------------------------------------------------ WHY THIS EVENT · the theme */}
+        <Theme />
+
+        {/* ------------------------------------------------ THE EVENING · what happens, and who is behind it */}
+        <Evening />
 
         {/* ------------------------------------------------ THREE HANDS, ONE CLOCK */}
         <section
