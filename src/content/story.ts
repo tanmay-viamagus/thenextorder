@@ -152,9 +152,9 @@ export const theme = {
 export const positioning = {
   lede: "ViaMagus builds technology platforms and solutions for large MNCs and GCCs. ViaMagus Select brings the talent and hiring support to scale them.",
   programme: {
-    k: "For leaders",
+    k: "For leaders and teams",
     title: "AI training",
-    line: "Upskills leaders to become AI decision-makers.",
+    line: "AI upskilling across the centre — for the teams who work with AI every day, and the leaders who make the AI decisions.",
   },
   /* Build-Operate-Transfer — the brochure’s words */
   bot: {

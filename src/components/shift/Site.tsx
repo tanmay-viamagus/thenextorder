@@ -7,7 +7,7 @@ import {
 } from "@/components/Brand";
 import { HandsClock } from "@/components/clock/Clock";
 import { FilmButton } from "@/components/film/FilmOverlay";
-import { knownFacts, officialLinks, statusLine } from "@/content/event";
+import { contactEmail, event, knownFacts, officialLinks, statusLine } from "@/content/event";
 import {
   convergence,
   cta,
@@ -19,10 +19,8 @@ import { FILM_DURATION } from "@/content/film";
 import { Chrome, Reveal, ShiftTitle } from "./Interactive";
 import { InviteForm } from "./InviteForm";
 import { GccEvolution } from "./GccEvolution";
-import { NameBoard } from "./NameBoard";
 import { Theme } from "./Theme";
 import { Evening } from "./Evening";
-import { Showcase } from "./Showcase";
 import { SelectMech, SynthiaMech, VelocityMech } from "./Mechanisms";
 
 const ext = { target: "_blank", rel: "noopener noreferrer" } as const;
@@ -46,6 +44,17 @@ const HAND = {
 
 const filmLength = `${Math.floor(FILM_DURATION / 60)}:${String(FILM_DURATION % 60).padStart(2, "0")}`;
 
+/** The date, time and place, broken only between the parts. */
+function Facts({ extra }: { extra?: string | null }) {
+  const parts = [...statusLine().split(" · "), ...(extra ? [extra] : [])];
+  return parts.map((part, k) => (
+    <Fragment key={part}>
+      {k ? " · " : ""}
+      <span className="hero__metap">{part}</span>
+    </Fragment>
+  ));
+}
+
 export function Site() {
   return (
     <>
@@ -61,14 +70,14 @@ export function Site() {
           <a href="#theme" data-for="theme">
             Why this event
           </a>
+          <a href="#evening" data-for="evening">
+            The evening
+          </a>
           <a href="#evolve" data-for="evolve">
             How a GCC evolves
           </a>
           <a href="#practices" data-for="practices">
             The hosts
-          </a>
-          <a href="#evening" data-for="evening">
-            The evening
           </a>
         </nav>
         <div className="hdr__end">
@@ -92,14 +101,7 @@ export function Site() {
         >
           <div className="hero__l">
             <p className="hero__meta">
-              {statusLine()
-                .split(" · ")
-                .map((part, k) => (
-                  <Fragment key={part}>
-                    {k ? " · " : ""}
-                    <span className="hero__metap">{part}</span>
-                  </Fragment>
-                ))}
+              <Facts />
             </p>
             <h1 id="hero-h" className="sr-only">
               The NEXT Order — an invitation from ViaMagus for Hyderabad’s GCC
@@ -128,8 +130,9 @@ export function Site() {
         {/* ------------------------------------------------ WHY THIS EVENT · the theme */}
         <Theme />
 
-        {/* ------------------------------------------------ THE NAME · GIC → GCC → ? (split-flap, plays in view) */}
-        <NameBoard />
+        {/* ------------------------------------------------ THE EVENING · what happens, and who is behind it */}
+        <Evening />
+
 
         {/* ------------------------------------------------ HOW A GCC EVOLVES · five stages (pinned)
             The ring of years (YearCycle) is kept in components/clock for later use. */}
@@ -262,7 +265,7 @@ export function Site() {
           <div className="fl__head">
             <div>
               <p className="fl__k">
-                <span className="chap">05</span>The film · {filmLength}
+                The film · {filmLength}
               </p>
               <h2 id="fl-h" className="fl__h">
                 See what’s changing.
@@ -281,13 +284,7 @@ export function Site() {
               </FilmButton>
             </div>
           </div>
-          <div className="fl__show">
-            <Showcase />
-          </div>
         </section>
-
-        {/* ------------------------------------------------ THE EVENING · agenda and organisers (from the brochure) */}
-        <Evening />
 
         {/* ------------------------------------------------ CLOSING · your place */}
         <section
@@ -300,11 +297,14 @@ export function Site() {
           <div className="close__grid">
             <div className="close__copy">
               <p className="close__k">
-                <span className="chap">07</span>Your place
+                <span className="chap">05</span>Your place
               </p>
               <h2 id="register-h" className="close__h">
                 Find your place in the conversation.
               </h2>
+              <p className="close__when">
+                <Facts extra={event.format} />
+              </p>
               <p className="close__who">{invite.who}</p>
               <ol className="steps">
                 <li>
@@ -337,9 +337,17 @@ export function Site() {
 
       <footer className="ftr" data-tone="dark">
         <ViaMagusLogo href={officialLinks.viamagus} />
-        <p className="ftr__partner">
-          Ecosystem partner · <b>{knownFacts.partner}</b>
-        </p>
+        <div className="ftr__event">
+          <p className="ftr__name">The NEXT Order</p>
+          <p className="ftr__partner">
+            {statusLine()} · {event.format}
+          </p>
+          <p className="ftr__partner">
+            Organised by <b>{knownFacts.host}</b> · Ecosystem partner{" "}
+            <b>{knownFacts.partner}</b> ·{" "}
+            <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+          </p>
+        </div>
         <ul>
           <li>
             <a href={officialLinks.velocity} {...ext}>
