@@ -6405,3 +6405,282 @@ html:not(.js) .why__bar {
     display: none;
   }
 }
+
+/* ==========================================================================
+   One story — Then · Now · Next. One hierarchy, one label, alternating ground
+   hero (dark) → then (light) → now (dark) → next (light) → hosts + film (dark)
+   → your place (light) → footer (dark)
+   ========================================================================== */
+:root {
+  --h-section: clamp(2.3rem, 4vw, 4.6rem);
+  --h-feature: clamp(2.6rem, 5.4vw, 6.6rem);
+}
+
+/* one label for every chapter */
+.evo__k,
+.th__k,
+.evn__k,
+.eco__k,
+.fl__k,
+.close__k {
+  display: flex;
+  align-items: center;
+  margin: 0 0 20px;
+  font: 600 0.76rem/1 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.evo__k,
+.evn__k,
+.close__k {
+  color: var(--purple);
+}
+
+.th__k,
+.eco__k,
+.fl__k {
+  color: var(--lilac);
+}
+
+/* one size for every chapter heading; the hero alone is display, "now" is the feature */
+.evo__h,
+.evn__h,
+.eco__h,
+.close__h {
+  font-size: var(--h-section);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+}
+
+.why__h {
+  font-size: var(--h-feature);
+}
+
+.fl__h {
+  font-size: clamp(1.9rem, 3vw, 3.2rem);
+}
+
+.eco__close {
+  font-size: clamp(1.6rem, 2.6vw, 2.8rem);
+  line-height: 1.05;
+}
+
+/* one rhythm for the chapters that scroll freely */
+.why,
+.evn,
+.eco,
+.close {
+  padding-top: clamp(88px, 13vh, 150px);
+  padding-bottom: clamp(88px, 12vh, 140px);
+}
+
+/* NOW — on midnight */
+.why {
+  background: #0b0a10;
+  color: var(--white);
+}
+
+.why__lede {
+  color: rgba(252, 253, 255, 0.68);
+}
+
+.why__v {
+  color: rgba(252, 253, 255, 0.42);
+}
+
+.why__v.is-on {
+  color: var(--lilac);
+}
+
+@media (hover: hover) {
+  .why__v:not(.is-on):hover {
+    color: rgba(252, 253, 255, 0.72);
+  }
+}
+
+.why__v:focus-visible {
+  outline-color: var(--lilac);
+}
+
+html:not(.js) .why__v {
+  color: var(--white);
+}
+
+.why__bar span {
+  background: rgba(252, 253, 255, 0.14);
+}
+
+.why__bar span.is-done,
+.why__bar span.is-on {
+  background: rgba(252, 253, 255, 0.3);
+}
+
+.why__bar i {
+  background: var(--magenta);
+}
+
+.why__pk {
+  color: rgba(252, 253, 255, 0.6);
+}
+
+.why__col.is-on .why__pk {
+  color: var(--lilac);
+}
+
+.why__tops li {
+  color: rgba(252, 253, 255, 0.62);
+  border-color: rgba(252, 253, 255, 0.12);
+}
+
+.why__tops li:first-child {
+  border-top-color: rgba(252, 253, 255, 0.12);
+}
+
+.why__col.is-on .why__tops li {
+  color: var(--white);
+}
+
+@media (max-width: 760px) {
+  .why__col {
+    border-top-color: rgba(252, 253, 255, 0.2);
+  }
+  .why__col.is-on {
+    border-top-color: var(--lilac);
+  }
+}
+
+/* the bridge into the next chapter */
+.why__bridge {
+  margin-top: clamp(48px, 8vh, 88px);
+  padding-top: 24px;
+  border-top: 1px solid rgba(252, 253, 255, 0.14);
+  font-size: clamp(1.15rem, 1.8vw, 1.7rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: rgba(252, 253, 255, 0.72);
+}
+
+.why__bridge a {
+  color: var(--lilac);
+  text-decoration: none;
+  border-bottom: 1.5px solid currentColor;
+  white-space: nowrap;
+}
+
+@media (hover: hover) {
+  .why__bridge a:hover span {
+    display: inline-block;
+    transform: translateY(3px);
+  }
+}
+
+/* NEXT — the evening on paper; the doorway is a small night scene */
+.evn {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.evn__hd {
+  border-bottom-color: var(--line-2);
+}
+
+.evn__lab {
+  color: var(--purple);
+  border-bottom-color: var(--line-2);
+}
+
+.evn__lab span {
+  color: var(--ink-2);
+}
+
+.evn__sub {
+  color: var(--purple);
+}
+
+.evn-door {
+  background: #07060b;
+  overflow: hidden;
+}
+
+.evn__list::before {
+  background: linear-gradient(180deg, var(--ink), var(--purple) 60%, rgba(102, 8, 169, 0.5));
+}
+
+.evn__row {
+  border-bottom-color: var(--line);
+}
+
+.evn__time {
+  color: var(--purple);
+}
+
+.evn__dot {
+  border-color: var(--purple);
+  background: var(--paper);
+}
+
+.evn__row--arrive .evn__dot {
+  background: var(--ink);
+  border-color: var(--ink);
+  box-shadow: 0 0 0 6px rgba(14, 13, 18, 0.08);
+}
+
+.evn__d,
+.evn__oline,
+.evn__mail {
+  color: var(--ink-2);
+}
+
+.evn__tag {
+  border-color: var(--purple);
+  color: var(--purple);
+}
+
+.evn__org {
+  border-bottom-color: var(--line);
+}
+
+.evn__role {
+  color: var(--ink-2);
+}
+
+.evn__mark {
+  color: var(--ink);
+}
+
+.evn__mail a {
+  color: var(--purple);
+}
+
+/* the film is the hosts' last word, on the same ground */
+.fl {
+  background: var(--wall);
+  border-top: 1px solid rgba(252, 253, 255, 0.1);
+}
+
+@media (min-width: 601px) {
+  .evn__hd {
+    grid-template-columns: minmax(0, 1fr) 176px;
+  }
+}
+
+/* phones: the night scene becomes a band above the date */
+@media (max-width: 600px) {
+  .evn__hd {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .evn-door {
+    order: -1;
+    aspect-ratio: 2 / 1;
+  }
+  .evn-door__open,
+  .evn-door__leaf {
+    left: 44%;
+    width: 12%;
+  }
+  .evn-door__beam {
+    clip-path: polygon(44% 0, 56% 0, 78% 100%, 22% 100%);
+  }
+}

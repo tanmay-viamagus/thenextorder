@@ -68,13 +68,13 @@ export function Site() {
         <ViaMagusLogo href={officialLinks.viamagus} />
         <nav className="hdr__nav" aria-label="Sections">
           <a href="#evolve" data-for="evolve">
-            How a GCC evolves
+            Then
           </a>
           <a href="#theme" data-for="theme">
-            Why this event
+            Now
           </a>
           <a href="#evening" data-for="evening">
-            The evening
+            Next: 3 Dec
           </a>
           <a href="#practices" data-for="practices">
             The hosts

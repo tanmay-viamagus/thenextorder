@@ -35,11 +35,11 @@ function Book() {
 export function Evening() {
   const sub = [event.time, [event.venue, event.city].filter(Boolean).join(", "), event.format].filter(Boolean);
   return (
-    <section id="evening" className="evn" data-tone="dark" data-act="evening" aria-labelledby="evn-h">
+    <section id="evening" className="evn" data-tone="light" data-act="evening" aria-labelledby="evn-h">
       <header className="evn__hd" data-reveal>
         <div className="evn__title">
           <p className="evn__k">
-            <span className="chap">03</span>The evening
+            <span className="chap">03</span>Next · The evening
           </p>
           <h2 id="evn-h" className="evn__h">
             Thursday 3 December.

@@ -59,14 +59,14 @@ export function Theme() {
       id="theme"
       ref={root}
       className={`why${auto && seen ? " is-auto" : ""}`}
-      data-tone="light"
+      data-tone="dark"
       data-act="theme"
       aria-labelledby="why-h"
     >
       <div className="why__top" data-reveal>
         <p className="th__k">
           <span className="chap">02</span>
-          {theme.kicker}
+          Now · {theme.kicker}
         </p>
         <p className="why__lede">{theme.lede}</p>
       </div>
@@ -106,6 +106,14 @@ export function Theme() {
           </div>
         ))}
       </div>
+
+      {/* the bridge to the next chapter */}
+      <p className="why__bridge" data-reveal>
+        The next order isn’t written yet.{" "}
+        <a href="#evening">
+          One evening to start writing it <span aria-hidden="true">↓</span>
+        </a>
+      </p>
     </section>
   );
 }
