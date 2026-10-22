@@ -238,9 +238,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   color: var(--white);
 }
 
-
-
-
 .ck-face {
   fill: #0a090e;
   stroke: rgba(252, 253, 255, 0.1);
@@ -256,9 +253,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   stroke: rgba(252, 253, 255, 0.9);
   stroke-width: 11;
 }
-
-
-
 
 .hero__meta {
   position: relative;
@@ -489,20 +483,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   container-type: size;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .eras__copy {
   position: absolute;
   left: 50%;
@@ -612,10 +592,6 @@ html:not(.js) .eras__stage {
   color: var(--white);
   padding: clamp(80px, 12vh, 150px) var(--gutter) clamp(80px, 12vh, 140px);
 }
-
-
-
-
 
 .k-v,
 .k-s,
@@ -783,7 +759,6 @@ html:not(.js) .eras__stage {
   text-underline-offset: 3px;
 }
 
-
 @media (prefers-reduced-motion: no-preference) {
   .js .eco__hd,
   .js .eco__close {
@@ -819,11 +794,6 @@ html:not(.js) .eras__stage {
   color: var(--purple);
 }
 
-
-
-
-
-
 .close__h {
   font-size: clamp(2rem, 3.6vw, 4.2rem);
   line-height: 0.96;
@@ -840,10 +810,6 @@ html:not(.js) .eras__stage {
   max-width: 32em;
 }
 
-.close__who--b {
-  margin: 8px 0 28px;
-  font-size: 0.95rem;
-}
 
 /* ---------------------------------------------------------------- mechanisms */
 .mech {
@@ -1187,7 +1153,6 @@ html:not(.js) .eras__stage {
   }
 }
 
-
 .tblock--attend {
   margin-top: 28px;
   max-width: 520px;
@@ -1325,8 +1290,6 @@ html:not(.js) .eras__stage {
 .bar {
   display: none;
 }
-
-
 
 /* ---------------------------------------------------------------- mechanisms inside the narrow panels */
 .pnl .mech figcaption {
@@ -1786,8 +1749,6 @@ html:not(.js) .eras__stage {
   aspect-ratio: 1;
 }
 
-
-
 /* panels: who it's for, and a way in */
 .pnl {
   grid-template-rows: auto auto auto auto 1fr auto auto;
@@ -2174,14 +2135,6 @@ html:not(.js) .eras__stage {
   color: var(--lilac);
 }
 
-
-
-
-
-
-
-
-
 .reg__host {
   font: 500 0.7rem/1 var(--mono);
   letter-spacing: 0.08em;
@@ -2265,7 +2218,6 @@ html:not(.js) .eras__stage {
     padding: 18px var(--gutter) 26px;
   }
 }
-
 
 /* ---------------------------------------------------------------- /register · the showcase: a story that never stops */
 .reg__show > * {
@@ -2741,11 +2693,6 @@ html:not(.js) .eras__stage {
   border-top: 1px solid rgba(252, 253, 255, 0.16);
 }
 
-
-
-
-
-
 .reg__when .reg__host {
   margin-left: auto;
 }
@@ -2784,7 +2731,6 @@ html:not(.js) .eras__stage {
     display: none;
   }
 }
-
 
 /* ---------------------------------------------------------------- three hands, one clock (restored) */
 .eco__k {
@@ -3073,8 +3019,6 @@ html:not(.js) .eras__stage {
   transition: opacity 0.4s;
 }
 
-
-
 .yc-ol {
   font: 700 17px var(--mono);
   letter-spacing: 0.08em;
@@ -3126,18 +3070,12 @@ html:not(.js) .eras__stage {
   font: 800 52px var(--font);
 }
 
-
-
 .yc-era {
   font: 600 21px var(--mono);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   fill: var(--purple);
 }
-
-
-
-
 
 .yc-marker line {
   stroke: var(--purple);
@@ -3706,12 +3644,6 @@ html:not(.js) .eras__stage {
   font-weight: 700;
 }
 
-.close__note {
-  font: 500 0.72rem/1.5 var(--mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-2);
-}
 
 .close__h {
   margin-top: 10px;
@@ -4156,7 +4088,6 @@ html:not(.js) .eras__stage {
     letter-spacing: 0.06em;
   }
 }
-
 
 /* ==========================================================================
    GIC → GCC → ? — a split-flap board that plays when it comes into view
@@ -5580,136 +5511,27 @@ html:not(.js) .evo__art .evo__gap {
   max-width: 30em;
 }
 
-/* the horizon: today → +10 → +20 years */
-.th__hz {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  margin: clamp(48px, 8vh, 88px) 0 clamp(28px, 4vh, 44px);
-  padding-top: 18px;
-}
 
-.th__hzline {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--ink), var(--purple) 50%);
-  transform-origin: left;
-}
 
-.th__hzm {
-  position: relative;
-  font: 600 0.78rem/1 var(--mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
 
-.th__hzm i {
-  position: absolute;
-  top: -25px;
-  left: 0;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--ink);
-}
 
-.th__hzm--1,
-.th__hzm--2 {
-  color: var(--purple);
-}
 
-.th__hzm--1 i,
-.th__hzm--2 i {
-  background: var(--purple);
-}
-
-.th__hzm--1 {
-  transform: translateX(-50%);
-}
-
-.th__hzm--1 i {
-  left: calc(50% - 7px);
-}
-
-.th__hzm--2 i {
-  left: auto;
-  right: 0;
-}
 
 /* the three shifts */
-.th__shifts {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(20px, 3vw, 48px);
-}
-
-.th__s {
-  padding: 24px 0 0;
-  border-top: 1.5px solid var(--ink);
-}
-
-.th__word {
-  font: 600 0.78rem/1 var(--mono);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--purple);
-}
-
-.th__line {
-  margin-top: 10px;
-  font-size: clamp(1.4rem, 2vw, 2.2rem);
-  line-height: 1.05;
-  letter-spacing: -0.035em;
-  font-weight: 700;
-}
-
-.th__note {
-  margin-top: 10px;
-  font-size: 1rem;
-  line-height: 1.5;
-  color: var(--ink-2);
-  max-width: 24em;
-}
-
-
-
-
-
-
 
 /* motion: once, on arrival */
 @media (prefers-reduced-motion: no-preference) {
-  .js .th__hd[data-reveal],
-  .js .th__s[data-reveal] {
+  .js .th__hd[data-reveal] {
     opacity: 0;
     transform: translateY(26px);
   }
-  .js .th__hd.is-in,
-  .js .th__s.is-in {
+  .js .th__hd.is-in {
     opacity: 1;
     transform: none;
     transition: opacity 0.8s var(--ease-out) calc(var(--i, 0) * 0.12s), transform 1s var(--ease-out) calc(var(--i, 0) * 0.12s);
   }
-  .js .th__hz .th__hzline {
-    transform: scaleX(0);
-  }
-  .js .th__hz.is-in .th__hzline {
-    transform: none;
-    transition: transform 1.4s var(--ease);
-  }
-}
-
-@keyframes agent {
-  0%,
-  100% {
-    fill: var(--sheet);
-  }
-  50% {
-    fill: var(--lilac);
-  }
+  
+  
 }
 
 @media (max-width: 900px) {
@@ -5718,10 +5540,7 @@ html:not(.js) .evo__art .evo__gap {
     grid-template-areas: "k" "h" "l";
     gap: 14px;
   }
-  .th__shifts {
-    grid-template-columns: 1fr;
-    gap: 36px;
-  }
+  
 }
 
 /* ---------------------------------------------------------------- the AI leadership programme */
@@ -5732,79 +5551,9 @@ html:not(.js) .evo__art .evo__gap {
   color: rgba(252, 253, 255, 0.72);
 }
 
-.prog {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) minmax(0, 1.2fr) auto;
-  gap: 12px clamp(20px, 3vw, 48px);
-  align-items: center;
-  margin-top: 24px;
-  padding: clamp(22px, 3vw, 34px);
-  border: 1px solid rgba(252, 253, 255, 0.18);
-  border-top: 5px solid var(--magenta);
-  background: rgba(252, 253, 255, 0.03);
-}
-
-.prog__k {
-  font: 600 0.74rem/1 var(--mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--magenta);
-}
-
-.prog__t {
-  font-size: clamp(1.4rem, 2vw, 2.1rem);
-  line-height: 1.05;
-  letter-spacing: -0.035em;
-  font-weight: 800;
-}
-
-.prog__l {
-  font-size: 1.02rem;
-  line-height: 1.45;
-  color: rgba(252, 253, 255, 0.8);
-}
-
-.prog__a {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  min-height: 52px;
-  padding-bottom: 2px;
-  border-bottom: 1.5px solid currentColor;
-  color: var(--magenta);
-  font-weight: 700;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-@media (hover: hover) {
-  .prog__a:hover .pnl__arr {
-    transform: translateX(4px);
-  }
-}
-
-@media (max-width: 1080px) {
-  .prog {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* ---------------------------------------------------------------- the close: what to expect */
-.close__exp {
-  display: grid;
-  gap: 6px;
-  margin: 0 0 6px;
-}
 
-.close__exp li {
-  font-size: 1rem;
-  font-weight: 600;
-}
 
-.close__exp li::before {
-  content: "— ";
-  color: var(--purple);
-}
 
 .ftr__partner {
   font: 500 0.74rem/1.4 var(--mono);
@@ -5867,57 +5616,11 @@ html[data-act="evolve"] .hdr__nav a[data-for="evolve"]::after {
 }
 
 /* the leadership programme: a ruled strip, not a boxed card */
-.prog {
-  border: 0;
-  border-top: 3px solid var(--magenta);
-  background: none;
-  padding: 26px 0 0;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr) auto;
-  grid-template-areas: "k l a" "t l a";
-  align-items: center;
-}
-
-.prog__k {
-  grid-area: k;
-}
-
-.prog__t {
-  grid-area: t;
-}
-
-.prog__l {
-  grid-area: l;
-  max-width: 30em;
-}
-
-.prog__a {
-  grid-area: a;
-}
-
-@media (max-width: 1080px) {
-  .prog {
-    grid-template-columns: 1fr;
-    grid-template-areas: "k" "t" "l" "a";
-  }
-}
 
 /* the theme: the horizon is the rule — no second line on top of each column */
-.th__s {
-  border-top: 0;
-  padding-top: 8px;
-}
 
 /* the close: one paragraph, one line of expectations */
-.close__exp {
-  margin: 4px 0 2px;
-  font-size: 0.98rem;
-  font-weight: 600;
-  color: var(--ink);
-}
 
-.close__who--b {
-  margin-bottom: 10px;
-}
 
 /* the close: one measure for every line in the column */
 .close__copy > * {
@@ -5929,432 +5632,24 @@ html[data-act="evolve"] .hdr__nav a[data-for="evolve"]::after {
 }
 
 /* ---------------------------------------------------------------- the theme: today → next, drawn and labelled */
-.thx {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 30px minmax(0, 1fr);
-  align-items: start;
-  gap: 0 8px;
-  margin: 16px 0 22px;
-  padding: 16px 0;
-  border-top: 1px solid var(--line-2);
-  border-bottom: 1px solid var(--line-2);
-}
-
-.thx__p {
-  display: grid;
-  gap: 6px;
-  align-content: start;
-}
-
-.thx-art {
-  display: block;
-  width: 100%;
-  max-width: 150px;
-  height: auto;
-  margin-bottom: 6px;
-  overflow: visible;
-}
-
-.thx__k {
-  font: 600 0.7rem/1 var(--mono);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-2);
-}
-
-.thx__p--next .thx__k {
-  color: var(--purple);
-}
-
-.thx__t {
-  font-size: 0.92rem;
-  line-height: 1.35;
-  font-weight: 600;
-  color: var(--ink);
-}
-
-.thx__p--today .thx__t {
-  color: var(--ink-2);
-  font-weight: 500;
-}
 
 /* the arrow between them, level with the drawings */
-.thx__arr {
-  position: relative;
-  height: 1.5px;
-  margin-top: 36px;
-  background: var(--ink);
-  transform-origin: left;
-}
-
-.thx__arr::after {
-  content: "";
-  position: absolute;
-  right: -1px;
-  top: -4px;
-  border: 4.5px solid transparent;
-  border-left: 7px solid var(--ink);
-  border-right: 0;
-}
 
 /* people and roles */
-.thx-role rect {
-  fill: var(--sheet);
-  stroke: var(--ink);
-  stroke-width: 1.4;
-}
-
-.thx-role circle,
-.thx-role path,
-.thx-person circle,
-.thx-person path {
-  fill: var(--ink);
-}
-
-.thx-person.is-lead circle,
-.thx-person.is-lead path {
-  fill: var(--purple);
-}
-
-.thx-role.is-new rect {
-  fill: var(--lilac);
-  stroke: var(--purple);
-  stroke-dasharray: 4 3;
-}
-
-.thx-role.is-new circle,
-.thx-role.is-new path {
-  fill: var(--purple);
-}
-
-.thx-role text {
-  font: 700 8.5px var(--mono);
-  letter-spacing: 0.08em;
-  fill: var(--purple);
-}
 
 /* tasks and agents */
-.thx-task {
-  fill: var(--sheet);
-  stroke: var(--ink);
-  stroke-width: 1.4;
-}
-
-.thx-tie {
-  stroke: var(--ink-2);
-  stroke-width: 1.2;
-}
-
-.thx-wire {
-  fill: none;
-  stroke: var(--purple);
-  stroke-width: 1.2;
-  stroke-dasharray: 2.5 3;
-}
-
-.thx-agent rect {
-  fill: var(--sheet);
-  stroke: var(--purple);
-  stroke-width: 1.6;
-}
-
-.thx-agent circle {
-  fill: var(--purple);
-}
 
 /* options and the call */
-.thx-opt path,
-.thx-opt--off {
-  fill: none;
-  stroke: var(--ink-2);
-  stroke-width: 1.3;
-  stroke-dasharray: 3 3;
-}
 
-.thx-opt--off {
-  stroke: var(--line-2);
-}
-
-.thx-opt text {
-  font: 700 11px var(--mono);
-  fill: var(--ink-2);
-}
-
-.thx-node {
-  fill: var(--ink);
-}
-
-.thx-stem {
-  stroke: var(--ink);
-  stroke-width: 1.6;
-}
-
-.thx-node.is-lead {
-  fill: var(--purple);
-}
-
-.thx-chosen {
-  fill: none;
-  stroke: var(--purple);
-  stroke-width: 2.6;
-}
-
-.thx-tick circle {
-  fill: var(--purple);
-}
-
-.thx-tick path {
-  fill: none;
-  stroke: var(--white);
-  stroke-width: 2.2;
-}
 
 /* motion: once, on arrival — today is there, the arrow runs, then next arrives */
-@media (prefers-reduced-motion: no-preference) {
-  .js .th__s .thx__arr {
-    transform: scaleX(0);
-  }
-  .js .th__s .thx__p--next {
-    opacity: 0;
-    transform: translateX(-8px);
-  }
-  .js .th__s.is-in .thx__arr {
-    transform: none;
-    transition: transform 0.6s var(--ease) calc(0.7s + var(--i, 0) * 0.12s);
-  }
-  .js .th__s.is-in .thx__p--next {
-    opacity: 1;
-    transform: none;
-    transition: opacity 0.6s var(--ease-out) calc(1.2s + var(--i, 0) * 0.12s), transform 0.8s var(--ease-out) calc(1.2s + var(--i, 0) * 0.12s);
-  }
-  .js .th__s .thx-role.is-new rect {
-    fill: var(--sheet);
-    stroke: var(--ink);
-    stroke-dasharray: none;
-  }
-  .js .th__s .thx-role.is-new circle,
-  .js .th__s .thx-role.is-new path {
-    fill: var(--ink);
-  }
-  .js .th__s .thx-role text {
-    opacity: 0;
-  }
-  .js .th__s.is-in .thx-role.is-new rect {
-    fill: var(--lilac);
-    stroke: var(--purple);
-    stroke-dasharray: 4 3;
-    transition: fill 0.5s calc(1.8s + var(--k) * 0.15s), stroke 0.5s calc(1.8s + var(--k) * 0.15s);
-  }
-  .js .th__s.is-in .thx-role.is-new circle,
-  .js .th__s.is-in .thx-role.is-new path {
-    fill: var(--purple);
-    transition: fill 0.5s calc(1.8s + var(--k) * 0.15s);
-  }
-  .js .th__s.is-in .thx-role text {
-    opacity: 1;
-    transition: opacity 0.4s calc(2s + var(--k) * 0.15s);
-  }
-  .js .th__s.is-in .thx-agent rect {
-    animation: agent 2.4s ease-in-out calc(1.8s + var(--k) * 0.18s) infinite;
-  }
-  .js .th__s .thx-chosen {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-  }
-  .js .th__s.is-in .thx-chosen {
-    stroke-dashoffset: 0;
-    transition: stroke-dashoffset 0.9s var(--ease) 1.7s;
-  }
-  .js .th__s .thx-tick {
-    opacity: 0;
-  }
-  .js .th__s.is-in .thx-tick {
-    opacity: 1;
-    transition: opacity 0.4s 2.5s;
-  }
-}
-
-@media (max-width: 900px) {
-  .thx {
-    max-width: 420px;
-  }
-}
 
 /* ---------------------------------------------------------------- ViaMagus Select · the BOT model */
-.bot {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 2.2fr);
-  grid-template-areas: "k s" "t s" "l s" "a s";
-  align-content: start;
-  gap: 10px clamp(20px, 3vw, 48px);
-  margin-top: 40px;
-  padding-top: 26px;
-  border-top: 3px solid var(--magenta);
-}
-
-.bot__k {
-  grid-area: k;
-  font: 600 0.74rem/1 var(--mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--magenta);
-}
-
-.bot__t {
-  grid-area: t;
-  font-size: clamp(1.4rem, 2vw, 2.1rem);
-  line-height: 1.05;
-  letter-spacing: -0.035em;
-  font-weight: 800;
-}
-
-.bot__l {
-  grid-area: l;
-  font-size: 1.02rem;
-  line-height: 1.45;
-  color: rgba(252, 253, 255, 0.8);
-  max-width: 24em;
-}
-
-.bot__a {
-  grid-area: a;
-  justify-self: start;
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  min-height: 52px;
-  padding-bottom: 2px;
-  border-bottom: 1.5px solid currentColor;
-  color: var(--magenta);
-  font-weight: 700;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-@media (hover: hover) {
-  .bot__a:hover .pnl__arr {
-    transform: translateX(4px);
-  }
-}
 
 /* the timeline: three phases on one line, transfer at the end */
-.bot__s {
-  grid-area: s;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-self: start;
-}
 
-.bot__st {
-  position: relative;
-  display: grid;
-  gap: 8px;
-  align-content: start;
-  padding: 26px 18px 0 0;
-}
-
-.bot__st::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 7px;
-  height: 2px;
-  background: rgba(252, 253, 255, 0.28);
-}
-
-.bot__st::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  border: 2px solid var(--magenta);
-  background: var(--wall);
-}
-
-.bot__st--transfer::after {
-  background: var(--magenta);
-}
-
-.bot__when {
-  font: 600 0.74rem/1 var(--mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--magenta);
-}
-
-.bot__word {
-  font-size: 1.25rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-}
-
-.bot__d {
-  font-size: 0.95rem;
-  line-height: 1.45;
-  color: rgba(252, 253, 255, 0.78);
-  max-width: 18em;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .js .bot[data-reveal] .bot__st::before {
-    transform: scaleX(0);
-    transform-origin: left;
-  }
-  .js .bot.is-in .bot__st::before {
-    transform: none;
-    transition: transform 0.7s var(--ease) calc(0.3s + var(--k) * 0.5s);
-  }
-  .js .bot[data-reveal] .bot__st > * {
-    opacity: 0;
-  }
-  .js .bot.is-in .bot__st > * {
-    opacity: 1;
-    transition: opacity 0.5s calc(0.4s + var(--k) * 0.5s);
-  }
-}
-
-@media (max-width: 1080px) {
-  .bot {
-    grid-template-columns: 1fr;
-    grid-template-areas: "k" "t" "l" "s" "a";
-  }
-  .bot__s {
-    margin: 8px 0 4px;
-  }
-}
-
-@media (max-width: 640px) {
-  .bot__s {
-    grid-template-columns: 1fr;
-  }
-  .bot__st {
-    padding: 0 0 22px 32px;
-  }
-  .bot__st::before {
-    left: 7px;
-    right: auto;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    height: auto;
-  }
-  .js .bot[data-reveal] .bot__st::before {
-    transform: scaleY(0);
-    transform-origin: top;
-  }
-  .js .bot.is-in .bot__st::before {
-    transform: none;
-  }
-}
 
 /* the line ends at the hand-over */
-.bot__st--transfer::before {
-  display: none;
-}
 
 /* ---------------------------------------------------------------- the name board: one screen, no pinning */
 .nb,
@@ -6377,57 +5672,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
 }
 
 /* why this event: the topics under each shift, and who brings it to the room */
-.th__topics {
-  display: grid;
-  gap: 6px;
-  margin-top: 16px;
-  padding: 0;
-  list-style: none;
-}
-
-.th__topics li {
-  position: relative;
-  padding-left: 18px;
-  font-size: 0.98rem;
-  font-weight: 500;
-}
-
-.th__topics li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.55em;
-  width: 7px;
-  height: 7px;
-  background: var(--purple);
-}
-
-.th__host {
-  display: grid;
-  gap: 2px;
-  margin-top: 20px;
-  padding-top: 14px;
-  border-top: 1px dashed var(--line-2);
-  font-size: 0.94rem;
-  color: var(--ink-2);
-}
-
-.th__host span {
-  font: 600 0.7rem/1.4 var(--mono);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--purple);
-}
-
-.th__host b {
-  color: var(--ink);
-  font-weight: 700;
-}
-
-
-
-
-
 
 /* ---------------------------------------------------------------- the evening */
 .evg {
@@ -6470,13 +5714,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   color: var(--lilac);
 }
 
-.evg__lede {
-  margin-top: 22px;
-  max-width: 30em;
-  font-size: 1.1rem;
-  line-height: 1.5;
-  color: rgba(252, 253, 255, 0.76);
-}
 
 /* the doorway: a lit opening, its door swinging in, light across the floor */
 .evg-door {
@@ -6841,4 +6078,257 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   font-size: 0.96rem;
   line-height: 1.45;
   color: rgba(252, 253, 255, 0.7);
+}
+
+/* ==========================================================================
+   One document — numbered chapters, Hire / Build / Lead, two more ways in
+   ========================================================================== */
+.chap {
+  display: inline-flex;
+  align-items: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.chap::after {
+  content: "";
+  width: 26px;
+  height: 1px;
+  margin: 0 12px;
+  background: currentColor;
+  opacity: 0.5;
+}
+
+/* why this event: the headline's three verbs, set large */
+.th__rows {
+  margin-top: clamp(56px, 9vh, 104px);
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid var(--line-2);
+}
+
+.th__row {
+  display: grid;
+  grid-template-columns: minmax(110px, 0.55fr) minmax(0, 2fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 0 clamp(20px, 3vw, 56px);
+  padding: clamp(14px, 2.6vh, 28px) 0;
+  border-top: 1px solid var(--line-2);
+}
+
+.th__idx {
+  font: 600 0.76rem/1 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--purple);
+}
+
+.th__verb {
+  font-size: clamp(4rem, 11.5vw, 12rem);
+  line-height: 0.84;
+  letter-spacing: -0.065em;
+  font-weight: 800;
+  white-space: nowrap;
+  transition: transform 0.6s var(--ease-out);
+}
+
+.th__fill {
+  /* room for the last glyph, which the tight tracking pushes past the box */
+  padding-right: 0.08em;
+  margin-right: -0.08em;
+  color: var(--ink);
+}
+
+.th__dot {
+  color: var(--purple);
+}
+
+.th__tops {
+  display: grid;
+  gap: 8px;
+  padding: 0;
+  list-style: none;
+  font-size: clamp(0.98rem, 1.1vw, 1.1rem);
+  line-height: 1.35;
+  color: var(--ink-2);
+}
+
+@media (hover: hover) {
+  .th__row:hover .th__verb {
+    transform: translateX(0.04em);
+  }
+  .th__row:hover .th__tops {
+    color: var(--ink);
+  }
+}
+
+/* each verb arrives as an outline and fills with ink, left to right */
+@media (prefers-reduced-motion: no-preference) {
+  .js .th__row[data-reveal] .th__fill {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--ink);
+    background: linear-gradient(90deg, var(--ink) 50%, transparent 50%) 100% 0 / 200% 100% no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  .js .th__row.is-in .th__fill {
+    background-position: 0 0;
+    transition: background-position 1.3s var(--ease) calc(0.25s + var(--i) * 0.18s);
+  }
+  .js .th__row[data-reveal] .th__dot,
+  .js .th__row[data-reveal] .th__tops {
+    opacity: 0;
+  }
+  .js .th__row.is-in .th__dot {
+    opacity: 1;
+    transition: opacity 0.3s calc(1.3s + var(--i) * 0.18s);
+  }
+  .js .th__row.is-in .th__tops {
+    opacity: 1;
+    transition: opacity 0.7s var(--ease-out) calc(0.6s + var(--i) * 0.18s);
+  }
+}
+
+@media (max-width: 760px) {
+  .th__row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 22px 0 24px;
+  }
+  .th__verb {
+    font-size: clamp(4.2rem, 24vw, 6.4rem);
+  }
+}
+
+/* two more ways in: the panel grid continues, in the panels' own language */
+.more {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+}
+
+.more__c {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 14px;
+  padding: 26px clamp(22px, 2.2vw, 36px) 32px;
+  border-top: 5px solid;
+}
+
+.more__c--bot {
+  background: #19150f;
+  border-top-color: var(--sel-amber);
+  color: var(--white);
+}
+
+.more__c--prog {
+  background: var(--lilac);
+  border-top-color: var(--magenta);
+  color: var(--ink);
+}
+
+.more__t {
+  font-size: clamp(1.8rem, 2.8vw, 3rem);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  font-weight: 800;
+}
+
+.more__l {
+  max-width: 18em;
+  font-size: clamp(1.1rem, 1.35vw, 1.45rem);
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+.more__steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-self: start;
+  margin: 10px 0 8px;
+  padding: 0;
+  list-style: none;
+}
+
+.more__steps li {
+  position: relative;
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  padding: 24px 18px 0 0;
+  border-top: 1.5px solid rgba(245, 184, 61, 0.45);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: rgba(252, 253, 255, 0.74);
+}
+
+.more__steps li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -6px;
+  width: 10px;
+  height: 10px;
+  background: var(--sel-amber);
+}
+
+.more__steps li:last-child::before {
+  border-radius: 50%;
+}
+
+.more__steps b {
+  font-size: 1.2rem;
+  color: var(--white);
+}
+
+.more__when {
+  font: 600 0.7rem/1 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sel-amber);
+}
+
+@media (max-width: 1080px) {
+  .more {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .more__steps {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    border-left: 1.5px solid rgba(245, 184, 61, 0.45);
+    margin-left: 4px;
+  }
+  .more__steps li {
+    padding: 0 0 0 20px;
+    border-top: 0;
+  }
+  .more__steps li::before {
+    left: -6px;
+    top: 4px;
+  }
+}
+
+/* round 1 */
+.hero__metap {
+  white-space: nowrap;
+}
+
+.evg__hd {
+  align-items: center;
+}
+
+.evg-door {
+  width: min(100%, 240px);
+}
+
+.close__who {
+  max-width: 28rem;
+}
+
+@media (max-width: 560px) {
+  .evg__it {
+    padding-right: 10px;
+  }
 }

@@ -3,7 +3,7 @@
 **Concept: the shift.**
 
 1. **Opening.** "THE NEXT ORDER", full width, cut by a magenta line across the screen; one line, one action, the details.
-1a. **Why this event · The evening** (from the brochure, Oct 2026). The three shifts drawn as today → next, with the brochure's topics and who brings each to the room; who it's for; what to expect. Then the evening: a doorway of light that opens, the tentative agenda as a lit line from 3:30 PM to the dinner (book launch with a cover reveal, Synthia AI live demo), and beside it who organises it — Viamagus and Hyderabad Mavericks, one line each. The date and place are in the heading, not repeated.
+1a. **One document, seven chapters** (numbered 01–07): why this event → a question of names → how a GCC evolves → the hosts → the film → the evening → your place. Ideas first, logistics just before the form. **Why this event** sets the headline's three verbs large — Hire. Build. Lead. — each filling with ink as it arrives, with only the brochure's topics beside it. **The evening** (from the brochure): a doorway of light, the tentative agenda as a lit line from 3:30 PM to the dinner, and Organised by — Viamagus and Hyderabad Mavericks, one line each. Build-Operate-Transfer and AI training continue the hosts' panel grid as two cards.
 1b. **GIC → GCC → ?** A split-flap board that plays once it is on screen (no pinning, no extra swipes): Global In-house Centre, renamed Global Capability Centre, then the middle letter flips once more to a magenta "?" — not written yet. The order follows the documented history (captive centre → GIC → GCC).
    - Below the line, the old order: aligned and grey.
    - Above it, the next order: turned out of alignment, lilac, and partly fused into owned arcs.
