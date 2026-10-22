@@ -49,7 +49,6 @@ export const knownFacts = {
   host: "Viamagus",
   /** ecosystem partner — local visibility and credibility in Hyderabad’s GCC community */
   partner: "Hyderabad Mavericks",
-  featuring: "Velocity AI · Synthia AI · Viamagus Select",
   /** the brochure’s line on the partner */
   partnerLine:
     "Hyderabad Mavericks is a group of leaders supporting Hyderabad as a thriving ecosystem for GCC growth, innovation and start-ups.",

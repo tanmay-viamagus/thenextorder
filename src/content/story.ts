@@ -57,71 +57,6 @@ export const shift: { n: string; years: string; era: string; headline: string; l
   },
 ];
 
-/* ---------------------------------------------------------------- the three practices (equal weight): hire → build → operate */
-export type PracticeKey = "velocity" | "synthia" | "select";
-
-export const practices: {
-  key: PracticeKey;
-  n: string;
-  verb: string;
-  name: string;
-  /** what it is, in one phrase */
-  cap: string;
-  /** who it's for, in a GCC leader's terms */
-  for: string;
-  /** verbatim from the official page */
-  line: string;
-  /** the way into the conversation at the event */
-  room: string;
-  /** the action on the product's own site */
-  go: string;
-  href: string;
-  source: string;
-}[] = [
-  {
-    key: "select",
-    n: "C",
-    verb: "Hire",
-    name: "Viamagus Select",
-    cap: "Technology talent",
-    for: "For centres building capability they don’t have yet.",
-    // viamagusselect.ai (hero headline)
-    line: "The mandate is yours. So is the team.",
-    room: "Bring a hiring brief to the room",
-    go: "Let’s hire",
-    href: "https://www.viamagusselect.ai/",
-    source: "viamagusselect.ai",
-  },
-  {
-    key: "velocity",
-    n: "A",
-    verb: "Build",
-    name: "Velocity AI",
-    cap: "AI-speed product engineering",
-    for: "For centres taking on product ownership.",
-    // viamagus.com/velocity-ai: "Three-month timelines become three-to-four weeks, with a shippable submodule delivered every single Friday."
-    line: "Three-month timelines become three-to-four weeks.",
-    room: "Bring a build challenge to the room",
-    go: "Let’s build",
-    href: "https://viamagus.com/velocity-ai",
-    source: "viamagus.com/velocity-ai",
-  },
-  {
-    key: "synthia",
-    n: "B",
-    verb: "Operate",
-    name: "Synthia AI",
-    cap: "Governed AI workflows and business processes",
-    for: "For centres running processes for the enterprise.",
-    // viamagus.com/synthia-ai
-    line: "Every AI output is a draft until a named officer signs it.",
-    room: "Bring a process to the room",
-    go: "Let’s automate",
-    href: "https://viamagus.com/synthia-ai",
-    source: "viamagus.com/synthia-ai",
-  },
-];
-
 export const convergence = "Everything an enterprise needs to become AI‑native.";
 
 /* ---------------------------------------------------------------- the invitation */
@@ -142,34 +77,20 @@ export const invite = {
 
 /* ---------------------------------------------------------------- the theme (from the event brief) */
 export const theme = {
-  kicker: "What’s new",
+  kicker: "Why attend",
   headline: "AI is reshaping how GCCs hire, build and lead.",
   lede: "Every stage so far changed what a centre owns. The next one changes how it hires, builds and leads — over the next 10 to 20 years.",
   /** the headline's three verbs, each with the brochure's topics — nothing more */
   shifts: [
-    { k: "talent", word: "Talent", verb: "Hire", topics: ["Roles that are changing", "Roles that are emerging", "Skills GCCs will need"], answer: { by: "Viamagus Select and Build-Operate-Transfer", href: "#pnl-select" } },
-    { k: "technology", word: "Technology", verb: "Build", topics: ["Building systems with AI", "Agentic workforces", "Human oversight"], answer: { by: "Velocity AI", href: "#pnl-velocity" } },
-    { k: "leadership", word: "Leadership", verb: "Lead", topics: ["How leaders adapt", "Becoming AI decision-makers"], answer: { by: "Synthia AI and AI training", href: "#pnl-synthia" } },
+    { k: "talent", word: "Talent", verb: "Hire", topics: ["Roles that are changing", "Roles that are emerging", "Skills GCCs will need"] },
+    { k: "technology", word: "Technology", verb: "Build", topics: ["Building systems with AI", "Agentic workforces", "Human oversight"] },
+    { k: "leadership", word: "Leadership", verb: "Lead", topics: ["How leaders adapt", "Becoming AI decision-makers"] },
+  ],
+  /** why it fits — the room, the horizon and the evening, from the brochure and the agenda */
+  fit: [
+    { k: "The room", d: "GCC heads and site leaders; CTOs, CIOs and engineering leaders; CHROs and talent leaders. By invitation." },
+    { k: "The horizon", d: "Not the next quarter: how GCCs hire, build and lead over the next 10 to 20 years." },
+    { k: "The evening", d: "Two leadership panels and a live AI demo, then cocktails and a networking dinner at T-Hub." },
   ],
 };
 
-/* ---------------------------------------------------------------- how Viamagus fits (from the event brief) */
-export const positioning = {
-  lede: "Viamagus builds technology platforms and solutions for large MNCs and GCCs. Viamagus Select brings the talent and hiring support to scale them.",
-  programme: {
-    k: "For leaders and teams",
-    title: "AI training",
-    line: "AI upskilling across the centre — for the teams who work with AI every day, and the leaders who make the AI decisions.",
-  },
-  /* Build-Operate-Transfer — the brochure’s words */
-  bot: {
-    k: "select · Build-Operate-Transfer",
-    title: "The GCC before your GCC.",
-    line: "We stand up and run your India team until your GCC is ready, then it transfers to you.",
-    steps: [
-      { k: "build", word: "Build", when: "8 weeks", d: "We stand up your India team — engineers AI-native in eight weeks." },
-      { k: "operate", word: "Operate", when: "Until you’re ready", d: "We run it until your GCC is ready." },
-      { k: "transfer", word: "Transfer", when: "Then", d: "It transfers to you." },
-    ],
-  },
-};

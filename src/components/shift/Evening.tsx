@@ -1,10 +1,14 @@
 import { agenda, agendaNote, contactEmail, event, organisers } from "@/content/event";
 import { ViaMagusMark } from "@/components/Brand";
 import { Handoff } from "./Story";
+import { FilmButton } from "@/components/film/FilmOverlay";
+import { FILM_DURATION } from "@/content/film";
+
+const filmLength = `${Math.floor(FILM_DURATION / 60)}:${String(FILM_DURATION % 60).padStart(2, "0")}`;
 
 /**
  * The evening — from the brochure. One grid: the date and a doorway of light
- * (the brochure's cover) on top; below, under one rule, the tentative agenda
+ * (the brochure's cover) on top; then the film; below, under one rule, the tentative agenda
  * as evenly spaced rows on a single line, and who is behind the evening
  * beside it, starting on the same line. Only the start is timed.
  */
@@ -27,7 +31,7 @@ export function Evening() {
       <header className="evn__hd" data-reveal>
         <div className="evn__title">
           <p className="evn__k">
-            <span className="chap">04</span>The evening
+            <span className="chap">02</span>The evening
           </p>
           <h2 id="evn-h" className="evn__h">
             Thursday 3 December.
@@ -47,6 +51,21 @@ export function Evening() {
         </div>
         <Doorway />
       </header>
+
+      {/* the film, before the running order */}
+      <div id="film" className="evn__film" data-reveal>
+        <div>
+          <p className="evn__lab">The film · {filmLength}</p>
+          <p className="evn__ft">See what’s changing.</p>
+        </div>
+        <p className="evn__fd">The old order, the shift, and what comes next. No sound needed.</p>
+        <FilmButton className="fl__btn">
+          <span className="fl__btnplay" aria-hidden="true">
+            <span className="tri" />
+          </span>
+          Play the film
+        </FilmButton>
+      </div>
 
       <div className="evn__body">
         <div className="evn__agenda">
@@ -88,7 +107,7 @@ export function Evening() {
           </p>
         </aside>
       </div>
-      <Handoff to="request">Places are by invitation. Will you be in the room?</Handoff>
+      <Handoff to="theme">What makes it worth the evening?</Handoff>
     </section>
   );
 }

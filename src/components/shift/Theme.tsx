@@ -5,7 +5,7 @@ import { theme } from "@/content/story";
 import { Handoff } from "./Story";
 
 /**
- * Why this event — the headline is the interface. "AI is reshaping how GCCs
+ * Why attend — the headline is the interface. "AI is reshaping how GCCs
  * hire, build and lead": each verb is a button; the active one is cut by the
  * magenta line from the title. All three sets of topics (from the brochure)
  * are always on screen — nothing waits on the animation; the active column
@@ -60,14 +60,14 @@ export function Theme() {
       id="theme"
       ref={root}
       className={`why${auto && seen ? " is-auto" : ""}`}
-      data-tone="dark"
+      data-tone="light"
       data-act="theme"
       aria-labelledby="why-h"
     >
       <div className="why__top" data-reveal>
         <p className="th__k">
-          <span className="chap">02</span>
-          Now · {theme.kicker}
+          <span className="chap">03</span>
+          {theme.kicker}
         </p>
         <p className="why__lede">{theme.lede}</p>
       </div>
@@ -104,14 +104,21 @@ export function Theme() {
                 <li key={t}>{t}</li>
               ))}
             </ul>
-            <a className="why__ans" href={s.answer.href}>
-              <span>Answered by</span> {s.answer.by} <i aria-hidden="true">↓</i>
-            </a>
           </div>
         ))}
       </div>
 
-      <Handoff to="practices">Three shifts need three answers. What does Viamagus bring?</Handoff>
+      {/* why it fits: the room, the horizon, the evening — all from the brochure */}
+      <dl className="why__fit" data-reveal>
+        {theme.fit.map((f) => (
+          <div key={f.k}>
+            <dt>{f.k}</dt>
+            <dd>{f.d}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <Handoff to="request">Places are by invitation. Will you be in the room?</Handoff>
     </section>
   );
 }

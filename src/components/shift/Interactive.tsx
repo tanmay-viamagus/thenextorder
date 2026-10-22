@@ -214,10 +214,15 @@ export function Chrome() {
       if (!raf) raf = requestAnimationFrame(update);
     };
     update();
+    // a link to a section: the browser jumped before the pinned scenes took their
+    // full height, so it landed short — aim again now the page is laid out
+    const target = location.hash ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null;
+    const aim = target ? requestAnimationFrame(() => target.scrollIntoView({ behavior: "instant", block: "start" })) : 0;
     window.addEventListener("scroll", on, { passive: true });
     window.addEventListener("resize", on);
     return () => {
       cancelAnimationFrame(raf);
+      cancelAnimationFrame(aim);
       window.removeEventListener("scroll", on);
       window.removeEventListener("resize", on);
     };

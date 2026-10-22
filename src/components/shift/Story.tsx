@@ -1,23 +1,22 @@
 import type { ReactNode } from "react";
 
 /**
- * The thread through the page: one story in five chapters — how GCCs
- * evolved → what's new → the answer → the evening → your place. The header
+ * The thread through the page: one story in four chapters — how GCCs are
+ * evolving → 3 December (the film and the agenda) → why attend → your place. The header
  * carries it as a line with five stops that fills as you read (Chrome sets
  * --sf0…--sf3 and the stops' state); each chapter ends by handing the reader
  * to the next with the question that chapter answers.
  */
 export const CHAPTERS = [
-  { id: "evolve", n: "01", label: "How GCCs evolved" },
-  { id: "theme", n: "02", label: "What’s new" },
-  { id: "practices", n: "03", label: "The answer" },
-  { id: "evening", n: "04", label: "3 December" },
-  { id: "request", n: "05", label: "Your place" },
+  { id: "evolve", n: "01", label: "How GCCs are evolving" },
+  { id: "evening", n: "02", label: "3 December" },
+  { id: "theme", n: "03", label: "Why attend" },
+  { id: "request", n: "04", label: "Your place" },
 ] as const;
 
 export function StoryNav() {
   return (
-    <nav className="hdr__nav story" aria-label="The story, in five chapters">
+    <nav className="hdr__nav story" aria-label="The story, in four chapters">
       <ol>
         {CHAPTERS.map((c, k) => (
           <li key={c.id} data-for={c.id}>

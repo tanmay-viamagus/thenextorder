@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { ViaMagusLogo } from "@/components/Brand";
 import { InviteForm } from "@/components/shift/InviteForm";
-import { Showcase } from "@/components/shift/Showcase";
-import { knownFacts, statusLine } from "@/content/event";
+import { agenda, knownFacts, statusLine } from "@/content/event";
 import { INTEREST_BY_KEY } from "@/content/register";
 import { invite } from "@/content/story";
 
@@ -42,7 +41,18 @@ export default async function Register({
             <span>The NEXT</span> <span>Order.</span>
           </p>
         </div>
-        <Showcase />
+        {/* the evening, as the brochure gives it — no products here */}
+        <div className="reg__agenda">
+          <p className="reg__k">The evening · tentative</p>
+          <ol>
+            {agenda.map((a) => (
+              <li key={a.k}>
+                <span className="reg__at">{a.time ?? ""}</span>
+                {a.t}
+              </li>
+            ))}
+          </ol>
+        </div>
         <div className="reg__when">
           <p className="reg__k">{statusLine()}</p>
           <p className="reg__host">

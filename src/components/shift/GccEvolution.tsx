@@ -5,7 +5,8 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 
 /**
  * How a GCC evolves — one editorial line illustration that changes across
- * five stages: a headquarters at home, a centre arriving in India, the centre
+ * four stages (the drawing has five states; the first, headquarters alone,
+ * is folded into the arrival): a centre arriving in India, the centre
  * operating, the ownership shift, and the next order. Fine black lines on
  * ivory; purple only where ownership moves. Scroll (pinned, native) or the
  * stage timeline on the ground line drives it. A conceptual journey, not a
@@ -14,22 +15,16 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 export const STAGES = [
   {
     n: "01",
-    title: "The origin",
-    line: "The business begins at home.",
-    note: "Leadership, teams and decisions all sit at headquarters.",
-    role: "Not there yet",
-    decides: "Headquarters",
-  },
-  {
-    n: "02",
+    scene: 2,
     title: "The arrival",
     line: "India becomes part of the plan.",
-    note: "A centre opens in India, connected to headquarters by a clear mandate.",
+    note: "The business is run from headquarters. A centre opens in India, connected to it by a clear mandate.",
     role: "Getting set up",
     decides: "Headquarters",
   },
   {
-    n: "03",
+    n: "02",
+    scene: 3,
     title: "The operating centre",
     line: "Teams form. Capabilities take shape.",
     note: "Work comes in, delivery goes back. This is where many GCCs are today.",
@@ -37,7 +32,8 @@ export const STAGES = [
     decides: "Headquarters",
   },
   {
-    n: "04",
+    n: "03",
+    scene: 4,
     title: "The ownership shift",
     line: "From executing work to owning outcomes.",
     note: "Products, platforms and engineering — and the decisions that go with them — start to sit in India.",
@@ -45,7 +41,8 @@ export const STAGES = [
     decides: "India, for what it owns",
   },
   {
-    n: "05",
+    n: "04",
+    scene: 5,
     title: "The next order",
     line: "Building what the business becomes next.",
     note: "The centre helps decide what the global business builds, and where it goes next.",
@@ -656,7 +653,7 @@ export function GccEvolution() {
       id="evolve"
       ref={root}
       className="evo"
-      data-stage={i + 1}
+      data-stage={s.scene}
       data-tone="light"
       data-act="evolve"
       aria-labelledby="evo-h"
@@ -665,7 +662,7 @@ export function GccEvolution() {
         <header className="evo__hd">
           <div className="evo__title">
             <p className="evo__k">
-              <span className="chap">01</span>Then · How a GCC evolves
+              <span className="chap">01</span>How GCCs are evolving
             </p>
             <h2 id="evo-h" className="evo__h">
               From a presence in India <br />
@@ -704,20 +701,20 @@ export function GccEvolution() {
           <Scene />
         </div>
 
-        {/* the five stages, set on the ground line */}
-        <ol className="evo__tl" aria-label="The five stages">
+        {/* the four stages, set on the ground line */}
+        <ol className="evo__tl" aria-label="The four stages">
           {STAGES.map((x, k) => (
             <li key={x.n}>
               <button
                 type="button"
-                className={`evo__t${k === i ? " is-on" : k < i ? " is-done" : ""}${k >= 3 ? " is-own" : ""}`}
+                className={`evo__t${k === i ? " is-on" : k < i ? " is-done" : ""}${k >= 2 ? " is-own" : ""}`}
                 aria-current={k === i ? "step" : undefined}
                 onClick={() => go(k)}
               >
                 <span className="evo__tdot" aria-hidden="true" />
                 <b>{x.n}</b>
                 <span className="evo__tlab">{x.title}</span>
-                {k === 2 ? (
+                {k === 1 ? (
                   <span className="evo__here" aria-hidden="true">
                     Many GCCs are here
                   </span>
@@ -744,7 +741,7 @@ export function GccEvolution() {
           <li key={x.n}>
             {x.n}, {x.title}: {x.line} {x.note} India’s role: {x.role}. Who
             decides: {x.decides}.
-            {x.n === "03" ? " Many GCCs are at this stage today." : ""}
+            {x.n === "02" ? " Many GCCs are at this stage today." : ""}
           </li>
         ))}
       </ol>

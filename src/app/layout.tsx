@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   applicationName: "The NEXT Order",
   alternates: { canonical: "/" },
   authors: [{ name: "Viamagus", url: "https://viamagus.com/" }],
-  keywords: ["GCC", "global capability centre", "GCC leaders India", "The NEXT Order", "Viamagus", "Velocity AI", "Synthia AI", "Viamagus Select"],
+  keywords: ["GCC", "global capability centre", "GCC leaders India", "The NEXT Order", "Viamagus"],
   openGraph: {
     title,
     description,

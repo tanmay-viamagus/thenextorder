@@ -12,7 +12,7 @@ type State = { kind: "idle" } | { kind: "sending" } | { kind: "done"; name: stri
  * Request an invitation. Three typed fields; everything else is a tap.
  * Submissions are stored (POST /api/register → Neon Postgres) and listed for
  * the organisers at /register/response. `preset` preselects a practice
- * (from /register?interest=velocity|synthia|select).
+ * (from /register?interest=talent|technology|leadership).
  */
 export function InviteForm({ source = "site", preset }: { source?: string; preset?: string }) {
   const [state, setState] = useState<State>({ kind: "idle" });
