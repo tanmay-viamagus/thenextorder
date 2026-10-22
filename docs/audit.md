@@ -259,3 +259,26 @@ What held up: the cut title, the transformation, and the open "?" volume, which 
 5. **Vague form chip:** "The conversation" is now "The wider conversation".
 
 **Verified:** build, tests, axe (0 violations), keyboard focus, no-JS and a registration end to end. Test rows were deleted.
+
+
+---
+
+## Round 13 — designer pass (hierarchy, first five seconds)
+
+**Constraint:** hero design and animations unchanged; hero copy only.
+
+**The 10 problems fixed:**
+1. **The hero didn't say what this is.** The kicker now reads "A ViaMagus leadership event · Hyderabad", and the line adds "How AI is reshaping talent, technology and leadership —".
+2. **The hero details line was a four-part run-on.** It now reads "Hyderabad · Date & venue to be announced · With Hyderabad Mavericks".
+3. **The practices intro measure was too wide** (about 110 characters). It is capped at roughly 38em.
+4. **The close stacked two near-duplicate paragraphs.** They are merged into one summary sentence.
+5. **The "what to expect" bullets repeated the theme section.** They are now one inline line.
+6. **The register lede had the same two-paragraph problem.** It now uses the one summary sentence.
+7. **The theme section drew double lines.** The column rules under the horizon are removed.
+8. **The leadership programme was a boxed card.** It is now a ruled strip.
+9. **Section headlines used five sizes.** There are now two: display and heading. The conversion headline is no longer the smallest.
+10. **The phone hero details wrapped awkwardly.** Fixed by #2.
+
+**Round 2:** the close status line was shortened, and every line in the close column now shares one measure.
+
+**Verified:** build, tests, axe (0 violations), no-JS, and desktop and phone screenshots of every section.

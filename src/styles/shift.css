@@ -6026,3 +6026,102 @@ html[data-act="evolve"] .hdr__nav a[data-for="evolve"]::after {
   margin-top: -18px;
   font-size: 1rem;
 }
+
+/* ==========================================================================
+   Designer pass — hierarchy, rhythm, fewer boxes
+   ========================================================================== */
+
+/* one scale for section headlines: display (statement sections) and heading (working sections) */
+:root {
+  --h-display: clamp(2.8rem, 5.4vw, 6.4rem);
+  --h-heading: clamp(2.4rem, 4.2vw, 4.8rem);
+}
+
+.th__h,
+.eco__h,
+.fl__h {
+  font-size: var(--h-display);
+}
+
+.evo__h,
+.close__h {
+  font-size: var(--h-heading);
+}
+
+.close__h {
+  max-width: 11em;
+  margin-top: 12px;
+}
+
+/* the practices intro: readable measure, the business line given room */
+.eco__hd {
+  max-width: 44rem;
+}
+
+.eco__hands {
+  max-width: 38em;
+  margin-top: 16px;
+  font-size: 1.05rem;
+}
+
+/* the leadership programme: a ruled strip, not a boxed card */
+.prog {
+  border: 0;
+  border-top: 3px solid var(--magenta);
+  background: none;
+  padding: 26px 0 0;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr) auto;
+  grid-template-areas: "k l a" "t l a";
+  align-items: center;
+}
+
+.prog__k {
+  grid-area: k;
+}
+
+.prog__t {
+  grid-area: t;
+}
+
+.prog__l {
+  grid-area: l;
+  max-width: 30em;
+}
+
+.prog__a {
+  grid-area: a;
+}
+
+@media (max-width: 1080px) {
+  .prog {
+    grid-template-columns: 1fr;
+    grid-template-areas: "k" "t" "l" "a";
+  }
+}
+
+/* the theme: the horizon is the rule — no second line on top of each column */
+.th__s {
+  border-top: 0;
+  padding-top: 8px;
+}
+
+/* the close: one paragraph, one line of expectations */
+.close__exp {
+  margin: 4px 0 2px;
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.close__who--b {
+  margin-bottom: 10px;
+}
+
+/* the close: one measure for every line in the column */
+.close__copy > * {
+  max-width: 30rem;
+}
+
+.close__copy > .close__h {
+  max-width: 11em;
+}

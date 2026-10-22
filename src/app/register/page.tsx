@@ -52,8 +52,7 @@ export default async function Register({
       </aside>
       <main className="reg__main">
         <h1 className="reg__h">Find your place in the conversation.</h1>
-        <p className="reg__lede">{invite.what}</p>
-        <p className="reg__lede reg__lede--theme">{invite.theme}</p>
+        <p className="reg__lede">{invite.summary}</p>
         <InviteForm source="register" preset={preset} />
       </main>
     </div>
