@@ -77,7 +77,6 @@ export const invite = {
 
 /* ---------------------------------------------------------------- the theme (from the event brief) */
 export const theme = {
-  kicker: "Why attend",
   /** the final brochure's "Why this event", verbatim */
   question: ["Your centre was built to execute.", "What will it own next?"],
   headline: "AI is reshaping how GCCs hire, build and lead.",

@@ -197,11 +197,8 @@ export function Chrome() {
       tops.forEach((t, k) => {
         if (t < mark) ch = k;
       });
-      for (let k = 0; k < tops.length - 1; k++) {
-        const f = Math.min(1, Math.max(0, (mark - tops[k]) / (tops[k + 1] - tops[k])));
-        root.style.setProperty(`--sf${k}`, f.toFixed(3));
-      }
-      const into = ch >= 0 && ch < tops.length - 1 ? Number(root.style.getPropertyValue(`--sf${ch}`)) : 0;
+      // --sp: 0 at the first stop, 1 at the last — each stop an equal step along the line
+      const into = ch >= 0 && ch < tops.length - 1 ? Math.min(1, Math.max(0, (mark - tops[ch]) / (tops[ch + 1] - tops[ch]))) : 0;
       root.style.setProperty("--sp", ch < 0 ? "0" : Math.min(1, (ch + into) / (tops.length - 1)).toFixed(3));
       chapters.forEach((c, k) => {
         c.li?.classList.toggle("is-on", k === ch);

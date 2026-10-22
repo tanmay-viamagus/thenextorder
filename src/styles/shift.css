@@ -4120,237 +4120,6 @@ html:not(.js) .why__bar {
 
 /* the answer: no clock beside the heading now */
 
-/* ==========================================================================
-   The thread — one story in five chapters, carried by one line
-   ========================================================================== */
-
-/* every chapter label starts on a stop of the line */
-.chap::before {
-  content: "";
-  flex: none;
-  width: 7px;
-  height: 7px;
-  margin-right: 10px;
-  border-radius: 50%;
-  background: var(--magenta);
-}
-
-/* the header: five stops, joined; the line fills as you read */
-.story ol {
-  display: flex;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.story li {
-  display: flex;
-  align-items: center;
-}
-
-.story a {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 10px 7px;
-  font: 500 0.7rem/1 var(--mono);
-  letter-spacing: 0.08em;
-  opacity: 0.6;
-  transition: opacity 0.3s;
-}
-
-.story a::after {
-  content: none;
-}
-
-.story a b {
-  font-weight: 600;
-}
-
-.story__dot {
-  width: 7px;
-  height: 7px;
-  flex: none;
-  border: 1.5px solid currentColor;
-  border-radius: 50%;
-  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
-}
-
-.story__seg {
-  position: relative;
-  width: clamp(14px, 2.2vw, 40px);
-  height: 1px;
-  background: color-mix(in srgb, currentColor 28%, transparent);
-}
-
-.story__seg i {
-  position: absolute;
-  inset: 0;
-  background: var(--magenta);
-  transform: scaleX(var(--f, 0));
-  transform-origin: left;
-}
-
-.story a:hover,
-.story li.is-on a,
-.story li.is-done a {
-  opacity: 1;
-}
-
-.story li.is-on .story__dot,
-.story li.is-done .story__dot {
-  background: var(--magenta);
-  border-color: var(--magenta);
-}
-
-.story li.is-on .story__dot {
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--magenta) 28%, transparent);
-}
-
-/* narrower screens: every stop, but only the current one is named */
-@media (max-width: 1360px) {
-  .story li:not(.is-on) .story__lab {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-}
-
-/* phones: the same line as a hairline under the header */
-.story-m {
-  display: none;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-  height: 2px;
-  pointer-events: none;
-}
-
-.story-m i {
-  position: absolute;
-  inset: 0;
-  background: var(--magenta);
-  transform: scaleX(var(--sp, 0));
-  transform-origin: left;
-}
-
-@media (max-width: 1080px) {
-  .story-m {
-    display: block;
-  }
-}
-
-/* the end of every chapter: the line draws across, and asks the next question */
-.handoff-band {
-  padding: clamp(20px, 4vh, 40px) var(--gutter) clamp(64px, 11vh, 120px);
-  background: var(--paper);
-  color: var(--ink);
-}
-
-.handoff-band .handoff {
-  margin-top: 0;
-}
-
-.handoff {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
-  gap: 12px 24px;
-  margin-top: clamp(56px, 9vh, 96px);
-  padding-top: 24px;
-  border-top: 1px solid color-mix(in srgb, currentColor 16%, transparent);
-  color: inherit;
-  text-decoration: none;
-}
-
-.handoff::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -1px;
-  height: 2px;
-  background: var(--magenta);
-  transform-origin: left;
-  transition: transform 1.2s var(--ease-out) 0.15s;
-}
-
-.js .handoff:not(.is-in)::before {
-  transform: scaleX(0.06);
-}
-
-.handoff__k {
-  display: flex;
-  align-items: center;
-  font: 500 0.72rem/1 var(--mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--purple);
-}
-
-[data-tone="dark"] .handoff__k {
-  color: var(--lilac);
-}
-
-.handoff__q {
-  grid-column: 1;
-  max-width: 26ch;
-  font-size: clamp(1.4rem, 2.6vw, 2.4rem);
-  font-weight: 700;
-  line-height: 1.08;
-  letter-spacing: -0.03em;
-}
-
-.handoff__arr {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  display: grid;
-  place-items: center;
-  width: clamp(44px, 4vw, 56px);
-  aspect-ratio: 1;
-  border: 1.5px solid currentColor;
-  border-radius: 50%;
-  font-size: 1.15rem;
-  transition: background-color 0.3s, border-color 0.3s, color 0.3s, transform 0.3s var(--ease-out);
-}
-
-@media (hover: hover) {
-  .handoff:hover .handoff__arr {
-    background: var(--magenta);
-    border-color: var(--magenta);
-    color: #0e0d12;
-    transform: translateY(3px);
-  }
-}
-
-.handoff:focus-visible {
-  outline: 2px solid var(--magenta);
-  outline-offset: 6px;
-}
-
-/* the film band hands on to the evening */
-.fl .handoff {
-  margin-top: clamp(40px, 7vh, 72px);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .js .handoff:not(.is-in)::before,
-  .handoff::before {
-    transform: none;
-    transition: none;
-  }
-  .story__seg i,
-  .story-m i {
-    transition: none;
-  }
-}
-
 /* the register panel: the evening's running order, in place of the products */
 .reg__agenda {
   align-self: center;
@@ -4647,17 +4416,6 @@ html:not(.js) .why__bar {
   }
 }
 
-/* the hand-off label stays on one line on a phone */
-@media (max-width: 759px) {
-  .handoff__k .chap::after {
-    width: 14px;
-    margin: 0 8px;
-  }
-  .handoff__k {
-    white-space: nowrap;
-  }
-}
-
 /* phones on their side: the pinned stage has ~330px — the label, the stage's
    line, the drawing and the timeline; the title and the ledger step aside
    (the screen-reader list carries both) */
@@ -4697,7 +4455,480 @@ html:not(.js) .why__bar {
   .evn__tag,
   .evn__role,
   .reg__host,
-  .evo__ledger dt {
+  .evo__ledger dt,
+  .evo__fine {
     font-size: 0.75rem;
   }
 }
+
+/* ==========================================================================
+   The thread — one story in four chapters, one line, one rhythm
+   ========================================================================== */
+
+/* every chapter label starts on a stop of the line */
+.chap::before {
+  content: "";
+  flex: none;
+  width: 7px;
+  height: 7px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: var(--magenta);
+}
+
+/* the header: four stops, evenly spaced on one straight line; the names sit
+   under their stops, so nothing moves as you read */
+.story {
+  position: relative;
+  display: block;
+  width: min(840px, 58vw);
+}
+
+.story ol {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.story a {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 12px 4px 10px;
+  font: 500 0.68rem/1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0.55;
+  transition: opacity 0.3s;
+}
+
+.story a::after {
+  content: none;
+}
+
+.story a b {
+  font-weight: 600;
+}
+
+.story__dot {
+  position: relative;
+  z-index: 1;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+/* the line runs from the first stop to the last: three equal steps */
+.story__track {
+  position: absolute;
+  top: 15px;
+  left: 12.5%;
+  width: 75%;
+  height: 1px;
+  background: color-mix(in srgb, currentColor 22%, transparent);
+  pointer-events: none;
+}
+
+.story__track i {
+  position: absolute;
+  inset: -0.5px 0;
+  background: var(--magenta);
+  transform: scaleX(var(--sp, 0));
+  transform-origin: left;
+}
+
+.story a:hover,
+.story li.is-done a {
+  opacity: 0.85;
+}
+
+.story li.is-on a {
+  opacity: 1;
+}
+
+.story li.is-on .story__dot,
+.story li.is-done .story__dot {
+  background: var(--magenta);
+}
+
+.story li.is-on .story__dot {
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--magenta) 28%, transparent);
+}
+
+/* laptops: the same four stops, numbers only — still evenly spaced */
+@media (max-width: 1399px) {
+  .story {
+    width: min(300px, 30vw);
+  }
+  .story__name {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+}
+
+/* phones: the same line as a hairline under the header */
+.story-m {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  pointer-events: none;
+}
+
+.story-m i {
+  position: absolute;
+  inset: 0;
+  background: var(--magenta);
+  transform: scaleX(var(--sp, 0));
+  transform-origin: left;
+}
+
+@media (max-width: 1080px) {
+  .story {
+    display: none;
+  }
+  .story-m {
+    display: block;
+  }
+}
+
+/* the end of every chapter: the same gap above, the same gap below, the same
+   shape — a line drawn across, where you go next, a statement and a question */
+:root {
+  --handoff-gap: clamp(72px, 11vh, 120px);
+  --chapter-end: clamp(88px, 12vh, 140px);
+}
+
+.handoff-band {
+  padding: var(--handoff-gap) var(--gutter) var(--chapter-end);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.handoff-band .handoff {
+  margin-top: 0;
+}
+
+.why,
+.evn {
+  padding-bottom: var(--chapter-end);
+}
+
+.handoff {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 16px 32px;
+  margin-top: var(--handoff-gap);
+  padding-top: 26px;
+  border-top: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+  color: inherit;
+  text-decoration: none;
+}
+
+.handoff::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1px;
+  height: 2px;
+  background: var(--magenta);
+  transform-origin: left;
+  transition: transform 1.2s var(--ease-out) 0.15s;
+}
+
+.js .handoff:not(.is-in)::before {
+  transform: scaleX(0.06);
+}
+
+/* the same voice as the chapter labels */
+.handoff__k {
+  grid-column: 1;
+  font: 600 0.76rem/1 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--purple);
+}
+
+[data-tone="dark"] .handoff__k {
+  color: var(--lilac);
+}
+
+.handoff__q {
+  grid-column: 1;
+  font-size: clamp(1.5rem, 2.6vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.handoff__ask {
+  display: block;
+  color: var(--purple);
+}
+
+[data-tone="dark"] .handoff__ask {
+  color: var(--lilac);
+}
+
+.handoff__arr {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  display: grid;
+  place-items: center;
+  width: clamp(48px, 4vw, 60px);
+  aspect-ratio: 1;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s, transform 0.3s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .handoff:hover .handoff__arr {
+    background: var(--magenta);
+    border-color: var(--magenta);
+    color: #0e0d12;
+    transform: translateY(3px);
+  }
+}
+
+.handoff:focus-visible {
+  outline: 2px solid var(--magenta);
+  outline-offset: 6px;
+}
+
+@media (max-width: 759px) {
+  .handoff {
+    gap: 14px 18px;
+    padding-top: 22px;
+  }
+  .handoff__q {
+    font-size: 1.35rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .handoff:not(.is-in)::before,
+  .handoff::before {
+    transform: none;
+    transition: none;
+  }
+}
+
+
+/* ==========================================================================
+   V2 opening (/v2) — one centred column: the shape, the title, one line,
+   two calls to action, the facts at the foot
+   ========================================================================== */
+.hero2 {
+  --R: max(50vw, 62svh); /* the rings' radius: a U whose sides leave the screen */
+  --arc-bottom: 62svh; /* where the U bottoms out — just under the title */
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  justify-items: center;
+  padding: calc(var(--hdr) + 24px) var(--gutter) clamp(22px, 4vh, 40px);
+  overflow: hidden;
+  background: var(--black);
+  color: var(--white);
+  text-align: center;
+}
+
+.hero2__arc {
+  position: absolute;
+  left: calc(50% - var(--R));
+  top: calc(var(--arc-bottom) - 2 * var(--R));
+  width: calc(2 * var(--R));
+  height: calc(2 * var(--R));
+  overflow: visible;
+  pointer-events: none;
+}
+
+.hero2__band {
+  fill: none;
+  stroke: var(--lilac);
+  stroke-opacity: 0.055;
+}
+
+.hero2__ring path {
+  fill: none;
+  stroke: var(--lilac);
+  stroke-opacity: 0.11;
+}
+
+.hero2__ring:first-of-type path {
+  stroke: var(--magenta);
+  stroke-opacity: 0.2;
+}
+
+.hero2__in {
+  position: relative;
+  z-index: 1;
+  align-self: center;
+  display: grid;
+  justify-items: center;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* the title, centred; its cut still crosses the whole screen */
+.hero2 .st {
+  margin: 0;
+  font-size: min(13.4vw, 24svh);
+  text-align: center;
+}
+
+.hero2 .st__below {
+  color: var(--white);
+}
+
+.hero2 .st__above {
+  color: var(--lilac);
+}
+
+.hero2 .st__cut {
+  left: calc(50% - 50vw);
+  width: 100vw;
+  height: 3px;
+  background: var(--magenta);
+}
+
+.hero2__text {
+  margin-top: clamp(22px, 4vh, 40px);
+}
+
+.hero2__line {
+  font-size: clamp(1.3rem, 2vw, 2.1rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.hero2__sub {
+  margin-top: 10px;
+  font-size: clamp(0.98rem, 1.1vw, 1.1rem);
+  color: rgba(252, 253, 255, 0.68);
+}
+
+.hero2__cta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin-top: clamp(24px, 4.4vh, 44px);
+}
+
+/* the second call to action: the same box as the first, outlined */
+.hero2__film {
+  min-height: 64px;
+  border-radius: 0;
+  padding-right: 26px;
+}
+
+.hero2__foot {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding-top: clamp(20px, 3vh, 28px);
+  font: 500 0.75rem/1.5 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(252, 253, 255, 0.62);
+}
+
+.hero2__partner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero2__mav {
+  width: auto;
+  height: 20px;
+}
+
+/* the header's call to action waits until the opening's has scrolled away, as in V1 */
+
+@media (max-width: 759px) {
+  .hero2 {
+    --R: 58vw;
+    --arc-bottom: 60svh;
+  }
+  .hero2 .st {
+    font-size: 23vw;
+  }
+  .hero2__cta {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+  .hero2__cta .btn,
+  .hero2__film {
+    justify-content: center;
+  }
+}
+
+/* short phones held upright: the secondary line steps aside */
+@media (max-width: 759px) and (max-height: 640px) {
+  .hero2__sub {
+    display: none;
+  }
+  .hero2__cta {
+    margin-top: 20px;
+  }
+}
+
+/* phones on their side: everything on one screen */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero2 {
+    padding-bottom: 10px;
+  }
+  .hero2__foot {
+    gap: 4px;
+    padding-top: 10px;
+  }
+  .hero2 .st {
+    font-size: min(9vw, 22svh);
+  }
+  .hero2__text {
+    margin-top: 12px;
+  }
+  .hero2__sub {
+    display: none;
+  }
+  .hero2__cta {
+    margin-top: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .hero2 .st__cut {
+    animation: cut-draw 1s var(--ease) 0.1s both;
+  }
+}
+
+/* V2: the header's call to action is there from the start (the sketch's icon, right) */
+.js:has(.hero2) .hdr__cta {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  visibility: visible;
+}
+
