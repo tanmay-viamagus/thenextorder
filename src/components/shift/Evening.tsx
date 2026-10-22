@@ -19,19 +19,6 @@ function Doorway() {
   );
 }
 
-/** The book, still under wraps. */
-function Book() {
-  return (
-    <span className="evn-book" aria-hidden="true">
-      <span className="evn-book__spine" />
-      <span className="evn-book__cover">
-        <span className="evn-book__t" />
-        <span className="evn-book__t evn-book__t--s" />
-      </span>
-    </span>
-  );
-}
-
 export function Evening() {
   const sub = [event.time, [event.venue, event.city].filter(Boolean).join(", "), event.format].filter(Boolean);
   return (
@@ -72,7 +59,6 @@ export function Evening() {
                   {a.d ? <span className="evn__d">{a.d}</span> : null}
                 </span>
                 <span className="evn__side">
-                  {a.k === "book" ? <Book /> : null}
                   {a.tag ? <em className="evn__tag">{a.tag}</em> : null}
                 </span>
               </li>
