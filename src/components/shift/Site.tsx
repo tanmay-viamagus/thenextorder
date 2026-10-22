@@ -90,14 +90,17 @@ export function Site() {
           aria-labelledby="hero-h"
         >
           <div className="hero__l">
-            <p className="hero__meta">An invitation from ViaMagus</p>
+            <p className="hero__meta">
+              A ViaMagus leadership event · Hyderabad
+            </p>
             <h1 id="hero-h" className="sr-only">
               The NEXT Order — an invitation from ViaMagus for Hyderabad’s GCC
               leaders
             </h1>
             <ShiftTitle lines={["THE ", "NEXT", "ORDER."]} cutLine={2} />
             <p className="hero__line">
-              For the leaders shaping what Hyderabad’s GCCs become next.
+              How AI is reshaping talent, technology and leadership — for the
+              leaders shaping what Hyderabad’s GCCs become next.
             </p>
             <div className="hero__cta">
               <a className="btn btn--shift btn--lg" href="/register">
@@ -108,8 +111,7 @@ export function Site() {
               </a>
             </div>
             <p className="hero__note">
-              {statusLine()} · Hosted by {knownFacts.host} · Ecosystem partner{" "}
-              {knownFacts.partner}
+              {statusLine()} · With {knownFacts.partner}
             </p>
           </div>
         </section>
@@ -260,14 +262,11 @@ export function Site() {
               <h2 id="register-h" className="close__h">
                 Find your place in the conversation.
               </h2>
-              <p className="close__who">{invite.what}</p>
-              <p className="close__who">{invite.theme}</p>
+              <p className="close__who">{invite.summary}</p>
               <p className="close__who close__who--b">{invite.who}</p>
-              <ul className="close__exp">
-                {theme.expect.map((e) => (
-                  <li key={e.n}>{e.t}</li>
-                ))}
-              </ul>
+              <p className="close__exp">
+                {theme.expect.map((e) => e.t).join(" · ")}
+              </p>
               <ol className="steps">
                 <li>
                   <b>01</b>
@@ -292,7 +291,7 @@ export function Site() {
                 </li>
               </ol>
               <p className="close__note">
-                {statusLine()} · Hosted by {knownFacts.host} · Ecosystem partner{" "}
+                {statusLine()} · Hosted by {knownFacts.host} with{" "}
                 {knownFacts.partner}
               </p>
             </div>

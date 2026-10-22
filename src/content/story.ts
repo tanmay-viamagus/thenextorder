@@ -127,6 +127,9 @@ export const invite = {
   line: "An invitation for Hyderabad’s GCC leaders.",
   who: "For GCC CEOs and MDs, site leaders, technology and engineering leaders, CHROs and talent leaders.",
   what: "A ViaMagus event on where global centres go next: what they own, the value they create and the capabilities they’ll need.",
+  /** the what, in one sentence — used where there's room for only one */
+  summary:
+    "A ViaMagus leadership event in Hyderabad on how AI and the coming wave of superintelligence are reshaping talent, technology and leadership — and where global centres go next.",
   /** added from the event brief */
   theme:
     "This edition explores how AI and the coming wave of superintelligence are reshaping talent, technology and leadership — for GCC leaders and decision-makers across Hyderabad.",
