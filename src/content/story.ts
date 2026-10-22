@@ -147,18 +147,24 @@ export const theme = {
       word: "Talent",
       line: "Roles are changing. New ones are emerging.",
       note: "Which roles your centre will need — and which it will grow into.",
+      today: "The roles you hire for",
+      next: "Roles change. New ones appear.",
     },
     {
       k: "technology",
       word: "Technology",
       line: "Agentic workforces, led by people.",
       note: "Rethinking how technology gets built when agents do the work and humans lead and oversee it.",
+      today: "People do the work",
+      next: "Agents do the work. People lead it.",
     },
     {
       k: "leadership",
       word: "Leadership",
       line: "Sound decisions about AI.",
       note: "How leaders adapt to make AI decisions they can stand behind.",
+      today: "Many AI options",
+      next: "One sound call, owned by a leader.",
     },
   ],
   expect: [
@@ -175,5 +181,16 @@ export const positioning = {
     k: "For leaders",
     title: "The AI leadership programme",
     line: "Upskilling today’s leaders to become confident AI decision-makers.",
+  },
+  /* ViaMagus Select’s BOT model — wording from viamagusselect.ai (the eight-week programme, 12 months, month 13) */
+  bot: {
+    k: "ViaMagus Select · The BOT model",
+    title: "Build. Operate. Transfer.",
+    line: "A team for your centre, built by ViaMagus Select and handed over to you.",
+    steps: [
+      { k: "build", word: "Build", when: "8 weeks", d: "Engineers trained in an eight-week AI-native programme." },
+      { k: "operate", word: "Operate", when: "12 months", d: "The team works with you while it stays with ViaMagus Select." },
+      { k: "transfer", word: "Transfer", when: "Month 13", d: "The team moves onto your payroll — no conversion fee." },
+    ],
   },
 };
