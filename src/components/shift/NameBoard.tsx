@@ -1,25 +1,28 @@
 "use client";
 
-import { useStepScroll } from "./useStepScroll";
 import { useEffect, useRef, useState } from "react";
 
 /**
- * GCC → GIC → ? as a split-flap board, driven by scroll (pinned, native scroll).
- * Only the middle letter changes — C, then I, then a question mark: the next
- * name isn't written yet. One clean flip per change.
+ * GIC → GCC → ? as a split-flap board. The order is the documented one: captive
+ * centres became Global In-house Centres (GICs), later renamed Global
+ * Capability Centres (GCCs). Only the middle letter changes — I, then C, then
+ * a question mark: the next name isn't written yet. One clean flip per change.
+ *
+ * Not pinned: the board plays itself once it is on screen (and again each
+ * time it comes back), so it costs no extra swipes.
  */
 const STATES = [
   {
-    word: ["G", "C", "C"],
+    word: ["G", "I", "C"],
     k: "It was",
-    name: "Global Capability Centre",
-    note: "Built to deliver what headquarters designed.",
+    name: "Global In‑house Centre",
+    note: "The captive centre, renamed. Built to deliver what headquarters designed.",
   },
   {
-    word: ["G", "I", "C"],
-    k: "Then",
-    name: "Global In‑house Centre — or Innovation Centre, depending on who you ask",
-    note: "Same centre, bigger brief. The middle letter changed first.",
+    word: ["G", "C", "C"],
+    k: "Now",
+    name: "Global Capability Centre",
+    note: "Same centre, bigger brief: capability, not just cost. The middle letter changed.",
   },
   {
     word: ["G", "?", "C"],
@@ -87,34 +90,41 @@ function Flap({ ch }: { ch: string }) {
   );
 }
 
+/** how long each name holds before the next flip (ms) */
+const HOLD = [1600, 2600];
+
 export function NameBoard() {
   const root = useRef<HTMLElement | null>(null);
-  useStepScroll(root, STATES.length);
   const [i, setI] = useState(0);
 
   useEffect(() => {
     const el = root.current;
     if (!el) return;
-    let raf = 0;
-    const read = () => {
-      raf = 0;
-      const r = el.getBoundingClientRect();
-      const p = Math.max(
-        0,
-        Math.min(1, -r.top / Math.max(1, r.height - window.innerHeight)),
-      );
-      setI(Math.round(p * 2));
+    let timers: number[] = [];
+    const clear = () => {
+      timers.forEach((t) => window.clearTimeout(t));
+      timers = [];
     };
-    const on = () => {
-      if (!raf) raf = requestAnimationFrame(read);
-    };
-    read();
-    window.addEventListener("scroll", on, { passive: true });
-    window.addEventListener("resize", on);
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.intersectionRatio >= 0.55 && !timers.length) {
+          // on screen: GIC, then GCC, then the open question
+          timers = [
+            window.setTimeout(() => setI(1), HOLD[0]),
+            window.setTimeout(() => setI(2), HOLD[0] + HOLD[1]),
+          ];
+        } else if (!e.isIntersecting) {
+          // gone: reset, so it plays again on the way back
+          clear();
+          setI(0);
+        }
+      },
+      { threshold: [0, 0.55] },
+    );
+    io.observe(el);
     return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", on);
-      window.removeEventListener("resize", on);
+      io.disconnect();
+      clear();
     };
   }, []);
 
@@ -130,7 +140,7 @@ export function NameBoard() {
       aria-labelledby="nb-h"
     >
       <h2 id="nb-h" className="sr-only">
-        It was the GCC. Then the GIC. What comes next?
+        It was the GIC. Now it is the GCC. What comes next?
       </h2>
       <ol className="sr-only">
         {STATES.map((x) => (
@@ -143,20 +153,11 @@ export function NameBoard() {
           </li>
         ))}
       </ol>
-      {/* one snap point per state: one swipe, one flip */}
-      {[0, 1, 2].map((k) => (
-        <span
-          key={k}
-          className="nb__snap"
-          style={{ top: `${k * 50}vh` }}
-          aria-hidden="true"
-        />
-      ))}
       <div className="nb__stage" aria-hidden="true">
         <div className="nb__top">
           <p className="nb__k">A question of names</p>
           <ol className="nb__steps">
-            {["GCC", "GIC", "?"].map((w, k) => (
+            {["GIC", "GCC", "?"].map((w, k) => (
               <li
                 key={w}
                 className={k === i ? "is-on" : k < i ? "is-done" : ""}

@@ -3,7 +3,7 @@
 **Concept: the shift.**
 
 1. **Opening.** "THE NEXT ORDER", full width, cut by a magenta line across the screen; one line, one action, the details.
-1b. **GCC → GIC → ?** A split-flap board pinned while you scroll: the middle letter flips C → I, then flips once more to a magenta "?" — not written yet. The name will follow the mandate; labelled as an open question, not a prediction.
+1b. **GIC → GCC → ?** A split-flap board that plays once it is on screen (no pinning, no extra swipes): Global In-house Centre, renamed Global Capability Centre, then the middle letter flips once more to a magenta "?" — not written yet. The order follows the documented history (captive centre → GIC → GCC).
    - Below the line, the old order: aligned and grey.
    - Above it, the next order: turned out of alignment, lilac, and partly fused into owned arcs.
    - Title and ring shift with the pointer, and the ring's centre plays the film ("See what's changing").
