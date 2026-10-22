@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   applicationName: "The NEXT Order",
   alternates: { canonical: "/" },
   authors: [{ name: "Viamagus", url: "https://viamagus.com/" }],
-  keywords: ["GCC", "global capability centre", "GCC leaders India", "The NEXT Order", "Viamagus", "Velocity AI", "Synthia AI", "Viamagus Select"],
+  keywords: ["GCC", "global capability centre", "GCC leaders India", "The NEXT Order", "Viamagus"],
   openGraph: {
     title,
     description,
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     url: "/",
     siteName: "The NEXT Order · Viamagus",
     locale: "en_IN",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "The NEXT Order — an invite-only evening for Hyderabad’s GCC leaders, 3 December 2026 at T-Hub, Hyderabad" }],
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "The NEXT Order — an invite-only symposium for Hyderabad’s GCC leaders, 3 December 2026 at T-Hub, Hyderabad" }],
   },
   twitter: { card: "summary_large_image", title, description, images: ["/og-image.jpg"] },
 };

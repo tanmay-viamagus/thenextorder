@@ -56,3 +56,16 @@ export function SelectWordmark() {
     </span>
   );
 }
+
+/** Hyderabad Mavericks — the partner's own logo (colour, for dark grounds), from the brochure. */
+export function MavericksLogo({ className, height = 30 }: { className?: string; height?: number }) {
+  return (
+    <Image
+      className={className}
+      src="/brand/hyderabad-mavericks.png"
+      alt="Hyderabad Mavericks"
+      width={Math.round((height * 640) / 133)}
+      height={height}
+    />
+  );
+}

@@ -49,32 +49,37 @@ export const knownFacts = {
   host: "Viamagus",
   /** ecosystem partner — local visibility and credibility in Hyderabad’s GCC community */
   partner: "Hyderabad Mavericks",
-  featuring: "Velocity AI · Synthia AI · Viamagus Select",
   /** the brochure’s line on the partner */
   partnerLine:
     "Hyderabad Mavericks is a group of leaders supporting Hyderabad as a thriving ecosystem for GCC growth, innovation and start-ups.",
 };
 
-/** Organised by — one line each, no pitch. Sits with the agenda. */
-export const organisers = [
-  { role: "Organised by", name: "Viamagus", line: "Builds technology platforms and solutions for large MNCs and GCCs." },
+/** Organised by — the final brochure's lines, verbatim. Sits with the agenda. */
+export const organisers: { role: string; name: string; line: string; logo?: "mavericks" }[] = [
+  {
+    role: "Organised by",
+    name: "Viamagus",
+    line: "Viamagus is a technology company that builds platforms and solutions for large MNCs and GCCs, and the AI talent to run them.",
+  },
   {
     role: "Ecosystem partner",
     name: "Hyderabad Mavericks",
-    line: "A group of leaders supporting Hyderabad as a thriving ecosystem for GCC growth, innovation and start-ups.",
+    line: "Hyderabad Mavericks is a group of leaders supporting Hyderabad as a thriving ecosystem for GCC growth, innovation and start-ups.",
+    logo: "mavericks",
   },
 ];
 
-/** The tentative agenda, from the brochure. Only the start is timed; the rest is announced later. */
-export const agenda: { k: string; t: string; time?: string; d?: string; tag?: string }[] = [
-  { k: "arrive", time: "3:30 PM", t: "Arrivals, registration and networking" },
-  { k: "welcome", t: "Welcome and introduction" },
-  { k: "panel-1", t: "Leadership panel I" },
-  { k: "panel-2", t: "Leadership panel II" },
+/** The tentative agenda, from the final brochure. Only the start is timed; the rest is announced later. */
+export const agenda: { k: string; t: string; time?: string; kind?: string; tag?: string }[] = [
+  { k: "arrive", time: "3:30 PM", t: "Arrival and registration" },
+  { k: "welcome", t: "Welcome address" },
+  { k: "panel-1", kind: "Panel discussion", t: "Rethinking GCC strategy in an AI-first world" },
+  { k: "talk", kind: "Expert talk", t: "Adopting responsible AI" },
+  { k: "panel-2", kind: "Panel discussion", t: "Hiring and people leadership in the age of the agentic workforce" },
   { k: "demo", t: "Synthia AI, live demo", tag: "Live" },
-  { k: "dinner", t: "Cocktails and networking dinner" },
+  { k: "dinner", t: "Cocktail dinner" },
 ];
-export const agendaNote = "Tentative. Timings, panel topics and speakers to be announced.";
+export const agendaNote = "Tentative. Timings, speakers and final panel themes to be announced.";
 
 export function whenWhere(e: EventDetails = event): string | null {
   const parts = [e.date, [e.venue, e.city].filter(Boolean).join(", ")].filter(Boolean);

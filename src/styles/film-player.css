@@ -1254,3 +1254,20 @@
     opacity: 1 !important;
   }
 }
+
+/* phones held upright: the film is 16:9 — say so, just under the picture */
+@media (orientation: portrait) and (max-width: 759px) {
+  .fp::after {
+    content: "Turn your phone sideways for the full picture";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(50% + 28.125vw + 18px);
+    text-align: center;
+    font: 500 0.75rem/1.4 var(--mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(252, 253, 255, 0.6);
+    pointer-events: none;
+  }
+}

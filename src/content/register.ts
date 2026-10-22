@@ -2,15 +2,13 @@
 
 export const SEATS = ["CEO / MD", "Site leader", "Technology leader", "HR & talent leader", "Other"] as const;
 
-/** What the visitor wants to explore — the practice keys match content/story.ts. */
-export const INTERESTS = ["Velocity AI", "Synthia AI", "Viamagus Select", "Build-Operate-Transfer", "AI training", "The wider conversation"] as const;
+/** What the visitor wants to explore — the symposium's three conversations (from the brochure). */
+export const INTERESTS = ["Talent: how GCCs hire", "Technology: how GCCs build", "Leadership: how GCCs lead", "The wider conversation"] as const;
 
 export const INTEREST_BY_KEY: Record<string, (typeof INTERESTS)[number]> = {
-  velocity: "Velocity AI",
-  synthia: "Synthia AI",
-  select: "Viamagus Select",
-  bot: "Build-Operate-Transfer",
-  programme: "AI training",
+  talent: "Talent: how GCCs hire",
+  technology: "Technology: how GCCs build",
+  leadership: "Leadership: how GCCs lead",
 };
 
 /** What the visitor's centre is taking on next. */

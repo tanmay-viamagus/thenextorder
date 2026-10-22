@@ -1,42 +1,13 @@
 import { Fragment } from "react";
-import {
-  SelectWordmark,
-  SynthiaLogo,
-  VelocityWordmark,
-  ViaMagusLogo,
-} from "@/components/Brand";
-import { FilmButton } from "@/components/film/FilmOverlay";
+import { MavericksLogo, ViaMagusLogo } from "@/components/Brand";
 import { contactEmail, event, knownFacts, officialLinks, statusLine } from "@/content/event";
-import {
-  convergence,
-  cta,
-  invite,
-  positioning,
-  practices,
-} from "@/content/story";
-import { FILM_DURATION } from "@/content/film";
+import { cta, invite } from "@/content/story";
 import { Chrome, Reveal, ShiftTitle } from "./Interactive";
 import { InviteForm } from "./InviteForm";
 import { GccEvolution } from "./GccEvolution";
 import { Theme } from "./Theme";
 import { Evening } from "./Evening";
 import { Handoff, StoryNav, StoryStrip } from "./Story";
-import { SelectMech, SynthiaMech, VelocityMech } from "./Mechanisms";
-
-const ext = { target: "_blank", rel: "noopener noreferrer" } as const;
-const NewTab = () => <span className="sr-only"> (opens in a new tab)</span>;
-
-const MECH = {
-  velocity: VelocityMech,
-  synthia: SynthiaMech,
-  select: SelectMech,
-};
-const MARK = {
-  velocity: VelocityWordmark,
-  synthia: () => <SynthiaLogo height={28} />,
-  select: SelectWordmark,
-};
-const filmLength = `${Math.floor(FILM_DURATION / 60)}:${String(FILM_DURATION % 60).padStart(2, "0")}`;
 
 /** The date, time and place, broken only between the parts. */
 function Facts({ extra }: { extra?: string | null }) {
@@ -102,176 +73,31 @@ export function Site() {
               </a>
             </div>
             <p className="hero__note">
-              An invite-only evening for Hyderabad’s GCC leaders · Organised
-              by {knownFacts.host} with {knownFacts.partner}
+              An invite-only symposium for Hyderabad’s GCC leaders and
+              decision-makers
+            </p>
+            <p className="hero__partner">
+              <span>In collaboration with</span>
+              <MavericksLogo className="hero__mav" height={22} />
             </p>
           </div>
         </section>
 
 
 
-        {/* ------------------------------------------------ HOW A GCC EVOLVES · five stages (pinned)
+        {/* ------------------------------------------------ HOW GCCS ARE EVOLVING · four stages (pinned)
             The ring of years (YearCycle) is kept in components/clock for later use. */}
         <GccEvolution />
         <div className="handoff-band" data-tone="light">
-          <Handoff to="theme">Stage five is still being written. What’s changing now?</Handoff>
+          <Handoff to="evening">The next order is being written now. Where will your centre be?</Handoff>
         </div>
 
-        {/* ------------------------------------------------ WHY THIS EVENT · the theme */}
-        <Theme />
-
-
-        {/* ------------------------------------------------ THE ANSWER · hire → build → operate */}
-        <section
-          id="practices"
-          className="eco"
-          data-tone="light"
-          data-act="practices"
-          aria-labelledby="eco-h"
-        >
-          <div className="eco__top">
-            <div className="eco__hd" data-reveal>
-              <p className="eco__k">
-                <span className="chap">03</span>The answer · Hosted by Viamagus
-              </p>
-              <h2 id="eco-h" className="eco__h">
-                Hire. Build. Operate.
-              </h2>
-              <p className="eco__lede">
-                Three connected practices that help an enterprise become
-                AI-native: <span className="k-x">Viamagus Select</span> for
-                technology talent, <span className="k-v">Velocity AI</span> for
-                AI-speed product engineering, and{" "}
-                <span className="k-s">Synthia AI</span> for governed AI
-                workflows.
-              </p>
-            </div>
-          </div>
-          <div className="pnls" data-reveal>
-            {practices.map((p) => {
-              const Mech = MECH[p.key];
-              const Mark = MARK[p.key];
-              return (
-                <article
-                  key={p.key}
-                  id={`pnl-${p.key}`}
-                  className={`pnl pnl--${p.key}`}
-                  data-practice={p.key}
-                  aria-labelledby={`${p.key}-h`}
-                >
-                  <p className="pnl__n">{p.cap}</p>
-                  <h3 id={`${p.key}-h`} className="pnl__verb">
-                    {p.verb}.<span className="sr-only"> {p.name}</span>
-                  </h3>
-                  <div className="pnl__mark" aria-hidden="true">
-                    <Mark />
-                  </div>
-                  <p className="pnl__for">{p.for}</p>
-                  <div className="pnl__mech">
-                    <Mech />
-                  </div>
-                  <p className="pnl__line">“{p.line}”</p>
-                  <div className="pnl__acts">
-                    <a className="pnl__go" href={p.href} {...ext}>
-                      <span>{p.go}</span>
-                      <span className="pnl__goarr" aria-hidden="true">
-                        ↗
-                      </span>
-                      <span className="sr-only">
-                        {" "}
-                        — {p.name} (opens in a new tab)
-                      </span>
-                    </a>
-                    <a
-                      className="pnl__room"
-                      href={`/register?interest=${p.key}`}
-                    >
-                      <span>{p.room}</span>
-                      <span className="pnl__arr" aria-hidden="true">
-                        →
-                      </span>
-                    </a>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-          {/* two more ways in — the same grid, the same language as the panels */}
-          <div className="more" data-reveal>
-            <article className="more__c more__c--bot" aria-labelledby="bot-h">
-              <p className="pnl__n">{positioning.bot.k}</p>
-              <h3 id="bot-h" className="more__t">
-                {positioning.bot.title}
-              </h3>
-              <ol className="more__steps">
-                {positioning.bot.steps.map((st) => (
-                  <li key={st.k}>
-                    <span className="more__when">{st.when}</span>
-                    <b>{st.word}</b>
-                    <span>{st.d}</span>
-                  </li>
-                ))}
-              </ol>
-              <a className="pnl__room" href="/register?interest=bot">
-                <span>Ask about Build-Operate-Transfer</span>
-                <span className="pnl__arr" aria-hidden="true">
-                  →
-                </span>
-              </a>
-            </article>
-            <article className="more__c more__c--prog" aria-labelledby="prog-h">
-              <p className="pnl__n">{positioning.programme.k}</p>
-              <h3 id="prog-h" className="more__t">
-                {positioning.programme.title}.
-              </h3>
-              <p className="more__l">{positioning.programme.line}</p>
-              <a className="pnl__room" href="/register?interest=programme">
-                <span>Ask about AI training</span>
-                <span className="pnl__arr" aria-hidden="true">
-                  →
-                </span>
-              </a>
-            </article>
-          </div>
-          <p className="eco__close" data-reveal>
-            {convergence}
-          </p>
-        </section>
-
-        {/* ------------------------------------------------ THE FILM · near the end */}
-        <section
-          id="film"
-          className="fl"
-          data-tone="dark"
-          aria-labelledby="fl-h"
-        >
-          <div className="fl__head">
-            <div>
-              <p className="fl__k">
-                The story so far · {filmLength}
-              </p>
-              <h2 id="fl-h" className="fl__h">
-                See what’s changing.
-              </h2>
-            </div>
-            <div className="fl__side">
-              <p className="fl__txt">
-                The old order, the shift, and three practices that become one
-                Viamagus. No sound needed.
-              </p>
-              <FilmButton className="fl__btn">
-                <span className="fl__btnplay" aria-hidden="true">
-                  <span className="tri" />
-                </span>
-                Play the film
-              </FilmButton>
-            </div>
-          </div>
-          <Handoff to="evening">Where do GCC leaders work this out together?</Handoff>
-        </section>
 
         {/* ------------------------------------------------ THE EVENING · what happens, and who is behind it */}
         <Evening />
+
+        {/* ------------------------------------------------ WHY ATTEND · why the next order fits */}
+        <Theme />
 
         {/* ------------------------------------------------ CLOSING · your place */}
         <section
@@ -284,7 +110,7 @@ export function Site() {
           <div className="close__grid">
             <div className="close__copy">
               <p className="close__k">
-                <span className="chap">05</span>Your place
+                <span className="chap">04</span>Your place
               </p>
               <h2 id="register-h" className="close__h">
                 Find your place in the conversation.
@@ -330,30 +156,15 @@ export function Site() {
             {statusLine()} · {event.format}
           </p>
           <p className="ftr__partner">
-            Organised by <b>{knownFacts.host}</b> · Ecosystem partner{" "}
-            <b>{knownFacts.partner}</b> ·{" "}
+            Organised by <b>{knownFacts.host}</b> ·{" "}
             <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+          </p>
+          <p className="ftr__partner ftr__mav">
+            <span>Ecosystem partner</span>
+            <MavericksLogo className="ftr__mavlogo" height={20} />
           </p>
         </div>
         <ul>
-          <li>
-            <a href={officialLinks.velocity} {...ext}>
-              Velocity AI
-              <NewTab />
-            </a>
-          </li>
-          <li>
-            <a href={officialLinks.synthia} {...ext}>
-              Synthia AI
-              <NewTab />
-            </a>
-          </li>
-          <li>
-            <a href={officialLinks.select} {...ext}>
-              Viamagus Select
-              <NewTab />
-            </a>
-          </li>
           <li>
             <a href="/film">The film</a>
           </li>
