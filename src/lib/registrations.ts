@@ -54,8 +54,9 @@ export type Input = { name: string; email: string; organisation: string; role: s
 
 const list = (v: unknown, allowed: readonly string[]) =>
   (Array.isArray(v) ? v : typeof v === "string" && v ? [v] : [])
-    .map((x) => String(x))
-    .filter((x) => allowed.includes(x))
+    // matched without regard to case, stored in today's spelling
+    .map((x) => allowed.find((a) => a.toLowerCase() === String(x).toLowerCase()))
+    .filter((x): x is string => Boolean(x))
     .join(", ");
 
 export function validate(raw: Record<string, unknown>): { ok: true; data: Input } | { ok: false; errors: Record<string, string> } {

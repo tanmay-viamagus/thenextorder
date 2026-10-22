@@ -22,7 +22,7 @@ export default async function Responses() {
     failed = true;
   }
   const byRole = SEATS.map((r) => [r, rows.filter((x) => x.role === r).length] as const);
-  const byInterest = INTERESTS.map((r) => [r, rows.filter((x) => (x.interests ?? "").split(", ").includes(r)).length] as const);
+  const byInterest = INTERESTS.map((r) => [r, rows.filter((x) => (x.interests ?? "").toLowerCase().split(", ").includes(r.toLowerCase())).length] as const);
 
   return (
     <main className="resp">

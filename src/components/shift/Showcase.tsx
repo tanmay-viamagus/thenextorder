@@ -112,7 +112,7 @@ export function Showcase() {
 
       <div className="sc__stage">
         <div className="sc__clock">
-          <HandsClock hl={p.key} label="A live clock whose three hands are Velocity AI, Synthia AI and ViaMagus Select, pinned on the ViaMagus mark." />
+          <HandsClock hl={p.key} label="A live clock whose three hands are Velocity AI, Synthia AI and Viamagus Select, pinned on the Viamagus mark." />
         </div>
         <div key={`${p.key}-${run}`} className="sc__story" role="tabpanel" aria-live="polite">
           <p className="sc__hand">{HAND[p.key]}</p>

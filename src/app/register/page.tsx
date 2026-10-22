@@ -6,9 +6,9 @@ import { knownFacts, statusLine } from "@/content/event";
 import { INTEREST_BY_KEY } from "@/content/register";
 import { invite } from "@/content/story";
 
-const title = "Register | The NEXT Order — ViaMagus";
+const title = "Register | The NEXT Order — Viamagus";
 const description =
-  "Request your place at The NEXT Order — a ViaMagus event for Hyderabad’s GCC leaders on how AI is reshaping talent, technology and leadership.";
+  "Request your place at The NEXT Order — a Viamagus event for Hyderabad’s GCC leaders on how AI is reshaping talent, technology and leadership.";
 
 export const metadata: Metadata = {
   title,

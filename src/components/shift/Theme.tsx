@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { theme } from "@/content/story";
+import { Handoff } from "./Story";
 
 /**
  * Why this event — the headline is the interface. "AI is reshaping how GCCs
@@ -110,13 +111,7 @@ export function Theme() {
         ))}
       </div>
 
-      {/* the bridge to the next chapter */}
-      <p className="why__bridge" data-reveal>
-        Three shifts need three answers.{" "}
-        <a href="#practices">
-          Here’s what ViaMagus brings <span aria-hidden="true">↓</span>
-        </a>
-      </p>
+      <Handoff to="practices">Three shifts need three answers. What does Viamagus bring?</Handoff>
     </section>
   );
 }

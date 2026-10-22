@@ -107,7 +107,7 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
         <p className="rf__p">
           {state.updated
             ? "We already had your request, and we’ve updated it with these details."
-            : "Your request is with the ViaMagus team. Places are confirmed by invitation — we’ll be in touch once the date and venue are set."}
+            : "Your request is with the Viamagus team. Places are confirmed by invitation — we’ll be in touch before 3 December."}
         </p>
         <p className="rf__small">
           Questions in the meantime? <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
@@ -165,7 +165,7 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
         />
         {err("linkedin") ?? (
           <span className="rf__help" id={`linkedin-${source}-help`}>
-            Helps the ViaMagus team confirm professional details when reviewing requests.
+            Helps the Viamagus team confirm professional details when reviewing requests.
           </span>
         )}
       </label>
@@ -225,7 +225,7 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
       <button type="submit" className="btn btn--shift rf__go" disabled={sending}>
         {sending ? "Sending…" : cta.submit} <span className="btn__arr" aria-hidden="true">→</span>
       </button>
-      <p className="rf__small">Places are confirmed by invitation. Your details go only to the ViaMagus team, to review requests for this event.</p>
+      <p className="rf__small">Places are confirmed by invitation. Your details go only to the Viamagus team, to review requests for this event.</p>
     </form>
   );
 }

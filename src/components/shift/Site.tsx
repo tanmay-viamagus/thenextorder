@@ -20,6 +20,7 @@ import { InviteForm } from "./InviteForm";
 import { GccEvolution } from "./GccEvolution";
 import { Theme } from "./Theme";
 import { Evening } from "./Evening";
+import { Handoff, StoryNav, StoryStrip } from "./Story";
 import { SelectMech, SynthiaMech, VelocityMech } from "./Mechanisms";
 
 const ext = { target: "_blank", rel: "noopener noreferrer" } as const;
@@ -59,20 +60,7 @@ export function Site() {
 
       <header className="hdr">
         <ViaMagusLogo href={officialLinks.viamagus} />
-        <nav className="hdr__nav" aria-label="Sections">
-          <a href="#evolve" data-for="evolve">
-            How GCCs evolved
-          </a>
-          <a href="#theme" data-for="theme">
-            What’s new
-          </a>
-          <a href="#practices" data-for="practices">
-            The answer
-          </a>
-          <a href="#evening" data-for="evening">
-            3 December
-          </a>
-        </nav>
+        <StoryNav />
         <div className="hdr__end">
           <a className="btn btn--shift btn--sm hdr__cta" href="/register">
             {cta.primary}{" "}
@@ -81,6 +69,7 @@ export function Site() {
             </span>
           </a>
         </div>
+        <StoryStrip />
       </header>
 
       <main id="main">
@@ -97,7 +86,7 @@ export function Site() {
               <Facts />
             </p>
             <h1 id="hero-h" className="sr-only">
-              The NEXT Order — an invitation from ViaMagus for Hyderabad’s GCC
+              The NEXT Order — an invitation from Viamagus for Hyderabad’s GCC
               leaders
             </h1>
             <ShiftTitle lines={["THE ", "NEXT", "ORDER."]} cutLine={2} />
@@ -124,6 +113,9 @@ export function Site() {
         {/* ------------------------------------------------ HOW A GCC EVOLVES · five stages (pinned)
             The ring of years (YearCycle) is kept in components/clock for later use. */}
         <GccEvolution />
+        <div className="handoff-band" data-tone="light">
+          <Handoff to="theme">Stage five is still being written. What’s changing now?</Handoff>
+        </div>
 
         {/* ------------------------------------------------ WHY THIS EVENT · the theme */}
         <Theme />
@@ -140,14 +132,14 @@ export function Site() {
           <div className="eco__top">
             <div className="eco__hd" data-reveal>
               <p className="eco__k">
-                <span className="chap">03</span>The answer · Hosted by ViaMagus
+                <span className="chap">03</span>The answer · Hosted by Viamagus
               </p>
               <h2 id="eco-h" className="eco__h">
                 Hire. Build. Operate.
               </h2>
               <p className="eco__lede">
                 Three connected practices that help an enterprise become
-                AI-native: <span className="k-x">ViaMagus Select</span> for
+                AI-native: <span className="k-x">Viamagus Select</span> for
                 technology talent, <span className="k-v">Velocity AI</span> for
                 AI-speed product engineering, and{" "}
                 <span className="k-s">Synthia AI</span> for governed AI
@@ -244,12 +236,6 @@ export function Site() {
           <p className="eco__close" data-reveal>
             {convergence}
           </p>
-          <p className="eco__next" data-reveal>
-            <a href="#evening">
-              See it, and the people behind it, on 3 December{" "}
-              <span aria-hidden="true">↓</span>
-            </a>
-          </p>
         </section>
 
         {/* ------------------------------------------------ THE FILM · near the end */}
@@ -262,7 +248,7 @@ export function Site() {
           <div className="fl__head">
             <div>
               <p className="fl__k">
-                The film · {filmLength}
+                The story so far · {filmLength}
               </p>
               <h2 id="fl-h" className="fl__h">
                 See what’s changing.
@@ -271,7 +257,7 @@ export function Site() {
             <div className="fl__side">
               <p className="fl__txt">
                 The old order, the shift, and three practices that become one
-                ViaMagus. No sound needed.
+                Viamagus. No sound needed.
               </p>
               <FilmButton className="fl__btn">
                 <span className="fl__btnplay" aria-hidden="true">
@@ -281,6 +267,7 @@ export function Site() {
               </FilmButton>
             </div>
           </div>
+          <Handoff to="evening">Where do GCC leaders work this out together?</Handoff>
         </section>
 
         {/* ------------------------------------------------ THE EVENING · what happens, and who is behind it */}
@@ -317,7 +304,7 @@ export function Site() {
                 <li>
                   <b>02</b>
                   <span>
-                    <strong>The ViaMagus team reviews every request</strong>,
+                    <strong>The Viamagus team reviews every request</strong>,
                     including the LinkedIn profile you share.
                   </span>
                 </li>
@@ -363,7 +350,7 @@ export function Site() {
           </li>
           <li>
             <a href={officialLinks.select} {...ext}>
-              ViaMagus Select
+              Viamagus Select
               <NewTab />
             </a>
           </li>

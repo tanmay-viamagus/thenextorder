@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { FilmPlayer } from "@/components/film/FilmPlayer";
 
 export const metadata: Metadata = {
-  title: "The Film | The NEXT Order | ViaMagus",
+  title: "The Film | The NEXT Order | Viamagus",
   description: "The 30-second film for The NEXT Order — for the event screens.",
 };
 

@@ -3,12 +3,12 @@
 export const SEATS = ["CEO / MD", "Site leader", "Technology leader", "HR & talent leader", "Other"] as const;
 
 /** What the visitor wants to explore — the practice keys match content/story.ts. */
-export const INTERESTS = ["Velocity AI", "Synthia AI", "ViaMagus Select", "Build-Operate-Transfer", "AI training", "The wider conversation"] as const;
+export const INTERESTS = ["Velocity AI", "Synthia AI", "Viamagus Select", "Build-Operate-Transfer", "AI training", "The wider conversation"] as const;
 
 export const INTEREST_BY_KEY: Record<string, (typeof INTERESTS)[number]> = {
   velocity: "Velocity AI",
   synthia: "Synthia AI",
-  select: "ViaMagus Select",
+  select: "Viamagus Select",
   bot: "Build-Operate-Transfer",
   programme: "AI training",
 };

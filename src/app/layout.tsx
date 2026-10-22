@@ -5,7 +5,7 @@ import { siteUrl } from "@/lib/site-url";
 import { JsFlag } from "@/components/JsFlag";
 import "./globals.css";
 
-// Brand faces verified on the live ViaMagus sites — see docs/brand-audit.md.
+// Brand faces verified on the live Viamagus sites — see docs/brand-audit.md.
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit", display: "swap" });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap" });
 const josefin = Josefin_Sans({
@@ -14,24 +14,24 @@ const josefin = Josefin_Sans({
   variable: "--font-josefin",
   display: "swap",
 });
-// ViaMagus Select's own face, used only for its wordmark and panel.
+// Viamagus Select's own face, used only for its wordmark and panel.
 const archivo = Archivo({ subsets: ["latin"], variable: "--font-archivo", display: "swap", preload: false });
 
-const title = "The NEXT Order — 3 December 2026, T-Hub Hyderabad | ViaMagus";
+const title = "The NEXT Order — 3 December 2026, T-Hub Hyderabad | Viamagus";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl()),
   title,
   description,
   applicationName: "The NEXT Order",
   alternates: { canonical: "/" },
-  authors: [{ name: "ViaMagus", url: "https://viamagus.com/" }],
-  keywords: ["GCC", "global capability centre", "GCC leaders India", "The NEXT Order", "ViaMagus", "Velocity AI", "Synthia AI", "ViaMagus Select"],
+  authors: [{ name: "Viamagus", url: "https://viamagus.com/" }],
+  keywords: ["GCC", "global capability centre", "GCC leaders India", "The NEXT Order", "Viamagus", "Velocity AI", "Synthia AI", "Viamagus Select"],
   openGraph: {
     title,
     description,
     type: "website",
     url: "/",
-    siteName: "The NEXT Order · ViaMagus",
+    siteName: "The NEXT Order · Viamagus",
     locale: "en_IN",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "The NEXT Order — an invite-only evening for Hyderabad’s GCC leaders, 3 December 2026 at T-Hub, Hyderabad" }],
   },
