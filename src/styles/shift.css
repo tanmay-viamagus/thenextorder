@@ -5843,10 +5843,10 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   background: none;
   font: inherit;
   letter-spacing: inherit;
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--ink);
+  /* waiting verbs: pale ink (an outline would show the font's overlapping contours) */
+  color: rgba(14, 13, 18, 0.5);
   cursor: pointer;
-  transition: color 0.45s var(--ease-out);
+  transition: color 0.3s var(--ease-out);
 }
 
 .why__v::after {
@@ -5859,12 +5859,11 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   background: var(--magenta);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.6s var(--ease-out);
+  transition: transform 0.4s var(--ease-out);
 }
 
 .why__v.is-on {
   color: var(--purple);
-  -webkit-text-stroke: 0;
 }
 
 .why__v.is-on::after {
@@ -5873,7 +5872,7 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
 
 @media (hover: hover) {
   .why__v:not(.is-on):hover {
-    color: rgba(14, 13, 18, 0.12);
+    color: rgba(14, 13, 18, 0.66);
   }
 }
 
@@ -5885,7 +5884,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
 /* no script: the sentence reads as plain, filled text */
 html:not(.js) .why__v {
   color: var(--ink);
-  -webkit-text-stroke: 0;
   cursor: default;
 }
 
@@ -5917,7 +5915,7 @@ html:not(.js) .why__v {
 }
 
 .why.is-auto .why__bar i {
-  animation: sc-fill 4.2s linear forwards;
+  animation: sc-fill 2.6s linear forwards;
 }
 
 html:not(.js) .why__bar {
@@ -5941,13 +5939,13 @@ html:not(.js) .why__bar {
 .why.is-live .why__p {
   visibility: hidden;
   opacity: 0;
-  transition: opacity 0.3s, visibility 0s 0.3s;
+  transition: opacity 0.18s, visibility 0s 0.18s;
 }
 
 .why.is-live .why__p.is-on {
   visibility: visible;
   opacity: 1;
-  transition: opacity 0.4s;
+  transition: opacity 0.25s;
 }
 
 html:not(.js) .why__p {
@@ -5995,8 +5993,8 @@ html:not(.js) .why__p {
 
 @media (prefers-reduced-motion: no-preference) {
   .why.is-live .why__p.is-on .why__tops li {
-    animation: sc-up 0.6s var(--ease-out) both;
-    animation-delay: calc(0.08s + var(--j) * 0.08s);
+    animation: sc-up 0.4s var(--ease-out) both;
+    animation-delay: calc(0.04s + var(--j) * 0.05s);
   }
 }
 
@@ -6010,9 +6008,6 @@ html:not(.js) .why__p {
   }
   .why__pk span {
     font-size: 1.6rem;
-  }
-  .why__v {
-    -webkit-text-stroke-width: 1.2px;
   }
 }
 

@@ -10,7 +10,7 @@ import { theme } from "@/content/story";
  * large beneath. While on screen it moves through the three on its own; a
  * click takes over. Reduced motion: no auto-advance. No JS: all three show.
  */
-const HOLD = 4200;
+const HOLD = 2600;
 
 export function Theme() {
   const root = useRef<HTMLElement | null>(null);
