@@ -1071,9 +1071,8 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
 }
 
 .reg__show {
-  position: sticky;
-  top: 0;
-  height: 100svh;
+  position: relative;
+  min-height: 100svh;
   display: grid;
   grid-template-rows: auto auto 1fr auto;
   gap: clamp(16px, 3vh, 32px);
@@ -2549,8 +2548,9 @@ html {
 
 /* one page = one part of the story: every swipe lands on the next page.
    The form, the last page, runs as long as it needs; the footer closes it. */
+/* the pager (components/shift/Pager) turns the pages; the browser never forces a snap */
 html.js {
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: none;
 }
 
 .hero2,
@@ -6610,5 +6610,139 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
 @media (max-width: 759px) {
   .wa__side {
     min-height: 120px;
+  }
+}
+
+/* ==========================================================================
+   Motion — quick and smooth. Content rises into place as each page arrives;
+   the opening plays in; the doorway and the conversation's light move on
+   short, visible cycles. Everything is still with reduced motion.
+   ========================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .js [data-reveal]:not(.is-in) {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  /* rows and list items follow one another */
+  .js [data-reveal] > li,
+  .js [data-reveal] .wa__list li,
+  .js .sy__agenda li {
+    transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .js [data-reveal]:not(.is-in) > li,
+  .js .sy__agenda-col:not(.is-in) .sy__agenda li {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  .js [data-reveal] > li:nth-child(2),
+  .js .sy__agenda li:nth-child(2) { transition-delay: 0.06s; }
+  .js [data-reveal] > li:nth-child(3),
+  .js .sy__agenda li:nth-child(3) { transition-delay: 0.12s; }
+  .js [data-reveal] > li:nth-child(4),
+  .js .sy__agenda li:nth-child(4) { transition-delay: 0.18s; }
+  .js .sy__agenda li:nth-child(5) { transition-delay: 0.24s; }
+  .js .sy__agenda li:nth-child(6) { transition-delay: 0.3s; }
+  .js .sy__agenda li:nth-child(7) { transition-delay: 0.36s; }
+
+  /* the opening plays in */
+  .js .hero2__presents,
+  .js .hero2__t span,
+  .js .hero2__text,
+  .js .hero2__cta,
+  .js .hero2__facts > div {
+    animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .js .hero2__t span:first-child { animation-delay: 0.08s; }
+  .js .hero2__t span:nth-child(2) { animation-delay: 0.18s; }
+  .js .hero2__text { animation-delay: 0.3s; }
+  .js .hero2__cta { animation-delay: 0.42s; }
+  .js .hero2__facts > div:nth-child(1) { animation-delay: 0.52s; }
+  .js .hero2__facts > div:nth-child(2) { animation-delay: 0.58s; }
+  .js .hero2__facts > div:nth-child(3) { animation-delay: 0.64s; }
+  .js .hero2__facts > div:nth-child(4) { animation-delay: 0.7s; }
+  .hero2__pane {
+    animation: pane-in 1.4s cubic-bezier(0.22, 1, 0.36, 1) both, pane-shine 6s ease-in-out 1.4s infinite alternate;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+}
+
+@keyframes pane-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes pane-shine {
+  from { filter: brightness(1); }
+  to { filter: brightness(1.12); }
+}
+
+/* the doorway: a visible 6 s breath */
+.sy-halo { animation-duration: 6s; }
+.sy-depth { animation-duration: 6s; }
+.sy-spill { animation-duration: 6s; }
+.sy-sweep { animation-duration: 5s; }
+
+@keyframes sy-halo {
+  from { opacity: 0.55; filter: blur(0); }
+  to { opacity: 1; filter: blur(4px); }
+}
+
+@keyframes sy-depth {
+  from { opacity: 0.2; }
+  to { opacity: 0.75; }
+}
+
+@keyframes sy-spill {
+  from { transform: scale(0.9, 0.86); opacity: 0.7; }
+  to { transform: scale(1.06, 1.06); opacity: 1; }
+}
+
+/* the conversation's light: quicker, clearer */
+.wa-art__beam { animation-duration: 7s; }
+.wa-art__opening { animation-duration: 5s; }
+.wa-art__plane { animation-duration: 5s; }
+.wa-art__plane--1 { animation-duration: 5s, 7s; }
+.wa-art__plane--4 { animation-duration: 6s, 8s; }
+.wa-art__edge::before { animation-duration: 6s; }
+.wa-art__edge--2::before { animation-duration: 5s; }
+
+@keyframes wa-breathe {
+  from { opacity: 0.6; }
+  to { opacity: 1; }
+}
+
+@keyframes wa-drift-l {
+  from { transform: translateX(-10px); }
+  to { transform: translateX(12px); }
+}
+
+@keyframes wa-drift-r {
+  from { transform: translateX(10px); }
+  to { transform: translateX(-10px); }
+}
+
+@keyframes wa-glow {
+  from { opacity: 0.45; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero2__presents,
+  .hero2__t span,
+  .hero2__text,
+  .hero2__cta,
+  .hero2__facts > div,
+  .hero2__pane {
+    animation: none !important;
   }
 }
