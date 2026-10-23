@@ -1189,34 +1189,82 @@
   opacity: 1 !important;
 }
 
+/* one slim capsule: transparent buttons, a line icon and a word each; a
+   quiet tint on hover; Close as a fine outlined pill at the end */
+.fp__controls {
+  align-items: center;
+  gap: 2px;
+  padding: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(11, 10, 14, 0.62);
+}
+
 .fp__controls button,
 .fp__controls a {
-  min-height: 44px;
-  padding: 0 16px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border: 1.5px solid rgba(252, 253, 255, 0.45);
-  border-radius: 0;
-  background: rgba(14, 13, 18, 0.72);
-  color: var(--white);
-  font: 600 14px/1 var(--font);
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.88);
+  font: 500 14px/1 var(--font);
+  letter-spacing: 0.01em;
   text-decoration: none;
   cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 
-.fp__controls button[aria-pressed="true"] {
-  border-color: var(--magenta);
+.fp__ico {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+.fp__controls button[aria-pressed="true"] .fp__ico {
+  color: #d8b4fe;
 }
 
 .fp__controls .fp__close {
-  background: var(--white);
-  color: var(--ink);
+  margin-left: 6px;
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+
+@media (hover: hover) {
+  .fp__controls button:hover,
+  .fp__controls a:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+  }
+  .fp__controls .fp__close:hover {
+    border-color: #c084fc;
+    background: rgba(216, 180, 254, 0.1);
+  }
 }
 
 .fp__controls :focus-visible {
-  outline: 3px solid var(--magenta);
-  outline-offset: 3px;
+  outline: 2px solid #d8b4fe;
+  outline-offset: 2px;
+}
+
+/* narrow phones: icons only — each button keeps its name for screen readers */
+@media (max-width: 479px) {
+  .fp__controls button,
+  .fp__controls a {
+    padding: 0 13px;
+  }
+  .fp__controls .fp__lab {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 }
 
 @media (max-width: 759px) {
@@ -1226,10 +1274,10 @@
     top: 10px;
   }
   .fp__controls {
-    left: 12px;
-    right: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    max-width: calc(100% - 24px);
   }
 }
 
