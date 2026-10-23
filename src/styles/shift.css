@@ -5428,3 +5428,10 @@ html[data-hdr="dark"] .hdr .btn--shift {
     padding-right: 14px;
   }
 }
+
+/* phones: the date stays the page's headline */
+@media (max-width: 759px) {
+  .sy__h {
+    font-size: min(13vw, 7svh);
+  }
+}
