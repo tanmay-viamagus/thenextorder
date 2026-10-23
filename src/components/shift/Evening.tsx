@@ -19,74 +19,143 @@ const AGENDA_ICON: Record<string, IconName> = {
 };
 
 /**
- * The brochure's cover, as a room — drawn as one picture so every edge
- * meets: the walls run into the door's frame, and the light on the floor
- * starts exactly at the door's sill, as wide as the door, and spreads
- * towards the viewer.
+ * The brochure's cover, as a room — drawn so every edge meets: the walls run
+ * into the door's frame, and the light on the floor starts exactly at the
+ * door's sill, as wide as the door, and spreads towards the viewer. The
+ * walls and floor run on past the picture's edges, so the room fills any
+ * screen without cropping the door.
+ *
+ * The room itself is still. Its light lives on separate layers drawn to the
+ * same coordinates, so each moves without disturbing the drawing: a violet
+ * halo around the opening, violet light on the walls beside the frame, the
+ * door's reflection on the floor, a gleam travelling down the door's edge and
+ * a ripple of light running out along the floor.
  */
+const ROOM = { viewBox: "0 0 400 800", preserveAspectRatio: "xMidYMid meet" } as const;
+
 function Doorway() {
   // the door: x 160–240, y 60–520 in a 400 × 800 room
   return (
-    <svg className="sy-room" viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
-      <defs>
-        <linearGradient id="sy-door" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#f3e6ff" />
-          <stop offset="0.55" stopColor="#ffffff" />
-          <stop offset="1" stopColor="#ecdcff" />
-        </linearGradient>
-        <linearGradient id="sy-wall-l" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stopColor="#0d0a14" />
-          <stop offset="0.7" stopColor="#2a1a45" />
-          <stop offset="1" stopColor="#7b5ab0" />
-        </linearGradient>
-        <linearGradient id="sy-wall-r" x1="1" y1="0" x2="0" y2="0">
-          <stop offset="0" stopColor="#0d0a14" />
-          <stop offset="0.7" stopColor="#2a1a45" />
-          <stop offset="1" stopColor="#7b5ab0" />
-        </linearGradient>
-        <linearGradient id="sy-beam" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#f2d0ff" stopOpacity="0.85" />
-          <stop offset="0.45" stopColor="#c9a2f0" stopOpacity="0.35" />
-          <stop offset="1" stopColor="#c9a2f0" stopOpacity="0.04" />
-        </linearGradient>
-        <radialGradient id="sy-glow" cx="200" cy="290" r="230" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#e9c8ff" stopOpacity="0.75" />
-          <stop offset="0.45" stopColor="#9b5cf0" stopOpacity="0.28" />
-          <stop offset="1" stopColor="#9b5cf0" stopOpacity="0" />
-        </radialGradient>
-        <filter id="sy-soft" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="14" />
-        </filter>
-        <filter id="sy-deep" x="-100%" y="-50%" width="300%" height="200%">
-          <feGaussianBlur stdDeviation="26" />
-        </filter>
-        <linearGradient id="sy-sweep" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#fff" stopOpacity="0" />
-          <stop offset="0.5" stopColor="#fff" stopOpacity="0.95" />
-          <stop offset="1" stopColor="#fff" stopOpacity="0" />
-        </linearGradient>
-        <clipPath id="sy-door-clip">
-          <rect x="160" y="60" width="80" height="460" />
-        </clipPath>
-      </defs>
-      {/* the floor, then the walls running into the door's frame */}
-      <polygon points="0,760 160,520 240,520 400,760 400,800 0,800" fill="#0c0a11" />
-      <polygon points="0,0 160,60 160,520 0,760" fill="url(#sy-wall-l)" />
-      <polygon points="400,0 240,60 240,520 400,760" fill="url(#sy-wall-r)" />
-      {/* the glow around the opening — it breathes */}
-      <rect className="sy-halo" x="0" y="0" width="400" height="640" fill="url(#sy-glow)" />
-      {/* depth: a faint glow just behind the door */}
-      <rect className="sy-depth" x="150" y="70" width="100" height="440" fill="#e9d4ff" filter="url(#sy-deep)" />
-      {/* the opening, its light bleeding a little past the frame */}
-      <rect x="160" y="60" width="80" height="460" fill="#fff" filter="url(#sy-soft)" opacity="0.7" />
-      <rect x="160" y="60" width="80" height="460" fill="url(#sy-door)" />
-      {/* a slow sweep of light down the door's inner edge */}
-      <g clipPath="url(#sy-door-clip)">
-        <rect className="sy-sweep" x="160" y="-60" width="7" height="160" fill="url(#sy-sweep)" />
-      </g>
-      {/* the light on the floor: from the sill, exactly the door's width, spreading out */}
-      <polygon className="sy-spill" points="160,520 240,520 330,800 70,800" fill="url(#sy-beam)" />
-    </svg>
+    <div className="sy-room" aria-hidden="true">
+      <svg className="sy-room__base" {...ROOM} focusable="false">
+        <defs>
+          <linearGradient id="sy-door" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#f3e6ff" />
+            <stop offset="0.55" stopColor="#ffffff" />
+            <stop offset="1" stopColor="#ecdcff" />
+          </linearGradient>
+          <linearGradient id="sy-wall-l" x1="0" y1="0" x2="160" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#0d0a14" />
+            <stop offset="0.7" stopColor="#2a1a45" />
+            <stop offset="1" stopColor="#7b5ab0" />
+          </linearGradient>
+          <linearGradient id="sy-wall-r" x1="400" y1="0" x2="240" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#0d0a14" />
+            <stop offset="0.7" stopColor="#2a1a45" />
+            <stop offset="1" stopColor="#7b5ab0" />
+          </linearGradient>
+          <linearGradient id="sy-beam" x1="0" y1="520" x2="0" y2="800" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#f2d0ff" stopOpacity="0.85" />
+            <stop offset="0.45" stopColor="#c9a2f0" stopOpacity="0.35" />
+            <stop offset="1" stopColor="#c9a2f0" stopOpacity="0.04" />
+          </linearGradient>
+          <filter id="sy-soft" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="14" />
+          </filter>
+        </defs>
+        {/* the floor, then the walls running into the door's frame */}
+        <polygon points="-300,1210 160,520 240,520 700,1210" fill="#0c0a11" />
+        <polygon points="-300,-112 160,60 160,520 -300,1210" fill="url(#sy-wall-l)" />
+        <polygon points="700,-112 240,60 240,520 700,1210" fill="url(#sy-wall-r)" />
+        {/* the opening, its light bleeding a little past the frame */}
+        <rect x="160" y="60" width="80" height="460" fill="#fff" filter="url(#sy-soft)" opacity="0.7" />
+        <rect x="160" y="60" width="80" height="460" fill="url(#sy-door)" />
+        {/* the light on the floor: from the sill, exactly the door's width, spreading out */}
+        <polygon points="160,520 240,520 394,1000 6,1000" fill="url(#sy-beam)" />
+      </svg>
+
+      {/* the halo around the opening */}
+      <svg className="sy-room__l sy-halo" {...ROOM} focusable="false">
+        <defs>
+          <radialGradient id="sy-glow" cx="200" cy="290" r="250" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#ead5ff" stopOpacity="0.7" />
+            <stop offset="0.42" stopColor="#8b5cf6" stopOpacity="0.3" />
+            <stop offset="1" stopColor="#7c3aed" stopOpacity="0" />
+          </radialGradient>
+        </defs>
+        <rect x="-300" y="-200" width="1000" height="1000" fill="url(#sy-glow)" />
+      </svg>
+
+      {/* violet light on the walls beside the frame */}
+      <svg className="sy-room__l sy-violet" {...ROOM} focusable="false">
+        <defs>
+          <linearGradient id="sy-violet-l" x1="160" y1="0" x2="30" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#a78bfa" stopOpacity="0.55" />
+            <stop offset="1" stopColor="#7c3aed" stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id="sy-violet-r" x1="240" y1="0" x2="370" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#a78bfa" stopOpacity="0.55" />
+            <stop offset="1" stopColor="#7c3aed" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <polygon points="30,11 160,60 160,520 30,715" fill="url(#sy-violet-l)" />
+        <polygon points="370,11 240,60 240,520 370,715" fill="url(#sy-violet-r)" />
+      </svg>
+
+      {/* the door's reflection on the floor, and violet light along the floor's edges */}
+      <svg className="sy-room__l sy-reflect" {...ROOM} focusable="false">
+        <defs>
+          <linearGradient id="sy-mirror" x1="0" y1="520" x2="0" y2="700" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#ffffff" stopOpacity="0.7" />
+            <stop offset="0.5" stopColor="#e9d5ff" stopOpacity="0.22" />
+            <stop offset="1" stopColor="#c4b5fd" stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id="sy-edge" x1="0" y1="520" x2="0" y2="820" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#c4b5fd" stopOpacity="0.8" />
+            <stop offset="1" stopColor="#7c3aed" stopOpacity="0" />
+          </linearGradient>
+          <filter id="sy-blur-2" x="-50%" y="-20%" width="200%" height="140%">
+            <feGaussianBlur stdDeviation="2.5" />
+          </filter>
+        </defs>
+        <polygon points="160,520 240,520 250,700 150,700" fill="url(#sy-mirror)" filter="url(#sy-blur-2)" />
+        <path d="M160 520 L-40 820 M240 520 L440 820" stroke="url(#sy-edge)" strokeWidth="2" filter="url(#sy-blur-2)" />
+      </svg>
+
+      {/* a gleam down the door's inner edge */}
+      <svg className="sy-room__l" {...ROOM} focusable="false">
+        <defs>
+          <linearGradient id="sy-sweep" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#fff" stopOpacity="0" />
+            <stop offset="0.5" stopColor="#fff" stopOpacity="0.95" />
+            <stop offset="1" stopColor="#fff" stopOpacity="0" />
+          </linearGradient>
+          <clipPath id="sy-door-clip">
+            <rect x="160" y="60" width="80" height="460" />
+          </clipPath>
+        </defs>
+        <g clipPath="url(#sy-door-clip)">
+          <rect className="sy-sweep" x="160" y="-60" width="7" height="160" fill="url(#sy-sweep)" />
+        </g>
+      </svg>
+
+      {/* a ripple of light running out from the sill along the floor */}
+      <svg className="sy-room__l" {...ROOM} focusable="false">
+        <defs>
+          <linearGradient id="sy-ripple" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#f5e8ff" stopOpacity="0" />
+            <stop offset="0.5" stopColor="#f5e8ff" stopOpacity="0.32" />
+            <stop offset="1" stopColor="#f5e8ff" stopOpacity="0" />
+          </linearGradient>
+          <clipPath id="sy-floor-clip">
+            <polygon points="160,520 240,520 394,1000 6,1000" />
+          </clipPath>
+        </defs>
+        <g clipPath="url(#sy-floor-clip)">
+          <rect className="sy-ripple" x="0" y="470" width="400" height="70" fill="url(#sy-ripple)" />
+        </g>
+      </svg>
+    </div>
   );
 }
 

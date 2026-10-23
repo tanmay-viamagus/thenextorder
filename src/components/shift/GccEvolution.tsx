@@ -634,16 +634,13 @@ export function GccEvolution() {
     };
   }, []);
 
-  // a stage on the timeline scrolls the page to that stage's snap point — native scroll, never hijacked
+  // a stage on the timeline scrolls the page to that stage — native (smooth) scroll
   const go = (k: number) => {
     const el = root.current;
     if (!el) return;
     const top = el.getBoundingClientRect().top + window.scrollY;
     const span = el.offsetHeight - window.innerHeight;
-    window.scrollTo({
-      top: top + (k / (STAGES.length - 1)) * span,
-      behavior: "instant",
-    });
+    window.scrollTo({ top: top + (k / (STAGES.length - 1)) * span });
   };
 
   const s = STAGES[i];
@@ -723,15 +720,6 @@ export function GccEvolution() {
           ))}
         </ol>
       </div>
-      {/* one snap point per stage: each swipe moves exactly one stage (scroll-snap-stop: always) */}
-      {STAGES.map((x, k) => (
-        <span
-          key={x.n}
-          className="evo__snap"
-          style={{ top: `${k * 50}vh` }}
-          aria-hidden="true"
-        />
-      ))}
       <ol className="sr-only">
         {STAGES.map((x) => (
           <li key={x.n}>

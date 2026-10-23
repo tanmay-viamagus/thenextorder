@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { MavericksLogo, ViaMagusLogo } from "@/components/Brand";
+import { LinkedInMark, MavericksLogo, ViaMagusLogo } from "@/components/Brand";
 import {
   contactEmail,
   event,
@@ -10,7 +10,6 @@ import {
 import { cta, invite } from "@/content/story";
 import { Chrome, Reveal } from "./Interactive";
 import { InviteForm } from "./InviteForm";
-import { Pager } from "./Pager";
 import { Icon } from "./Icons";
 import { GccEvolution } from "./GccEvolution";
 import { Theme } from "./Theme";
@@ -42,7 +41,6 @@ export function Site() {
       </a>
       <Chrome />
       <Reveal />
-      <Pager />
 
       <header className="hdr">
         <ViaMagusLogo href={officialLinks.viamagus} />
@@ -152,6 +150,12 @@ export function Site() {
           </li>
           <li>
             <a href="/register">{cta.primary}</a>
+          </li>
+          <li>
+            <a className="ftr__in" href={officialLinks.linkedin} target="_blank" rel="noopener noreferrer">
+              <LinkedInMark />
+              <span className="sr-only">Viamagus on LinkedIn (opens in a new tab)</span>
+            </a>
           </li>
         </ul>
       </footer>
