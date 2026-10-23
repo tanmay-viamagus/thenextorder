@@ -2554,7 +2554,6 @@ html.js {
 }
 
 .hero2,
-.wa,
 .close {
   scroll-snap-align: start;
   scroll-snap-stop: always;
@@ -3829,149 +3828,12 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
 /* ==========================================================================
    03 Why attend — the brochure's "Why this event", on one grid
    ========================================================================== */
-.wa {
-  --wa-gap: clamp(64px, 10vh, 112px);
-  padding: clamp(88px, 13vh, 150px) var(--gutter) var(--chapter-end);
-  background: var(--paper);
-  color: var(--ink);
-}
-
-.wa .th__k {
-  margin: 0;
-}
 
 /* the question, and the theme beside it */
-.wa__head {
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-  align-items: end;
-  gap: 24px clamp(24px, 3vw, 56px);
-  margin-top: clamp(22px, 3.4vh, 36px);
-}
-
-.wa__h {
-  font-size: var(--h-section);
-  font-weight: 800;
-  line-height: 0.98;
-  letter-spacing: -0.05em;
-}
-
-.wa__h span {
-  display: block;
-  color: var(--purple);
-}
-
-.wa__lede {
-  max-width: 34ch;
-  font-size: clamp(1.02rem, 1.25vw, 1.2rem);
-  line-height: 1.5;
-  color: var(--ink-2);
-}
-
-.wa__lede strong {
-  display: block;
-  margin-bottom: 4px;
-  font-weight: 600;
-  color: var(--ink);
-}
 
 /* three columns, and everything below sits on the same three */
-.wa__cols,
-.wa__pair {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 40px clamp(24px, 3vw, 56px);
-  margin: var(--wa-gap) 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.wa__col,
-.wa__pair > div {
-  padding-top: 22px;
-  border-top: 1px solid var(--line-2);
-}
-
-.wa__pair > div:last-child {
-  grid-column: span 2;
-}
-
-.wa__n {
-  font: 500 0.75rem/1 var(--mono);
-  letter-spacing: 0.1em;
-  color: var(--ink-2);
-}
-
-.wa__t {
-  margin-top: 14px;
-  font-size: clamp(2rem, 3vw, 3rem);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.04em;
-}
-
-.wa__t span {
-  color: var(--magenta);
-}
-
-.wa__k {
-  font: 600 0.76rem/1 var(--mono);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--purple);
-}
-
-.wa__list {
-  display: grid;
-  gap: 12px;
-  margin: 22px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.wa__list li {
-  position: relative;
-  padding-left: 22px;
-  font-size: clamp(1rem, 1.2vw, 1.15rem);
-  line-height: 1.4;
-}
 
 /* the brochure's square bullet */
-.wa__list li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.5em;
-  width: 7px;
-  height: 7px;
-  background: var(--purple);
-}
-
-@media (max-width: 900px) {
-  .wa__head {
-    grid-template-columns: minmax(0, 1fr);
-    align-items: start;
-  }
-  .wa__cols {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .wa__pair {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .wa__pair > div:last-child {
-    grid-column: auto;
-  }
-}
-
-@media (max-width: 759px) {
-  .wa {
-    --wa-gap: 56px;
-  }
-  .wa__cols,
-  .wa__pair {
-    gap: 32px;
-  }
-}
 
 /* ==========================================================================
    One page per part of the story
@@ -4007,13 +3869,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
 }
 
 /* every page fills the screen, its content centred in it */
-.wa {
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: calc(var(--hdr) + clamp(20px, 4vh, 44px)) var(--gutter) clamp(20px, 4vh, 40px);
-}
 
 /* the hand-off: one row at the foot of the page */
 .handoff {
@@ -4068,32 +3923,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
 /* the agenda: one line, a stop for each item */
 
 /* ---------------------------------------------------------------- 03 the conversation, on one page */
-.wa {
-  --wa-gap: clamp(24px, 4.6vh, 52px);
-}
-
-.wa__h {
-  font-size: clamp(2.2rem, 3.9vw, 4.2rem);
-}
-
-.wa__col,
-.wa__pair > div {
-  padding-top: clamp(14px, 2.2vh, 22px);
-}
-
-.wa__t {
-  margin-top: 10px;
-  font-size: clamp(1.6rem, 2.3vw, 2.4rem);
-}
-
-.wa__list {
-  gap: clamp(6px, 1vh, 10px);
-  margin-top: clamp(12px, 2vh, 18px);
-}
-
-.wa__list li {
-  font-size: clamp(0.98rem, 1.1vw, 1.08rem);
-}
 
 /* ---------------------------------------------------------------- the opening's facts */
 .hero2__facts {
@@ -4254,10 +4083,6 @@ html[data-hdr="dark"] .hdr .btn--shift {
 
 @media (max-width: 759px) {
   /* a page that can't fit one phone screen is two swipes */
-  .wa__pair {
-    scroll-snap-align: start;
-    scroll-margin-top: calc(var(--hdr) + 16px);
-  }
   .hero2__facts {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -4293,26 +4118,6 @@ html[data-hdr="dark"] .hdr .btn--shift {
   }
   /* the date line, one fact a line — no orphaned separators */
   /* the conversation's first screen: the question and the three topics */
-  .wa__n {
-    display: none;
-  }
-  .wa__cols {
-    gap: 18px;
-  }
-  .wa__col {
-    padding-top: 12px;
-  }
-  .wa__t {
-    margin-top: 0;
-    font-size: 1.35rem;
-  }
-  .wa__list {
-    gap: 4px;
-    margin-top: 8px;
-  }
-  .wa__list li {
-    font-size: 0.95rem;
-  }
 }
 
 /* the smallest phones: the buttons tighten so nothing runs off the screen */
@@ -4684,148 +4489,10 @@ html[data-hdr="dark"] .hdr .btn--shift {
    03 The conversation — the reference: icon tiles, dividers, a gradient on
    the question, and a footer row for the hand-off
    ========================================================================== */
-.wa {
-  position: relative;
-  overflow: hidden;
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: calc(var(--hdr) + clamp(16px, 3vh, 36px)) var(--gutter) clamp(16px, 3vh, 32px);
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-}
 
 /* glass light at the top right */
 
-.wa > * {
-  position: relative;
-}
-
-.wa__head {
-  grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr);
-  align-items: center;
-  padding-bottom: clamp(18px, 3.4vh, 36px);
-  border-bottom: 1px solid var(--line-2);
-}
-
-.wa__h span {
-  background: linear-gradient(90deg, var(--purple) 0%, #8a2be2 45%, #b45cf0 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.wa__lede {
-  max-width: none;
-  padding-left: clamp(20px, 2.6vw, 44px);
-  border-left: 1px solid var(--line-2);
-}
-
-.wa__lede strong {
-  margin-bottom: 8px;
-  font-size: clamp(1.15rem, 1.6vw, 1.55rem);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.03em;
-}
-
-.wa__cols {
-  margin-top: clamp(18px, 3.4vh, 36px);
-  gap: 0;
-}
-
-.wa__col {
-  padding: 0 clamp(16px, 2.4vw, 40px);
-  border-top: 0;
-}
-
-.wa__col:first-child {
-  padding-left: 0;
-}
-
-.wa__col + .wa__col {
-  border-left: 1px solid var(--line-2);
-}
-
-.wa__row {
-  display: flex;
-  align-items: flex-start;
-  gap: clamp(14px, 1.8vw, 28px);
-  margin-top: 10px;
-}
-
-.wa__tile {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: clamp(56px, 5vw, 76px);
-  aspect-ratio: 1;
-  border-radius: 14px;
-  background: linear-gradient(160deg, #f1e6fd, #e6d6fa);
-  box-shadow: 0 8px 24px -14px rgba(102, 8, 169, 0.5);
-  color: var(--ink);
-}
-
-.wa__tile svg {
-  width: 46%;
-  height: 46%;
-}
-
-.wa__t {
-  margin-top: 4px;
-  font-size: clamp(1.7rem, 2.5vw, 2.6rem);
-}
-
-.wa__list li::before {
-  top: 0.55em;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-}
-
-.wa__pair {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0;
-  margin-top: clamp(18px, 3.4vh, 36px);
-  padding-top: clamp(16px, 3vh, 32px);
-  border-top: 1px solid var(--line-2);
-}
-
-.wa__pair > div {
-  padding: 0 clamp(16px, 2.4vw, 40px) 0 0;
-  border-top: 0;
-}
-
-.wa__pair > div:last-child {
-  grid-column: auto;
-  padding: 0 0 0 clamp(16px, 2.4vw, 40px);
-  border-left: 1px solid var(--line-2);
-}
-
-.wa__k {
-  font-size: 0.92rem;
-  letter-spacing: 0.16em;
-}
-
-.wa__pair .wa__list {
-  margin-top: 4px;
-}
-
 /* the hand-off: a footer row — where next, divided from the line */
-.wa .handoff {
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  margin-top: clamp(18px, 3.4vh, 36px);
-  padding-top: clamp(14px, 2.6vh, 26px);
-  border-top: 1px solid var(--line-2);
-}
-
-.wa .handoff__q {
-  padding-left: clamp(20px, 2.6vw, 44px);
-  border-left: 1px solid var(--line-2);
-  font-size: clamp(1.2rem, 1.9vw, 1.9rem);
-  font-weight: 700;
-}
 
 .handoff__of {
   margin-left: 2px;
@@ -4840,66 +4507,6 @@ html[data-hdr="dark"] .hdr .btn--shift {
   vertical-align: middle;
   background: currentColor;
   opacity: 0.6;
-}
-
-.wa .handoff__arr {
-  width: 60px;
-}
-
-@media (max-width: 900px) {
-  .wa__head {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .wa__lede {
-    padding-left: 0;
-    border-left: 0;
-  }
-  .wa__cols {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 16px;
-  }
-  .wa__col,
-  .wa__col:first-child {
-    padding: 0;
-  }
-  .wa__col + .wa__col {
-    padding-top: 16px;
-    border-left: 0;
-    border-top: 1px solid var(--line-2);
-  }
-  .wa__pair {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 20px;
-  }
-  .wa__pair > div,
-  .wa__pair > div:last-child {
-    padding: 0;
-    border-left: 0;
-  }
-  .wa .handoff {
-    grid-template-columns: minmax(0, 1fr) auto;
-  }
-  .wa .handoff__q {
-    padding-left: 0;
-    border-left: 0;
-  }
-}
-
-@media (max-width: 759px) {
-  .wa__n {
-    display: none;
-  }
-  .wa__tile {
-    width: 48px;
-    border-radius: 12px;
-  }
-  .wa__row {
-    gap: 14px;
-    margin-top: 0;
-  }
-  .wa__t {
-    font-size: 1.35rem;
-  }
 }
 
 /* ==========================================================================
@@ -5220,43 +4827,10 @@ html[data-hdr="dark"] .hdr .btn--shift {
 }
 
 /* the conversation on short screens */
-@media (min-width: 760px) and (max-height: 880px) {
-  .wa {
-    padding-top: calc(var(--hdr) + 12px);
-    padding-bottom: 12px;
-  }
-  .wa__h {
-    font-size: min(3.9vw, 8svh);
-  }
-  .wa__head {
-    margin-top: 10px;
-    padding-bottom: 14px;
-  }
-  .wa__cols,
-  .wa__pair,
-  .wa .handoff {
-    margin-top: 14px;
-  }
-  .wa__pair,
-  .wa .handoff {
-    padding-top: 12px;
-  }
-  .wa__tile {
-    width: 52px;
-  }
-  .wa__t {
-    font-size: min(2.3vw, 4.6svh);
-  }
-  .wa__list {
-    gap: 3px;
-    margin-top: 8px;
-  }
-}
 
 /* clip, not hidden: a page must not become its own scroll container, or its
    phone stops (the agenda, the organisers, who and what) stop counting */
-.sy,
-.wa {
+.sy {
   overflow: clip;
 }
 
@@ -5734,22 +5308,6 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
 }
 
 /* ---------------------------------------------------------------- 03 the conversation: light and airy */
-.wa {
-  background:
-    radial-gradient(36% 46% at 92% 14%, rgba(214, 180, 255, 0.42), transparent 70%),
-    radial-gradient(30% 40% at 0% 100%, rgba(214, 180, 255, 0.22), transparent 70%),
-    linear-gradient(180deg, #fbf9fd, #f5f0fb);
-  color: var(--deep);
-}
-
-.wa__tile {
-  background: linear-gradient(160deg, #f6effe, #ece0fb);
-  color: var(--violet-a);
-}
-
-.wa__list li::before {
-  background: var(--violet-a);
-}
 
 /* ---------------------------------------------------------------- 04 your place: a white card on light */
 .close {
@@ -5982,21 +5540,18 @@ html:not([data-hdr="dark"]) .hdr {
 
 .evo,
 .evo__stage,
-.wa,
 .close {
   background: var(--ref-cream);
   color: var(--ref-ink);
 }
 
 .evo__h,
-.wa__h,
 .close__h {
   color: var(--ref-ink);
 }
 
 /* accents are solid purple, not gradients */
 .evo__hl,
-.wa__h span,
 .close__h span {
   background: none;
   -webkit-background-clip: border-box;
@@ -6004,32 +5559,19 @@ html:not([data-hdr="dark"]) .hdr {
   color: var(--ref-purple);
 }
 
-.wa__head,
-.wa__pair,
-.wa .handoff,
-.wa__col + .wa__col,
-.wa__lede,
-.wa .handoff__q,
-.wa__pair > div:last-child,
 .steps li {
   border-color: var(--ref-line);
 }
 
-.wa__lede,
 .close__who,
 .steps span {
   color: var(--ref-ink-2);
 }
 
-.wa__tile,
 .steps__tile {
   background: #f1eafd;
   box-shadow: none;
   color: var(--ref-purple);
-}
-
-.wa__list li::before {
-  background: var(--ref-purple);
 }
 
 /* the section label: "01 / 04 —— THE ROAD SO FAR", no dot */
@@ -6315,4 +5857,758 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
 .sy-room {
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
+}
+
+/* ==========================================================================
+   03 The conversation — a split page: an architectural light installation
+   on the left (about a third), the brochure's "Why this event" on cream on
+   the right
+   ========================================================================== */
+.wa {
+  position: relative;
+  display: grid;
+  grid-template-columns: 34% minmax(0, 1fr);
+  min-height: 100svh;
+  overflow: clip;
+  background: var(--ref-cream);
+  color: var(--ref-ink);
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* ---------------------------------------------------------------- the left panel */
+.wa__side {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: calc(var(--hdr) + clamp(24px, 4.4vh, 52px)) clamp(28px, 3.4vw, 64px) clamp(32px, 7vh, 72px);
+  color: var(--white);
+}
+
+.wa__k-side {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+}
+
+.wa__k-side .chapter,
+.wa__k-side .chapter__of {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.wa__k-side .chap::after {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.wa__names {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  justify-items: start;
+  gap: 16px;
+  width: max-content;
+  font: 500 0.84rem/1 var(--mono);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.96);
+  text-shadow: 0 1px 12px rgba(60, 40, 100, 0.35);
+}
+
+.wa__names::before,
+.wa__names::after {
+  content: "";
+  width: 48px;
+  height: 1px;
+  margin: 6px 0;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* the installation: planes, glass, light — all within the panel */
+.wa-art,
+.wa-art > span {
+  position: absolute;
+  pointer-events: none;
+}
+
+.wa-art {
+  inset: 0;
+  overflow: hidden;
+}
+
+.wa-art__base {
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent 62%, rgba(255, 246, 236, 0.55) 100%),
+    linear-gradient(115deg, #5d4a82 0%, #8d7ab3 28%, #c9b8de 50%, #efe2df 72%, #fbf2e8 100%);
+}
+
+/* translucent vertical planes */
+.wa-art__plane {
+  top: 6%;
+  bottom: 20%;
+  border-left: 1px solid rgba(255, 255, 255, 0.45);
+  border-right: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(1px);
+  animation: wa-breathe 14s ease-in-out infinite alternate;
+}
+
+.wa-art__plane--1 {
+  left: 4%;
+  width: 26%;
+  background: linear-gradient(180deg, rgba(70, 52, 108, 0.55), rgba(120, 96, 168, 0.25));
+  animation-name: wa-breathe, wa-drift-l;
+  animation-duration: 14s, 20s;
+}
+
+.wa-art__plane--2 {
+  left: 24%;
+  width: 20%;
+  top: 14%;
+  bottom: 16%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(160, 136, 205, 0.18));
+  animation-delay: -5s;
+}
+
+.wa-art__plane--3 {
+  left: 52%;
+  width: 24%;
+  top: 2%;
+  bottom: 24%;
+  background: linear-gradient(180deg, rgba(255, 252, 246, 0.7), rgba(255, 244, 232, 0.25));
+  animation-delay: -9s;
+}
+
+.wa-art__plane--4 {
+  left: 74%;
+  width: 22%;
+  top: 12%;
+  bottom: 14%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.4), rgba(214, 196, 236, 0.2));
+  animation-name: wa-breathe, wa-drift-r;
+  animation-duration: 16s, 22s;
+  animation-delay: -3s, -7s;
+}
+
+/* angular glass */
+.wa-art__shard {
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.04) 60%);
+}
+
+.wa-art__shard--1 {
+  clip-path: polygon(0 40%, 100% 12%, 100% 20%, 0 54%);
+  opacity: 0.55;
+}
+
+.wa-art__shard--2 {
+  clip-path: polygon(0 74%, 100% 46%, 100% 50%, 0 82%);
+  opacity: 0.4;
+}
+
+/* a warm-white glow at the central opening */
+.wa-art__opening {
+  left: 34%;
+  top: 22%;
+  width: 52%;
+  height: 50%;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(255, 249, 238, 0.85), rgba(255, 240, 225, 0.25) 45%, transparent 72%);
+  filter: blur(6px);
+  animation: wa-glow 16s ease-in-out infinite alternate;
+}
+
+/* a broad, diffuse beam drifting slowly across the planes */
+.wa-art__beam {
+  top: -20%;
+  left: -70%;
+  width: 70%;
+  height: 140%;
+  background: linear-gradient(90deg, transparent, rgba(244, 236, 255, 0.55) 45%, rgba(255, 255, 255, 0.65) 50%, rgba(244, 236, 255, 0.55) 55%, transparent);
+  filter: blur(22px);
+  transform: rotate(16deg);
+  animation: wa-beam 18s ease-in-out infinite alternate;
+}
+
+/* reflections travelling along two plane edges */
+.wa-art__edge {
+  width: 2px;
+  overflow: hidden;
+}
+
+.wa-art__edge--1 {
+  left: 52%;
+  top: 2%;
+  bottom: 24%;
+}
+
+.wa-art__edge--2 {
+  left: 30%;
+  top: 6%;
+  bottom: 20%;
+}
+
+.wa-art__edge::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 36%;
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.95), transparent);
+  animation: wa-edge 20s ease-in-out infinite alternate;
+}
+
+.wa-art__edge--2::before {
+  animation-duration: 17s;
+  animation-delay: -8s;
+}
+
+/* the polished floor */
+.wa-art__floor {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 26%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 250, 244, 0.5));
+}
+
+@keyframes wa-breathe {
+  from { opacity: 0.78; }
+  to { opacity: 1; }
+}
+
+@keyframes wa-drift-l {
+  from { transform: translateX(-4px); }
+  to { transform: translateX(6px); }
+}
+
+@keyframes wa-drift-r {
+  from { transform: translateX(5px); }
+  to { transform: translateX(-5px); }
+}
+
+@keyframes wa-glow {
+  from { opacity: 0.7; }
+  to { opacity: 1; }
+}
+
+@keyframes wa-beam {
+  from { transform: translateX(0) rotate(16deg); }
+  to { transform: translateX(230%) rotate(16deg); }
+}
+
+@keyframes wa-edge {
+  from { transform: translateY(-40%); }
+  to { transform: translateY(220%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wa-art *,
+  .wa-art > span,
+  .wa-art__edge::before {
+    animation: none !important;
+  }
+  .wa-art__beam {
+    transform: translateX(110%) rotate(16deg);
+  }
+}
+
+/* ---------------------------------------------------------------- the right panel */
+.wa__main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  padding: calc(var(--hdr) + clamp(18px, 3.4vh, 44px)) clamp(32px, 4.4vw, 88px) clamp(18px, 3vh, 34px);
+}
+
+.wa__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(24px, 3vw, 56px);
+  padding-bottom: clamp(16px, 3.2vh, 34px);
+  border-bottom: 1px solid var(--ref-line);
+}
+
+.wa__h {
+  font: 800 min(3.7vw, 6.4svh) / 0.98 var(--font);
+  letter-spacing: -0.05em;
+  color: var(--ref-ink);
+}
+
+.wa__h span {
+  display: block;
+  color: var(--ref-purple);
+}
+
+.wa__lede {
+  padding-left: clamp(20px, 2.4vw, 40px);
+  border-left: 1px solid var(--ref-line);
+  font-size: clamp(0.95rem, 1.05vw, 1.06rem);
+  line-height: 1.6;
+  color: var(--ref-ink-2);
+}
+
+.wa__lede strong {
+  display: block;
+  margin-bottom: 12px;
+  font-size: clamp(1.05rem, 1.35vw, 1.3rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  color: var(--ref-ink);
+}
+
+/* three equal rows */
+.wa__rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wa__rowi {
+  display: grid;
+  grid-template-columns: 44px clamp(48px, 4.2vw, 64px) minmax(0, 0.9fr) minmax(0, 1.25fr) 44px;
+  align-items: center;
+  gap: clamp(14px, 1.8vw, 28px);
+  min-height: clamp(84px, 13vh, 132px);
+  padding: clamp(8px, 1.4vh, 14px) 0;
+  border-bottom: 1px solid var(--ref-line);
+}
+
+.wa__n {
+  font: 500 0.8rem/1 var(--mono);
+  letter-spacing: 0.12em;
+  color: var(--ref-ink-2);
+}
+
+.wa__tile {
+  display: grid;
+  place-items: center;
+  width: clamp(48px, 4.2vw, 64px);
+  aspect-ratio: 1;
+  border-radius: 10px;
+  background: #efe8fd;
+  color: var(--ref-purple);
+}
+
+.wa__tile svg {
+  width: 46%;
+  height: 46%;
+}
+
+.wa__t {
+  font-size: clamp(1.5rem, 2.1vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.wa__t span {
+  color: #c026d3;
+}
+
+.wa__list {
+  display: grid;
+  gap: clamp(4px, 0.8vh, 8px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wa__rowi .wa__list {
+  align-self: stretch;
+  align-content: center;
+  padding-left: clamp(20px, 2.4vw, 40px);
+  border-left: 1px solid var(--ref-line);
+}
+
+.wa__list li {
+  position: relative;
+  padding-left: 22px;
+  font-size: clamp(0.95rem, 1.05vw, 1.06rem);
+  line-height: 1.45;
+  color: var(--ref-ink);
+}
+
+.wa__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.58em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ref-purple);
+}
+
+.wa__go {
+  justify-self: end;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--ref-ink);
+  font-size: 1.5rem;
+  text-decoration: none;
+  transition: transform 0.4s var(--ease-out), color 0.3s;
+}
+
+@media (hover: hover) {
+  .wa__go:hover {
+    color: var(--ref-purple);
+    transform: translateX(4px);
+  }
+}
+
+.wa__go:focus-visible {
+  outline: 2px solid var(--ref-purple);
+  outline-offset: 2px;
+}
+
+/* who and what: two balanced columns */
+.wa__pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding-top: clamp(16px, 3vh, 30px);
+}
+
+.wa__pair > div:first-child {
+  padding-right: clamp(20px, 2.6vw, 48px);
+}
+
+.wa__pair > div:last-child {
+  padding-left: clamp(20px, 2.6vw, 48px);
+  border-left: 1px solid var(--ref-line);
+}
+
+.wa__k {
+  margin-bottom: clamp(10px, 1.8vh, 18px);
+  font: 600 0.84rem/1 var(--mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ref-purple);
+}
+
+.wa__row {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(16px, 2vw, 32px);
+}
+
+.wa__pair .wa__tile {
+  width: clamp(44px, 3.6vw, 56px);
+}
+
+/* the footer: the hand-off */
+.wa .handoff {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  margin-top: clamp(16px, 3vh, 30px);
+  padding-top: clamp(12px, 2.2vh, 22px);
+  border-top: 1px solid var(--ref-line);
+}
+
+.wa .handoff__q {
+  padding-left: clamp(20px, 2.4vw, 40px);
+  border-left: 1px solid var(--ref-line);
+  font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+  font-weight: 700;
+}
+
+.wa .handoff__ask {
+  color: var(--ref-purple);
+}
+
+.wa .handoff__arr {
+  width: 52px;
+}
+
+/* ---------------------------------------------------------------- tablets and phones */
+@media (max-width: 1080px) {
+  .wa {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .wa__side {
+    min-height: clamp(150px, 24svh, 220px);
+    flex-direction: row;
+    align-items: flex-end;
+    padding: calc(var(--hdr) + 16px) var(--gutter) 20px;
+  }
+  .wa__names {
+    gap: 8px;
+    font-size: 0.75rem;
+    letter-spacing: 0.24em;
+  }
+  .wa__names::before,
+  .wa__names::after {
+    display: none;
+  }
+  .wa__main {
+    padding: 24px var(--gutter) 28px;
+  }
+}
+
+@media (max-width: 900px) {
+  .wa__head {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .wa__lede {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .wa__rowi {
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
+    grid-template-areas: "tile title go" "list list list";
+    gap: 10px 14px;
+    min-height: 0;
+    padding: 14px 0;
+  }
+  .wa__n {
+    display: none;
+  }
+  .wa__rowi .wa__tile {
+    grid-area: tile;
+    width: 44px;
+  }
+  .wa__rowi .wa__t {
+    grid-area: title;
+    font-size: 1.35rem;
+  }
+  .wa__rowi .wa__go {
+    grid-area: go;
+  }
+  .wa__rowi .wa__list {
+    grid-area: list;
+    padding-left: 0;
+    border-left: 0;
+  }
+  .wa__pair {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+  }
+  .wa__pair > div:first-child,
+  .wa__pair > div:last-child {
+    padding: 0;
+    border-left: 0;
+  }
+  .wa .handoff {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .wa .handoff__q {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
+@media (max-width: 759px) {
+  .wa__h {
+    font-size: min(9vw, 5.4svh);
+  }
+  .wa__side {
+    min-height: 132px;
+    padding-top: calc(var(--hdr) + 12px);
+  }
+  .wa__names {
+    display: none;
+  }
+  .wa__pair .wa__tile {
+    width: 44px;
+  }
+  /* a page that can't fit one phone screen is two swipes */
+  .wa__pair {
+    scroll-snap-align: start;
+    scroll-margin-top: calc(var(--hdr) + 16px);
+  }
+}
+
+/* the installation, deeper on the left (where the labels sit), warm light to the right */
+.wa-art__base {
+  background:
+    radial-gradient(70% 45% at 8% 96%, rgba(44, 32, 74, 0.6), transparent 72%),
+    radial-gradient(60% 40% at 6% 4%, rgba(44, 32, 74, 0.55), transparent 72%),
+    linear-gradient(108deg, #3f3060 0%, #5e4a86 24%, #8d79b4 44%, #c8b7de 60%, #efe3df 78%, #fbf3ea 100%);
+}
+
+.wa-art__plane--1 {
+  background: linear-gradient(180deg, rgba(36, 24, 62, 0.6), rgba(84, 64, 124, 0.38));
+}
+
+.wa-art__plane--2 {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(150, 126, 196, 0.12));
+}
+
+.wa-art__floor {
+  background: linear-gradient(180deg, transparent, rgba(255, 250, 244, 0.5));
+  -webkit-mask-image: linear-gradient(90deg, transparent 30%, #000 75%);
+  mask-image: linear-gradient(90deg, transparent 30%, #000 75%);
+}
+
+.wa__names,
+.wa__k-side {
+  text-shadow: 0 1px 14px rgba(30, 20, 56, 0.55);
+}
+
+/* the right panel fits one screen: a wider headline column, steadier rows */
+.wa__head {
+  grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
+}
+
+.wa__h {
+  font-size: min(3.3vw, 5.6svh);
+}
+
+.wa__rowi {
+  min-height: clamp(72px, 10.6vh, 120px);
+}
+
+.wa__tile {
+  width: clamp(46px, 3.8vw, 58px);
+}
+
+/* shorter laptop screens: the same layout, tighter */
+@media (min-width: 1081px) and (max-height: 880px) {
+  .wa__main {
+    padding-top: calc(var(--hdr) + 10px);
+    padding-bottom: 10px;
+  }
+  .wa__head {
+    padding-bottom: 12px;
+  }
+  .wa__h {
+    font-size: min(3vw, 5.2svh);
+  }
+  .wa__lede {
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+  .wa__lede strong {
+    margin-bottom: 6px;
+    font-size: 1.05rem;
+  }
+  .wa__rowi {
+    min-height: 0;
+    padding: 6px 0;
+  }
+  .wa__list {
+    gap: 1px;
+  }
+  .wa__list li {
+    font-size: 0.92rem;
+    line-height: 1.38;
+  }
+  .wa__pair {
+    padding-top: 12px;
+  }
+  .wa__k {
+    margin-bottom: 8px;
+  }
+  .wa__tile,
+  .wa__pair .wa__tile {
+    width: 44px;
+  }
+  .wa .handoff {
+    margin-top: 10px;
+    padding-top: 10px;
+  }
+  .wa .handoff__q {
+    font-size: 1.1rem;
+  }
+  .wa .handoff__arr {
+    width: 44px;
+  }
+}
+
+@media (min-width: 1081px) and (max-height: 760px) {
+  .wa__lede {
+    font-size: 0.86rem;
+  }
+  .wa__t {
+    font-size: 1.4rem;
+  }
+  .wa__pair .wa__list li:nth-child(n) {
+    line-height: 1.3;
+  }
+}
+
+/* ==========================================================================
+   02 The meeting point — the doorway, quietly alive with light. One 14 s
+   cycle shared by every part (the door itself never moves): the halo
+   breathes, a sweep of light travels down the inner edge, the floor light
+   spills a little further and draws back, a glow sits deep behind the door
+   ========================================================================== */
+.sy-halo,
+.sy-depth,
+.sy-sweep,
+.sy-spill {
+  transform-box: fill-box;
+  will-change: opacity, transform;
+}
+
+.sy-halo {
+  animation: sy-halo 14s ease-in-out infinite alternate;
+}
+
+.sy-depth {
+  opacity: 0.45;
+  animation: sy-depth 14s ease-in-out infinite alternate;
+}
+
+.sy-sweep {
+  opacity: 0;
+  animation: sy-sweep 14s ease-in-out infinite;
+}
+
+.sy-spill {
+  transform-origin: 50% 0%;
+  animation: sy-spill 14s ease-in-out infinite alternate;
+}
+
+@keyframes sy-halo {
+  from { opacity: 0.78; filter: blur(0); }
+  to { opacity: 1; filter: blur(3px); }
+}
+
+@keyframes sy-depth {
+  from { opacity: 0.32; }
+  to { opacity: 0.6; }
+}
+
+@keyframes sy-sweep {
+  0% { transform: translateY(0); opacity: 0; }
+  12% { opacity: 0.9; }
+  58% { opacity: 0.9; }
+  70% { transform: translateY(420px); opacity: 0; }
+  100% { transform: translateY(420px); opacity: 0; }
+}
+
+@keyframes sy-spill {
+  from { transform: scale(0.96, 0.94); opacity: 0.85; }
+  to { transform: scale(1.04, 1.04); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sy-halo,
+  .sy-depth,
+  .sy-sweep,
+  .sy-spill {
+    animation: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .wa__head {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+  .wa__h {
+    font-size: min(8.6vw, 5.4svh);
+  }
+}
+
+@media (max-width: 759px) {
+  .wa__side {
+    min-height: 120px;
+  }
 }

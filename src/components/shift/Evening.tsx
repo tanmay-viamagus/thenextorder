@@ -57,18 +57,35 @@ function Doorway() {
         <filter id="sy-soft" x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation="14" />
         </filter>
+        <filter id="sy-deep" x="-100%" y="-50%" width="300%" height="200%">
+          <feGaussianBlur stdDeviation="26" />
+        </filter>
+        <linearGradient id="sy-sweep" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#fff" stopOpacity="0" />
+          <stop offset="0.5" stopColor="#fff" stopOpacity="0.95" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+        </linearGradient>
+        <clipPath id="sy-door-clip">
+          <rect x="160" y="60" width="80" height="460" />
+        </clipPath>
       </defs>
       {/* the floor, then the walls running into the door's frame */}
       <polygon points="0,760 160,520 240,520 400,760 400,800 0,800" fill="#0c0a11" />
       <polygon points="0,0 160,60 160,520 0,760" fill="url(#sy-wall-l)" />
       <polygon points="400,0 240,60 240,520 400,760" fill="url(#sy-wall-r)" />
-      {/* the glow around the opening */}
-      <rect x="0" y="0" width="400" height="640" fill="url(#sy-glow)" />
+      {/* the glow around the opening — it breathes */}
+      <rect className="sy-halo" x="0" y="0" width="400" height="640" fill="url(#sy-glow)" />
+      {/* depth: a faint glow just behind the door */}
+      <rect className="sy-depth" x="150" y="70" width="100" height="440" fill="#e9d4ff" filter="url(#sy-deep)" />
       {/* the opening, its light bleeding a little past the frame */}
       <rect x="160" y="60" width="80" height="460" fill="#fff" filter="url(#sy-soft)" opacity="0.7" />
       <rect x="160" y="60" width="80" height="460" fill="url(#sy-door)" />
+      {/* a slow sweep of light down the door's inner edge */}
+      <g clipPath="url(#sy-door-clip)">
+        <rect className="sy-sweep" x="160" y="-60" width="7" height="160" fill="url(#sy-sweep)" />
+      </g>
       {/* the light on the floor: from the sill, exactly the door's width, spreading out */}
-      <polygon points="160,520 240,520 330,800 70,800" fill="url(#sy-beam)" />
+      <polygon className="sy-spill" points="160,520 240,520 330,800 70,800" fill="url(#sy-beam)" />
     </svg>
   );
 }
