@@ -74,13 +74,16 @@ export function Handoff({ to, lead, ask }: { to: ChapterId; lead: ReactNode; ask
   return (
     <a className="handoff" href={`#${c.id}`} data-reveal>
       <span className="handoff__k">
-        Next <span aria-hidden="true">→</span> {c.n} · {c.label}
+        Next <span aria-hidden="true">→</span> {c.n}
+        <span className="handoff__of">/{String(CHAPTERS.length).padStart(2, "0")}</span>
+        <span className="handoff__dash" aria-hidden="true" />
+        {c.label}
       </span>
       <span className="handoff__q">
         {lead} <span className="handoff__ask">{ask}</span>
       </span>
       <span className="handoff__arr" aria-hidden="true">
-        ↓
+        →
       </span>
     </a>
   );

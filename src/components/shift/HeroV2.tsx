@@ -2,6 +2,8 @@ import { MavericksLogo } from "@/components/Brand";
 import { FilmButton } from "@/components/film/FilmOverlay";
 import { event } from "@/content/event";
 import { cta } from "@/content/story";
+import type { ReactNode } from "react";
+import { Icon, type IconName } from "./Icons";
 import { ShiftTitle } from "./Interactive";
 
 /**
@@ -45,17 +47,33 @@ function Arc() {
   );
 }
 
+const FACTS: { k: string; icon: IconName; v: ReactNode }[] = [
+  { k: "Date", icon: "calendar", v: event.date },
+  { k: "Time", icon: "clock", v: event.time },
+  { k: "Venue", icon: "pin", v: [event.venue, event.city].filter(Boolean).join(", ") },
+  { k: "In collaboration with", icon: "users", v: <MavericksLogo className="hero2__mav" height={24} /> },
+];
+
 export function HeroV2() {
   return (
     <section id="top" className="hero2" data-tone="dark" data-shift-root aria-labelledby="hero-h">
       <Arc />
+      {/* the brochure's cover, twice: a lit doorway at each side of the room */}
+      <span className="hero2__door hero2__door--l" aria-hidden="true" />
+      <span className="hero2__door hero2__door--r" aria-hidden="true" />
       <div className="hero2__in">
+        <p className="hero2__presents">Viamagus presents</p>
         <h1 id="hero-h" className="sr-only">
-          The NEXT Order — an invite-only symposium from Viamagus for Hyderabad’s GCC leaders and decision-makers
+          The Next Order of talent, technology and leadership — an invite-only symposium from Viamagus for Hyderabad’s
+          GCC leaders and decision-makers
         </h1>
-        <ShiftTitle lines={["THE ", "NEXT", "ORDER."]} cutLine={2} />
+        {/* one title: THE NEXT ORDER / of / talent, technology and leadership. */}
+        <ShiftTitle lines={["THE ", "NEXT", "ORDER"]} cutLine={2} />
         <div className="hero2__text">
-          <p className="hero2__line">The next order of talent, technology and leadership.</p>
+          <p className="hero2__line" aria-hidden="true">
+            <span className="hero2__of">of</span>
+            <span className="hero2__ttl">talent, technology and leadership.</span>
+          </p>
           <p className="hero2__sub">An invite-only symposium for Hyderabad’s GCC leaders and decision-makers.</p>
         </div>
         <div className="hero2__cta">
@@ -75,24 +93,17 @@ export function HeroV2() {
       </div>
       {/* the facts, as labelled cells — when, what time, where, and with whom */}
       <dl className="hero2__facts">
-        <div>
-          <dt>Date</dt>
-          <dd>{event.date}</dd>
-        </div>
-        <div>
-          <dt>Time</dt>
-          <dd>{event.time}</dd>
-        </div>
-        <div>
-          <dt>Venue</dt>
-          <dd>{[event.venue, event.city].filter(Boolean).join(", ")}</dd>
-        </div>
-        <div>
-          <dt>In collaboration with</dt>
-          <dd>
-            <MavericksLogo className="hero2__mav" height={22} />
-          </dd>
-        </div>
+        {FACTS.map((f) => (
+          <div key={f.k}>
+            <dt>
+              <span className="hero2__ftile">
+                <Icon name={f.icon} />
+              </span>
+              {f.k}
+            </dt>
+            <dd>{f.v}</dd>
+          </div>
+        ))}
       </dl>
     </section>
   );
