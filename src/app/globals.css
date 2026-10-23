@@ -55,11 +55,6 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
-}
 
 /* event walls: scale the rem system so 4K reads like 1920, just bigger */
 @media (min-width: 1921px) {

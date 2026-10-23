@@ -10,8 +10,9 @@ import { useEffect } from "react";
  * screen) is a page. A wheel notch, a trackpad gesture, a swipe, Page
  * Up/Down, Space or an arrow key moves exactly one page; the header's
  * chapter links and the hand-offs glide the same way. The glide is ours
- * (about a second, cubic in-out); the browser's snapping is paused while it
- * runs and resumes on landing. Momentum after a gesture is absorbed. Inside a
+ * (about two-thirds of a second, cubic in-out); the browser's snapping is paused while it
+ * runs. Momentum after a gesture is absorbed, but a fresh swipe always turns
+ * the next page. Inside a
  * page taller than the screen (the form) scrolling is left alone. With
  * reduced motion every move is instant.
  */
@@ -51,13 +52,12 @@ export function Pager() {
       return p;
     };
 
-    // after a glide, the rest of the gesture's momentum is absorbed
+    // after a glide, the rest of that gesture's momentum is absorbed — but only
+    // while it is dying away: a fresh swipe (a bigger delta) turns the next page
     let busyUntil = 0;
-    let quietTimer = 0;
+    let lastDelta = 0;
     const markBusy = () => {
-      busyUntil = Math.max(busyUntil, performance.now() + 450);
-      window.clearTimeout(quietTimer);
-      quietTimer = window.setTimeout(() => (busyUntil = 0), 260);
+      busyUntil = performance.now() + 380;
     };
 
     // the glide
@@ -68,23 +68,30 @@ export function Pager() {
       const from = window.scrollY;
       const d = to - from;
       if (reduce.matches || Math.abs(d) < 2) {
-        window.scrollTo({ top: to, behavior: "instant" });
+        root.style.scrollBehavior = "auto";
+        window.scrollTo(0, to);
+        root.style.scrollBehavior = "";
         markBusy();
         return;
       }
-      const dur = Math.min(1200, 780 + Math.abs(d) * 0.16);
+      const dur = Math.min(820, 560 + Math.abs(d) * 0.08);
       const t0 = performance.now();
       gliding = true;
-      root.style.scrollSnapType = "none";
+      // every step is placed exactly: no CSS smooth-scrolling on top of ours
+      root.style.scrollBehavior = "auto";
+      const done = () => {
+        gliding = false;
+        root.style.scrollBehavior = "";
+        markBusy();
+      };
       const step = (now: number) => {
-        const t = Math.min(1, (now - t0) / dur);
-        window.scrollTo({ top: from + d * ease(t), behavior: "instant" });
-        if (t < 1) {
-          raf = requestAnimationFrame(step);
-        } else {
-          gliding = false;
-          root.style.scrollSnapType = "";
-          markBusy();
+        try {
+          const t = Math.min(1, (now - t0) / dur);
+          window.scrollTo(0, from + d * ease(t));
+          if (t < 1) raf = requestAnimationFrame(step);
+          else done();
+        } catch {
+          done();
         }
       };
       raf = requestAnimationFrame(step);
@@ -92,13 +99,16 @@ export function Pager() {
 
     const onWheel = (e: WheelEvent) => {
       if (e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
-      if (gliding || performance.now() < busyUntil) {
-        // the gesture that turned the page, or its momentum: absorb all of it
+      const mag = Math.abs(e.deltaY);
+      const fresh = mag > lastDelta * 1.6 + 6;
+      lastDelta = mag;
+      if (gliding || (performance.now() < busyUntil && !fresh)) {
+        // the gesture that turned the page, or its dying momentum: absorb it
         e.preventDefault();
         if (!gliding) markBusy();
         return;
       }
-      if (Math.abs(e.deltaY) < 4) return;
+      if (mag < 4) return;
       const p = target(e.deltaY > 0 ? 1 : -1);
       if (p === null) return;
       e.preventDefault();
@@ -166,8 +176,6 @@ export function Pager() {
     document.addEventListener("click", onClick);
     return () => {
       cancelAnimationFrame(raf);
-      window.clearTimeout(quietTimer);
-      root.style.scrollSnapType = "";
       window.removeEventListener("wheel", onWheel);
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchmove", onTouchMove);
