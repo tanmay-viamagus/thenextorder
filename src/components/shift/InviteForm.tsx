@@ -112,6 +112,9 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
         <p className="rf__small">
           Questions in the meantime? <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
         </p>
+        <a className="rf__home" href={source === "register" ? "/" : "#top"}>
+          Back to the top <span aria-hidden="true">→</span>
+        </a>
       </div>
     );
   }
@@ -135,18 +138,18 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
       <div className="rf__row">
         <label className="rf__field">
           <span>Name</span>
-          <input name="name" autoComplete="name" required maxLength={120} {...a("name")} />
+          <input name="name" placeholder="Your name" autoComplete="name" required maxLength={120} {...a("name")} />
           {err("name")}
         </label>
         <label className="rf__field">
           <span>Work email</span>
-          <input name="email" type="email" autoComplete="email" inputMode="email" required maxLength={200} {...a("email")} />
+          <input name="email" placeholder="name@company.com" type="email" autoComplete="email" inputMode="email" required maxLength={200} {...a("email")} />
           {err("email")}
         </label>
       </div>
       <label className="rf__field">
         <span>Organisation</span>
-        <input name="organisation" autoComplete="organization" required maxLength={160} {...a("organisation")} />
+        <input name="organisation" placeholder="Company name" autoComplete="organization" required maxLength={160} {...a("organisation")} />
         {err("organisation")}
       </label>
       <label className="rf__field">

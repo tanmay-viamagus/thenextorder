@@ -1,10 +1,11 @@
 import type { ReactNode } from "react";
 
 /**
- * The thread through the page: one story in four chapters — how GCCs are
- * evolving → the symposium (the film and the agenda) → why attend → your
- * place. Every chapter name comes from here: the header's line, each
- * chapter's label and each hand-off all say the same thing.
+ * The thread through the page: one journey in four chapters — the road so
+ * far (how GCCs are evolving) → the meeting point (the symposium: the film
+ * and the agenda) → the conversation (why attend) → your place (the form).
+ * Every chapter name comes from here: the header's line, each chapter's
+ * label and each hand-off all say the same thing.
  *
  * The header carries the story as one straight line with four evenly spaced
  * stops; it fills as you read (Chrome sets --sp, 0 → 1, and the stops'
@@ -12,9 +13,9 @@ import type { ReactNode } from "react";
  * and the question the next chapter answers.
  */
 export const CHAPTERS = [
-  { id: "evolve", n: "01", label: "How GCCs are evolving" },
-  { id: "evening", n: "02", label: "The symposium" },
-  { id: "theme", n: "03", label: "Why attend" },
+  { id: "evolve", n: "01", label: "The road so far" },
+  { id: "evening", n: "02", label: "The meeting point" },
+  { id: "theme", n: "03", label: "The conversation" },
   { id: "request", n: "04", label: "Your place" },
 ] as const;
 
@@ -26,10 +27,13 @@ export const chapter = (id: ChapterId) => CHAPTERS.find((c) => c.id === id)!;
 export function ChapterLabel({ id }: { id: ChapterId }) {
   const c = chapter(id);
   return (
-    <>
-      <span className="chap">{c.n}</span>
+    <span className="chapter">
+      <span className="chap">
+        {c.n}
+        <span className="chapter__of">/{String(CHAPTERS.length).padStart(2, "0")}</span>
+      </span>
       {c.label}
-    </>
+    </span>
   );
 }
 
@@ -70,7 +74,10 @@ export function Handoff({ to, lead, ask }: { to: ChapterId; lead: ReactNode; ask
   return (
     <a className="handoff" href={`#${c.id}`} data-reveal>
       <span className="handoff__k">
-        Next <span aria-hidden="true">→</span> {c.n} · {c.label}
+        Next <span aria-hidden="true">→</span> {c.n}
+        <span className="handoff__of">/{String(CHAPTERS.length).padStart(2, "0")}</span>
+        <span className="handoff__dash" aria-hidden="true" />
+        {c.label}
       </span>
       <span className="handoff__q">
         {lead} <span className="handoff__ask">{ask}</span>
