@@ -83,7 +83,7 @@ export function Handoff({ to, lead, ask }: { to: ChapterId; lead: ReactNode; ask
         {lead} <span className="handoff__ask">{ask}</span>
       </span>
       <span className="handoff__arr" aria-hidden="true">
-        →
+        ↓
       </span>
     </a>
   );

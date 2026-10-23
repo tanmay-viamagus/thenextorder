@@ -665,7 +665,7 @@ export function GccEvolution() {
             </p>
             <h2 id="evo-h" className="evo__h">
               From a presence in India <br />
-              to a force in the business.
+              to a force <span className="evo__hl">in the business.</span>
             </h2>
           </div>
           <div key={i} className="evo__cap" aria-live="polite">
@@ -697,6 +697,10 @@ export function GccEvolution() {
         </header>
 
         <div className="evo__art">
+          {/* the city beyond: a faint skyline behind the drawing */}
+          <svg className="evo__sky" viewBox="0 0 1600 240" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+            <path d="M0 240V160h40V240M54 240V200h72V240M126 240V180h60V240M194 240V200h60V240M258 240V180h26V240M298 240V180h52V240M354 240V50h26V240M380 240V180h60V240M444 240V200h72V240M530 240V140h26V240M556 240V160h60V240M624 240V160h52V240M676 240V110h60V240M740 240V140h26V240M774 240V180h26V240M800 240V140h60V240M874 240V50h72V240M954 240V20h52V240M1014 240V140h40V240M1058 240V140h72V240M1130 240V110h60V240M1204 240V20h40V240M1252 240V180h60V240M1312 240V50h60V240M1376 240V160h40V240M1430 240V200h52V240M1482 240V80h60V240M1550 240V80h72V240" />
+          </svg>
           <Scene />
         </div>
 

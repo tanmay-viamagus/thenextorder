@@ -13,7 +13,7 @@ import { useEffect } from "react";
  * normally. Keyboard and programmatic scrolling are never intercepted; with
  * reduced motion the jump is instant.
  */
-const SNAPS = ".hero2, .evo__snap, .sy, .sy__agenda-col, .sy__orgs, .wa, .wa__pair, .close, .ftr";
+const SNAPS = ".hero2, .evo__snap, .sy, .sy__agenda-col, .sy__r, .wa, .wa__pair, .close, .ftr";
 
 export function Pager() {
   useEffect(() => {

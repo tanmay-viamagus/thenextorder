@@ -11,6 +11,7 @@ import { cta, invite } from "@/content/story";
 import { Chrome, Reveal } from "./Interactive";
 import { InviteForm } from "./InviteForm";
 import { Pager } from "./Pager";
+import { Icon } from "./Icons";
 import { GccEvolution } from "./GccEvolution";
 import { Theme } from "./Theme";
 import { Evening } from "./Evening";
@@ -85,7 +86,7 @@ export function Site() {
                 <ChapterLabel id="request" />
               </p>
               <h2 id="register-h" className="close__h">
-                Find your place in the conversation.
+                Find your place <span>in the conversation.</span>
               </h2>
               <p className="close__when">
                 <Facts extra={event.format} />
@@ -93,21 +94,30 @@ export function Site() {
               <p className="close__who">{invite.who}</p>
               <ol className="steps">
                 <li>
-                  <b>01</b>
+                  <b className="steps__tile">
+                    <Icon name="pen" />
+                    <span className="sr-only">Step 1</span>
+                  </b>
                   <span>
                     <strong>Request your place</strong> — about 30 seconds,
                     mostly taps.
                   </span>
                 </li>
                 <li>
-                  <b>02</b>
+                  <b className="steps__tile">
+                    <Icon name="eye" />
+                    <span className="sr-only">Step 2</span>
+                  </b>
                   <span>
                     <strong>The Viamagus team reviews every request</strong>,
                     including the LinkedIn profile you share.
                   </span>
                 </li>
                 <li>
-                  <b>03</b>
+                  <b className="steps__tile">
+                    <Icon name="mail" />
+                    <span className="sr-only">Step 3</span>
+                  </b>
                   <span>
                     <strong>Invitations go out</strong> to confirmed guests,
                     with everything you need for 3 December at T-Hub.

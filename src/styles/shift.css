@@ -5435,3 +5435,686 @@ html[data-hdr="dark"] .hdr .btn--shift {
     font-size: min(13vw, 7svh);
   }
 }
+
+/* ==========================================================================
+   The light edition — the reference: airy lilac light and glass, pill
+   buttons, a white form card; the meeting point stays the night room
+   ========================================================================== */
+:root {
+  --deep: #1b0f3d;
+  --deep-2: #5d5470;
+  --violet-a: #5a1fd0;
+  --violet-b: #8b3cf7;
+  --wash: linear-gradient(180deg, #faf7fd 0%, #f3ecfb 55%, #ede3f8 100%);
+}
+
+/* ---------------------------------------------------------------- header on light */
+html:not([data-hdr="dark"]) .hdr {
+  background: rgba(250, 247, 253, 0.82);
+  border-bottom-color: rgba(27, 15, 61, 0.08);
+  color: var(--deep);
+}
+
+/* ---------------------------------------------------------------- buttons: pills */
+.btn--shift {
+  background: linear-gradient(90deg, var(--violet-a), #7a2ee8);
+  color: var(--white);
+  border-radius: 999px;
+  padding-left: 28px;
+  overflow: hidden;
+  box-shadow: 0 14px 30px -14px rgba(90, 31, 208, 0.75);
+}
+
+.btn--shift .btn__arr {
+  margin-left: 18px;
+  border-radius: 0 999px 999px 0;
+  background: linear-gradient(90deg, var(--violet-b), #b44df0);
+  color: var(--white);
+}
+
+[data-tone="dark"] .btn--shift,
+html[data-hdr="dark"] .hdr .btn--shift {
+  background: linear-gradient(90deg, #f2d0ff, #ecc2ff);
+  color: var(--deep);
+  box-shadow: 0 14px 34px -14px rgba(214, 140, 255, 0.8);
+}
+
+[data-tone="dark"] .btn--shift .btn__arr,
+html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
+  background: linear-gradient(90deg, #f07be0, var(--magenta));
+  color: var(--deep);
+}
+
+.hdr__cta,
+.hdr__cta .btn__arr {
+  border-radius: 8px;
+}
+
+.hdr__cta .btn__arr {
+  border-radius: 0 8px 8px 0;
+}
+
+.hdr__cta {
+  box-shadow: 0 10px 24px -14px rgba(90, 31, 208, 0.8);
+}
+
+@media (hover: hover) {
+  .btn--shift:hover,
+  .hdr__cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 36px -14px rgba(90, 31, 208, 0.85);
+  }
+}
+
+.btn--shift:active {
+  transform: translateY(0);
+  box-shadow: 0 8px 18px -10px rgba(90, 31, 208, 0.7);
+}
+
+/* the film button: a white pill, a ringed play */
+.fl__btn {
+  min-height: 60px;
+  padding: 0 26px 0 8px;
+  border: 1px solid rgba(27, 15, 61, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--deep);
+  backdrop-filter: blur(8px);
+}
+
+.fl__btnplay {
+  border: 1.5px solid var(--deep);
+  background: transparent;
+  color: var(--deep);
+}
+
+[data-tone="dark"] .fl__btn {
+  border-color: rgba(252, 253, 255, 0.6);
+  background: transparent;
+  color: var(--white);
+}
+
+[data-tone="dark"] .fl__btnplay {
+  border: 0;
+  background: var(--white);
+  color: var(--deep);
+}
+
+@media (hover: hover) {
+  .fl__btn:hover {
+    border-color: var(--violet-a);
+    background: #fff;
+  }
+  .fl__btn:hover .fl__btnplay {
+    background: var(--deep);
+    color: var(--white);
+  }
+  [data-tone="dark"] .fl__btn:hover {
+    background: rgba(242, 208, 255, 0.1);
+    border-color: var(--lilac);
+  }
+}
+
+/* ---------------------------------------------------------------- 00 the opening: a light room */
+.hero2 {
+  background:
+    radial-gradient(42% 46% at 50% 38%, rgba(255, 255, 255, 0.95), transparent 72%),
+    radial-gradient(30% 50% at 12% 60%, rgba(196, 160, 255, 0.35), transparent 70%),
+    radial-gradient(30% 50% at 88% 60%, rgba(196, 160, 255, 0.35), transparent 70%),
+    var(--wash);
+  color: var(--deep);
+}
+
+.hero2__glass {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero2__pane {
+  position: absolute;
+  top: 6%;
+  bottom: 14%;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(226, 208, 250, 0.25) 60%, rgba(255, 255, 255, 0.4));
+  box-shadow: inset 0 0 40px rgba(255, 255, 255, 0.6), 0 0 60px rgba(190, 150, 250, 0.25);
+  backdrop-filter: blur(2px);
+}
+
+.hero2__pane--l1 {
+  left: 2%;
+  width: 9%;
+  transform: perspective(800px) rotateY(28deg);
+}
+
+.hero2__pane--l2 {
+  left: 12%;
+  width: 6%;
+  top: 14%;
+  bottom: 22%;
+  opacity: 0.7;
+  transform: perspective(800px) rotateY(24deg);
+}
+
+.hero2__pane--r1 {
+  right: 2%;
+  width: 9%;
+  transform: perspective(800px) rotateY(-28deg);
+}
+
+.hero2__pane--r2 {
+  right: 12%;
+  width: 6%;
+  top: 14%;
+  bottom: 22%;
+  opacity: 0.7;
+  transform: perspective(800px) rotateY(-24deg);
+}
+
+.hero2__beam {
+  position: absolute;
+  top: -10%;
+  width: 22%;
+  height: 120%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.75), transparent);
+  filter: blur(12px);
+  opacity: 0.8;
+}
+
+.hero2__beam--l {
+  left: 14%;
+  transform: rotate(14deg);
+}
+
+.hero2__beam--r {
+  right: 14%;
+  transform: rotate(-14deg);
+}
+
+.hero2__presents {
+  color: #6b5a8e;
+}
+
+.hero2__presents::before,
+.hero2__presents::after {
+  background: rgba(107, 90, 142, 0.45);
+}
+
+.hero2__t {
+  margin: 0;
+  font: 800 min(10.6vw, 18.5svh) / 0.86 var(--font);
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+  color: var(--deep);
+}
+
+.hero2__t span {
+  display: block;
+}
+
+.hero2__order {
+  background: linear-gradient(90deg, #4a1fc4 0%, #6a2bd9 45%, #9a4cf2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero2__line .hero2__of {
+  color: var(--deep-2);
+  font-size: 0.7em;
+  font-weight: 600;
+}
+
+.hero2__line .hero2__ttl {
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  color: var(--deep);
+}
+
+.hero2__line {
+  font-size: clamp(1.5rem, 2.5vw, 2.6rem);
+  letter-spacing: -0.035em;
+}
+
+.hero2__sub {
+  color: var(--deep-2);
+}
+
+.hero2 .btn--shift {
+  box-shadow: 0 16px 34px -14px rgba(90, 31, 208, 0.75);
+}
+
+.hero2__facts {
+  border-top: 1px solid rgba(27, 15, 61, 0.1);
+}
+
+.hero2__facts > div + div {
+  border-left-color: rgba(27, 15, 61, 0.1);
+}
+
+.hero2__facts dt {
+  color: #7a6f90;
+}
+
+.hero2__facts dd {
+  color: var(--deep);
+}
+
+.hero2__ftile {
+  border-color: rgba(90, 31, 208, 0.3);
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--violet-a);
+}
+
+/* ---------------------------------------------------------------- 01 the road so far: the same drawing in a light room */
+.evo {
+  background: var(--wash);
+}
+
+.evo__stage {
+  background:
+    radial-gradient(40% 40% at 78% 20%, rgba(214, 180, 255, 0.4), transparent 70%),
+    radial-gradient(36% 36% at 10% 80%, rgba(214, 180, 255, 0.28), transparent 70%),
+    var(--wash);
+}
+
+.evo__h {
+  color: var(--deep);
+}
+
+.evo__hl {
+  background: linear-gradient(90deg, #4a1fc4, #8b3cf7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.evo__art {
+  position: relative;
+}
+
+.evo__sky {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 42%;
+  fill: #c9b4ec;
+  opacity: 0.28;
+  pointer-events: none;
+}
+
+.evo__art .ev {
+  position: relative;
+}
+
+/* ---------------------------------------------------------------- 02 the meeting point: the night room */
+.sy {
+  justify-content: center;
+  background:
+    radial-gradient(34% 60% at 60% 34%, rgba(190, 110, 255, 0.3), transparent 72%),
+    radial-gradient(40% 40% at 0% 100%, rgba(102, 8, 169, 0.25), transparent 70%),
+    #07050c;
+}
+
+.sy-room {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 38%;
+  width: 34%;
+  pointer-events: none;
+}
+
+.sy-room__glow {
+  position: absolute;
+  inset: 0 -20% 10%;
+  background: radial-gradient(40% 50% at 50% 40%, rgba(230, 190, 255, 0.55), rgba(150, 70, 230, 0.2) 50%, transparent 75%);
+  filter: blur(10px);
+}
+
+.sy-room__open {
+  position: absolute;
+  left: 38%;
+  top: 9%;
+  width: 26%;
+  height: 58%;
+  background: linear-gradient(180deg, #f6e6ff, #ffffff 60%, #f3dcff);
+  box-shadow: 0 0 60px rgba(242, 208, 255, 0.8), 0 0 180px rgba(190, 101, 255, 0.55);
+}
+
+.sy-room__wall {
+  position: absolute;
+  top: 0;
+  bottom: 18%;
+  width: 38%;
+  background: linear-gradient(180deg, rgba(40, 24, 64, 0.85), rgba(24, 14, 40, 0.95));
+}
+
+.sy-room__wall--l {
+  left: 0;
+  clip-path: polygon(0 0, 100% 9%, 100% 92%, 0 100%);
+  background: linear-gradient(90deg, rgba(20, 12, 34, 0.95), rgba(70, 40, 110, 0.6));
+}
+
+.sy-room__wall--r {
+  right: 0;
+  clip-path: polygon(0 9%, 100% 0, 100% 100%, 0 92%);
+  background: linear-gradient(90deg, rgba(90, 50, 140, 0.55), rgba(20, 12, 34, 0.95));
+}
+
+.sy-room__floor {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  top: 67%;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(242, 208, 255, 0.45), rgba(242, 208, 255, 0.02));
+  clip-path: polygon(44% 0, 66% 0, 100% 100%, 0 100%);
+}
+
+.sy__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.7fr);
+  gap: clamp(32px, 6vw, 120px);
+  align-items: stretch;
+}
+
+.sy__l {
+  display: grid;
+  align-content: start;
+  gap: clamp(16px, 3vh, 30px);
+  max-width: 760px;
+}
+
+.sy__r {
+  display: grid;
+  align-content: space-between;
+  gap: clamp(20px, 4vh, 40px);
+}
+
+.sy__h {
+  font-size: min(4.8vw, 9svh);
+  line-height: 0.92;
+}
+
+.sy__date {
+  display: block;
+  background: linear-gradient(90deg, #d9a6ff, #a565f5);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.sy__sub {
+  color: rgba(252, 253, 255, 0.92);
+  font-size: clamp(1rem, min(1.35vw, 2.6svh), 1.5rem);
+}
+
+.sy__time {
+  color: var(--lilac);
+}
+
+.sy__agenda li {
+  grid-template-columns: var(--at) 24px 32px minmax(0, 1fr) auto;
+  border-bottom-color: rgba(252, 253, 255, 0.06);
+}
+
+.sy__time-at {
+  color: #ff8ae0;
+}
+
+.sy__icon {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  background: none;
+}
+
+.sy__tag {
+  border-radius: 999px;
+}
+
+.sy__ft span {
+  color: var(--lilac);
+}
+
+.sy__org {
+  padding: clamp(10px, 1.8vh, 18px) 0;
+}
+
+/* ---------------------------------------------------------------- 03 the conversation: light and airy */
+.wa {
+  background:
+    radial-gradient(36% 46% at 92% 14%, rgba(214, 180, 255, 0.42), transparent 70%),
+    radial-gradient(30% 40% at 0% 100%, rgba(214, 180, 255, 0.22), transparent 70%),
+    linear-gradient(180deg, #fbf9fd, #f5f0fb);
+  color: var(--deep);
+}
+
+.wa__tile {
+  background: linear-gradient(160deg, #f6effe, #ece0fb);
+  color: var(--violet-a);
+}
+
+.wa__list li::before {
+  background: var(--violet-a);
+}
+
+/* ---------------------------------------------------------------- 04 your place: a white card on light */
+.close {
+  background:
+    radial-gradient(40% 50% at 85% 20%, rgba(214, 180, 255, 0.4), transparent 70%),
+    radial-gradient(30% 40% at 0% 90%, rgba(214, 180, 255, 0.25), transparent 70%),
+    linear-gradient(180deg, #fbf9fd, #f3ecfb);
+  color: var(--deep);
+}
+
+.close__h span {
+  display: block;
+  background: linear-gradient(90deg, #4a1fc4, #8b3cf7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.steps {
+  border-top: 0;
+}
+
+.steps li {
+  grid-template-columns: 44px 1fr;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 0;
+  border-bottom-color: rgba(27, 15, 61, 0.08);
+}
+
+.steps__tile {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(160deg, #f6effe, #ece0fb);
+  color: var(--violet-a);
+}
+
+.steps__tile svg {
+  width: 22px;
+  height: 22px;
+}
+
+.rf {
+  gap: 18px;
+  border: 0;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(27, 15, 61, 0.06), 0 40px 80px -40px rgba(60, 20, 120, 0.45);
+}
+
+.rf__field input {
+  min-height: 46px;
+  padding: 10px 14px;
+  border: 1px solid #e3dcef;
+  border-radius: 10px;
+  background: #fbf9fe;
+  font-size: 1rem;
+}
+
+.rf__field input:focus-visible {
+  border-color: var(--violet-a);
+  outline: 3px solid rgba(90, 31, 208, 0.18);
+  outline-offset: 0;
+}
+
+.chip span {
+  border: 1px solid #e3dcef;
+  border-radius: 999px;
+  background: #fff;
+  font-size: 0.92rem;
+}
+
+.chip input:checked + span {
+  background: #f1e6fd;
+  border-color: var(--violet-a);
+  color: var(--violet-a);
+  transform: none;
+  box-shadow: none;
+}
+
+.rf__go.btn--shift {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.rf__go.btn--shift .btn__arr {
+  border-radius: 0 12px 12px 0;
+}
+
+/* the thank-you: centred, a ringed tick, back to the top */
+.rf--done {
+  justify-items: center;
+  align-content: center;
+  min-height: min(560px, 70svh);
+  text-align: center;
+  background:
+    radial-gradient(60% 60% at 50% 30%, rgba(214, 180, 255, 0.3), transparent 70%),
+    #fff;
+}
+
+.rf--done .rf__tick {
+  width: 72px;
+  height: 72px;
+}
+
+.rf--done .rf__h {
+  font-size: clamp(2.2rem, 3.4vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.rf__home {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 22px;
+  border: 1px solid rgba(27, 15, 61, 0.2);
+  border-radius: 999px;
+  color: var(--deep);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  .rf__home:hover {
+    border-color: var(--violet-a);
+    color: var(--violet-a);
+  }
+}
+
+@media (max-width: 1080px) {
+  .sy__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sy-room {
+    left: 20%;
+    width: 80%;
+    opacity: 0.45;
+  }
+  .hero2__glass {
+    opacity: 0.6;
+  }
+}
+
+@media (max-width: 759px) {
+  .sy__agenda li {
+    grid-template-columns: 24px 32px minmax(0, 1fr) auto;
+  }
+  .sy__h {
+    font-size: min(13vw, 7svh);
+  }
+  .sy__r {
+    scroll-snap-align: start;
+    scroll-margin-top: calc(var(--hdr) + 16px);
+  }
+  .hero2__t {
+    font-size: min(19vw, 11svh);
+  }
+  .hero2__pane--l2,
+  .hero2__pane--r2,
+  .hero2__beam {
+    display: none;
+  }
+}
+
+/* the room sits between the columns: the doorway never crosses the agenda */
+@media (min-width: 1081px) {
+  .sy-room {
+    left: 50%;
+    width: 26%;
+  }
+  .sy-room__open {
+    left: 39%;
+    width: 22%;
+    top: 10%;
+    height: 52%;
+  }
+  .sy__l {
+    max-width: min(760px, 52vw);
+  }
+}
+
+/* three columns on wide screens: the date and agenda, the doorway's own
+   space, the film and who is behind it */
+@media (min-width: 1081px) {
+  .sy__grid {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.5fr) minmax(0, 0.62fr);
+    gap: clamp(24px, 2.6vw, 48px);
+  }
+  .sy__l {
+    grid-column: 1;
+    max-width: none;
+  }
+  .sy__r {
+    grid-column: 3;
+  }
+  .sy-room {
+    left: 51%;
+    width: 22%;
+  }
+  .sy-room__open {
+    left: 37%;
+    width: 26%;
+  }
+}
+
+.sy__orgs {
+  padding-left: 0;
+  border-left: 0;
+}

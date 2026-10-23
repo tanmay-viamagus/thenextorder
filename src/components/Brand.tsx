@@ -58,11 +58,20 @@ export function SelectWordmark() {
 }
 
 /** Hyderabad Mavericks — the partner's own logo (colour, for dark grounds), from the brochure. */
-export function MavericksLogo({ className, height = 30 }: { className?: string; height?: number }) {
+export function MavericksLogo({
+  className,
+  height = 30,
+  tone = "light",
+}: {
+  className?: string;
+  height?: number;
+  /** light lettering for dark grounds; ink lettering (teal M kept) for light ones */
+  tone?: "light" | "ink";
+}) {
   return (
     <Image
       className={className}
-      src="/brand/hyderabad-mavericks.png"
+      src={tone === "ink" ? "/brand/hyderabad-mavericks-ink.png" : "/brand/hyderabad-mavericks.png"}
       alt="Hyderabad Mavericks"
       width={Math.round((height * 640) / 133)}
       height={height}

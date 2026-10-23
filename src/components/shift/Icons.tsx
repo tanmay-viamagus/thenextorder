@@ -60,6 +60,24 @@ const PATHS = {
       <path d="M19.5 3h-15L12 11Z" />
     </>
   ),
+  pen: (
+    <>
+      <path d="M12 20h9" />
+      <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" />
+    </>
+  ),
+  eye: (
+    <>
+      <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z" />
+      <circle cx="12" cy="12" r="3" />
+    </>
+  ),
+  mail: (
+    <>
+      <rect x="2.5" y="4.5" width="19" height="15" rx="2" />
+      <path d="m3 6 9 7 9-7" />
+    </>
+  ),
   chip: (
     <>
       <rect x="5" y="5" width="14" height="14" rx="2" />
