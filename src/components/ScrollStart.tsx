@@ -1,5 +1,6 @@
 /**
- * Opening the site always opens on the event: the browser doesn't put a
+ * Runs before the page first paints: marks <html class="js"> so the opening
+ * plays in once, without a flash. Opening the site always opens on the event: the browser doesn't put a
  * returning visitor back where they left off; a fresh link to a section
  * (/#evening) still goes there (Chrome re-aims it once the page is live).
  */
@@ -7,7 +8,7 @@ export function ScrollStart() {
   return (
     <script
       dangerouslySetInnerHTML={{
-        __html: `(function(){try{history.scrollRestoration="manual";var n=performance.getEntriesByType("navigation")[0];if(n&&n.type!=="navigate"&&location.hash){history.replaceState(history.state,"",location.pathname+location.search)}if(!location.hash){window.scrollTo(0,0)}}catch(e){}})();`,
+        __html: `(function(){try{document.documentElement.classList.add("js");history.scrollRestoration="manual";var n=performance.getEntriesByType("navigation")[0];if(n&&n.type!=="navigate"&&location.hash){history.replaceState(history.state,"",location.pathname+location.search)}if(!location.hash){window.scrollTo(0,0)}}catch(e){}})();`,
       }}
     />
   );
