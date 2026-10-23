@@ -5,8 +5,9 @@ import { ChapterLabel, Handoff } from "./Story";
  * Why attend — the final brochure's "Why this event" page, set for the
  * screen: one question as the headline, the theme beside it, the three
  * conversations as three equal columns, who it's for and what to expect,
- * and the brochure's closing line. Nothing moves and nothing is greyed out:
- * everything here is meant to be read.
+ * and the brochure's closing line as the hand-off — one page. Nothing moves
+ * and nothing is greyed out: everything here is meant to be read. On a phone
+ * "who it's for" and "what to expect" are a second swipe.
  */
 export function Theme() {
   return (
@@ -61,11 +62,8 @@ export function Theme() {
         </div>
       </div>
 
-      <p className="wa__close" data-reveal>
-        {theme.close[0]} <span>{theme.close[1]}</span>
-      </p>
-
-      <Handoff to="request" lead="Places are by invitation." ask="Will you be in the room?" />
+      {/* the brochure's closing line is the page's hand-off */}
+      <Handoff to="request" lead={theme.close[0]} ask={theme.close[1]} />
     </section>
   );
 }

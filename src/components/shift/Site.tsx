@@ -8,13 +8,14 @@ import {
   statusLine,
 } from "@/content/event";
 import { cta, invite } from "@/content/story";
-import { Chrome, Reveal, ShiftTitle } from "./Interactive";
+import { Chrome, Reveal } from "./Interactive";
 import { InviteForm } from "./InviteForm";
+import { Pager } from "./Pager";
 import { GccEvolution } from "./GccEvolution";
 import { Theme } from "./Theme";
 import { Evening } from "./Evening";
 import { HeroV2 } from "./HeroV2";
-import { ChapterLabel, Handoff, StoryNav, StoryStrip } from "./Story";
+import { ChapterLabel, StoryNav, StoryStrip } from "./Story";
 
 /** The date, time and place, broken only between the parts. */
 function Facts({ extra }: { extra?: string | null }) {
@@ -22,13 +23,17 @@ function Facts({ extra }: { extra?: string | null }) {
   return parts.map((part, k) => (
     <Fragment key={part}>
       {k ? " · " : ""}
-      <span className="hero__metap">{part}</span>
+      <span className="facts__p">{part}</span>
     </Fragment>
   ));
 }
 
-/** variant "v2": the centred opening (app/v2); everything after the opening is shared. */
-export function Site({ variant = "v1" }: { variant?: "v1" | "v2" }) {
+/**
+ * One page per part of the story: the opening, how GCCs are evolving (one
+ * swipe a stage), the symposium, why attend — each one screen, one swipe —
+ * and the form, which runs as long as it needs to.
+ */
+export function Site() {
   return (
     <>
       <a className="skip-link" href="#main">
@@ -36,6 +41,7 @@ export function Site({ variant = "v1" }: { variant?: "v1" | "v2" }) {
       </a>
       <Chrome />
       <Reveal />
+      <Pager />
 
       <header className="hdr">
         <ViaMagusLogo href={officialLinks.viamagus} />
@@ -52,61 +58,12 @@ export function Site({ variant = "v1" }: { variant?: "v1" | "v2" }) {
       </header>
 
       <main id="main">
-        {variant === "v2" ? (
-          <HeroV2 />
-        ) : (
-          <>
-            {/* ------------------------------------------------ OPENING · it's already running */}
-            <section
-              id="top"
-              className="hero"
-              data-tone="dark"
-              data-shift-root
-              aria-labelledby="hero-h"
-            >
-              <div className="hero__l">
-                <p className="hero__meta">
-                  <Facts />
-                </p>
-                <h1 id="hero-h" className="sr-only">
-                  The NEXT Order — an invitation from Viamagus for Hyderabad’s
-                  GCC leaders
-                </h1>
-                <ShiftTitle lines={["THE ", "NEXT", "ORDER."]} cutLine={2} />
-                <p className="hero__line">
-                  The next order of talent, technology and leadership.
-                </p>
-                <div className="hero__cta">
-                  <a className="btn btn--shift btn--lg" href="/register">
-                    {cta.primary}{" "}
-                    <span className="btn__arr" aria-hidden="true">
-                      →
-                    </span>
-                  </a>
-                </div>
-                <p className="hero__note">
-                  An invite-only symposium for Hyderabad’s GCC leaders and
-                  decision-makers
-                </p>
-                <p className="hero__partner">
-                  <span>In collaboration with</span>
-                  <MavericksLogo className="hero__mav" height={22} />
-                </p>
-              </div>
-            </section>
-          </>
-        )}
+        {/* ------------------------------------------------ OPENING · one page */}
+        <HeroV2 />
 
         {/* ------------------------------------------------ HOW GCCS ARE EVOLVING · four stages (pinned)
             The ring of years (YearCycle) is kept in components/clock for later use. */}
         <GccEvolution />
-        <div className="handoff-band" data-tone="light">
-          <Handoff
-            to="evening"
-            lead="The next order is being written now."
-            ask="Where will your centre be?"
-          />
-        </div>
 
         {/* ------------------------------------------------ THE EVENING · what happens, and who is behind it */}
         <Evening />
@@ -189,14 +146,6 @@ export function Site({ variant = "v1" }: { variant?: "v1" | "v2" }) {
         </ul>
       </footer>
 
-      <div className="bar">
-        <a className="btn btn--shift" href="/register">
-          {cta.primary}{" "}
-          <span className="btn__arr" aria-hidden="true">
-            →
-          </span>
-        </a>
-      </div>
     </>
   );
 }

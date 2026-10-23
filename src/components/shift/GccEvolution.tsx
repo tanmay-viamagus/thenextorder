@@ -1,6 +1,5 @@
 "use client";
 
-import { useStepScroll } from "./useStepScroll";
 import { ChapterLabel } from "./Story";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
@@ -607,7 +606,6 @@ function Scene() {
 /* ---------------------------------------------------------------- the section */
 export function GccEvolution() {
   const root = useRef<HTMLElement | null>(null);
-  useStepScroll(root, STAGES.length);
   const [i, setI] = useState(0);
 
   useEffect(() => {
@@ -724,9 +722,6 @@ export function GccEvolution() {
             </li>
           ))}
         </ol>
-        <p className="evo__fine">
-          A way of seeing it, not a rule — every centre’s path is different.
-        </p>
       </div>
       {/* one snap point per stage: each swipe moves exactly one stage (scroll-snap-stop: always) */}
       {STAGES.map((x, k) => (

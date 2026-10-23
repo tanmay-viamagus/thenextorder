@@ -155,13 +155,12 @@ export function Reveal() {
   return null;
 }
 
-/** Header ink follows the scene beneath it; the mobile CTA bar appears after the hero and steps aside at the form. */
+/** Header ink follows the scene beneath it; the story line follows the chapter you are in. */
 export function Chrome() {
   useEffect(() => {
     const root = document.documentElement;
     const scenes = [...document.querySelectorAll<HTMLElement>("[data-tone]")];
     const hero = document.getElementById("top");
-    const form = document.getElementById("request");
     const chapters = [...document.querySelectorAll<HTMLElement>(".story li[data-for]")].map((li) => ({
       li,
       a: li.querySelector("a"),
@@ -176,15 +175,6 @@ export function Chrome() {
         return r.top <= probe && r.bottom > probe;
       });
       root.dataset.hdr = under?.dataset.tone ?? "light";
-      const pastHero = hero ? hero.getBoundingClientRect().bottom < window.innerHeight * 0.4 : true;
-      const atForm = form ? form.getBoundingClientRect().top < window.innerHeight * 0.9 : false;
-      // the pinned artwork gets the whole screen: no bar over it
-      // the pinned scenes (the name board, the ring of years) get the whole screen
-      const inShift = ["name", "eras", "evolve"].some((id) => {
-        const r = document.getElementById(id)?.getBoundingClientRect();
-        return r ? r.top < window.innerHeight * 0.5 && r.bottom > window.innerHeight * 0.5 : false;
-      });
-      root.classList.toggle("show-bar", pastHero && !atForm && !inShift);
       // the header's call to action waits until the hero's own has scrolled away — never two at once
       root.classList.toggle("past-hero", hero ? hero.getBoundingClientRect().bottom < window.innerHeight * 0.25 : true);
       let act = "";

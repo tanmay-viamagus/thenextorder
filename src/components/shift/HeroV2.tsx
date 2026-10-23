@@ -1,6 +1,6 @@
 import { MavericksLogo } from "@/components/Brand";
 import { FilmButton } from "@/components/film/FilmOverlay";
-import { statusLine } from "@/content/event";
+import { event } from "@/content/event";
 import { cta } from "@/content/story";
 import { ShiftTitle } from "./Interactive";
 
@@ -73,13 +73,27 @@ export function HeroV2() {
           </FilmButton>
         </div>
       </div>
-      <div className="hero2__foot">
-        <p className="hero2__facts">{statusLine()}</p>
-        <p className="hero2__partner">
-          <span>In collaboration with</span>
-          <MavericksLogo className="hero2__mav" height={20} />
-        </p>
-      </div>
+      {/* the facts, as labelled cells — when, what time, where, and with whom */}
+      <dl className="hero2__facts">
+        <div>
+          <dt>Date</dt>
+          <dd>{event.date}</dd>
+        </div>
+        <div>
+          <dt>Time</dt>
+          <dd>{event.time}</dd>
+        </div>
+        <div>
+          <dt>Venue</dt>
+          <dd>{[event.venue, event.city].filter(Boolean).join(", ")}</dd>
+        </div>
+        <div>
+          <dt>In collaboration with</dt>
+          <dd>
+            <MavericksLogo className="hero2__mav" height={22} />
+          </dd>
+        </div>
+      </dl>
     </section>
   );
 }
