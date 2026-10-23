@@ -24,9 +24,10 @@ function readStart() {
   const q = new URLSearchParams(window.location.search);
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const t = Number(q.get("t"));
-  if (q.has("t") && Number.isFinite(t)) return { t: Math.min(FILM_DURATION - 0.01, Math.max(0, t)), paused: true };
+  const loop = q.get("loop") === "1";
+  if (q.has("t") && Number.isFinite(t)) return { t: Math.min(FILM_DURATION - 0.01, Math.max(0, t)), paused: true, loop };
   // reduced motion: open paused on the closing line
-  return { t: reduce ? FILM_DURATION - 3 : 0, paused: reduce };
+  return { t: reduce ? FILM_DURATION - 3 : 0, paused: reduce, loop };
 }
 
 /**
@@ -73,7 +74,9 @@ function FilmBar({ t, label }: { t: number; label: string }) {
 }
 
 /**
- * The film — 30 s, 16:9, silent-first, loops. Directed for a room:
+ * The film — 16:9, silent-first; it plays once and holds on its last frame
+ * (Replay, or Play, starts it again; /film?loop=1 loops it for a screen at
+ * the venue). Directed for a room:
  * one idea per beat, never more than a few words on screen, every product as
  * one big legible transformation, and a payoff — the three practices, as three
  * pieces of the Viamagus mark, fly in and lock together into the logo.
@@ -107,6 +110,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
   const [idle, setIdle] = useState(false);
   const [host, setHost] = useState("");
   const [hudT, setHudT] = useState(0);
+  const [ended, setEnded] = useState(false);
   const playingRef = useRef(false);
 
   useEffect(() => {
@@ -150,9 +154,17 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
       if (playingRef.current) {
         c.t += dt;
         if (c.t >= FILM_DURATION) {
-          c.t -= FILM_DURATION;
-          cur = "";
-          score.current?.scheduleLoop(score.current.ctx.currentTime - c.t, 0);
+          if (s.loop) {
+            c.t -= FILM_DURATION;
+            cur = "";
+            score.current?.scheduleLoop(score.current.ctx.currentTime - c.t, 0);
+          } else {
+            // once through: hold on the last frame, controls showing
+            c.t = FILM_DURATION - 0.001;
+            playingRef.current = false;
+            setPlaying(false);
+            setEnded(true);
+          }
         }
       }
       if (Math.floor(c.t * 10) !== hudLast) {
@@ -201,6 +213,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
   }, []);
 
   const restart = useCallback(() => {
+    setEnded(false);
     clock.current.t = 0;
     root.current?.dispatchEvent(new Event("fp-restart"));
     if (score.current) {
@@ -209,6 +222,12 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
     }
     setPlaying(true);
   }, []);
+
+  // Play at the end starts the film again
+  const togglePlay = useCallback(() => {
+    if (clock.current.t >= FILM_DURATION - 0.01) restart();
+    else setPlaying((p) => !p);
+  }, [restart]);
 
   useEffect(() => {
     let timer = window.setTimeout(() => setIdle(true), 2200);
@@ -221,7 +240,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
       wake();
       if (e.code === "Space" && !(e.target instanceof HTMLButtonElement) && !(e.target instanceof HTMLAnchorElement)) {
         e.preventDefault();
-        setPlaying((p) => !p);
+        togglePlay();
       } else if (e.key === "m" || e.key === "M") toggleSound();
       else if (e.key === "Escape" && onClose) onClose();
     };
@@ -232,7 +251,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
       window.removeEventListener("pointermove", wake);
       window.removeEventListener("keydown", onKey);
     };
-  }, [toggleSound, onClose]);
+  }, [toggleSound, togglePlay, onClose]);
 
   // the ring of years on the film clock: through the inflection scene the marker runs 2019 → 2030, crossing both boundaries
   const inflP = useCallback(() => {
@@ -244,7 +263,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
   const d = (s: number): CSSProperties => ({ ["--d" as string]: `${s}s` });
 
   return (
-    <div ref={root} className={`fp fp--${mode}${idle ? " is-idle" : ""}${playing ? "" : " is-paused"}`} data-scene={scene}>
+    <div ref={root} className={`fp fp--${mode}${idle && !ended ? " is-idle" : ""}${playing ? "" : " is-paused"}`} data-scene={scene}>
       <div className="fp__stage" aria-hidden="true">
         {/* 00–03 · HOOK: a giant dial sweeps; the title lands on the third second */}
         <section className="fs fs--title" data-id="title">
@@ -424,7 +443,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
       </div>
 
       <div className="fp__controls">
-        <button type="button" onClick={() => setPlaying((p) => !p)} aria-pressed={!playing}>
+        <button type="button" onClick={togglePlay} aria-pressed={!playing}>
           <CtlIcon name={playing ? "pause" : "play"} />
           <span className="fp__lab">{playing ? "Pause" : "Play"}</span>
         </button>

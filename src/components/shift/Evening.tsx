@@ -59,12 +59,20 @@ function Doorway() {
             <stop offset="0.45" stopColor="#c9a2f0" stopOpacity="0.35" />
             <stop offset="1" stopColor="#c9a2f0" stopOpacity="0.04" />
           </linearGradient>
+          {/* the whole floor catches the door's light: brightest at the sill, violet to the walls */}
+          <radialGradient id="sy-floor" cx="200" cy="520" r="520" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#d9c6ff" stopOpacity="0.62" />
+            <stop offset="0.35" stopColor="#8b5cf6" stopOpacity="0.4" />
+            <stop offset="0.75" stopColor="#4c2a8a" stopOpacity="0.32" />
+            <stop offset="1" stopColor="#2a1a45" stopOpacity="0.28" />
+          </radialGradient>
           <filter id="sy-soft" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="14" />
           </filter>
         </defs>
         {/* the floor, then the walls running into the door's frame */}
         <polygon points="-300,1210 160,520 240,520 700,1210" fill="#0c0a11" />
+        <polygon points="-300,1210 160,520 240,520 700,1210" fill="url(#sy-floor)" />
         <polygon points="-300,-112 160,60 160,520 -300,1210" fill="url(#sy-wall-l)" />
         <polygon points="700,-112 240,60 240,520 700,1210" fill="url(#sy-wall-r)" />
         {/* the opening, its light bleeding a little past the frame */}
@@ -148,11 +156,11 @@ function Doorway() {
             <stop offset="1" stopColor="#f5e8ff" stopOpacity="0" />
           </linearGradient>
           <clipPath id="sy-floor-clip">
-            <polygon points="160,520 240,520 394,1000 6,1000" />
+            <polygon points="-300,1210 160,520 240,520 700,1210" />
           </clipPath>
         </defs>
         <g clipPath="url(#sy-floor-clip)">
-          <rect className="sy-ripple" x="0" y="470" width="400" height="70" fill="url(#sy-ripple)" />
+          <rect className="sy-ripple" x="-300" y="470" width="1000" height="70" fill="url(#sy-ripple)" />
         </g>
       </svg>
     </div>
