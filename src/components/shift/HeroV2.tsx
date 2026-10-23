@@ -39,17 +39,16 @@ export function HeroV2() {
       <div className="hero2__in">
         <p className="hero2__presents">Viamagus presents</p>
         <h1 id="hero-h" className="sr-only">
-          The Next Order of talent, technology and leadership — an invite-only symposium from Viamagus for Hyderabad’s
+          The Next Order: talent, technology and leadership — an invite-only symposium from Viamagus for Hyderabad’s
           GCC leaders and decision-makers
         </h1>
-        {/* one title: THE NEXT ORDER / of / talent, technology and leadership. */}
+        {/* one title: THE NEXT ORDER / talent, technology and leadership. */}
         <p className="hero2__t" aria-hidden="true">
           <span>THE NEXT</span>
           <span className="hero2__order">ORDER</span>
         </p>
         <div className="hero2__text">
           <p className="hero2__line" aria-hidden="true">
-            <span className="hero2__of">of</span>
             <span className="hero2__ttl">talent, technology and leadership.</span>
           </p>
           <p className="hero2__sub">An invite-only symposium for Hyderabad’s GCC leaders and decision-makers.</p>

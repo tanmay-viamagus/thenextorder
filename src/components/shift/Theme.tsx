@@ -14,7 +14,6 @@ const TOPIC_ICON: Record<string, IconName> = { talent: "users", technology: "chi
 export function Theme() {
   return (
     <section id="theme" className="wa" data-tone="light" data-act="theme" aria-labelledby="wa-h">
-      <div className="wa__glass" aria-hidden="true" />
       <p className="th__k" data-reveal>
         <ChapterLabel id="theme" />
       </p>
