@@ -80,6 +80,23 @@ function FilmBar({ t, label }: { t: number; label: string }) {
  * The clock decides which scene is on; each scene's motion is CSS that starts
  * when the scene does (--into lets the clock join a scene part-way).
  */
+/** the controls' line icons — decorative; each button's label names it */
+function CtlIcon({ name }: { name: "play" | "pause" | "sound" | "mute" | "replay" | "close" }) {
+  const d = {
+    play: <path d="M8 5.5v13l10.5-6.5z" fill="currentColor" stroke="none" />,
+    pause: <path d="M8.5 5.5v13M15.5 5.5v13" />,
+    sound: <path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4zM15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" />,
+    mute: <path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4zM16 9.5l5 5M21 9.5l-5 5" />,
+    replay: <path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4.5v4h4" />,
+    close: <path d="M6.5 6.5l11 11M17.5 6.5l-11 11" />,
+  }[name];
+  return (
+    <svg className="fp__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+      {d}
+    </svg>
+  );
+}
+
 export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overlay"; onClose?: () => void }) {
   const root = useRef<HTMLDivElement | null>(null);
   const clock = useRef({ t: 0 });
@@ -408,20 +425,27 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
 
       <div className="fp__controls">
         <button type="button" onClick={() => setPlaying((p) => !p)} aria-pressed={!playing}>
-          {playing ? "Pause" : "Play"}
+          <CtlIcon name={playing ? "pause" : "play"} />
+          <span className="fp__lab">{playing ? "Pause" : "Play"}</span>
         </button>
         <button type="button" onClick={toggleSound} aria-pressed={sound}>
-          {sound ? "Sound on" : "Sound off"}
+          <CtlIcon name={sound ? "sound" : "mute"} />
+          <span className="fp__lab">{sound ? "Sound on" : "Sound off"}</span>
         </button>
         <button type="button" onClick={restart}>
-          Replay
+          <CtlIcon name="replay" />
+          <span className="fp__lab">Replay</span>
         </button>
         {mode === "overlay" ? (
           <button type="button" onClick={onClose} className="fp__close" autoFocus>
-            Close <span aria-hidden="true">✕</span>
+            <span className="fp__lab">Close</span>
+            <CtlIcon name="close" />
           </button>
         ) : (
-          <Link href="/">Back to the site</Link>
+          <Link href="/" className="fp__close">
+            <span className="fp__lab">Back to the site</span>
+            <CtlIcon name="close" />
+          </Link>
         )}
       </div>
       <p className="sr-only">

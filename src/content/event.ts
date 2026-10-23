@@ -103,6 +103,7 @@ export const officialLinks = {
   synthia: "https://viamagus.com/synthia-ai",
   select: "https://www.viamagusselect.ai/",
   linkedin: "https://www.linkedin.com/company/viamagusselect/?viewAsMember=true",
+  privacy: "https://viamagus.com/privacy-policy",
 } as const;
 
 /** One line: when and where, e.g. "Thursday 3 December 2026 · From 3:30 PM · T-Hub, Hyderabad". Unconfirmed parts say so. */

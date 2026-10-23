@@ -204,6 +204,11 @@ export function Evening() {
                     <Icon name={AGENDA_ICON[a.k] ?? "users"} />
                   </span>
                   <span className="sy__what">
+                    {a.time ? (
+                      <span className="sy__kind sy__at-m" aria-hidden="true">
+                        {a.time}
+                      </span>
+                    ) : null}
                     {a.kind ? <span className="sy__kind">{a.kind}</span> : null}
                     <span className="sy__t">{a.t}</span>
                   </span>

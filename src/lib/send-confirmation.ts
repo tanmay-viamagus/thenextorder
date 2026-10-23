@@ -8,12 +8,14 @@ import { siteUrl } from "@/lib/site-url";
 /**
  * Sends the confirmation email through Resend (Vercel Marketplace).
  *
- * Needs RESEND_API_KEY, and the sending domain (viamagus.com) verified in
- * that Resend account. CONFIRMATION_FROM overrides the sender. Without a key
- * nothing is sent and the registration is unaffected — it is already saved
- * by the time this runs.
+ * Needs RESEND_API_KEY, and the sending domain (thenextorder.events)
+ * verified in that Resend account. The event's domain has no mailbox, so
+ * replies go to Shreenath's own inbox. CONFIRMATION_FROM and
+ * CONFIRMATION_REPLY_TO override them. Without a key nothing is sent and the
+ * registration is unaffected — it is already saved by the time this runs.
  */
-export const DEFAULT_FROM = "Shreenath Rao <Shreenath.rao@viamagus.com>";
+export const DEFAULT_FROM = "Shreenath Rao <shreenath.rao@thenextorder.events>";
+export const DEFAULT_REPLY_TO = "Shreenath.rao@viamagus.com";
 
 const BROCHURE = path.join(process.cwd(), "src/assets/the-next-order-brochure.pdf");
 export const BROCHURE_NAME = "The-NEXT-Order-Brochure.pdf";
@@ -37,6 +39,7 @@ export async function sendConfirmation(to: string, p: { name: string; updated: b
 
   const { data, error } = await new Resend(key).emails.send({
     from: process.env.CONFIRMATION_FROM || DEFAULT_FROM,
+    replyTo: process.env.CONFIRMATION_REPLY_TO || DEFAULT_REPLY_TO,
     to: [to],
     subject,
     html,

@@ -129,35 +129,70 @@ export function Site() {
       </main>
 
       <footer className="ftr" data-tone="dark">
-        <ViaMagusLogo href={officialLinks.viamagus} />
-        <div className="ftr__event">
-          <p className="ftr__name">The NEXT Order</p>
-          <p className="ftr__partner">
-            {statusLine()} · {event.format}
-          </p>
-          <p className="ftr__partner">
-            Organised by <b>{knownFacts.host}</b> ·{" "}
-            <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
-          </p>
-          <p className="ftr__partner ftr__mav">
-            <span>Ecosystem partner</span>
-            <MavericksLogo className="ftr__mavlogo" height={20} />
-          </p>
+        {/* the doorway's light, at the edge of the page */}
+        <div className="ftr__light" aria-hidden="true">
+          <span className="ftr__wall" />
+          <span className="ftr__floor" />
+          <span className="ftr__door" />
         </div>
-        <ul>
-          <li>
-            <a href="/film">The film</a>
-          </li>
-          <li>
-            <a href="/register">{cta.primary}</a>
-          </li>
-          <li>
+        <div className="ftr__top">
+          <div className="ftr__brand">
+            <ViaMagusLogo href={officialLinks.viamagus} />
+            <p className="ftr__tag">
+              People <span aria-hidden="true">×</span> Technology <span aria-hidden="true">×</span> Possibilities
+            </p>
+          </div>
+          <div className="ftr__event">
+            <p className="ftr__name">The NEXT Order</p>
+            <div className="ftr__facts">
+              <p className="ftr__fact">
+                <Icon name="calendar" />
+                <span>
+                  <b>{event.date}</b>
+                  <span>{event.time}</span>
+                </span>
+              </p>
+              <p className="ftr__fact">
+                <Icon name="pin" />
+                <span>
+                  <b>{[event.venue, event.city].filter(Boolean).join(", ")}</b>
+                  <span className="ftr__mono">{event.format}</span>
+                </span>
+              </p>
+            </div>
+            <div className="ftr__by">
+              <p>
+                Organised by <b>{knownFacts.host}</b>
+              </p>
+              <p>
+                Ecosystem partner <MavericksLogo className="ftr__mavlogo" height={22} />
+              </p>
+            </div>
+          </div>
+          <nav className="ftr__nav" aria-label="Footer">
+            <a className="ftr__go" href="/film">
+              The film <span aria-hidden="true">→</span>
+            </a>
+            <a className="ftr__go" href="/register">
+              {cta.primary} <span aria-hidden="true">→</span>
+            </a>
             <a className="ftr__in" href={officialLinks.linkedin} target="_blank" rel="noopener noreferrer">
               <LinkedInMark />
               <span className="sr-only">Viamagus on LinkedIn (opens in a new tab)</span>
             </a>
-          </li>
-        </ul>
+          </nav>
+        </div>
+        <div className="ftr__base">
+          <p>© 2026 Viamagus. All rights reserved.</p>
+          <ul>
+            <li>
+              <a href={officialLinks.privacy}>Privacy</a>
+            </li>
+            <li>
+              <a href={`mailto:${contactEmail}`}>Contact</a>
+            </li>
+          </ul>
+        </div>
       </footer>
 
     </>

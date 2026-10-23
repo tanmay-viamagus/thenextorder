@@ -1,7 +1,8 @@
 "use client";
 
 import { ChapterLabel } from "./Story";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 
 /**
  * How a GCC evolves — one editorial line illustration that changes across
@@ -603,10 +604,105 @@ function Scene() {
   );
 }
 
+/* ---------------------------------------------------------------- the clip, for phones */
+const STEP = 2400; // each stage on screen, ms
+const HOLD = 1400; // the last stage holds, then the clip closes
+
+/**
+ * Phones: the drawing is too wide to read in a tall, pinned scene, so it plays
+ * as a short clip instead — turned to landscape, the four stages in about ten
+ * seconds, captioned, then it closes by itself. A tap outside the screen, the
+ * close button or Escape ends it early; focus returns to the button that
+ * opened it. With reduced motion the stages still advance, without movement.
+ */
+function EvoClip({ onClose }: { onClose: () => void }) {
+  const [k, setK] = useState(0);
+  const close = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    const t = window.setTimeout(
+      () => (k < STAGES.length - 1 ? setK(k + 1) : onClose()),
+      k < STAGES.length - 1 ? STEP : STEP + HOLD,
+    );
+    return () => window.clearTimeout(t);
+  }, [k, onClose]);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const was = root.style.overflow;
+    root.style.overflow = "hidden";
+    close.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      // the close button is the only control: focus stays on it
+      if (e.key === "Tab") {
+        e.preventDefault();
+        close.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      root.style.overflow = was;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [onClose]);
+
+  const s = STAGES[k];
+  return createPortal(
+    <div
+      className="evx-dlg"
+      role="dialog"
+      aria-modal="true"
+      aria-label="How a GCC evolves: a short animation"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div className="evx evx__screen" data-stage={s.scene}>
+        <div className="evx__bar" aria-hidden="true">
+          {STAGES.map((x, j) => (
+            <span key={x.n} className={j < k ? "is-done" : j === k ? "is-on" : undefined} />
+          ))}
+        </div>
+        <button ref={close} type="button" className="evx__close" onClick={onClose}>
+          <span className="sr-only">Close</span>
+          <span aria-hidden="true">×</span>
+        </button>
+        <div key={k} className="evx__cap" aria-live="polite">
+          <p className="evx__n">
+            <span>{s.n}</span> {s.title}
+          </p>
+          <p className="evx__line">{s.line}</p>
+          <dl className="evx__ledger">
+            <div>
+              <dt>India’s role</dt>
+              <dd>{s.role}</dd>
+            </div>
+            <div>
+              <dt>Who decides</dt>
+              <dd>{s.decides}</dd>
+            </div>
+          </dl>
+        </div>
+        <div className="evx__art">
+          <Scene />
+        </div>
+      </div>
+    </div>,
+    document.body,
+  );
+}
+
 /* ---------------------------------------------------------------- the section */
 export function GccEvolution() {
   const root = useRef<HTMLElement | null>(null);
   const [i, setI] = useState(0);
+  const [clip, setClip] = useState(false);
+  const opener = useRef<HTMLButtonElement | null>(null);
+  const endClip = useCallback(() => {
+    setClip(false);
+    opener.current?.focus();
+  }, []);
 
   useEffect(() => {
     const el = root.current;
@@ -697,6 +793,33 @@ export function GccEvolution() {
           <Scene />
         </div>
 
+        {/* phones: the stages as a list, and the drawing as a short clip */}
+        <div className="evo__mob">
+          <button ref={opener} type="button" className="evo__poster" onClick={() => setClip(true)}>
+            <span className="evx evo__thumb" data-stage="5" aria-hidden="true">
+              <Scene />
+            </span>
+            <span className="evo__playlab">
+              <span className="evo__playring" aria-hidden="true">
+                <span className="tri" />
+              </span>
+              See how it evolved
+              <span className="evo__len">10 sec</span>
+            </span>
+          </button>
+          <ol className="evo__mlist">
+            {STAGES.map((x) => (
+              <li key={x.n} className={x.n >= "03" ? "is-own" : undefined}>
+                <span className="evo__mn">{x.n}</span>
+                <span>
+                  <b>{x.title}</b>
+                  <span>{x.line}</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+
         {/* the four stages, set on the ground line */}
         <ol className="evo__tl" aria-label="The four stages">
           {STAGES.map((x, k) => (
@@ -720,7 +843,8 @@ export function GccEvolution() {
           ))}
         </ol>
       </div>
-      <ol className="sr-only">
+      {clip ? <EvoClip onClose={endClip} /> : null}
+      <ol className="sr-only evo__sr">
         {STAGES.map((x) => (
           <li key={x.n}>
             {x.n}, {x.title}: {x.line} {x.note} India’s role: {x.role}. Who
