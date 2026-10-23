@@ -4408,58 +4408,6 @@ html[data-hdr="dark"] .hdr .btn--shift {
 }
 
 /* the doorway (the brochure's cover) */
-.sy-door {
-  position: relative;
-  justify-self: center;
-  width: min(100%, 300px);
-  aspect-ratio: 1 / 1.05;
-}
-
-.sy-door__glow {
-  position: absolute;
-  inset: -12% -30% 18%;
-  background: radial-gradient(50% 50% at 50% 50%, rgba(214, 140, 255, 0.55), rgba(140, 50, 210, 0.18) 55%, transparent 75%);
-  filter: blur(6px);
-}
-
-.sy-door__horizon {
-  position: absolute;
-  left: -60%;
-  right: -60%;
-  top: 72%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(242, 208, 255, 0.4), transparent);
-}
-
-.sy-door__open {
-  position: absolute;
-  left: 42%;
-  top: 6%;
-  width: 22%;
-  height: 66%;
-  background: linear-gradient(180deg, #f2d0ff, #fff 70%);
-  box-shadow: 0 0 40px rgba(242, 208, 255, 0.7), 0 0 120px rgba(190, 101, 255, 0.5);
-}
-
-.sy-door__leaf {
-  position: absolute;
-  left: 30%;
-  top: 4%;
-  width: 12%;
-  height: 68%;
-  background: linear-gradient(90deg, #0b0910, #1b1424);
-  clip-path: polygon(0 4%, 100% 0, 100% 100%, 0 96%);
-}
-
-.sy-door__floor {
-  position: absolute;
-  left: 2%;
-  right: 2%;
-  top: 72%;
-  bottom: 0;
-  background: linear-gradient(180deg, rgba(242, 208, 255, 0.55), rgba(242, 208, 255, 0.04));
-  clip-path: polygon(42% 0, 64% 0, 100% 100%, 0 100%);
-}
 
 /* the film */
 .sy__fk {
@@ -4683,9 +4631,6 @@ html[data-hdr="dark"] .hdr .btn--shift {
 @media (max-width: 1080px) {
   .sy__top {
     grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
-  }
-  .sy-door {
-    display: none;
   }
   .sy__bottom {
     grid-template-columns: minmax(0, 1fr);
@@ -5179,10 +5124,6 @@ html[data-hdr="dark"] .hdr .btn--shift {
   height: clamp(34px, 4.6svh, 44px);
 }
 
-.sy-door {
-  width: min(100%, 300px, 34svh);
-}
-
 /* the opening's doorways: quiet light at the edges, not beacons */
 .hero2__door {
   bottom: 21%;
@@ -5211,10 +5152,6 @@ html[data-hdr="dark"] .hdr .btn--shift {
 .hero2__facts dd {
   text-align: left;
   justify-items: start;
-}
-
-.sy-door {
-  width: min(100%, 300px, 28svh);
 }
 
 .sy__agenda li {
@@ -5724,53 +5661,6 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
   pointer-events: none;
 }
 
-.sy-room__glow {
-  position: absolute;
-  inset: 0 -20% 10%;
-  background: radial-gradient(40% 50% at 50% 40%, rgba(230, 190, 255, 0.55), rgba(150, 70, 230, 0.2) 50%, transparent 75%);
-  filter: blur(10px);
-}
-
-.sy-room__open {
-  position: absolute;
-  left: 38%;
-  top: 9%;
-  width: 26%;
-  height: 58%;
-  background: linear-gradient(180deg, #f6e6ff, #ffffff 60%, #f3dcff);
-  box-shadow: 0 0 60px rgba(242, 208, 255, 0.8), 0 0 180px rgba(190, 101, 255, 0.55);
-}
-
-.sy-room__wall {
-  position: absolute;
-  top: 0;
-  bottom: 18%;
-  width: 38%;
-  background: linear-gradient(180deg, rgba(40, 24, 64, 0.85), rgba(24, 14, 40, 0.95));
-}
-
-.sy-room__wall--l {
-  left: 0;
-  clip-path: polygon(0 0, 100% 9%, 100% 92%, 0 100%);
-  background: linear-gradient(90deg, rgba(20, 12, 34, 0.95), rgba(70, 40, 110, 0.6));
-}
-
-.sy-room__wall--r {
-  right: 0;
-  clip-path: polygon(0 9%, 100% 0, 100% 100%, 0 92%);
-  background: linear-gradient(90deg, rgba(90, 50, 140, 0.55), rgba(20, 12, 34, 0.95));
-}
-
-.sy-room__floor {
-  position: absolute;
-  left: -10%;
-  right: -10%;
-  top: 67%;
-  bottom: 0;
-  background: linear-gradient(180deg, rgba(242, 208, 255, 0.45), rgba(242, 208, 255, 0.02));
-  clip-path: polygon(44% 0, 66% 0, 100% 100%, 0 100%);
-}
-
 .sy__grid {
   position: relative;
   z-index: 1;
@@ -6035,12 +5925,6 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
     left: 50%;
     width: 26%;
   }
-  .sy-room__open {
-    left: 39%;
-    width: 22%;
-    top: 10%;
-    height: 52%;
-  }
   .sy__l {
     max-width: min(760px, 52vw);
   }
@@ -6063,10 +5947,6 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
   .sy-room {
     left: 51%;
     width: 22%;
-  }
-  .sy-room__open {
-    left: 37%;
-    width: 26%;
   }
 }
 
@@ -6409,14 +6289,30 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
 
 /* phones: the doorway's light stays behind, never across the date */
 @media (max-width: 1080px) {
-  .sy-room__open,
-  .sy-room__floor,
-  .sy-room__wall {
-    display: none;
-  }
   .sy-room {
     left: 30%;
     width: 70%;
     opacity: 0.6;
   }
+}
+
+/* the doorway: one drawing, filling its column top to bottom */
+.sy-room {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  pointer-events: none;
+}
+
+@media (max-width: 1080px) {
+  .sy-room {
+    display: none;
+  }
+}
+
+/* the room melts into the dark at its sides — no hard edges */
+.sy-room {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
 }
