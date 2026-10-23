@@ -14,7 +14,7 @@ import { siteUrl } from "@/lib/site-url";
  * CONFIRMATION_REPLY_TO override them. Without a key nothing is sent and the
  * registration is unaffected — it is already saved by the time this runs.
  */
-export const DEFAULT_FROM = "Shreenath Rao <shreenath.rao@thenextorder.events>";
+export const DEFAULT_FROM = "Shreenath Rao <host@thenextorder.events>";
 export const DEFAULT_REPLY_TO = "Shreenath.rao@viamagus.com";
 
 const BROCHURE = path.join(process.cwd(), "src/assets/the-next-order-brochure.pdf");

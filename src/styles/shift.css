@@ -7052,3 +7052,78 @@ html[data-hdr="dark"] .hdr .btn--shift {
     flex-wrap: wrap;
   }
 }
+
+/* /register: the left panel's content runs from the top in one even rhythm,
+   however long the form beside it */
+.reg__show {
+  grid-template-rows: auto;
+  align-content: start;
+  gap: clamp(28px, 5vh, 56px);
+}
+
+.reg__agenda {
+  align-self: start;
+}
+
+/* when and who, left-aligned: the date line, then the organisers with the
+   partner's logo on the same line */
+.reg__when {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+}
+
+.reg__when .reg__host {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  margin-left: 0;
+  line-height: 1.4;
+}
+
+.reg__mav {
+  margin-left: 0;
+}
+
+/* the opening's facts: one row of four from 1024px — tighter on laptops so
+   the partner never drops to a line of its own; tablets get an even 2 × 2 */
+@media (min-width: 760px) {
+  .hero2__facts {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    justify-content: center;
+  }
+}
+
+@media (min-width: 760px) and (max-width: 1279px) {
+  .hero2__facts > div,
+  .hero2__facts > div:nth-child(even) {
+    padding: 12px clamp(10px, 1.2vw, 16px) 0 calc(clamp(10px, 1.2vw, 16px) + 50px);
+  }
+  .hero2__ftile {
+    left: clamp(10px, 1.2vw, 16px);
+    width: 38px;
+    height: 38px;
+  }
+  .hero2__ftile svg {
+    width: 20px;
+    height: 20px;
+  }
+  .hero2__facts dt {
+    letter-spacing: 0.08em;
+  }
+  .hero2__facts dd {
+    font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 760px) and (max-width: 1023px) {
+  .hero2__facts {
+    grid-template-columns: repeat(2, auto);
+    row-gap: 14px;
+  }
+  .hero2__facts > div:nth-child(3) {
+    border-left: 0;
+  }
+}
