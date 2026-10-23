@@ -151,3 +151,10 @@ button {
 .skip-link:focus {
   transform: none;
 }
+
+/* links within the page glide there; the page itself always scrolls natively */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}

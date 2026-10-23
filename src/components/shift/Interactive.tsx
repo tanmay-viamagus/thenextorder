@@ -204,7 +204,15 @@ export function Chrome() {
     // a link to a section: the browser jumped before the pinned scenes took their
     // full height, so it landed short — aim again now the page is laid out
     const target = location.hash ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null;
-    const aim = target ? requestAnimationFrame(() => target.scrollIntoView({ behavior: "instant", block: "start" })) : 0;
+    const aim = target
+      ? requestAnimationFrame(() => {
+          // a jump, not a glide: smooth scrolling is for links clicked on the page
+          const root = document.documentElement;
+          root.style.scrollBehavior = "auto";
+          target.scrollIntoView({ block: "start" });
+          root.style.scrollBehavior = "";
+        })
+      : 0;
     window.addEventListener("scroll", on, { passive: true });
     window.addEventListener("resize", on);
     return () => {

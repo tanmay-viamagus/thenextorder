@@ -1,6 +1,8 @@
 import { checkBotId } from "botid/server";
 import { checkToken, clientIp, rateLimited } from "@/lib/guard";
+import { after } from "next/server";
 import { saveRegistration, validate } from "@/lib/registrations";
+import { sendConfirmation } from "@/lib/send-confirmation";
 
 /**
  * POST /api/register — stores one registration (JSON body).
@@ -45,6 +47,16 @@ export async function POST(req: Request) {
   if (!v.ok) return Response.json({ ok: false, errors: v.errors }, { status: 400 });
   try {
     const r = await saveRegistration(v.data);
+    // the confirmation email goes after the response: it never delays or fails a saved registration
+    after(async () => {
+      try {
+        const m = await sendConfirmation(v.data.email, { name: v.data.name, updated: r.updated });
+        if (m.sent) console.info("confirmation email sent", m.id);
+        else console.warn("confirmation email not sent:", m.reason);
+      } catch (e) {
+        console.error("confirmation email failed", e instanceof Error ? e.message : e);
+      }
+    });
     return Response.json({ ok: true, updated: r.updated });
   } catch (e) {
     console.error("register failed", e instanceof Error ? e.message : e);

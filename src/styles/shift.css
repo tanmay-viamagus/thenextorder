@@ -38,61 +38,6 @@ body {
   text-transform: uppercase;
 }
 
-/* ---------------------------------------------------------------- buttons: they shift */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  min-height: 56px;
-  padding: 0 26px;
-  border: 1.5px solid transparent;
-  border-radius: 0;
-  font: 600 1rem/1 var(--font);
-  letter-spacing: -0.01em;
-  text-decoration: none;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out), background-color 0.25s, color 0.25s;
-}
-
-.btn--shift {
-  background: var(--purple);
-  color: var(--white);
-}
-
-.btn--line {
-  border-color: var(--ink);
-  background: transparent;
-  color: var(--ink);
-}
-
-.btn--ink {
-  background: var(--ink);
-  color: var(--white);
-}
-
-.btn--sm {
-  min-height: 42px;
-  padding: 0 18px;
-  font-size: 0.92rem;
-}
-
-@media (hover: hover) {
-  .btn:hover {
-    transform: translate(-4px, -4px);
-    box-shadow: 4px 4px 0 var(--magenta);
-  }
-  .btn--line:hover {
-    box-shadow: 4px 4px 0 var(--purple);
-  }
-}
-
-.btn:active {
-  transform: none;
-  box-shadow: none;
-}
-
 .dim {
   opacity: 0.6;
   font-weight: 500;
@@ -344,8 +289,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   max-width: 30em;
 }
 
-/* ---------------------------------------------------------------- THE ERAS: one hand, one revolution (pinned; native scroll) */
-
 /* ---------------------------------------------------------------- THREE HANDS, ONE CLOCK */
 
 .k-v,
@@ -402,8 +345,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   color: var(--ink-2);
   max-width: 32em;
 }
-
-/* ---------------------------------------------------------------- mechanisms */
 
 /* Velocity: three months compress to weeks, shipping every Friday */
 .vm {
@@ -536,11 +477,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   content: "! ";
 }
 
-.form .btn {
-  width: 100%;
-  margin-top: 6px;
-}
-
 .form--sent p + p {
   margin-top: 4px;
 }
@@ -592,8 +528,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   }
 }
 
-/* ---------------------------------------------------------------- reveals (once; content never hidden without JS) */
-
 /* ---------------------------------------------------------------- tablets */
 @media (max-width: 1080px) {
   .hdr__nav {
@@ -614,11 +548,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
 @media (max-width: 759px) {
   :root {
     --hdr: 3.6rem;
-  }
-  .hdr .btn--sm {
-    min-height: 38px;
-    padding: 0 14px;
-    font-size: 0.86rem;
   }
   .hdr__film {
     padding: 0 8px;
@@ -645,7 +574,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   .ftr ul {
     margin-left: 0;
   }
-  /* thumb-zone CTA: after the hero, never over the dial, out of the way at the form */
 }
 
 /* ---------------------------------------------------------------- forms: states */
@@ -667,11 +595,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
 
 .form__fail a {
   font-weight: 600;
-}
-
-.form .btn[disabled] {
-  opacity: 0.7;
-  cursor: progress;
 }
 
 .form--sent:focus {
@@ -810,12 +733,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
 /* ==========================================================================
    Refinement pass — hero composition, film link, panels, the form, /register
    ========================================================================== */
-
-/* the hero: words left, clock right — nothing crosses */
-
-/* the title's cut runs on into the ring's: one line across the whole opening */
-
-/* panels: who it's for, and a way in */
 
 /* ---------------------------------------------------------------- the form: three fields, the rest is a tap */
 .rf {
@@ -984,17 +901,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   background: rgba(102, 8, 169, 0.07);
   font-size: 0.95rem;
   line-height: 1.45;
-}
-
-.rf__go {
-  width: 100%;
-  min-height: 60px;
-  font-size: 1.05rem;
-}
-
-.rf__go[disabled] {
-  opacity: 0.7;
-  cursor: progress;
 }
 
 .rf__small {
@@ -1263,10 +1169,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   }
 }
 
-/* hover pauses the whole story, not just the bar */
-
-/* reduced motion: every state complete, nothing moving */
-
 /* the date strip */
 .reg__when {
   display: flex;
@@ -1292,42 +1194,9 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   }
 }
 
-/* ---------------------------------------------------------------- three hands, one clock (restored) */
-
 /* ==========================================================================
    The ring, the year, the call to action, the product links, LinkedIn help
    ========================================================================== */
-
-/* ---------------------------------------------------------------- the call to action: one, and unmissable */
-.btn--lg {
-  min-height: 64px;
-  padding: 0 30px 0 32px;
-  font-size: 1.12rem;
-  gap: 14px;
-}
-
-.btn__arr {
-  display: inline-block;
-  transition: transform 0.35s var(--ease-out);
-}
-
-@media (hover: hover) {
-  .btn:hover .btn__arr {
-    transform: translateX(5px);
-  }
-}
-
-.btn--shift:focus-visible {
-  outline: 3px solid var(--magenta);
-  outline-offset: 4px;
-}
-
-.hdr__cta {
-  min-height: 46px;
-  padding: 0 20px;
-  font-size: 0.95rem;
-  box-shadow: 0 0 0 1px rgba(252, 253, 255, 0.08), 0 10px 30px -12px rgba(102, 8, 169, 0.9);
-}
 
 /* ---------------------------------------------------------------- hero: the ring */
 
@@ -1583,10 +1452,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   stroke-width: 1.5;
 }
 
-/* the centre: era · headline · the number that matters */
-
-/* ---------------------------------------------------------------- product links */
-
 /* ---------------------------------------------------------------- form: LinkedIn help */
 .rf__help {
   display: block;
@@ -1622,9 +1487,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   .ring__pt {
     display: none;
   }
-  .btn--lg {
-    width: 100%;
-  }
   .yc-era,
   .yc-bound text {
     display: none;
@@ -1634,11 +1496,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   }
   .yc-ol {
     font-size: 22px;
-  }
-  .hdr__cta {
-    min-height: 40px;
-    padding: 0 14px;
-    font-size: 0.84rem;
   }
   .hdr__film {
     display: none;
@@ -1654,88 +1511,10 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   }
 }
 
-/* ---------------------------------------------------------------- the ring of years: the centre */
-
-/* the centre as a fixed stack: running year on top, the era's words beneath */
-
 /* ==========================================================================
    Buttons that belong: a purple block, an attached arrow cell, and on hover
    the site's magenta cut line draws along the base.
    ========================================================================== */
-.btn--shift {
-  position: relative;
-  gap: 0;
-  padding: 0 0 0 26px;
-  overflow: hidden;
-  box-shadow: none;
-}
-
-.btn--shift .btn__arr {
-  display: grid;
-  place-items: center;
-  align-self: stretch;
-  width: 56px;
-  margin-left: 22px;
-  border-left: 1px solid rgba(252, 253, 255, 0.28);
-  font-size: 1.1em;
-  transition: background-color 0.3s, transform 0.35s var(--ease-out);
-}
-
-.btn--shift::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 4px;
-  background: var(--magenta);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.45s var(--ease);
-}
-
-@media (hover: hover) {
-  .btn--shift:hover {
-    transform: none;
-    box-shadow: none;
-  }
-  .btn--shift:hover::after {
-    transform: none;
-  }
-  .btn--shift:hover .btn__arr {
-    background: var(--magenta);
-    color: var(--ink);
-    transform: none;
-  }
-}
-
-.btn--shift:active .btn__arr {
-  background: #d94dbb;
-}
-
-.btn--lg.btn--shift {
-  padding-left: 30px;
-}
-
-.btn--lg.btn--shift .btn__arr {
-  width: 64px;
-}
-
-.hdr__cta.btn--shift {
-  padding-left: 18px;
-}
-
-.hdr__cta.btn--shift .btn__arr {
-  width: 44px;
-  margin-left: 16px;
-}
-
-.rf__go.btn--shift {
-  justify-content: space-between;
-  padding-left: 28px;
-}
-
-/* ---------------------------------------------------------------- product actions: bigger, in each product's colour */
 
 /* ---------------------------------------------------------------- the close: put together */
 .steps {
@@ -1832,56 +1611,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
    The film, near the end: the practices play as a story, the film one click away
    ========================================================================== */
 
-/* the section takes on the colour of the practice in the spotlight */
-
-.fl__btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  min-height: 60px;
-  padding: 0 24px 0 8px;
-  border: 1.5px solid rgba(252, 253, 255, 0.7);
-  border-radius: 999px;
-  background: transparent;
-  color: var(--white);
-  font: 600 1rem/1 var(--font);
-  cursor: pointer;
-  transition: background-color 0.25s, color 0.25s, border-color 0.25s;
-}
-
-.fl__btnplay {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--white);
-  color: var(--ink);
-  transition: background-color 0.25s;
-}
-
-.fl__btnplay .tri {
-  margin-left: 3px;
-}
-
-@media (hover: hover) {
-  .fl__btn:hover {
-    border-color: var(--magenta);
-  }
-  .fl__btn:hover .fl__btnplay {
-    background: var(--magenta);
-  }
-}
-
-.fl__btn:focus-visible {
-  outline: 3px solid var(--magenta);
-  outline-offset: 4px;
-}
-
-/* the showcase, at section scale */
-
-/* the era label fits inside the ring's inner circle */
-
 /* ==========================================================================
    GIC → GCC → ? — a split-flap board that plays when it comes into view
    ========================================================================== */
@@ -1904,8 +1633,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
     transform: translateY(12px);
   }
 }
-
-/* without JavaScript nothing waits on an entrance animation */
 
 /* ==========================================================================
    How a GCC evolves — one line illustration, five stages, pinned while you scroll
@@ -2538,48 +2265,14 @@ html:not(.js) .evo__cap > * {
 }
 
 /* ==========================================================================
-   One swipe, one stage: native scroll-snap points inside the pinned scenes.
-   Proximity snapping applies only near these points; scroll-snap-stop keeps a
-   single swipe from skipping a stage. Elsewhere the page scrolls freely.
+   The page is one continuous, native scroll: no snapping, no paging. The
+   GCC evolution's stage is pinned while its section scrolls past, and the
+   stage follows the scroll position.
    ========================================================================== */
-html {
-  scroll-snap-type: y proximity;
-}
-
-/* one page = one part of the story: every swipe lands on the next page.
-   The form, the last page, runs as long as it needs; the footer closes it. */
-/* the pager (components/shift/Pager) turns the pages; the browser never forces a snap */
-html.js {
-  scroll-snap-type: none;
-}
-
-.hero2,
-.close {
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-}
-
-.ftr {
-  scroll-snap-align: end;
-}
-
-.evo__snap {
-  position: absolute;
-  left: 0;
-  width: 1px;
-  height: 1px;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  pointer-events: none;
-}
 
 /* 100vh of stage + 50vh per transition (three) */
 .evo {
   height: 250vh;
-}
-
-html:not(.js) .evo__snap {
-  display: none;
 }
 
 /* ---------------------------------------------------------------- the caption: one block, fixed in place */
@@ -2937,25 +2630,6 @@ html:not(.js) .evo__art .evo__gap {
    Site-leader audit: one call to action at a time; no repeated clocks
    ========================================================================== */
 
-/* the header CTA appears once the hero's has scrolled away */
-.js .hdr__cta {
-  opacity: 0;
-  transform: translateY(-6px);
-  pointer-events: none;
-  visibility: hidden;
-  transition: opacity 0.35s, transform 0.45s var(--ease-out), visibility 0s 0.35s;
-}
-
-.js.past-hero .hdr__cta {
-  opacity: 1;
-  transform: none;
-  pointer-events: auto;
-  visibility: visible;
-  transition: opacity 0.35s, transform 0.45s var(--ease-out);
-}
-
-/* the practices open on a compact intro: the clock is a signature, not a screen */
-
 /* ==========================================================================
    The theme — what the room will explore (from the event brief)
    ========================================================================== */
@@ -2967,12 +2641,6 @@ html:not(.js) .evo__art .evo__gap {
   color: var(--purple);
   margin-bottom: 18px;
 }
-
-/* the three shifts */
-
-/* motion: once, on arrival */
-
-/* ---------------------------------------------------------------- the AI leadership programme */
 
 /* ---------------------------------------------------------------- the close: what to expect */
 
@@ -3019,14 +2687,6 @@ html[data-act="evolve"] .hdr__nav a[data-for="evolve"]::after {
   margin-top: 12px;
 }
 
-/* the practices intro: readable measure, the business line given room */
-
-/* the leadership programme: a ruled strip, not a boxed card */
-
-/* the theme: the horizon is the rule — no second line on top of each column */
-
-/* the close: one paragraph, one line of expectations */
-
 /* the close: one measure for every line in the column */
 .close__copy > * {
   max-width: 30rem;
@@ -3036,26 +2696,6 @@ html[data-act="evolve"] .hdr__nav a[data-for="evolve"]::after {
   max-width: 11em;
 }
 
-/* ---------------------------------------------------------------- the theme: today → next, drawn and labelled */
-
-/* the arrow between them, level with the drawings */
-
-/* people and roles */
-
-/* tasks and agents */
-
-/* options and the call */
-
-/* motion: once, on arrival — today is there, the arrow runs, then next arrives */
-
-/* ---------------------------------------------------------------- Viamagus Select · the BOT model */
-
-/* the timeline: three phases on one line, transfer at the end */
-
-/* the line ends at the hand-over */
-
-/* ---------------------------------------------------------------- the name board: one screen, no pinning */
-
 /* ==========================================================================
    The brochure — why this event, the evening, the hosts, the partner
    ========================================================================== */
@@ -3063,18 +2703,6 @@ html[data-act="evening"] .hdr__nav a[data-for="evening"]::after,
 html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   transform: none;
 }
-
-/* why this event: the topics under each shift, and who brings it to the room */
-
-/* ---------------------------------------------------------------- the evening */
-
-/* the doorway: a lit opening, its door swinging in, light across the floor */
-
-/* the agenda and the facts */
-
-/* the line, lit from the top: afternoon into the evening */
-
-/* organised by — beside the agenda, one line each */
 
 /* ==========================================================================
    One document — numbered chapters, Hire / Build / Lead, two more ways in
@@ -3093,12 +2721,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   background: currentColor;
   opacity: 0.5;
 }
-
-/* why this event: the headline's three verbs, set large */
-
-/* each verb arrives as an outline and fills with ink, left to right */
-
-/* two more ways in: the panel grid continues, in the panels' own language */
 
 /* round 1 */
 
@@ -3137,27 +2759,9 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
    Why this event — the headline is the interface
    ========================================================================== */
 
-/* the verbs: outlines until chosen; the chosen one is cut by the title's line */
-
-/* no script: the sentence reads as plain, filled text */
-
-/* progress: three segments, the live one filling while it plays by itself */
-
-/* the topics: all three always on screen; the active column is brighter */
-
-/* the bar sits on the columns: one segment over each */
-
 /* ==========================================================================
    The evening — one grid
    ========================================================================== */
-
-/* the doorway: a lit opening, its door swinging in, light across the floor */
-
-/* the body: agenda and who is behind it, starting on the same line */
-
-/* every row the same: time · marker · what · side */
-
-/* who is behind it */
 
 /* ==========================================================================
    One story — Then · Now · Next. One hierarchy, one label, alternating ground
@@ -3201,25 +2805,9 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   padding-bottom: clamp(88px, 12vh, 140px);
 }
 
-/* the film leads into the evening, on the same dark ground */
-
-/* phones: the night scene becomes a band above the date */
-
 /* ==========================================================================
    Current state → problem → answer → the event
    ========================================================================== */
-
-/* the problem points to its answer */
-
-/* THE ANSWER — the practices on paper */
-
-/* the dark panels keep their own light ink now the section sits on paper */
-
-/* the ivory panel, set apart from the paper it now sits on */
-
-/* what the evening is for, under the date */
-
-/* the answer: no clock beside the heading now */
 
 /* the register panel: the evening's running order, in place of the products */
 .reg__agenda {
@@ -3252,13 +2840,9 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   color: var(--lilac);
 }
 
-/* the evening: the film, between the date and the running order */
-
 /* ==========================================================================
    The final brochure — and phones
    ========================================================================== */
-
-/* opening: who it's for, and the partner beside it (the brochure's cover) */
 
 /* the agenda: what each item is, above it */
 .reg__kind {
@@ -3294,10 +2878,7 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   vertical-align: middle;
 }
 
-/* why attend: the brochure's question, set large; the theme beneath it */
-
 /* every tap target at least 44px */
-.btn--sm,
 .chip span {
   min-height: 44px;
 }
@@ -3314,25 +2895,14 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   .reg__kind {
     font-size: 0.75rem;
   }
-  .hdr .btn--sm,
-  .hdr__cta {
-    min-height: 44px;
-  }
   /* the bar sits above the home indicator */
   .ftr {
     padding-bottom: calc(104px + env(safe-area-inset-bottom));
   }
 }
 
-/* the smallest phones: the header's button drops its arrow so it fits */
+/* the smallest phones: a smaller logo so the header fits */
 @media (max-width: 374px) {
-  .hdr__cta {
-    padding: 0 12px;
-    font-size: 0.8rem;
-  }
-  .hdr__cta .btn__arr {
-    display: none;
-  }
   .hdr .vm-logo {
     font-size: 1.02rem;
   }
@@ -3749,19 +3319,10 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   margin-top: clamp(24px, 4.4vh, 44px);
 }
 
-/* the second call to action: the same box as the first, outlined */
-.hero2__film {
-  min-height: 64px;
-  border-radius: 0;
-  padding-right: 26px;
-}
-
 .hero2__mav {
   width: auto;
   height: 20px;
 }
-
-/* the header's call to action waits until the opening's has scrolled away, as in V1 */
 
 @media (max-width: 759px) {
   .hero2 {
@@ -3775,10 +3336,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
     flex-direction: column;
     align-items: stretch;
     width: 100%;
-  }
-  .hero2__cta .btn,
-  .hero2__film {
-    justify-content: center;
   }
 }
 
@@ -3817,23 +3374,9 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
   }
 }
 
-/* V2: the header's call to action is there from the start (the sketch's icon, right) */
-.js:has(.hero2) .hdr__cta {
-  opacity: 1;
-  transform: none;
-  pointer-events: auto;
-  visibility: visible;
-}
-
 /* ==========================================================================
    03 Why attend — the brochure's "Why this event", on one grid
    ========================================================================== */
-
-/* the question, and the theme beside it */
-
-/* three columns, and everything below sits on the same three */
-
-/* the brochure's square bullet */
 
 /* ==========================================================================
    One page per part of the story
@@ -3867,8 +3410,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
 .chapter .chap::after {
   width: 30px;
 }
-
-/* every page fills the screen, its content centred in it */
 
 /* the hand-off: one row at the foot of the page */
 .handoff {
@@ -3917,12 +3458,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
     grid-row: 1 / span 2;
   }
 }
-
-/* ---------------------------------------------------------------- 02 the meeting point */
-
-/* the agenda: one line, a stop for each item */
-
-/* ---------------------------------------------------------------- 03 the conversation, on one page */
 
 /* ---------------------------------------------------------------- the opening's facts */
 .hero2__facts {
@@ -3973,111 +3508,6 @@ html[data-act="practices"] .hdr__nav a[data-for="practices"]::after {
    The calls to action — the site's own shape: a solid block, a magenta
    arrow tile, and a hard offset shadow (the form card's), lifting on hover
    ========================================================================== */
-.btn--shift {
-  --b-bg: var(--purple);
-  --b-fg: var(--white);
-  --b-shadow: var(--ink);
-  --b-h: 56px;
-  position: relative;
-  gap: 0;
-  min-height: var(--b-h);
-  padding: 0 0 0 24px;
-  overflow: visible;
-  border: 0;
-  background: var(--b-bg);
-  color: var(--b-fg);
-  box-shadow: 5px 5px 0 var(--b-shadow);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  transition: transform 0.22s var(--ease-out), box-shadow 0.22s var(--ease-out), background-color 0.3s, color 0.3s;
-}
-
-[data-tone="dark"] .btn--shift,
-html[data-hdr="dark"] .hdr .btn--shift {
-  --b-bg: var(--lilac);
-  --b-fg: var(--ink);
-  --b-shadow: var(--purple);
-}
-
-.btn--lg {
-  --b-h: 64px;
-}
-
-.btn--sm,
-.hdr__cta {
-  --b-h: 46px;
-}
-
-.btn--shift::after {
-  content: none;
-}
-
-.btn--shift .btn__arr {
-  display: grid;
-  place-items: center;
-  align-self: stretch;
-  width: var(--b-h);
-  margin-left: 20px;
-  border-left: 0;
-  background: var(--magenta);
-  color: var(--ink);
-  font-size: 1.15em;
-  transition: padding 0.25s var(--ease-out);
-}
-
-.hdr__cta {
-  box-shadow: 4px 4px 0 var(--b-shadow);
-}
-
-@media (hover: hover) {
-  .btn--shift:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 7px 7px 0 var(--b-shadow);
-  }
-  .hdr__cta:hover {
-    box-shadow: 6px 6px 0 var(--b-shadow);
-  }
-  .btn--shift:hover .btn__arr {
-    transform: none;
-    padding-left: 10px;
-  }
-}
-
-.btn--shift:active {
-  transform: translate(3px, 3px);
-  box-shadow: 1px 1px 0 var(--b-shadow);
-}
-
-/* the second call to action: an outlined box with a magenta play disc */
-.fl__btn {
-  min-height: 64px;
-  padding: 0 24px 0 10px;
-  border: 1.5px solid currentColor;
-  border-radius: 0;
-  background: transparent;
-  font-weight: 700;
-  transition: background-color 0.25s, border-color 0.25s;
-}
-
-[data-tone="dark"] .fl__btn {
-  border-color: rgba(242, 208, 255, 0.7);
-  color: var(--white);
-}
-
-.fl__btnplay {
-  background: var(--magenta);
-  color: var(--ink);
-}
-
-@media (hover: hover) {
-  .fl__btn:hover {
-    background: rgba(242, 208, 255, 0.1);
-    border-color: var(--lilac);
-  }
-  .fl__btn:hover .fl__btnplay {
-    background: var(--lilac);
-  }
-}
 
 /* ---------------------------------------------------------------- phones */
 
@@ -4107,36 +3537,6 @@ html[data-hdr="dark"] .hdr .btn--shift {
   }
 }
 
-/* phones: buttons at full width keep the label left and the arrow tile at the edge */
-@media (max-width: 759px) {
-  .hero2__cta .btn--shift {
-    justify-content: space-between;
-  }
-  .fl__btn {
-    flex: none;
-    white-space: nowrap;
-  }
-  /* the date line, one fact a line — no orphaned separators */
-  /* the conversation's first screen: the question and the three topics */
-}
-
-/* the smallest phones: the buttons tighten so nothing runs off the screen */
-@media (max-width: 374px) {
-  .btn--shift {
-    padding-left: 16px;
-  }
-  .btn--shift .btn__arr {
-    width: 48px;
-    margin-left: 12px;
-  }
-  .hdr__cta {
-    padding-right: 14px;
-  }
-  .hdr__cta .btn__arr {
-    display: none;
-  }
-}
-
 /* ==========================================================================
    02 The meeting point — the reference: date, doorway, film; agenda as a
    timeline with icons; who is behind it
@@ -4156,8 +3556,6 @@ html[data-hdr="dark"] .hdr .btn--shift {
     radial-gradient(30% 30% at 100% 100%, rgba(102, 8, 169, 0.14), transparent 70%),
     #050408;
   color: var(--white);
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
 }
 
 .sy__top {
@@ -4212,8 +3610,6 @@ html[data-hdr="dark"] .hdr .btn--shift {
   color: rgba(252, 253, 255, 0.68);
 }
 
-/* the doorway (the brochure's cover) */
-
 /* the film */
 .sy__fk {
   font: 600 0.78rem/1 var(--mono);
@@ -4236,17 +3632,6 @@ html[data-hdr="dark"] .hdr .btn--shift {
   font-size: clamp(0.98rem, 1.1vw, 1.12rem);
   line-height: 1.5;
   color: rgba(252, 253, 255, 0.7);
-}
-
-.sy .sy__play {
-  margin-top: clamp(14px, 2.4vh, 24px);
-  min-height: 60px;
-  border-radius: 999px;
-  border-color: rgba(252, 253, 255, 0.7);
-}
-
-.sy .sy__play .fl__btnplay {
-  background: var(--white);
 }
 
 /* below: the agenda and who is behind it, divided */
@@ -4480,7 +3865,6 @@ html[data-hdr="dark"] .hdr .btn--shift {
   /* the agenda, and who is behind it: a swipe each */
   .sy__agenda-col,
   .sy__orgs {
-    scroll-snap-align: start;
     scroll-margin-top: calc(var(--hdr) + 16px);
   }
 }
@@ -4489,8 +3873,6 @@ html[data-hdr="dark"] .hdr .btn--shift {
    03 The conversation — the reference: icon tiles, dividers, a gradient on
    the question, and a footer row for the hand-off
    ========================================================================== */
-
-/* glass light at the top right */
 
 /* the hand-off: a footer row — where next, divided from the line */
 
@@ -4564,14 +3946,6 @@ html[data-hdr="dark"] .hdr .btn--shift {
 .hero2__cta {
   margin-top: clamp(18px, 3.4vh, 36px);
   gap: 22px;
-}
-
-.hero2 .btn--shift {
-  box-shadow: 5px 5px 0 var(--purple), 0 0 46px rgba(214, 140, 255, 0.42);
-}
-
-.hero2 .fl__btnplay {
-  background: var(--lilac);
 }
 
 /* the doorways at the sides */
@@ -4826,8 +4200,6 @@ html[data-hdr="dark"] .hdr .btn--shift {
   }
 }
 
-/* the conversation on short screens */
-
 /* clip, not hidden: a page must not become its own scroll container, or its
    phone stops (the agenda, the organisers, who and what) stop counting */
 .sy {
@@ -4867,11 +4239,6 @@ html[data-hdr="dark"] .hdr .btn--shift {
     gap: 10px;
     margin-top: 16px;
   }
-  .hero2__cta .btn--lg,
-  .hero2__film {
-    --b-h: 54px;
-    min-height: 54px;
-  }
   .hero2__facts {
     margin-top: 14px;
   }
@@ -4902,18 +4269,6 @@ html[data-hdr="dark"] .hdr .btn--shift {
   }
 }
 
-/* the arrow tile always closes the button: no padding after it */
-.btn--shift,
-.hdr__cta.btn--shift {
-  padding-right: 0;
-}
-
-@media (max-width: 374px) {
-  .hdr__cta.btn--shift {
-    padding-right: 14px;
-  }
-}
-
 /* phones: the date stays the page's headline */
 @media (max-width: 759px) {
   .sy__h {
@@ -4938,106 +4293,6 @@ html:not([data-hdr="dark"]) .hdr {
   background: rgba(250, 247, 253, 0.82);
   border-bottom-color: rgba(27, 15, 61, 0.08);
   color: var(--deep);
-}
-
-/* ---------------------------------------------------------------- buttons: pills */
-.btn--shift {
-  background: linear-gradient(90deg, var(--violet-a), #7a2ee8);
-  color: var(--white);
-  border-radius: 999px;
-  padding-left: 28px;
-  overflow: hidden;
-  box-shadow: 0 14px 30px -14px rgba(90, 31, 208, 0.75);
-}
-
-.btn--shift .btn__arr {
-  margin-left: 18px;
-  border-radius: 0 999px 999px 0;
-  background: linear-gradient(90deg, var(--violet-b), #b44df0);
-  color: var(--white);
-}
-
-[data-tone="dark"] .btn--shift,
-html[data-hdr="dark"] .hdr .btn--shift {
-  background: linear-gradient(90deg, #f2d0ff, #ecc2ff);
-  color: var(--deep);
-  box-shadow: 0 14px 34px -14px rgba(214, 140, 255, 0.8);
-}
-
-[data-tone="dark"] .btn--shift .btn__arr,
-html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
-  background: linear-gradient(90deg, #f07be0, var(--magenta));
-  color: var(--deep);
-}
-
-.hdr__cta,
-.hdr__cta .btn__arr {
-  border-radius: 8px;
-}
-
-.hdr__cta .btn__arr {
-  border-radius: 0 8px 8px 0;
-}
-
-.hdr__cta {
-  box-shadow: 0 10px 24px -14px rgba(90, 31, 208, 0.8);
-}
-
-@media (hover: hover) {
-  .btn--shift:hover,
-  .hdr__cta:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 18px 36px -14px rgba(90, 31, 208, 0.85);
-  }
-}
-
-.btn--shift:active {
-  transform: translateY(0);
-  box-shadow: 0 8px 18px -10px rgba(90, 31, 208, 0.7);
-}
-
-/* the film button: a white pill, a ringed play */
-.fl__btn {
-  min-height: 60px;
-  padding: 0 26px 0 8px;
-  border: 1px solid rgba(27, 15, 61, 0.18);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.7);
-  color: var(--deep);
-  backdrop-filter: blur(8px);
-}
-
-.fl__btnplay {
-  border: 1.5px solid var(--deep);
-  background: transparent;
-  color: var(--deep);
-}
-
-[data-tone="dark"] .fl__btn {
-  border-color: rgba(252, 253, 255, 0.6);
-  background: transparent;
-  color: var(--white);
-}
-
-[data-tone="dark"] .fl__btnplay {
-  border: 0;
-  background: var(--white);
-  color: var(--deep);
-}
-
-@media (hover: hover) {
-  .fl__btn:hover {
-    border-color: var(--violet-a);
-    background: #fff;
-  }
-  .fl__btn:hover .fl__btnplay {
-    background: var(--deep);
-    color: var(--white);
-  }
-  [data-tone="dark"] .fl__btn:hover {
-    background: rgba(242, 208, 255, 0.1);
-    border-color: var(--lilac);
-  }
 }
 
 /* ---------------------------------------------------------------- 00 the opening: a light room */
@@ -5160,10 +4415,6 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
   color: var(--deep-2);
 }
 
-.hero2 .btn--shift {
-  box-shadow: 0 16px 34px -14px rgba(90, 31, 208, 0.75);
-}
-
 .hero2__facts {
   border-top: 1px solid rgba(27, 15, 61, 0.1);
 }
@@ -5224,15 +4475,6 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
     radial-gradient(34% 60% at 60% 34%, rgba(190, 110, 255, 0.3), transparent 72%),
     radial-gradient(40% 40% at 0% 100%, rgba(102, 8, 169, 0.25), transparent 70%),
     #07050c;
-}
-
-.sy-room {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 38%;
-  width: 34%;
-  pointer-events: none;
 }
 
 .sy__grid {
@@ -5306,8 +4548,6 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
 .sy__org {
   padding: clamp(10px, 1.8vh, 18px) 0;
 }
-
-/* ---------------------------------------------------------------- 03 the conversation: light and airy */
 
 /* ---------------------------------------------------------------- 04 your place: a white card on light */
 .close {
@@ -5391,15 +4631,6 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
   box-shadow: none;
 }
 
-.rf__go.btn--shift {
-  width: 100%;
-  border-radius: 12px;
-}
-
-.rf__go.btn--shift .btn__arr {
-  border-radius: 0 12px 12px 0;
-}
-
 /* the thank-you: centred, a ringed tick, back to the top */
 .rf--done {
   justify-items: center;
@@ -5446,11 +4677,6 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
   .sy__grid {
     grid-template-columns: minmax(0, 1fr);
   }
-  .sy-room {
-    left: 20%;
-    width: 80%;
-    opacity: 0.45;
-  }
   .hero2__glass {
     opacity: 0.6;
   }
@@ -5464,7 +4690,6 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
     font-size: min(13vw, 7svh);
   }
   .sy__r {
-    scroll-snap-align: start;
     scroll-margin-top: calc(var(--hdr) + 16px);
   }
   .hero2__t {
@@ -5479,10 +4704,6 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
 
 /* the room sits between the columns: the doorway never crosses the agenda */
 @media (min-width: 1081px) {
-  .sy-room {
-    left: 50%;
-    width: 26%;
-  }
   .sy__l {
     max-width: min(760px, 52vw);
   }
@@ -5501,10 +4722,6 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
   }
   .sy__r {
     grid-column: 3;
-  }
-  .sy-room {
-    left: 51%;
-    width: 22%;
   }
 }
 
@@ -5590,109 +4807,6 @@ html:not([data-hdr="dark"]) .hdr {
 .chapter__of {
   margin: 0 0.35em;
   opacity: 0.7;
-}
-
-/* ---------------------------------------------------------------- buttons */
-.btn--shift,
-[data-tone="dark"] .btn--shift,
-html[data-hdr="dark"] .hdr .btn--shift {
-  background: var(--ref-purple);
-  color: var(--white);
-  box-shadow: 0 6px 16px -10px rgba(124, 58, 237, 0.7);
-}
-
-.btn--shift .btn__arr,
-[data-tone="dark"] .btn--shift .btn__arr,
-html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
-  margin-left: 16px;
-  background: var(--ref-accent);
-  color: var(--white);
-  font-size: 1em;
-}
-
-.btn--lg {
-  --b-h: 56px;
-  font-size: 1rem;
-}
-
-.hdr__cta,
-.hdr__cta.btn--shift {
-  --b-h: 42px;
-  border-radius: 4px;
-  font-size: 0.86rem;
-  box-shadow: none;
-}
-
-.hdr__cta .btn__arr {
-  border-radius: 0 4px 4px 0;
-}
-
-@media (hover: hover) {
-  .btn--shift:hover,
-  .hdr__cta:hover {
-    transform: none;
-    background: #6d28d9;
-    box-shadow: 0 8px 20px -10px rgba(124, 58, 237, 0.8);
-  }
-}
-
-.btn--shift:active {
-  transform: translateY(1px);
-}
-
-/* the film: an outlined pill, a small filled play disc */
-.fl__btn,
-.hero2__film {
-  --b-h: 56px;
-  min-height: 56px;
-  gap: 12px;
-  padding: 0 24px 0 10px;
-  border: 1.5px solid var(--ref-ink);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.85);
-  color: var(--ref-ink);
-  backdrop-filter: none;
-  font-size: 1rem;
-}
-
-.fl__btnplay {
-  width: 34px;
-  height: 34px;
-  border: 0;
-  background: var(--ref-ink);
-  color: var(--white);
-}
-
-.fl__btnplay .tri {
-  border-left-width: 7px;
-  border-top-width: 4.5px;
-  border-bottom-width: 4.5px;
-}
-
-[data-tone="dark"] .fl__btn {
-  border-color: rgba(252, 253, 255, 0.85);
-  background: transparent;
-  color: var(--white);
-}
-
-[data-tone="dark"] .fl__btnplay {
-  background: var(--white);
-  color: var(--ref-ink);
-}
-
-@media (hover: hover) {
-  .fl__btn:hover {
-    background: #fff;
-    border-color: var(--ref-purple);
-  }
-  .fl__btn:hover .fl__btnplay {
-    background: var(--ref-purple);
-    color: var(--white);
-  }
-  [data-tone="dark"] .fl__btn:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: var(--white);
-  }
 }
 
 /* ---------------------------------------------------------------- the opening (kept; the reference's title) */
@@ -5789,14 +4903,6 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
   color: var(--ref-purple);
 }
 
-.rf__go.btn--shift {
-  border-radius: 4px;
-}
-
-.rf__go.btn--shift .btn__arr {
-  border-radius: 0 4px 4px 0;
-}
-
 .rf--done {
   background: #fff;
 }
@@ -5810,11 +4916,6 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
   color: var(--ref-ink);
 }
 
-.hero2 .fl__btnplay {
-  background: var(--ref-ink);
-  color: var(--white);
-}
-
 .chapter__of {
   opacity: 1;
   color: var(--ref-ink-2);
@@ -5822,41 +4923,6 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
 
 [data-tone="dark"] .chapter__of {
   color: rgba(252, 253, 255, 0.7);
-}
-
-.hdr__cta,
-.hdr__cta.btn--shift {
-  --b-h: 44px;
-}
-
-/* phones: the doorway's light stays behind, never across the date */
-@media (max-width: 1080px) {
-  .sy-room {
-    left: 30%;
-    width: 70%;
-    opacity: 0.6;
-  }
-}
-
-/* the doorway: one drawing, filling its column top to bottom */
-.sy-room {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  height: 100%;
-  pointer-events: none;
-}
-
-@media (max-width: 1080px) {
-  .sy-room {
-    display: none;
-  }
-}
-
-/* the room melts into the dark at its sides — no hard edges */
-.sy-room {
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
 }
 
 /* ==========================================================================
@@ -5872,8 +4938,6 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
   overflow: clip;
   background: var(--ref-cream);
   color: var(--ref-ink);
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
 }
 
 /* ---------------------------------------------------------------- the left panel */
@@ -6418,7 +5482,187 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
   }
   /* a page that can't fit one phone screen is two swipes */
   .wa__pair {
-    scroll-snap-align: start;
+    scroll-margin-top: calc(var(--hdr) + 16px);
+  }
+}
+
+/* the installation, deeper on the left (where the labels sit), warm light to the right */
+.wa-art__base {
+  background:
+    radial-gradient(70% 45% at 8% 96%, rgba(44, 32, 74, 0.6), transparent 72%),
+    radial-gradient(60% 40% at 6% 4%, rgba(44, 32, 74, 0.55), transparent 72%),
+    linear-gradient(108deg, #3f3060 0%, #5e4a86 24%, #8d79b4 44%, #c8b7de 60%, #efe3df 78%, #fbf3ea 100%);
+}
+
+.wa-art__plane--1 {
+  background: linear-gradient(180deg, rgba(36, 24, 62, 0.6), rgba(84, 64, 124, 0.38));
+}
+
+.wa-art__plane--2 {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(150, 126, 196, 0.12));
+}
+
+.wa-art__floor {
+  background: linear-gradient(180deg, transparent, rgba(255, 250, 244, 0.5));
+  -webkit-mask-image: linear-gradient(90deg, transparent 30%, #000 75%);
+  mask-image: linear-gradient(90deg, transparent 30%, #000 75%);
+}
+
+.wa__names,
+.wa__k-side {
+  text-shadow: 0 1px 14px rgba(30, 20, 56, 0.55);
+}
+
+/* the right panel fits one screen: a wider headline column, steadier rows */
+.wa__head {
+  grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
+}
+
+.wa__h {
+  font-size: min(3.3vw, 5.6svh);
+}
+
+.wa__rowi {
+  min-height: clamp(72px, 10.6vh, 120px);
+}
+
+.wa__tile {
+  width: clamp(46px, 3.8vw, 58px);
+}
+
+/* shorter laptop screens: the same layout, tighter */
+@media (min-width: 1081px) and (max-height: 880px) {
+  .wa__main {
+    padding-top: calc(var(--hdr) + 10px);
+    padding-bottom: 10px;
+  }
+  .wa__head {
+    padding-bottom: 12px;
+  }
+  .wa__h {
+    font-size: min(3vw, 5.2svh);
+  }
+  .wa__lede {
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+  .wa__lede strong {
+    margin-bottom: 6px;
+    font-size: 1.05rem;
+  }
+  .wa__rowi {
+    min-height: 0;
+    padding: 6px 0;
+  }
+  .wa__list {
+    gap: 1px;
+  }
+  .wa__list li {
+    font-size: 0.92rem;
+    line-height: 1.38;
+  }
+  .wa__pair {
+    padding-top: 12px;
+  }
+  .wa__k {
+    margin-bottom: 8px;
+  }
+  .wa__tile,
+  .wa__pair .wa__tile {
+    width: 44px;
+  }
+  .wa .handoff {
+    margin-top: 10px;
+    padding-top: 10px;
+  }
+  .wa .handoff__q {
+    font-size: 1.1rem;
+  }
+  .wa .handoff__arr {
+    width: 44px;
+  }
+}
+
+@media (min-width: 1081px) and (max-height: 760px) {
+  .wa__lede {
+    font-size: 0.86rem;
+  }
+  .wa__t {
+    font-size: 1.4rem;
+  }
+  .wa__pair .wa__list li:nth-child(n) {
+    line-height: 1.3;
+  }
+}
+
+@media (max-width: 900px) {
+  .wa__head {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .wa__lede {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .wa__rowi {
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
+    grid-template-areas: "tile title go" "list list list";
+    gap: 10px 14px;
+    min-height: 0;
+    padding: 14px 0;
+  }
+  .wa__n {
+    display: none;
+  }
+  .wa__rowi .wa__tile {
+    grid-area: tile;
+    width: 44px;
+  }
+  .wa__rowi .wa__t {
+    grid-area: title;
+    font-size: 1.35rem;
+  }
+  .wa__rowi .wa__go {
+    grid-area: go;
+  }
+  .wa__rowi .wa__list {
+    grid-area: list;
+    padding-left: 0;
+    border-left: 0;
+  }
+  .wa__pair {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+  }
+  .wa__pair > div:first-child,
+  .wa__pair > div:last-child {
+    padding: 0;
+    border-left: 0;
+  }
+  .wa .handoff {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .wa .handoff__q {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
+@media (max-width: 759px) {
+  .wa__h {
+    font-size: min(9vw, 5.4svh);
+  }
+  .wa__side {
+    min-height: 132px;
+    padding-top: calc(var(--hdr) + 12px);
+  }
+  .wa__names {
+    display: none;
+  }
+  .wa__pair .wa__tile {
+    width: 44px;
+  }
+  /* a page that can't fit one phone screen is two swipes */
+  .wa__pair {
     scroll-margin-top: calc(var(--hdr) + 16px);
   }
 }
@@ -6538,64 +5782,6 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
    breathes, a sweep of light travels down the inner edge, the floor light
    spills a little further and draws back, a glow sits deep behind the door
    ========================================================================== */
-.sy-halo,
-.sy-depth,
-.sy-sweep,
-.sy-spill {
-  transform-box: fill-box;
-  will-change: opacity, transform;
-}
-
-.sy-halo {
-  animation: sy-halo 14s ease-in-out infinite alternate;
-}
-
-.sy-depth {
-  opacity: 0.45;
-  animation: sy-depth 14s ease-in-out infinite alternate;
-}
-
-.sy-sweep {
-  opacity: 0;
-  animation: sy-sweep 14s ease-in-out infinite;
-}
-
-.sy-spill {
-  transform-origin: 50% 0%;
-  animation: sy-spill 14s ease-in-out infinite alternate;
-}
-
-@keyframes sy-halo {
-  from { opacity: 0.78; filter: blur(0); }
-  to { opacity: 1; filter: blur(3px); }
-}
-
-@keyframes sy-depth {
-  from { opacity: 0.32; }
-  to { opacity: 0.6; }
-}
-
-@keyframes sy-sweep {
-  0% { transform: translateY(0); opacity: 0; }
-  12% { opacity: 0.9; }
-  58% { opacity: 0.9; }
-  70% { transform: translateY(420px); opacity: 0; }
-  100% { transform: translateY(420px); opacity: 0; }
-}
-
-@keyframes sy-spill {
-  from { transform: scale(0.96, 0.94); opacity: 0.85; }
-  to { transform: scale(1.04, 1.04); opacity: 1; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .sy-halo,
-  .sy-depth,
-  .sy-sweep,
-  .sy-spill {
-    animation: none;
-  }
-}
 
 @media (max-width: 900px) {
   .wa__head {
@@ -6686,27 +5872,6 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
   to { filter: brightness(1.12); }
 }
 
-/* the doorway: a visible 6 s breath */
-.sy-halo { animation-duration: 6s; }
-.sy-depth { animation-duration: 6s; }
-.sy-spill { animation-duration: 6s; }
-.sy-sweep { animation-duration: 5s; }
-
-@keyframes sy-halo {
-  from { opacity: 0.55; filter: blur(0); }
-  to { opacity: 1; filter: blur(4px); }
-}
-
-@keyframes sy-depth {
-  from { opacity: 0.2; }
-  to { opacity: 0.75; }
-}
-
-@keyframes sy-spill {
-  from { transform: scale(0.9, 0.86); opacity: 0.7; }
-  to { transform: scale(1.06, 1.06); opacity: 1; }
-}
-
 /* the conversation's light: quicker, clearer */
 .wa-art__beam { animation-duration: 7s; }
 .wa-art__opening { animation-duration: 5s; }
@@ -6744,5 +5909,448 @@ html[data-hdr="dark"] .hdr .btn--shift .btn__arr {
   .hero2__facts > div,
   .hero2__pane {
     animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   The header — solid, so nothing shows through it as the page scrolls
+   ========================================================================== */
+.hdr,
+html:not([data-hdr="dark"]) .hdr {
+  background: var(--ref-cream);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+html[data-hdr="dark"] .hdr {
+  background: var(--ref-dark);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ==========================================================================
+   Buttons — one family: no fill, a fine line, a quiet hover. The call to
+   action is drawn in purple; the film in the page's own ink. On a hover the
+   line takes the accent, a faint tint comes up behind and the arrow moves on.
+   ========================================================================== */
+.btn,
+.fl__btn {
+  --b-line: rgba(11, 10, 14, 0.3);
+  --b-fg: var(--ref-ink);
+  --b-acc: var(--ref-purple);
+  --b-tint: rgba(124, 58, 237, 0.06);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 52px;
+  padding: 0 26px;
+  border: 1px solid var(--b-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--b-fg);
+  font: 500 1rem/1 var(--font);
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn--shift {
+  --b-line: var(--ref-purple);
+}
+
+.btn__arr {
+  display: inline-block;
+  color: var(--b-acc);
+  font-size: 1.1em;
+  transition: transform 0.35s var(--ease-out);
+}
+
+[data-tone="dark"] .btn,
+[data-tone="dark"] .fl__btn,
+html[data-hdr="dark"] .hdr .btn {
+  --b-line: rgba(255, 255, 255, 0.34);
+  --b-fg: #fff;
+  --b-acc: #d8b4fe;
+  --b-tint: rgba(216, 180, 254, 0.08);
+}
+
+[data-tone="dark"] .btn--shift,
+html[data-hdr="dark"] .hdr .btn--shift {
+  --b-line: #c084fc;
+}
+
+@media (hover: hover) {
+  .btn:hover,
+  .fl__btn:hover {
+    border-color: var(--b-acc);
+    background: var(--b-tint);
+  }
+  .btn:hover .btn__arr {
+    transform: translateX(4px);
+  }
+}
+
+.btn:active,
+.fl__btn:active {
+  background: var(--b-tint);
+}
+
+.btn:focus-visible,
+.fl__btn:focus-visible {
+  outline: 2px solid var(--b-acc);
+  outline-offset: 3px;
+}
+
+.btn[disabled] {
+  opacity: 0.55;
+  cursor: progress;
+}
+
+.btn--lg {
+  min-height: 56px;
+  padding: 0 30px;
+  font-size: 1.04rem;
+}
+
+.btn--sm,
+.hdr__cta {
+  min-height: 44px;
+  padding: 0 20px;
+  font-size: 0.92rem;
+}
+
+/* the film: a fine ring around the play mark */
+.fl__btn {
+  gap: 12px;
+  padding: 0 24px 0 8px;
+}
+
+.fl__btnplay {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--b-line);
+  border-radius: 50%;
+  color: var(--b-fg);
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.fl__btnplay .tri {
+  margin-left: 2px;
+  border-left-width: 8px;
+  border-top-width: 5px;
+  border-bottom-width: 5px;
+}
+
+@media (hover: hover) {
+  .fl__btn:hover .fl__btnplay {
+    border-color: var(--b-acc);
+    color: var(--b-acc);
+  }
+}
+
+.sy .sy__play {
+  margin-top: clamp(14px, 2.4vh, 24px);
+}
+
+/* the form's own button: the width of the form, the arrow at its edge */
+.rf__go {
+  width: 100%;
+  min-height: 56px;
+  justify-content: space-between;
+}
+
+/* back to the top, after a request */
+.rf__home {
+  min-height: 46px;
+  border: 1px solid rgba(11, 10, 14, 0.3);
+  background: transparent;
+  font-weight: 500;
+  transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+@media (hover: hover) {
+  .rf__home:hover {
+    border-color: var(--ref-purple);
+    background: rgba(124, 58, 237, 0.06);
+    color: var(--ref-ink);
+  }
+}
+
+/* the three conversations' arrows: a fine ring */
+.wa__go {
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(11, 10, 14, 0.22);
+  border-radius: 50%;
+  font-size: 1.1rem;
+  transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+@media (hover: hover) {
+  .wa__go:hover {
+    transform: none;
+    border-color: var(--ref-purple);
+    background: rgba(124, 58, 237, 0.06);
+  }
+}
+
+/* the form's choices: fine-lined pills; a choice made takes the purple line */
+.chip span {
+  border: 1px solid var(--ref-line);
+  border-radius: 999px;
+  background: transparent;
+  padding: 0 16px;
+  transition: border-color 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+}
+
+@media (hover: hover) {
+  .chip:hover span {
+    border-color: rgba(124, 58, 237, 0.55);
+  }
+}
+
+.chip input:checked + span {
+  border-color: var(--ref-purple);
+  background: rgba(124, 58, 237, 0.07);
+  color: var(--ref-purple);
+}
+
+/* phones: the opening's two buttons share the width */
+@media (max-width: 759px) {
+  .hero2__cta .btn,
+  .hero2__cta .fl__btn {
+    width: 100%;
+    min-height: 54px;
+  }
+  .hero2__cta .btn {
+    justify-content: space-between;
+  }
+  .hero2__cta .fl__btn {
+    justify-content: center;
+  }
+}
+
+/* the smallest phones: the header's button keeps to its words */
+@media (max-width: 374px) {
+  .hdr__cta {
+    padding: 0 14px;
+  }
+  .hdr__cta .btn__arr {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   02 The meeting point — the doorway. The room is still; its light moves.
+   Each light is its own layer, so only opacity (and two small travelling
+   gleams) change: a violet halo and violet light on the walls breathe, the
+   door's reflection on the floor brightens with them, a gleam runs down the
+   door's edge and a ripple of light runs out along the floor. Every layer is
+   drawn to the room's height, so it lines up exactly with the door. Still,
+   at a resting glow, with reduced motion.
+   ========================================================================== */
+.sy-room {
+  position: absolute;
+  top: var(--hdr);
+  bottom: 0;
+  left: 51%;
+  width: 22%;
+  overflow: clip;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 78%, transparent 100%), linear-gradient(180deg, transparent 0, #000 6%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 78%, transparent 100%), linear-gradient(180deg, transparent 0, #000 6%);
+  mask-composite: intersect;
+}
+
+.sy-room > svg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  width: auto;
+  max-width: none;
+  aspect-ratio: 1 / 2;
+  overflow: visible;
+  transform: translateX(-50%);
+}
+
+.sy-halo {
+  opacity: 0.8;
+}
+
+.sy-violet {
+  opacity: 0.6;
+}
+
+.sy-reflect {
+  opacity: 0.75;
+}
+
+.sy-sweep {
+  opacity: 0;
+}
+
+.sy-ripple {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sy-halo {
+    animation: sy-breathe 6s ease-in-out infinite alternate;
+  }
+  .sy-violet {
+    animation: sy-violet 7s ease-in-out infinite alternate;
+  }
+  .sy-reflect {
+    animation: sy-breathe 6s ease-in-out infinite alternate;
+  }
+  .sy-sweep {
+    animation: sy-sweep 5s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+  }
+  .sy-ripple {
+    animation: sy-ripple 5s cubic-bezier(0.3, 0, 0.3, 1) infinite;
+  }
+}
+
+@keyframes sy-breathe {
+  from { opacity: 0.55; }
+  to { opacity: 1; }
+}
+
+@keyframes sy-violet {
+  from { opacity: 0.3; }
+  to { opacity: 0.95; }
+}
+
+@keyframes sy-sweep {
+  0% { transform: translateY(0); opacity: 0; }
+  14% { opacity: 0.9; }
+  62% { opacity: 0.9; }
+  76% { transform: translateY(440px); opacity: 0; }
+  100% { transform: translateY(440px); opacity: 0; }
+}
+
+@keyframes sy-ripple {
+  0% { transform: translateY(0); opacity: 0; }
+  18% { opacity: 1; }
+  70% { opacity: 0.5; }
+  100% { transform: translateY(300px); opacity: 0; }
+}
+
+/* tablets and phones: the doorway opens the page, above the date */
+@media (max-width: 1080px) {
+  .sy-room {
+    position: relative;
+    inset: auto;
+    flex: none;
+    width: auto;
+    height: clamp(240px, 38svh, 380px);
+    margin: 0 calc(var(--gutter) * -1);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 14%, #000 86%, transparent 100%), linear-gradient(180deg, transparent 0, #000 12%, #000 72%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 14%, #000 86%, transparent 100%), linear-gradient(180deg, transparent 0, #000 12%, #000 72%, transparent 100%);
+  }
+}
+
+/* ==========================================================================
+   The agenda's line runs through the centre of every stop: past the time
+   column and the gap after it, to the middle of the stop's own column
+   ========================================================================== */
+@media (min-width: 760px) {
+  .sy__agenda::before {
+    left: calc(var(--at) + 14px + 11px);
+  }
+}
+
+/* ==========================================================================
+   The footer — LinkedIn, and no room kept for the bar that has gone
+   ========================================================================== */
+.ftr__in {
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 50%;
+  color: #fff;
+  transition: border-color 0.3s ease, color 0.3s ease, background-color 0.3s ease;
+}
+
+.ftr__in svg {
+  width: 17px;
+  height: 17px;
+}
+
+@media (hover: hover) {
+  .ftr__in:hover {
+    border-color: #c084fc;
+    background: rgba(216, 180, 254, 0.08);
+    color: #d8b4fe;
+  }
+}
+
+.ftr__in:focus-visible {
+  outline: 2px solid #d8b4fe;
+  outline-offset: 3px;
+}
+
+@media (max-width: 759px) {
+  .ftr {
+    padding-bottom: calc(40px + env(safe-area-inset-bottom));
+  }
+}
+
+/* phones: the opening's facts as a list — every label on one line */
+@media (max-width: 759px) {
+  .hero2__facts {
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 24px;
+    border-top: 0;
+  }
+  .hero2__facts > div,
+  .hero2__facts > div:nth-child(even) {
+    min-height: 56px;
+    padding: 10px 0 10px 52px;
+    border-left: 0;
+    border-top: 1px solid rgba(11, 10, 14, 0.08);
+  }
+  .hero2__ftile {
+    left: 0;
+    top: 50%;
+    width: 38px;
+    height: 38px;
+    transform: translateY(-50%);
+  }
+  .hero2__facts dt {
+    margin-bottom: 4px;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+  }
+  .hero2__facts dd {
+    font-size: 1rem;
+  }
+}
+
+/* tablets and phones: the conversation's light opens the page at full
+   height below the header, as the doorway opens the meeting point */
+@media (max-width: 1080px) {
+  .wa__side,
+  .wa__side:nth-child(n) {
+    min-height: calc(var(--hdr) + clamp(170px, 26svh, 240px));
+  }
+}
+
+/* the header's chapters stay legible on the solid header (4.5:1 and up) */
+.story a {
+  opacity: 0.68;
+}
+
+/* phones: the facts' labels at a readable size */
+@media (max-width: 759px) {
+  .hero2__facts dt {
+    font-size: 0.75rem;
   }
 }
