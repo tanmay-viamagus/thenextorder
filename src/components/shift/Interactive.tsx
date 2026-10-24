@@ -146,8 +146,20 @@ export function Reveal() {
       window.setTimeout(() => delete m.dataset.busy, 3200);
     };
     panels.forEach((p) => p.addEventListener("pointerenter", replay));
+    // a scene whose light comes on as you arrive (the doorway): lit while in
+    // view, dark again once it has left — so it plays from the start each visit
+    const lights = [...document.querySelectorAll<HTMLElement>("[data-light]")];
+    const lio =
+      "IntersectionObserver" in window
+        ? new IntersectionObserver(
+            (entries) => entries.forEach((en) => en.target.classList.toggle("is-lit", en.isIntersecting)),
+            { rootMargin: "-18% 0px -18% 0px" },
+          )
+        : null;
+    lights.forEach((e) => (lio ? lio.observe(e) : e.classList.add("is-lit")));
     return () => {
       io.disconnect();
+      lio?.disconnect();
       document.removeEventListener("focusin", onFocus);
       panels.forEach((p) => p.removeEventListener("pointerenter", replay));
     };

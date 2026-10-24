@@ -176,7 +176,7 @@ function Doorway() {
 export function Evening() {
   const where = [event.venue, event.city].filter(Boolean).join(", ");
   return (
-    <section id="evening" className="sy" data-tone="dark" data-act="evening" aria-labelledby="sy-h">
+    <section id="evening" className="sy" data-tone="dark" data-act="evening" data-light aria-labelledby="sy-h">
       <Doorway />
       <div className="sy__grid">
         <div className="sy__l">

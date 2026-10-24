@@ -7127,3 +7127,28 @@ html[data-hdr="dark"] .hdr .btn--shift {
     border-left: 0;
   }
 }
+
+/* the doorway's light comes on as you arrive: the room waits dim and still;
+   in view, the light rises, a gleam runs down the door and a ripple runs out
+   across the floor, then it settles into its breathing. Each visit replays.
+   (Without script, or with reduced motion, the room is simply lit.) */
+@media (prefers-reduced-motion: no-preference) {
+  .js .sy:not(.is-lit) .sy-room {
+    opacity: 0.18;
+  }
+  .js .sy:not(.is-lit) .sy-halo,
+  .js .sy:not(.is-lit) .sy-violet,
+  .js .sy:not(.is-lit) .sy-reflect,
+  .js .sy:not(.is-lit) .sy-sweep,
+  .js .sy:not(.is-lit) .sy-ripple {
+    animation: none;
+  }
+  .js .sy.is-lit .sy-room {
+    animation: sy-on 1.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+@keyframes sy-on {
+  from { opacity: 0.18; }
+  to { opacity: 1; }
+}
