@@ -10,12 +10,12 @@ import { siteUrl } from "@/lib/site-url";
  *
  * Needs RESEND_API_KEY, and the sending domain (thenextorder.events)
  * verified in that Resend account. The event's domain has no mailbox, so
- * replies go to Shreenath's own inbox. CONFIRMATION_FROM and
+ * replies go to Shreenath. CONFIRMATION_FROM and
  * CONFIRMATION_REPLY_TO override them. Without a key nothing is sent and the
  * registration is unaffected — it is already saved by the time this runs.
  */
 export const DEFAULT_FROM = "Shreenath Rao <host@thenextorder.events>";
-export const DEFAULT_REPLY_TO = "Shreenath.rao@viamagus.com";
+export const DEFAULT_REPLY_TO = "shreenath@viamagusselect.ai";
 
 const BROCHURE = path.join(process.cwd(), "src/assets/the-next-order-brochure.pdf");
 export const BROCHURE_NAME = "The-NEXT-Order-Brochure.pdf";
