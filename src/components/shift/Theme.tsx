@@ -78,7 +78,7 @@ export function Theme() {
                   <li key={t}>{t}</li>
                 ))}
               </ul>
-              <InterestLink className="wa__go" href={`/register?interest=${s.k}`} interest={INTEREST_BY_KEY[s.k]}>
+              <InterestLink className="wa__go" href={`/register?interest=${s.k}#request`} interest={INTEREST_BY_KEY[s.k]}>
                 Request a place <span className="sr-only">for the {s.word.toLowerCase()} conversation</span>
                 <span className="btn__arr" aria-hidden="true">
                   →

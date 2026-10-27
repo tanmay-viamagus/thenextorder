@@ -262,7 +262,7 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
   const d = (s: number): CSSProperties => ({ ["--d" as string]: `${s}s` });
 
   // the invitation: over the site it closes the film and goes to the form; on /film it opens /register
-  const requestHref = mode === "overlay" ? "#request" : "/register";
+  const requestHref = mode === "overlay" ? "#request" : "/register#request";
   const request = (e: MouseEvent<HTMLAnchorElement>) => {
     if (mode !== "overlay") return;
     e.preventDefault();

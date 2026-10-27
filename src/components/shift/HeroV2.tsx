@@ -55,7 +55,7 @@ export function HeroV2() {
           <p className="hero2__sub">{keep(invite.hero)}</p>
         </div>
         <div className="hero2__cta">
-          <a className="btn btn--shift btn--lg" href="/register">
+          <a className="btn btn--shift btn--lg" href="/register#request">
             {cta.primary}{" "}
             <span className="btn__arr" aria-hidden="true">
               →

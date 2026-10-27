@@ -59,7 +59,16 @@ export default async function Register({
           <p className="reg__note">{agendaNote.replace(/^Tentative\. /, "")}</p>
         </div>
         <div className="reg__when">
-          <p className="reg__k">{keep(statusLine())}</p>
+          <p className="reg__k">
+            {statusLine()
+              .split(" · ")
+              .map((part, k) => (
+                <span key={part} className="reg__part">
+                  {k ? " · " : ""}
+                  {keep(part)}
+                </span>
+              ))}
+          </p>
           <p className="reg__host">
             <span>Organised by {knownFacts.host}</span>
             <span aria-hidden="true">·</span>
@@ -70,7 +79,8 @@ export default async function Register({
           </p>
         </div>
       </aside>
-      <main className="reg__main">
+      {/* links from the site land here (/register#request); the brochure's QR opens the whole page */}
+      <main id="request" className="reg__main">
         <h1 className="reg__h">Find your place in the conversation.</h1>
         <p className="reg__lede">{keep(invite.summary)}</p>
         <InviteForm source="register" preset={preset} />

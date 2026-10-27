@@ -47,7 +47,7 @@ export const shareMailto = (() => {
     "The NEXT Order: an invite-only symposium for Hyderabad’s GCC leaders and decision-makers on how AI is reshaping the way centres hire, build and lead.",
     "Thursday 3 December 2026, from 3:30 PM IST, at T-Hub, Hyderabad.",
     "",
-    `Request your place: ${siteAddress}/register?ref=share`,
+    `See the evening and request your place: ${siteAddress}/?ref=share`,
   ].join("\n");
   return `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 })();

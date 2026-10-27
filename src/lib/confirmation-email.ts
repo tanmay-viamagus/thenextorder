@@ -68,6 +68,7 @@ export function confirmationEmail(p: ConfirmationInput, f: ConfirmationFacts) {
   const preheader = `${p.updated ? "Request updated" : "Request received"}. ${f.date} · ${f.time} · ${f.venue}. The brochure is attached.`;
   const status = p.updated ? "Request updated" : "Request received";
   const evening = `${f.siteUrl}/#evening`;
+  const hold = `${f.siteUrl}/the-next-order.ics`;
 
   const rows = details
     .map(
@@ -130,6 +131,7 @@ export function confirmationEmail(p: ConfirmationInput, f: ConfirmationFacts) {
           <a href="${esc(evening)}" style="display:inline-block;padding:13px 24px;font:500 15px/1 ${SANS};color:${C.ink};text-decoration:none;">See the agenda and the film <span style="color:${C.purple};">&rarr;</span></a>
         </td>
       </tr></table>
+      <p style="margin:16px 0 0;font:14px/1.5 ${SANS};color:${C.ink2};"><a href="${esc(hold)}" style="color:${C.purple};">Hold the date</a>: adds 3 December to your calendar, all day.</p>
     </td></tr>
     <tr><td style="background:${C.dark};padding:22px 40px;border-radius:0 0 14px 14px;">
       <p style="margin:0;font:12px/1.6 ${SANS};color:#B9B4C4;">Organised by Viamagus · Ecosystem partner Hyderabad Mavericks</p>
@@ -167,6 +169,7 @@ export function confirmationEmail(p: ConfirmationInput, f: ConfirmationFacts) {
     SIGNATORY.title,
     "",
     `See the agenda and the film: ${evening}`,
+    `Hold the date (adds 3 December to your calendar): ${hold}`,
     "Questions? Just reply to this email.",
   ].join("\n");
 

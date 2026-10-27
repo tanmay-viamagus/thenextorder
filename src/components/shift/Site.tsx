@@ -47,7 +47,7 @@ export function Site() {
         <ViaMagusLogo href={officialLinks.viamagus} />
         <StoryNav />
         <div className="hdr__end">
-          <a className="btn btn--shift btn--sm hdr__cta" href="/register">
+          <a className="btn btn--shift btn--sm hdr__cta" href="/register#request">
             {cta.primary}{" "}
             <span className="btn__arr" aria-hidden="true">
               →
@@ -173,7 +173,7 @@ export function Site() {
             <a className="ftr__go" href="/film">
               The film <span aria-hidden="true">→</span>
             </a>
-            <a className="ftr__go" href="/register">
+            <a className="ftr__go" href="/register#request">
               {cta.primary} <span aria-hidden="true">→</span>
             </a>
             <a className="ftr__in" href={officialLinks.linkedin} target="_blank" rel="noopener noreferrer">

@@ -1366,3 +1366,8 @@
 .fp.is-idle .fbar {
   opacity: 0.7;
 }
+
+/* the controls, likewise solid where they cross the letterbox's edge */
+.fp__controls {
+  background: #0b0a0e;
+}

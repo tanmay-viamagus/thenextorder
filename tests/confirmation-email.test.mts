@@ -24,6 +24,7 @@ test("carries the event's details, the whole agenda and the signature", () => {
   assert.ok(html.includes("Request received") && text.startsWith("REQUEST RECEIVED"));
   assert.ok(html.includes("Places</td>") && !html.includes("Format</td>"));
   assert.ok(html.includes('href="https://thenextorder.events/#evening"') && html.includes("See the agenda and the film"));
+  assert.ok(html.includes('href="https://thenextorder.events/the-next-order.ics"') && text.includes("/the-next-order.ics"));
   assert.ok(html.includes("Questions? Just reply to this email.") && !/hi@viamagus\.com/.test(html + text));
   assert.ok(html.includes(SIGNATORY.name) && html.includes(SIGNATORY.title));
   assert.ok(text.includes(`${SIGNATORY.name}\n${SIGNATORY.title}`));

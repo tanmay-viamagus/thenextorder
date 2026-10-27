@@ -7513,3 +7513,21 @@ html[data-hdr="dark"] .hdr .btn--shift {
     display: none;
   }
 }
+
+/* round two: the date line breaks only between its parts; the hero's facts
+   on phones keep one edge */
+.reg__part {
+  white-space: nowrap;
+}
+
+.rf--done .rf__p b {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 759px) {
+  .hero2__facts > div + div {
+    padding: 10px 0 10px 52px;
+    border-left: 0;
+  }
+}

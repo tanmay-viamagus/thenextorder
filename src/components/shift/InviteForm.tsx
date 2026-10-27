@@ -8,7 +8,7 @@ import { cta } from "@/content/story";
 import { greetingName } from "@/lib/confirmation-email";
 import { normalizeLinkedIn } from "@/lib/linkedin";
 
-type State = { kind: "idle" } | { kind: "sending" } | { kind: "done"; name: string; updated: boolean } | { kind: "failed"; message: string };
+type State = { kind: "idle" } | { kind: "sending" } | { kind: "done"; name: string; email: string; updated: boolean } | { kind: "failed"; message: string };
 
 /** A conversation chosen elsewhere on the page: the form ticks it (detail: the INTERESTS value). */
 const PICK_INTEREST = "nxo:pick-interest";
@@ -27,6 +27,39 @@ function referral(): string {
       .slice(0, 24);
     if (ref) sessionStorage.setItem("nxo-ref", ref);
     return ref || sessionStorage.getItem("nxo-ref") || "";
+  } catch {
+    return "";
+  }
+}
+
+/**
+ * What's typed so far, kept for the visit: someone who leaves for the
+ * LinkedIn app to copy their link comes back to the form as they left it.
+ */
+const DRAFT = "nxo-draft";
+const DRAFT_FIELDS = ["name", "email", "organisation", "linkedin", "role"] as const;
+
+function saveDraft(form: HTMLFormElement) {
+  try {
+    const fd = new FormData(form);
+    sessionStorage.setItem(DRAFT, JSON.stringify(Object.fromEntries(DRAFT_FIELDS.map((k) => [k, String(fd.get(k) ?? "")]))));
+  } catch {}
+}
+
+function restoreDraft(form: HTMLFormElement): string {
+  try {
+    const d = JSON.parse(sessionStorage.getItem(DRAFT) ?? "{}") as Record<string, string>;
+    for (const k of DRAFT_FIELDS) {
+      if (!d[k]) continue;
+      if (k === "role") {
+        const r = form.querySelector<HTMLInputElement>(`input[name="role"][value="${CSS.escape(d[k])}"]`);
+        if (r) r.checked = true;
+      } else {
+        const i = form.querySelector<HTMLInputElement>(`input[name="${k}"]`);
+        if (i && !i.value) i.value = d[k];
+      }
+    }
+    return d.role ?? "";
   } catch {
     return "";
   }
@@ -146,7 +179,10 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
       });
       const json = (await res.json().catch(() => ({}))) as { ok?: boolean; updated?: boolean; errors?: Record<string, string>; error?: string };
       if (res.ok && json.ok) {
-        setState({ kind: "done", name: greetingName(v("name")), updated: !!json.updated });
+        setState({ kind: "done", name: greetingName(v("name")), email: v("email"), updated: !!json.updated });
+        try {
+          sessionStorage.removeItem(DRAFT);
+        } catch {}
         return;
       }
       if (json.errors) {
@@ -162,8 +198,11 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
     }
   };
 
-  // remember the referral as soon as the form is seen, before any navigation
-  useEffect(() => void referral(), []);
+  // remember the referral as soon as the form is seen, before any navigation; bring back a draft
+  useEffect(() => {
+    referral();
+    if (formRef.current) setRole(restoreDraft(formRef.current));
+  }, []);
 
   const err = (k: string) =>
     errors[k] ? (
@@ -189,7 +228,7 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
           {state.updated
             ? "We already had your request, and we’ve updated it with these details."
             : "The Viamagus team reads every request; invitations follow before 3 December."}{" "}
-          A note from Shreenath Rao is on its way. If it isn’t in your inbox, check junk.
+          A note from Shreenath Rao is on its way to <b>{state.email}</b>. If it isn’t there, check junk.
         </p>
         <div className="rf__next">
           <a className="btn btn--shift btn--sm" href="/the-next-order.ics" download="The-NEXT-Order.ics">
@@ -226,13 +265,22 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
   const sending = state.kind === "sending";
   const id = (k: string) => `${k}-${source}`;
   return (
-    <form ref={formRef} className="rf" onSubmit={submit} noValidate aria-labelledby={id("rf-h")} aria-busy={sending}>
+    <form
+      ref={formRef}
+      className="rf"
+      onSubmit={submit}
+      onInput={(e) => saveDraft(e.currentTarget)}
+      noValidate
+      aria-labelledby={id("rf-h")}
+      aria-busy={sending}
+    >
       <div className="rf__head">
         <p className="rf__k" id={id("rf-h")}>
           {cta.primary}
         </p>
         <p className="rf__time">About 30 seconds</p>
       </div>
+      <p className="rf__help rf__for">Requesting for your leader? Enter their name, work email, LinkedIn and role; we’ll write to them.</p>
       <noscript>
         <p className="rf__fail">
           This form needs JavaScript. To request an invitation, email <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
@@ -273,12 +321,11 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
         />
         {err("linkedin") ?? (
           <span className="rf__help" id={`linkedin-${source}-help`}>
-            Your profile link, or just your handle. It helps the Viamagus team confirm professional details.
-            <span className="rf__help-m"> In the LinkedIn app: your profile → ⋯ → Share via → Copy link.</span>
+            A link or just your handle, e.g. priya-raman.
+            <span className="rf__help-m"> In the LinkedIn app: Profile → ⋯ → Share via → Copy link.</span>
           </span>
         )}
       </label>
-      <p className="rf__help rf__for">Requesting for someone else? Use their name, work email and LinkedIn; we’ll write to them.</p>
 
       <fieldset className="rf__set" aria-describedby={errors.role ? `role-${source}-err` : undefined}>
         <legend>Your role</legend>
@@ -326,7 +373,7 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
 
         <fieldset className="rf__set">
           <legend>
-            My centre is taking on <em>Optional</em>
+            My centre is taking on <em>Optional · helps us plan the room</em>
           </legend>
           <div className="rf__chips">
             {FOCUS.map((s) => (
