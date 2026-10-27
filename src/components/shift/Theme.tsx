@@ -1,5 +1,7 @@
+import { INTEREST_BY_KEY } from "@/content/register";
 import { theme } from "@/content/story";
 import { Icon, type IconName } from "./Icons";
+import { InterestLink } from "./InviteForm";
 import { ChapterLabel, Handoff } from "./Story";
 
 const TOPIC_ICON: Record<string, IconName> = { talent: "users", technology: "chip", leadership: "chart" };
@@ -12,8 +14,8 @@ const TOPIC_ICON: Record<string, IconName> = { talent: "users", technology: "chi
  * staggered cycles, still with reduced motion). Right: the brochure's "Why
  * this event" — the question, the theme beside it, the three conversations
  * as equal rows, who it's for and what to expect, and the closing line as
- * the hand-off. Each row's arrow opens the form with that conversation
- * ticked.
+ * the hand-off. Each row's "Request a place" ticks that conversation in the
+ * form and goes there (or opens /register with it ticked).
  */
 function Installation() {
   return (
@@ -76,10 +78,12 @@ export function Theme() {
                   <li key={t}>{t}</li>
                 ))}
               </ul>
-              <a className="wa__go" href={`/register?interest=${s.k}`}>
-                <span className="sr-only">Request your place — interested in {s.word.toLowerCase()}</span>
-                <span aria-hidden="true">→</span>
-              </a>
+              <InterestLink className="wa__go" href={`/register?interest=${s.k}`} interest={INTEREST_BY_KEY[s.k]}>
+                Request a place <span className="sr-only">for the {s.word.toLowerCase()} conversation</span>
+                <span className="btn__arr" aria-hidden="true">
+                  →
+                </span>
+              </InterestLink>
             </li>
           ))}
         </ol>

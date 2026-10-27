@@ -67,6 +67,11 @@ export const invite = {
   line: "An invitation for Hyderabad’s GCC leaders.",
   who: "For GCC heads and site leaders; CTOs, CIOs and engineering leaders; CHROs and talent leaders.",
   what: "A Viamagus event on where global centres go next: what they own, the value they create and the capabilities they’ll need.",
+  /** the opening's line: who it is for, and what it is about */
+  hero: "An invite-only symposium for Hyderabad’s GCC leaders and decision-makers on how AI is reshaping the way centres hire, build and lead.",
+  /** what a guest leaves with — the brochure's "What to expect", outcome first */
+  outcomes:
+    "Leave with a sharper case for HQ: leadership panels and discussions, then networking with Hyderabad’s GCC leaders over a cocktail dinner.",
   /** the what, in one sentence — used where there's room for only one */
   summary:
     "An invite-only symposium at T-Hub, Hyderabad, for GCC leaders and decision-makers — on how AI is reshaping the way GCCs hire, build and lead.",
@@ -89,10 +94,10 @@ export const theme = {
   ],
   who: ["GCC heads and site leaders", "CTOs, CIOs and engineering leaders", "CHROs and talent leaders"],
   expect: [
+    "Leave with a sharper case for HQ",
     "Leadership panels and discussions",
     "A practical playbook for responsible AI",
     "Networking with Hyderabad’s GCC leaders",
-    "Leave with a sharper case for HQ",
   ],
   close: ["Every centre’s plan is different.", "That is the conversation."],
 };

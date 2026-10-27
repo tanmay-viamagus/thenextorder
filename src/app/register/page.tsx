@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { MavericksLogo, ViaMagusLogo } from "@/components/Brand";
 import { InviteForm } from "@/components/shift/InviteForm";
-import { agenda, knownFacts, statusLine } from "@/content/event";
+import { agenda, agendaNote, knownFacts, statusLine } from "@/content/event";
 import { INTEREST_BY_KEY } from "@/content/register";
 import { invite } from "@/content/story";
+import { keep } from "@/lib/text";
 
 const title = "Register | The NEXT Order — Viamagus";
 const description =
@@ -41,7 +42,7 @@ export default async function Register({
             <span>The NEXT</span> <span>Order.</span>
           </p>
         </div>
-        {/* the agenda, as the final brochure gives it — no products here */}
+        {/* the agenda, as the final brochure gives it — compact on phones */}
         <div className="reg__agenda">
           <p className="reg__k">Tentative agenda</p>
           <ol>
@@ -50,23 +51,28 @@ export default async function Register({
                 <span className="reg__at">{a.time ?? ""}</span>
                 <span>
                   {a.kind ? <span className="reg__kind">{a.kind}</span> : null}
-                  {a.t}
+                  {keep(a.t)}
                 </span>
               </li>
             ))}
           </ol>
+          <p className="reg__note">{agendaNote.replace(/^Tentative\. /, "")}</p>
         </div>
         <div className="reg__when">
-          <p className="reg__k">{statusLine()}</p>
+          <p className="reg__k">{keep(statusLine())}</p>
           <p className="reg__host">
-            Organised by {knownFacts.host} · In collaboration with
-            <MavericksLogo className="reg__mav" height={18} />
+            <span>Organised by {knownFacts.host}</span>
+            <span aria-hidden="true">·</span>
+            <span className="reg__with">
+              In collaboration with
+              <MavericksLogo className="reg__mav" height={18} />
+            </span>
           </p>
         </div>
       </aside>
       <main className="reg__main">
         <h1 className="reg__h">Find your place in the conversation.</h1>
-        <p className="reg__lede">{invite.summary}</p>
+        <p className="reg__lede">{keep(invite.summary)}</p>
         <InviteForm source="register" preset={preset} />
       </main>
     </div>

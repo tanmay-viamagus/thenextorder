@@ -8,7 +8,7 @@
 export type EventDetails = {
   /** e.g. "Thursday, 12 March 2027" */
   date: string | null;
-  /** e.g. "From 3:30 PM" */
+  /** e.g. "From 3:30 PM IST" */
   time: string | null;
   /** ISO start, for calendars and structured data */
   start: string | null;
@@ -26,7 +26,7 @@ export type EventDetails = {
 // confirmed in the event brochure (Oct 2026)
 export const event: EventDetails = {
   date: "Thursday 3 December 2026",
-  time: "From 3:30 PM",
+  time: "From 3:30 PM IST",
   start: "2026-12-03T15:30:00+05:30",
   city: "Hyderabad",
   venue: "T-Hub",
@@ -34,6 +34,23 @@ export const event: EventDetails = {
   speakers: [],
   registrationUrl: null,
 };
+
+/** The event's own address, for links that travel (a forwarded invitation, the calendar file). */
+export const siteAddress = "https://thenextorder.events";
+
+/** "Send them the invitation": an email the visitor writes to a colleague, with the link to request a place. */
+export const shareMailto = (() => {
+  const subject = "The NEXT Order · 3 December · T-Hub";
+  const body = [
+    "I thought you should be in the room for this.",
+    "",
+    "The NEXT Order: an invite-only symposium for Hyderabad’s GCC leaders and decision-makers on how AI is reshaping the way centres hire, build and lead.",
+    "Thursday 3 December 2026, from 3:30 PM IST, at T-Hub, Hyderabad.",
+    "",
+    `Request your place: ${siteAddress}/register?ref=share`,
+  ].join("\n");
+  return `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+})();
 
 /** Until a dedicated RSVP exists, interest goes to the official Viamagus contact section. */
 export const interestUrl = "https://viamagus.com/#contact";
@@ -71,12 +88,13 @@ export const organisers: { role: string; name: string; line: string; logo?: "mav
 
 /** The tentative agenda, from the final brochure. Only the start is timed; the rest is announced later. */
 export const agenda: { k: string; t: string; time?: string; kind?: string; tag?: string }[] = [
-  { k: "arrive", time: "3:30 PM", t: "Arrival and registration" },
+  { k: "arrive", time: "3:30 PM IST", t: "Arrival and registration" },
   { k: "welcome", t: "Welcome address" },
   { k: "panel-1", kind: "Panel discussion", t: "Rethinking GCC strategy in an AI-first world" },
   { k: "talk", kind: "Expert talk", t: "Adopting responsible AI" },
   { k: "panel-2", kind: "Panel discussion", t: "Hiring and people leadership in the age of the agentic workforce" },
-  { k: "demo", t: "Synthia AI, live demo", tag: "Live" },
+  // the one product on the evening, said plainly
+  { k: "demo", kind: "A Viamagus product", t: "Synthia AI, live demo", tag: "Live" },
   { k: "dinner", t: "Cocktail dinner" },
 ];
 export const agendaNote = "Tentative. Timings, speakers and final panel themes to be announced.";
@@ -106,7 +124,7 @@ export const officialLinks = {
   privacy: "https://viamagus.com/privacy-policy",
 } as const;
 
-/** One line: when and where, e.g. "Thursday 3 December 2026 · From 3:30 PM · T-Hub, Hyderabad". Unconfirmed parts say so. */
+/** One line: when and where, e.g. "Thursday 3 December 2026 · From 3:30 PM IST · T-Hub, Hyderabad". Unconfirmed parts say so. */
 export function statusLine(e: EventDetails = event): string {
   const place = [e.venue, e.city].filter(Boolean).join(", ");
   const parts: string[] = [];

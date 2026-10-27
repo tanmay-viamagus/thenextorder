@@ -5,14 +5,21 @@
  *
  * Accepts linkedin.com, www.linkedin.com and two-letter country subdomains
  * (e.g. in.linkedin.com); a missing scheme or http:// is upgraded to https://.
+ * A bare handle ("priya-raman") or "/in/priya-raman" is read as that profile.
  * Returns the canonical https://www.linkedin.com/in/<slug>.
  */
 const HOST = /^(?:www\.|[a-z]{2}\.)?linkedin\.com$/;
-const PATH = /^\/in\/([A-Za-z0-9\-_%.]{3,100})\/?$/;
+const SLUG = "[A-Za-z0-9\\-_%.]{3,100}";
+const PATH = new RegExp(`^/in/(${SLUG})/?$`);
+/** a handle on its own, or the profile path without the domain */
+const HANDLE = new RegExp(`^(?:/?in/)?@?(${SLUG})/?$`);
 
 export function normalizeLinkedIn(raw: string): { ok: true; url: string } | { ok: false; error: string } {
   const v = raw.trim();
   if (!v) return { ok: false, error: "Please add your LinkedIn profile link." };
+  // a handle has no dot-separated host in it, so it can't be mistaken for another site
+  const h = !v.includes(".") || /^\/?in\//.test(v) ? HANDLE.exec(v) : null;
+  if (h && h[1].toLowerCase() !== "linkedin") return { ok: true, url: `https://www.linkedin.com/in/${h[1]}` };
   let u: URL;
   try {
     u = new URL(/^https?:\/\//i.test(v) ? v : `https://${v}`);

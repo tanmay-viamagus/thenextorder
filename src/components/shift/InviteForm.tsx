@@ -1,22 +1,88 @@
 "use client";
 
-import { useEffect, useRef, useState, type FormEvent } from "react";
-import { contactEmail } from "@/content/event";
+import { useEffect, useRef, useState, type FormEvent, type MouseEvent, type ReactNode } from "react";
+import { FilmButton } from "@/components/film/FilmOverlay";
+import { contactEmail, shareMailto } from "@/content/event";
 import { FOCUS, INTERESTS, SEATS } from "@/content/register";
 import { cta } from "@/content/story";
+import { greetingName } from "@/lib/confirmation-email";
 import { normalizeLinkedIn } from "@/lib/linkedin";
 
 type State = { kind: "idle" } | { kind: "sending" } | { kind: "done"; name: string; updated: boolean } | { kind: "failed"; message: string };
 
+/** A conversation chosen elsewhere on the page: the form ticks it (detail: the INTERESTS value). */
+const PICK_INTEREST = "nxo:pick-interest";
+
 /**
- * Request an invitation. Three typed fields; everything else is a tap.
- * Submissions are stored (POST /api/register → Neon Postgres) and listed for
- * the organisers at /register/response. `preset` preselects a practice
- * (from /register?interest=talent|technology|leadership).
+ * Where the visitor came from (?ref= or ?utm_source=), kept for the visit so
+ * it survives a click through to /register. Stored with the request as
+ * "site:linkedin", so each invitation channel can be traced.
+ */
+function referral(): string {
+  try {
+    const q = new URLSearchParams(window.location.search);
+    const ref = (q.get("ref") ?? q.get("utm_source") ?? "")
+      .toLowerCase()
+      .replace(/[^a-z0-9._-]+/g, "-")
+      .slice(0, 24);
+    if (ref) sessionStorage.setItem("nxo-ref", ref);
+    return ref || sessionStorage.getItem("nxo-ref") || "";
+  } catch {
+    return "";
+  }
+}
+
+/** "Know a GCC leader who should be in the room?" — an email the visitor sends a colleague. */
+function Share() {
+  return (
+    <p className="rf__share">
+      Know a GCC leader who should be in the room?{" "}
+      <a href={shareMailto}>
+        Send them the invitation <span aria-hidden="true">→</span>
+      </a>
+    </p>
+  );
+}
+
+/**
+ * A theme's "Request a place": on the home page it ticks that conversation in
+ * the form and goes there; elsewhere (or without script) it opens /register
+ * with the conversation ticked.
+ */
+export function InterestLink({ href, interest, className, children }: { href: string; interest: string; className?: string; children: ReactNode }) {
+  const go = (e: MouseEvent<HTMLAnchorElement>) => {
+    const form = document.querySelector<HTMLElement>("#request form.rf");
+    if (!form || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    window.dispatchEvent(new CustomEvent(PICK_INTEREST, { detail: interest }));
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.getElementById("request")?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    // once the form has shown the ticked chip (phones open the optional details first)
+    requestAnimationFrame(() =>
+      form.querySelector<HTMLInputElement>(`input[name="interests"][value="${CSS.escape(interest)}"]`)?.focus({ preventScroll: true }),
+    );
+  };
+  return (
+    <a className={className} href={href} onClick={go}>
+      {children}
+    </a>
+  );
+}
+
+/**
+ * Request an invitation. Four typed fields and one tap; two optional groups
+ * of taps (behind one button on phones). Submissions are stored (POST
+ * /api/register → Neon Postgres) and listed for the organisers at
+ * /register/response. `preset` preselects a conversation (from
+ * /register?interest=talent|technology|leadership).
  */
 export function InviteForm({ source = "site", preset }: { source?: string; preset?: string }) {
   const [state, setState] = useState<State>({ kind: "idle" });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [role, setRole] = useState("");
+  // phones: the optional groups wait behind a button — open already when a conversation was chosen
+  const [more, setMore] = useState(Boolean(preset));
+  const formRef = useRef<HTMLFormElement | null>(null);
   // a signed, timestamped token from the server; the API refuses submissions without it
   const token = useRef<string>("");
   const fetchToken = () =>
@@ -30,6 +96,17 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
     void fetchToken();
   }, []);
 
+  useEffect(() => {
+    const pick = (e: Event) => {
+      const box = formRef.current?.querySelector<HTMLInputElement>(`input[name="interests"][value="${CSS.escape(String((e as CustomEvent).detail))}"]`);
+      if (!box) return;
+      box.checked = true;
+      setMore(true);
+    };
+    window.addEventListener(PICK_INTEREST, pick);
+    return () => window.removeEventListener(PICK_INTEREST, pick);
+  }, []);
+
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -39,7 +116,7 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
     if (!v("name")) local.name = "Please add your name.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v("email"))) local.email = "Please add a valid work email.";
     if (!v("organisation")) local.organisation = "Please add your organisation.";
-    if (!v("role")) local.role = "Please choose your seat.";
+    if (!v("role")) local.role = "Please choose your role.";
     const li = normalizeLinkedIn(v("linkedin"));
     if (!li.ok) local.linkedin = li.error;
     if (Object.keys(local).length) {
@@ -49,6 +126,7 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
     }
     setErrors({});
     setState({ kind: "sending" });
+    const ref = referral();
     try {
       const res = await fetch("/api/register", {
         method: "POST",
@@ -63,12 +141,12 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
           interests: fd.getAll("interests"),
           focus: fd.getAll("focus"),
           website: v("website"),
-          source,
+          source: ref ? `${source}:${ref}` : source,
         }),
       });
       const json = (await res.json().catch(() => ({}))) as { ok?: boolean; updated?: boolean; errors?: Record<string, string>; error?: string };
       if (res.ok && json.ok) {
-        setState({ kind: "done", name: v("name").split(" ")[0], updated: !!json.updated });
+        setState({ kind: "done", name: greetingName(v("name")), updated: !!json.updated });
         return;
       }
       if (json.errors) {
@@ -83,6 +161,9 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
       setState({ kind: "failed", message: "You seem to be offline." });
     }
   };
+
+  // remember the referral as soon as the form is seen, before any navigation
+  useEffect(() => void referral(), []);
 
   const err = (k: string) =>
     errors[k] ? (
@@ -107,11 +188,34 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
         <p className="rf__p">
           {state.updated
             ? "We already had your request, and we’ve updated it with these details."
-            : "Your request is with the Viamagus team. Places are confirmed by invitation — we’ll be in touch before 3 December."}
+            : "The Viamagus team reads every request; invitations follow before 3 December."}{" "}
+          A note from Shreenath Rao is on its way. If it isn’t in your inbox, check junk.
         </p>
-        <p className="rf__small">
-          Questions in the meantime? <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
-        </p>
+        <div className="rf__next">
+          <a className="btn btn--shift btn--sm" href="/the-next-order.ics" download="The-NEXT-Order.ics">
+            Hold the date{" "}
+            <span className="btn__arr" aria-hidden="true">
+              ↓
+            </span>
+          </a>
+          {source === "register" ? (
+            <a className="btn btn--shift btn--sm" href="/film">
+              Watch the film{" "}
+              <span className="btn__arr" aria-hidden="true">
+                →
+              </span>
+            </a>
+          ) : (
+            <FilmButton className="btn btn--shift btn--sm">
+              Watch the film{" "}
+              <span className="btn__arr" aria-hidden="true">
+                →
+              </span>
+            </FilmButton>
+          )}
+        </div>
+        <p className="rf__small">Hold the date adds 3 December to your calendar, all day. Your invitation confirms your place.</p>
+        <Share />
         <a className="rf__home" href={source === "register" ? "/" : "#top"}>
           Back to the top <span aria-hidden="true">→</span>
         </a>
@@ -122,7 +226,7 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
   const sending = state.kind === "sending";
   const id = (k: string) => `${k}-${source}`;
   return (
-    <form className="rf" onSubmit={submit} noValidate aria-labelledby={id("rf-h")} aria-busy={sending}>
+    <form ref={formRef} className="rf" onSubmit={submit} noValidate aria-labelledby={id("rf-h")} aria-busy={sending}>
       <div className="rf__head">
         <p className="rf__k" id={id("rf-h")}>
           {cta.primary}
@@ -159,60 +263,81 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
           type="url"
           inputMode="url"
           autoComplete="url"
+          autoCapitalize="none"
           spellCheck={false}
           required
           maxLength={300}
-          placeholder="https://www.linkedin.com/in/your-profile"
+          placeholder="linkedin.com/in/your-profile"
           {...a("linkedin")}
           aria-describedby={errors.linkedin ? `linkedin-${source}-err` : `linkedin-${source}-help`}
         />
         {err("linkedin") ?? (
           <span className="rf__help" id={`linkedin-${source}-help`}>
-            Helps the Viamagus team confirm professional details when reviewing requests.
+            Your profile link, or just your handle. It helps the Viamagus team confirm professional details.
+            <span className="rf__help-m"> In the LinkedIn app: your profile → ⋯ → Share via → Copy link.</span>
           </span>
         )}
       </label>
+      <p className="rf__help rf__for">Requesting for someone else? Use their name, work email and LinkedIn; we’ll write to them.</p>
 
       <fieldset className="rf__set" aria-describedby={errors.role ? `role-${source}-err` : undefined}>
-        <legend>Your seat</legend>
+        <legend>Your role</legend>
         <div className="rf__chips">
           {SEATS.map((s) => (
             <label key={s} className="chip">
-              <input type="radio" name="role" value={s} required />
+              <input type="radio" name="role" value={s} required onChange={() => setRole(s)} />
               <span>{s}</span>
             </label>
           ))}
         </div>
         {err("role")}
-      </fieldset>
-
-      <fieldset className="rf__set">
-        <legend>
-          At the event, I’d like to explore <em>Optional · pick any</em>
-        </legend>
-        <div className="rf__chips">
-          {INTERESTS.map((s) => (
-            <label key={s} className={`chip chip--${s.split(" ")[0].toLowerCase()}`}>
-              <input type="checkbox" name="interests" value={s} defaultChecked={preset === s} />
-              <span>{s}</span>
-            </label>
-          ))}
+        <div aria-live="polite">
+          {role === "Other" ? (
+            <p className="rf__note">
+              The evening is for GCC heads and site leaders, technology leaders and talent leaders. If your centre’s
+              leader should be in the room, <a href={shareMailto}>send them the invitation</a>.
+            </p>
+          ) : null}
         </div>
       </fieldset>
 
-      <fieldset className="rf__set">
-        <legend>
-          My centre is taking on <em>Optional</em>
-        </legend>
-        <div className="rf__chips">
-          {FOCUS.map((s) => (
-            <label key={s} className="chip">
-              <input type="checkbox" name="focus" value={s} />
-              <span>{s}</span>
-            </label>
-          ))}
-        </div>
-      </fieldset>
+      <button type="button" className="rf__more" aria-expanded={more} aria-controls={id("opt")} onClick={() => setMore((m) => !m)}>
+        <span className="rf__more-i" aria-hidden="true">
+          {more ? "−" : "+"}
+        </span>
+        <span>
+          Add two optional details <em>(helps us plan the room)</em>
+        </span>
+      </button>
+      <div id={id("opt")} className={`rf__opt${more ? " is-open" : ""}`}>
+        <fieldset className="rf__set">
+          <legend>
+            At the event, I’d like to explore <em>Optional · pick any</em>
+          </legend>
+          <div className="rf__chips">
+            {INTERESTS.map((s) => (
+              <label key={s} className={`chip chip--${s.split(" ")[0].toLowerCase()}`}>
+                <input type="checkbox" name="interests" value={s} defaultChecked={preset === s} />
+                <span>{s}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset className="rf__set">
+          <legend>
+            My centre is taking on <em>Optional</em>
+          </legend>
+          <div className="rf__chips">
+            {FOCUS.map((s) => (
+              <label key={s} className="chip">
+                <input type="checkbox" name="focus" value={s} />
+                <span>{s}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      </div>
 
       {/* honeypot — hidden from people and assistive tech */}
       <div className="hp" aria-hidden="true">
@@ -220,6 +345,7 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
           Website <input name="website" tabIndex={-1} autoComplete="off" />
         </label>
       </div>
+      <p className="rf__small rf__fine">Places are by invitation. Your details are used only to review requests for this event.</p>
       {state.kind === "failed" ? (
         <p className="rf__fail" role="alert">
           {state.message} Please try again, or email <a href={`mailto:${contactEmail}?subject=${encodeURIComponent("The NEXT Order — invitation request")}`}>{contactEmail}</a>.
@@ -228,7 +354,7 @@ export function InviteForm({ source = "site", preset }: { source?: string; prese
       <button type="submit" className="btn btn--shift rf__go" disabled={sending}>
         {sending ? "Sending…" : cta.submit} <span className="btn__arr" aria-hidden="true">→</span>
       </button>
-      <p className="rf__small">Places are confirmed by invitation. Your details go only to the Viamagus team, to review requests for this event.</p>
+      <Share />
     </form>
   );
 }

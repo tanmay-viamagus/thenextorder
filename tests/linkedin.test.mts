@@ -16,10 +16,22 @@ test("accepts personal profile links and canonicalises them", () => {
   ok("https://www.linkedin.com/in/jane?trk=public", "https://www.linkedin.com/in/jane");
 });
 
+test("accepts a bare handle or the profile path on its own", () => {
+  ok("priya-raman", "https://www.linkedin.com/in/priya-raman");
+  ok(" /in/priya-raman/ ", "https://www.linkedin.com/in/priya-raman");
+  ok("in/priya_raman-12", "https://www.linkedin.com/in/priya_raman-12");
+  ok("@priya-raman", "https://www.linkedin.com/in/priya-raman");
+});
+
 test("rejects other LinkedIn pages, lookalike domains and malformed input", () => {
   for (const v of [
     "",
     "linkedin",
+    "pr",
+    "priya raman",
+    "/in/",
+    "evil.com",
+    "/company/viamagus",
     "https://linkedin.com/company/viamagus",
     "https://www.linkedin.com/in/",
     "https://www.linkedin.com.evil.com/in/jane",

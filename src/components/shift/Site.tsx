@@ -8,6 +8,7 @@ import {
   statusLine,
 } from "@/content/event";
 import { cta, invite } from "@/content/story";
+import { keep } from "@/lib/text";
 import { Chrome, Reveal } from "./Interactive";
 import { InviteForm } from "./InviteForm";
 import { Icon } from "./Icons";
@@ -23,7 +24,7 @@ function Facts({ extra }: { extra?: string | null }) {
   return parts.map((part, k) => (
     <Fragment key={part}>
       {k ? " · " : ""}
-      <span className="facts__p">{part}</span>
+      <span className="facts__p">{keep(part)}</span>
     </Fragment>
   ));
 }
@@ -89,7 +90,7 @@ export function Site() {
               <p className="close__when">
                 <Facts extra={event.format} />
               </p>
-              <p className="close__who">{invite.who}</p>
+              <p className="close__who">{invite.outcomes}</p>
               <ol className="steps">
                 <li>
                   <b className="steps__tile">
@@ -97,8 +98,8 @@ export function Site() {
                     <span className="sr-only">Step 1</span>
                   </b>
                   <span>
-                    <strong>Request your place</strong> — about 30 seconds,
-                    mostly taps.
+                    <strong>Request your place:</strong> four short fields
+                    and a tap.
                   </span>
                 </li>
                 <li>
@@ -107,8 +108,7 @@ export function Site() {
                     <span className="sr-only">Step 2</span>
                   </b>
                   <span>
-                    <strong>The Viamagus team reviews every request</strong>,
-                    including the LinkedIn profile you share.
+                    <strong>The Viamagus team reads every request.</strong>
                   </span>
                 </li>
                 <li>
@@ -117,8 +117,8 @@ export function Site() {
                     <span className="sr-only">Step 3</span>
                   </b>
                   <span>
-                    <strong>Invitations go out</strong> to confirmed guests,
-                    with everything you need for 3 December at T-Hub.
+                    <strong>If there’s a place for you, your invitation follows</strong>,
+                    with everything you need for 3 December at {keep("T-Hub")}.
                   </span>
                 </li>
               </ol>
@@ -155,7 +155,7 @@ export function Site() {
               <p className="ftr__fact">
                 <Icon name="pin" />
                 <span>
-                  <b>{[event.venue, event.city].filter(Boolean).join(", ")}</b>
+                  <b>{keep([event.venue, event.city].filter(Boolean).join(", "))}</b>
                   <span className="ftr__mono">{event.format}</span>
                 </span>
               </p>
@@ -178,7 +178,7 @@ export function Site() {
             </a>
             <a className="ftr__in" href={officialLinks.linkedin} target="_blank" rel="noopener noreferrer">
               <LinkedInMark />
-              <span className="sr-only">Viamagus on LinkedIn (opens in a new tab)</span>
+              <span className="sr-only">Viamagus Select on LinkedIn (opens in a new tab)</span>
             </a>
           </nav>
         </div>

@@ -6,13 +6,14 @@ import { neon } from "@neondatabase/serverless";
  * Vercel BotID and the honeypot):
  *  - a signed form token: issued when the form loads, required on submit,
  *    rejected if forged, if submitted under MIN_MS (scripted), or if stale;
- *  - per-IP rate limiting, stored as salted hashes (no raw IPs kept).
+ *  - per-IP rate limiting, stored as salted hashes (no raw IPs kept). The
+ *    limit leaves room for a GCC office whose people share one public IP.
  * FORM_SECRET must be set; without it every submission is refused (fail closed).
  */
 const MIN_MS = 2500;
 const MAX_MS = 6 * 3600e3;
 const WINDOW_MIN = 10;
-const MAX_PER_WINDOW = 6;
+const MAX_PER_WINDOW = 20;
 
 function secret() {
   const s = process.env.FORM_SECRET;

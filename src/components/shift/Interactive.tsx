@@ -128,7 +128,8 @@ export function Reveal() {
             io.unobserve(en.target);
           }
         }),
-      { rootMargin: "0px 0px -15% 0px", threshold: 0.05 },
+      // as soon as any of it is on screen, so no blank band waits at the foot of the page
+      { rootMargin: "0px", threshold: 0 },
     );
     els.forEach((e) => io.observe(e));
     // keyboard focus never lands on content that hasn't faded in yet
@@ -173,6 +174,7 @@ export function Chrome() {
     const root = document.documentElement;
     const scenes = [...document.querySelectorAll<HTMLElement>("[data-tone]")];
     const hero = document.getElementById("top");
+    const request = document.getElementById("request");
     const chapters = [...document.querySelectorAll<HTMLElement>(".story li[data-for]")].map((li) => ({
       li,
       a: li.querySelector("a"),
@@ -189,6 +191,9 @@ export function Chrome() {
       root.dataset.hdr = under?.dataset.tone ?? "light";
       // the header's call to action waits until the hero's own has scrolled away — never two at once
       root.classList.toggle("past-hero", hero ? hero.getBoundingClientRect().bottom < window.innerHeight * 0.25 : true);
+      // …and steps aside again while the form itself is on screen
+      const rq = request?.getBoundingClientRect();
+      root.classList.toggle("at-request", rq ? rq.top < window.innerHeight * 0.85 && rq.bottom > 0 : false);
       let act = "";
       for (const a of document.querySelectorAll<HTMLElement>("[data-act]")) if (a.getBoundingClientRect().top < window.innerHeight * 0.5) act = a.dataset.act ?? "";
       root.dataset.act = act;

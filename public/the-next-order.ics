@@ -1,0 +1,17 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Viamagus//The NEXT Order//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:the-next-order-2026-12-03@thenextorder.events
+DTSTAMP:20261027T000000Z
+DTSTART;VALUE=DATE:20261203
+DTEND;VALUE=DATE:20261204
+SUMMARY:The NEXT Order (hold the date)
+LOCATION:T-Hub\, Hyderabad
+DESCRIPTION:From 3:30 PM IST. Your invitation confirms your place.\nhttps://thenextorder.events
+URL:https://thenextorder.events
+TRANSP:TRANSPARENT
+END:VEVENT
+END:VCALENDAR

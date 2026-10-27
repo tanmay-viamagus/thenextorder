@@ -1078,22 +1078,31 @@
   color: var(--lilac);
 }
 
+/* the invitation: a real link, in the site's thin-border style (stage pixels) */
 .fs__endu {
-  display: inline-grid;
-  justify-items: center;
-  gap: 8px;
-  padding: 22px 44px 20px;
-  background: var(--purple);
-  border-bottom: 6px solid var(--magenta);
+  display: inline-flex;
+  align-items: center;
+  gap: 22px;
+  padding: 26px 56px 28px;
+  border: 3px solid rgba(216, 180, 254, 0.75);
+  border-radius: 999px;
+  color: var(--white);
   font-size: 48px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.01em;
+  text-decoration: none;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
-.fs__endurl {
-  font: 500 24px/1 var(--mono);
-  letter-spacing: 0.06em;
-  opacity: 0.85;
+.fs__endu span {
+  color: #c084fc;
+}
+
+@media (hover: hover) {
+  .fs__endu:hover {
+    border-color: #c084fc;
+    background: rgba(168, 85, 247, 0.14);
+  }
 }
 
 /* ---------------------------------------------------------------- the timing bar */
@@ -1228,6 +1237,13 @@
   color: #d8b4fe;
 }
 
+/* once the film has ended: the invitation, beside Close */
+.fp__controls .fp__req {
+  margin-left: 6px;
+  border-color: rgba(192, 132, 252, 0.7);
+  color: #fff;
+}
+
 .fp__controls .fp__close {
   margin-left: 6px;
   border-color: rgba(255, 255, 255, 0.3);
@@ -1240,6 +1256,7 @@
     background: rgba(255, 255, 255, 0.08);
     color: #fff;
   }
+  .fp__controls .fp__req:hover,
   .fp__controls .fp__close:hover {
     border-color: #c084fc;
     background: rgba(216, 180, 254, 0.1);
@@ -1318,4 +1335,34 @@
     color: rgba(252, 253, 255, 0.6);
     pointer-events: none;
   }
+}
+
+/* narrow phones: the invitation keeps its words */
+@media (max-width: 479px) {
+  .fp__controls .fp__req .fp__lab {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+  }
+}
+
+/* the timing bar: one solid band wherever it sits — over the letterbox, a
+   cream scene or both — never a two-tone grey; when idle only its contents dim */
+.fp__hud {
+  background: #0b0a0e;
+  border-color: rgba(252, 253, 255, 0.1);
+}
+
+.fp.is-idle .fp__hud {
+  opacity: 1;
+}
+
+.fbar {
+  transition: opacity 0.5s;
+}
+
+.fp.is-idle .fbar {
+  opacity: 0.7;
 }
