@@ -1,7 +1,8 @@
 import { MavericksLogo } from "@/components/Brand";
 import { FilmButton } from "@/components/film/FilmOverlay";
 import { event } from "@/content/event";
-import { cta } from "@/content/story";
+import { cta, invite } from "@/content/story";
+import { keep } from "@/lib/text";
 import type { ReactNode } from "react";
 import { Icon, type IconName } from "./Icons";
 
@@ -14,7 +15,7 @@ import { Icon, type IconName } from "./Icons";
 const FACTS: { k: string; icon: IconName; v: ReactNode }[] = [
   { k: "Date", icon: "calendar", v: event.date },
   { k: "Time", icon: "clock", v: event.time },
-  { k: "Venue", icon: "pin", v: [event.venue, event.city].filter(Boolean).join(", ") },
+  { k: "Venue", icon: "pin", v: keep([event.venue, event.city].filter(Boolean).join(", ")) },
   { k: "In collaboration with", icon: "users", v: <MavericksLogo className="hero2__mav" height={24} tone="ink" /> },
 ];
 
@@ -39,7 +40,7 @@ export function HeroV2() {
       <div className="hero2__in">
         <p className="hero2__presents">Viamagus presents</p>
         <h1 id="hero-h" className="sr-only">
-          The Next Order: talent, technology and leadership — an invite-only symposium from Viamagus for Hyderabad’s
+          The NEXT Order: talent, technology and leadership — an invite-only symposium from Viamagus for Hyderabad’s
           GCC leaders and decision-makers
         </h1>
         {/* one title: THE NEXT ORDER / talent, technology and leadership. */}
@@ -51,10 +52,10 @@ export function HeroV2() {
           <p className="hero2__line" aria-hidden="true">
             <span className="hero2__ttl">talent, technology and leadership.</span>
           </p>
-          <p className="hero2__sub">An invite-only symposium for Hyderabad’s GCC leaders and decision-makers.</p>
+          <p className="hero2__sub">{keep(invite.hero)}</p>
         </div>
         <div className="hero2__cta">
-          <a className="btn btn--shift btn--lg" href="/register">
+          <a className="btn btn--shift btn--lg" href="/register#request">
             {cta.primary}{" "}
             <span className="btn__arr" aria-hidden="true">
               →

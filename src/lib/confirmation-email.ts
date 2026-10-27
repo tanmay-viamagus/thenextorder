@@ -15,13 +15,22 @@ export type ConfirmationFacts = {
   format: string;
   agenda: { t: string; time?: string; kind?: string }[];
   agendaNote: string;
-  contactEmail: string;
   siteUrl: string;
 };
 
 export type ConfirmationInput = { name: string; updated: boolean };
 
 export const SIGNATORY = { name: "Shreenath Rao", title: "CEO, Viamagus" } as const;
+
+/** Honorifics that keep the whole name in a greeting: "Dear Dr. Rao", never "Dear Dr.". */
+const TITLE = /^(?:dr|prof|professor|mr|mrs|ms|mx|miss|sir|dame|shri|smt|capt|col|gen|lt|maj)\.?$/i;
+
+/** The name to greet someone by: the first name, or the whole name when it starts with a title. */
+export function greetingName(full: string) {
+  const name = full.trim().replace(/\s+/g, " ");
+  const [first = ""] = name.split(" ");
+  return TITLE.test(first) ? name : first;
+}
 
 const esc = (s: string) =>
   s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
@@ -39,7 +48,7 @@ const SANS = "'Helvetica Neue', Helvetica, Arial, sans-serif";
 const LABEL = `font:600 11px/1.4 ${SANS};letter-spacing:2px;text-transform:uppercase;color:${C.purple};`;
 
 export function confirmationEmail(p: ConfirmationInput, f: ConfirmationFacts) {
-  const name = p.name.trim();
+  const name = greetingName(p.name);
   const subject = p.updated
     ? "Your updated request for The NEXT Order, 3 December"
     : "Your request for The NEXT Order, 3 December";
@@ -47,16 +56,19 @@ export function confirmationEmail(p: ConfirmationInput, f: ConfirmationFacts) {
     ? "Thank you for updating your request for a place at The NEXT Order. We have your new details."
     : "Thank you for requesting a place at The NEXT Order, our invite-only symposium for Hyderabad’s GCC leaders and decision-makers.";
   const next =
-    "Your request is with the Viamagus team. Places are confirmed by invitation, and we’ll be in touch before 3 December.";
+    "The Viamagus team reads every request. Places are confirmed by invitation, and invitations follow before 3 December.";
   const brochure = "I’ve attached the brochure, with the themes we’ll take up and the agenda as it stands.";
   const close = "AI is reshaping how GCCs hire, build and lead. Every centre’s plan is different — that is the conversation, and I hope you’ll be part of it.";
   const details: [string, string][] = [
     ["Date", f.date],
     ["Time", f.time],
     ["Venue", f.venue],
-    ["Format", f.format],
+    ["Places", f.format],
   ];
-  const preheader = `${f.date} · ${f.time} · ${f.venue}. The brochure is attached.`;
+  const preheader = `${p.updated ? "Request updated" : "Request received"}. ${f.date} · ${f.time} · ${f.venue}. The brochure is attached.`;
+  const status = p.updated ? "Request updated" : "Request received";
+  const evening = `${f.siteUrl}/#evening`;
+  const hold = `${f.siteUrl}/the-next-order.ics`;
 
   const rows = details
     .map(
@@ -97,7 +109,8 @@ export function confirmationEmail(p: ConfirmationInput, f: ConfirmationFacts) {
       <p style="margin:0;font:800 34px/1.05 ${SANS};letter-spacing:-0.5px;color:#FFFFFF;">THE NEXT <span style="color:${C.accent};">ORDER.</span></p>
       <p style="margin:12px 0 0;font:500 15px/1.5 ${SANS};color:#D9D4E4;">talent, technology and leadership.</p>
     </td></tr>
-    <tr><td style="background:#FFFFFF;padding:36px 40px 8px;">
+    <tr><td style="background:#FFFFFF;padding:32px 40px 8px;">
+      <p style="margin:0 0 22px;${LABEL}"><span style="display:inline-block;padding:7px 12px 6px;border:1px solid ${C.purple};border-radius:999px;">&#10003;&nbsp; ${esc(status)}</span></p>
       <p style="margin:0 0 18px;font:500 17px/1.6 ${SANS};color:${C.ink};">Dear ${esc(name)},</p>
       <p style="margin:0 0 16px;font:16px/1.65 ${SANS};color:${C.ink};">${esc(opening)}</p>
       <p style="margin:0 0 16px;font:16px/1.65 ${SANS};color:${C.ink};">${esc(next)}</p>
@@ -115,13 +128,14 @@ export function confirmationEmail(p: ConfirmationInput, f: ConfirmationFacts) {
     <tr><td style="background:#FFFFFF;padding:0 40px 36px;">
       <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
         <td style="border:1px solid ${C.purple};border-radius:999px;">
-          <a href="${esc(f.siteUrl)}" style="display:inline-block;padding:13px 24px;font:500 15px/1 ${SANS};color:${C.ink};text-decoration:none;">The NEXT Order <span style="color:${C.purple};">&rarr;</span></a>
+          <a href="${esc(evening)}" style="display:inline-block;padding:13px 24px;font:500 15px/1 ${SANS};color:${C.ink};text-decoration:none;">See the agenda and the film <span style="color:${C.purple};">&rarr;</span></a>
         </td>
       </tr></table>
+      <p style="margin:16px 0 0;font:14px/1.5 ${SANS};color:${C.ink2};"><a href="${esc(hold)}" style="color:${C.purple};">Hold the date</a>: adds 3 December to your calendar, all day.</p>
     </td></tr>
     <tr><td style="background:${C.dark};padding:22px 40px;border-radius:0 0 14px 14px;">
       <p style="margin:0;font:12px/1.6 ${SANS};color:#B9B4C4;">Organised by Viamagus · Ecosystem partner Hyderabad Mavericks</p>
-      <p style="margin:4px 0 0;font:12px/1.6 ${SANS};color:#B9B4C4;">Questions? Reply to this email, or write to <a href="mailto:${esc(f.contactEmail)}" style="color:#D8B4FE;">${esc(f.contactEmail)}</a>.</p>
+      <p style="margin:4px 0 0;font:12px/1.6 ${SANS};color:#B9B4C4;">Questions? Just reply to this email.</p>
     </td></tr>
   </table>
   <p style="margin:18px 0 0;font:12px/1.5 ${SANS};color:${C.ink2};">You’re receiving this because this address was used to request a place at The NEXT Order.</p>
@@ -131,6 +145,8 @@ export function confirmationEmail(p: ConfirmationInput, f: ConfirmationFacts) {
 </html>`;
 
   const text = [
+    status.toUpperCase(),
+    "",
     `Dear ${name},`,
     "",
     opening,
@@ -152,8 +168,9 @@ export function confirmationEmail(p: ConfirmationInput, f: ConfirmationFacts) {
     SIGNATORY.name,
     SIGNATORY.title,
     "",
-    f.siteUrl,
-    `Questions? Reply to this email, or write to ${f.contactEmail}.`,
+    `See the agenda and the film: ${evening}`,
+    `Hold the date (adds 3 December to your calendar): ${hold}`,
+    "Questions? Just reply to this email.",
   ].join("\n");
 
   return { subject, html, text };

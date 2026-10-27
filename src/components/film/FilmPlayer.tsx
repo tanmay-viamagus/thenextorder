@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react";
 import { SelectWordmark, SynthiaLogo, VelocityWordmark } from "@/components/Brand";
 import { ShiftRing } from "@/components/clock/ShiftRing";
 import { YearCycle } from "@/components/clock/YearCycle";
@@ -84,7 +84,7 @@ function FilmBar({ t, label }: { t: number; label: string }) {
  * when the scene does (--into lets the clock join a scene part-way).
  */
 /** the controls' line icons — decorative; each button's label names it */
-function CtlIcon({ name }: { name: "play" | "pause" | "sound" | "mute" | "replay" | "close" }) {
+function CtlIcon({ name }: { name: "play" | "pause" | "sound" | "mute" | "replay" | "close" | "go" }) {
   const d = {
     play: <path d="M8 5.5v13l10.5-6.5z" fill="currentColor" stroke="none" />,
     pause: <path d="M8.5 5.5v13M15.5 5.5v13" />,
@@ -92,6 +92,7 @@ function CtlIcon({ name }: { name: "play" | "pause" | "sound" | "mute" | "replay
     mute: <path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4zM16 9.5l5 5M21 9.5l-5 5" />,
     replay: <path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4.5v4h4" />,
     close: <path d="M6.5 6.5l11 11M17.5 6.5l-11 11" />,
+    go: <path d="M5 12h13.5M13 6.5l5.5 5.5-5.5 5.5" />,
   }[name];
   return (
     <svg className="fp__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
@@ -108,7 +109,6 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
   const [sound, setSound] = useState(false);
   const [scene, setScene] = useState<FilmSceneId | "">("");
   const [idle, setIdle] = useState(false);
-  const [host, setHost] = useState("");
   const [hudT, setHudT] = useState(0);
   const [ended, setEnded] = useState(false);
   const playingRef = useRef(false);
@@ -131,7 +131,6 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
   useEffect(() => {
     const el = root.current;
     if (!el) return;
-    setHost(window.location.host);
     const s = readStart();
     clock.current.t = s.t;
     let cur = "";
@@ -261,6 +260,15 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
   }, []);
 
   const d = (s: number): CSSProperties => ({ ["--d" as string]: `${s}s` });
+
+  // the invitation: over the site it closes the film and goes to the form; on /film it opens /register
+  const requestHref = mode === "overlay" ? "#request" : "/register#request";
+  const request = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (mode !== "overlay") return;
+    e.preventDefault();
+    onClose?.();
+    requestAnimationFrame(() => document.getElementById("request")?.scrollIntoView({ block: "start" }));
+  };
 
   return (
     <div ref={root} className={`fp fp--${mode}${idle && !ended ? " is-idle" : ""}${playing ? "" : " is-paused"}`} data-scene={scene}>
@@ -430,10 +438,10 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
             <p className="fs__endt">
               <span>The NEXT</span> Order.
             </p>
-            <p className="fs__endu">
-              <span>{cta.primary}</span>
-              <span className="fs__endurl">{host ? `${host}/register` : ""}</span>
-            </p>
+            {/* the picture is hidden from assistive tech: keyboards reach the same link in the controls */}
+            <Link className="fs__endu" href={requestHref} onClick={request} tabIndex={-1}>
+              {cta.primary} <span aria-hidden="true">→</span>
+            </Link>
           </div>
         </section>
       </div>
@@ -455,6 +463,12 @@ export function FilmPlayer({ mode = "page", onClose }: { mode?: "page" | "overla
           <CtlIcon name="replay" />
           <span className="fp__lab">Replay</span>
         </button>
+        {ended ? (
+          <Link href={requestHref} onClick={request} className="fp__req">
+            <span className="fp__lab">{cta.primary}</span>
+            <CtlIcon name="go" />
+          </Link>
+        ) : null}
         {mode === "overlay" ? (
           <button type="button" onClick={onClose} className="fp__close" autoFocus>
             <span className="fp__lab">Close</span>

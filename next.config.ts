@@ -9,9 +9,18 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/api/register": ["./src/assets/the-next-order-brochure.pdf"],
   },
-  // V2 became the site: its old preview address goes home
   async redirects() {
-    return [{ source: "/v2", destination: "/", permanent: false }];
+    return [
+      // V2 became the site: its old preview address goes home
+      { source: "/v2", destination: "/", permanent: false },
+      // the brochure (page 3, with its QR code) prints the first address: it lands on the event's own domain
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "thenextorder.vercel.app" }],
+        destination: "https://thenextorder.events/:path*",
+        permanent: true,
+      },
+    ];
   },
 };
 

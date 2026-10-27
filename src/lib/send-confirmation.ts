@@ -1,9 +1,8 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { Resend } from "resend";
-import { agenda, agendaNote, contactEmail, event } from "@/content/event";
+import { agenda, agendaNote, event, siteAddress } from "@/content/event";
 import { confirmationEmail } from "@/lib/confirmation-email";
-import { siteUrl } from "@/lib/site-url";
 
 /**
  * Sends the confirmation email through Resend (Vercel Marketplace).
@@ -33,8 +32,8 @@ export async function sendConfirmation(to: string, p: { name: string; updated: b
     format: event.format ?? "",
     agenda,
     agendaNote: agendaNote.replace(/^Tentative\.\s*/, ""),
-    contactEmail,
-    siteUrl: siteUrl(),
+    // the event's own domain, whichever deployment sends it
+    siteUrl: siteAddress,
   });
 
   const { data, error } = await new Resend(key).emails.send({

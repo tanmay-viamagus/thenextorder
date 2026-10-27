@@ -2,6 +2,7 @@ import { agenda, agendaNote, event, organisers } from "@/content/event";
 import { MavericksLogo, ViaMagusMark } from "@/components/Brand";
 import { FilmButton } from "@/components/film/FilmOverlay";
 import { FILM_DURATION } from "@/content/film";
+import { keep } from "@/lib/text";
 import { Icon, type IconName } from "./Icons";
 import { ChapterLabel } from "./Story";
 
@@ -188,9 +189,9 @@ export function Evening() {
               Thursday <span className="sy__date">3 December.</span>
             </h2>
             <p className="sy__sub">
-              <span className="sy__time">{event.time}</span>
+              <span className="sy__time">{event.time}, ending with a cocktail dinner</span>
               <i aria-hidden="true">·</i>
-              <span>{where}</span>
+              <span>{keep(where)}</span>
               <i aria-hidden="true">·</i>
               <span>{event.format}</span>
             </p>
@@ -218,7 +219,7 @@ export function Evening() {
                       </span>
                     ) : null}
                     {a.kind ? <span className="sy__kind">{a.kind}</span> : null}
-                    <span className="sy__t">{a.t}</span>
+                    <span className="sy__t">{keep(a.t)}</span>
                   </span>
                   {a.tag ? <em className="sy__tag">{a.tag}</em> : <span />}
                 </li>
@@ -233,7 +234,7 @@ export function Evening() {
             <p className="sy__ft">
               See what’s <span>changing.</span>
             </p>
-            <p className="sy__fd">The old order, the shift, and what comes next.</p>
+            <p className="sy__fd">The old order, the shift, and how Viamagus is building for what comes next.</p>
             <FilmButton className="fl__btn sy__play">
               <span className="fl__btnplay" aria-hidden="true">
                 <span className="tri" />

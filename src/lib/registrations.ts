@@ -75,7 +75,7 @@ export function validate(raw: Record<string, unknown>): { ok: true; data: Input 
   if (!data.name) errors.name = "Please add your name.";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) errors.email = "Please add a valid work email.";
   if (!data.organisation) errors.organisation = "Please add your organisation.";
-  if (!(SEATS as readonly string[]).includes(data.role)) errors.role = "Please choose your seat.";
+  if (!(SEATS as readonly string[]).includes(data.role)) errors.role = "Please choose your role.";
   const li = normalizeLinkedIn(s("linkedin", 300));
   if (li.ok) data.linkedin = li.url;
   else errors.linkedin = li.error;
