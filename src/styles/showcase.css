@@ -1,5 +1,5 @@
 /* ==========================================================================
-   After the form: the people on stage (near-black) and the organisations
+   After the meeting point: the people on stage (near-black) and the organisations
    around the evening (cream). One head for both — the mono label, the
    two-tone heading, a line beside it. Portraits are greyscale until you
    reach them; logos are quiet until you do. Each rises in after the last.
@@ -22,8 +22,13 @@
   color: var(--ref-ink);
 }
 
-/* straight after the form, on the same cream: a line between them */
-.close + .show--light {
+/* on from the meeting point's night room: a faint line where the people begin */
+.sy + .show--dark {
+  border-top: 1px solid rgba(252, 253, 255, 0.08);
+}
+
+/* into the conversation, on the same cream: a line between them */
+.show--light + .wa {
   border-top: 1px solid var(--ref-line);
 }
 
@@ -294,6 +299,33 @@
   opacity: 0.78;
 }
 
+/* a blank tile, until the logos arrive: a faint mark and a bar where a logo would sit */
+.org__ph {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(56%, 140px);
+}
+
+.org__ph::before,
+.org__ph::after {
+  content: "";
+  background: #eeebf1;
+}
+
+.org__ph::before {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+}
+
+.org__ph::after {
+  flex: 1;
+  height: 10px;
+  border-radius: 999px;
+}
+
 .org__name {
   font: 600 clamp(1rem, 1.2vw, 1.15rem) / 1.25 var(--font);
   letter-spacing: -0.01em;
@@ -303,7 +335,7 @@
 }
 
 @media (hover: hover) {
-  .org__tile:hover {
+  .org__tile:not(.org__tile--empty):hover {
     border-color: rgba(124, 58, 237, 0.35);
     box-shadow: 0 14px 34px -22px rgba(76, 29, 149, 0.45);
     transform: translateY(-2px);

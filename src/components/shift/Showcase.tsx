@@ -1,15 +1,16 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import { LinkedInMark } from "@/components/Brand";
-import { organisations, organisationsCopy, type Organisation } from "@/content/organisations";
+import { organisations, organisationsCopy, placeholderTiles, type Organisation } from "@/content/organisations";
 import { speakerGroups, speakersCopy, type Speaker } from "@/content/speakers";
 import { keep } from "@/lib/text";
 
 /**
- * After the form: who is on stage, on near-black, then the organisations
- * around the evening, on cream. Each is drawn from its data file
- * (content/speakers.ts, content/organisations.ts) and stays off the page
- * until that file has entries.
+ * After the meeting point: who is on stage, on near-black, then the
+ * organisations around the evening, on cream. Each is drawn from its data
+ * file (content/speakers.ts, content/organisations.ts) and stays off the page
+ * until that file has entries — the logo wall holds blank tiles meanwhile,
+ * if asked to.
  */
 
 type Copy = { label: string; title: string[]; intro: string | null };
@@ -109,15 +110,27 @@ export function LogoTile({ org, index }: { org: Organisation; index: number }) {
   );
 }
 
+/** A blank tile holding a logo's place: a faint mark, nothing read out. */
+function PlaceholderTile({ index }: { index: number }) {
+  return (
+    <li className="org" style={{ "--i": index } as CSSProperties}>
+      <div className="org__tile org__tile--empty">
+        <span className="org__ph" />
+      </div>
+    </li>
+  );
+}
+
 export function Organisations() {
-  if (!organisations.length) return null;
+  const blanks = organisations.length ? 0 : placeholderTiles;
+  if (!organisations.length && !blanks) return null;
   return (
     <section id="organisations" className="show show--light" data-tone="light" aria-labelledby="organisations-h">
       <Head id="organisations-h" copy={organisationsCopy} />
-      <ul className="org-wall" data-reveal>
-        {organisations.map((o, k) => (
-          <LogoTile key={o.name} org={o} index={k} />
-        ))}
+      <ul className="org-wall" data-reveal aria-hidden={blanks ? true : undefined}>
+        {blanks
+          ? Array.from({ length: blanks }, (_, k) => <PlaceholderTile key={k} index={k} />)
+          : organisations.map((o, k) => <LogoTile key={o.name} org={o} index={k} />)}
       </ul>
     </section>
   );

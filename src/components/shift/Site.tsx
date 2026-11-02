@@ -69,6 +69,11 @@ export function Site() {
         {/* ------------------------------------------------ THE EVENING · what happens, and who is behind it */}
         <Evening />
 
+        {/* ------------------------------------------------ WHO IS ON STAGE · then the organisations around the evening
+            Each stays off the page until content/speakers.ts or content/organisations.ts has entries. */}
+        <Speakers />
+        <Organisations />
+
         {/* ------------------------------------------------ WHY ATTEND · why the next order fits */}
         <Theme />
 
@@ -127,11 +132,6 @@ export function Site() {
             <InviteForm source="site" />
           </div>
         </section>
-
-        {/* ------------------------------------------------ AFTER THE FORM · who is on stage, and the organisations around the evening
-            Each stays off the page until content/speakers.ts or content/organisations.ts has entries. */}
-        <Speakers />
-        <Organisations />
       </main>
 
       <footer className="ftr" data-tone="dark">
