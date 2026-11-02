@@ -70,22 +70,57 @@ npm test           # LinkedIn URL validation
 
 ## Before sharing
 
-1. **`src/content/event.ts`** holds the confirmed facts from the brochure (Thursday 3 December 2026, from 3:30 PM, T-Hub, Hyderabad, by invitation) and the tentative agenda. Speakers and panel topics are still to be announced; add them there when confirmed. Details in the internal event plan that are still marked "to finalise" are not published.
+1. **`src/content/event.ts`** holds the confirmed facts from the brochure (Thursday 3 December 2026, from 3:30 PM, T-Hub, Hyderabad, by invitation) and the tentative agenda. Speakers go in `src/content/speakers.ts` (see below). Details in the internal event plan that are still marked "to finalise" are not published.
 2. **Site URL:** canonical links, the sitemap and OG URLs use `NEXT_PUBLIC_SITE_URL`, falling back to the Vercel production URL. Set it if a custom domain is added.
 3. **Sign-off:** the strategy follows the corrected GCC strategy notes (internal; a local copy lives at `docs/strategy-notes.md`, which is git-ignored because this repo is public). Every figure and product quote has its source next to it in `src/content/story.ts`.
+
+## Speakers and organisations
+
+Two sections follow the form: **The people shaping what’s next** (speakers and panellists, on near-black) and **Organisations shaping the next order** (the logo wall, on cream). Each is built from one data file and stays off the page until that file has entries. Only supplied names, details, photos and logos go in: nothing invented, redrawn or approximated.
+
+**A speaker or panellist.** Put the photo in `public/speakers/`: a portrait at least 800 px wide, as JPG, PNG, WebP or AVIF. It is shown at 4:5, cropped from the centre. Then add an entry to the right group in `src/content/speakers.ts`:
+
+```ts
+{
+  name: "Full name",
+  role: "Designation",                        // optional
+  company: "Organisation",                    // optional
+  photo: "/speakers/full-name.jpg",           // optional: their initials stand in until it arrives
+  photoFocus: "50% 20%",                      // optional: where the face sits, if the centre crop cuts it
+  linkedin: "https://www.linkedin.com/in/handle", // optional
+},
+```
+
+- **Order:** people show in the order listed, and groups in the order of `speakerGroups`.
+- **Moving or removing someone:** move or delete the entry.
+- **Groups:** a new category (for example one per panel, with the panel's theme as `note`) is another `{ title, note, people }` in `speakerGroups`. Empty groups don't show.
+- **Wording:** the section's own label, heading and intro are in `speakersCopy`.
+- **Structured data:** the speakers are also listed in the page's event data for search engines.
+
+**An organisation.** Put the supplied logo in `public/organisations/`. SVG is best; otherwise use a PNG or WebP with a transparent background. Then add `{ name: "Organisation", logo: "/organisations/organisation.svg" }` to `organisations` in `src/content/organisations.ts`:
+
+- **Order:** logos show in the order listed, and a short last row is centred.
+- **Fit:** each logo is fitted inside its tile at its own proportions, never stretched or cropped.
+- **Colour:** logos are greyscale by default and turn to full colour on hover. Set `treatment: "original"` to keep a logo's colours at all times, or `treatment: "solid"` for a logo supplied in white or too pale for the page.
+- **Size:** `scale` (0.6–1.4) nudges a logo that looks heavier or slighter than the rest.
+- **No logo yet:** an organisation without a `logo` shows its name in type.
+- **Wording:** the wall carries no invitation, attendance or sponsorship wording.
+
+`npm test` checks both files: every photo and logo exists in `public/`, every LinkedIn link is a canonical profile link, nobody is listed twice, and the logo wall's wording stays clear of "invited", "confirmed", "sponsor" and the like. The section design is in `src/components/shift/Showcase.tsx` and `src/styles/showcase.css`.
 
 ## Where things live
 
 ```
-src/content/            story.ts (all copy + sources), event.ts (verified facts only), film.ts (film timeline)
+src/content/            story.ts (all copy + sources), event.ts (verified facts only), film.ts (film timeline),
+                        speakers.ts + organisations.ts (the two sections after the form)
 src/components/clock/   ShiftRing (hero), YearCycle (the year), Clock (HandsClock, FilmDial)
-src/components/shift/   Site (the page), Mechanisms (the three practice diagrams), Interactive (cut title, reveals, header), InviteForm
+src/components/shift/   Site (the page), Mechanisms (the three practice diagrams), Interactive (cut title, reveals, header), InviteForm, Showcase (speakers, logo wall)
 src/components/film/    FilmPlayer (the 30 s film), FilmOverlay, score.ts (Web Audio)
 src/lib/                registrations.ts (Neon), guard.ts (token + rate limit), linkedin.ts, site-url.ts
 src/instrumentation-client.ts  BotID client
 tests/                  linkedin.test.mts (npm test)
 src/proxy.ts            Basic auth for /register/response
-src/styles/             shift.css (site + register), film-player.css (film), film.css (OG card), shared.css (logos)
+src/styles/             shift.css (site + register), showcase.css (speakers, logo wall), film-player.css (film), film.css (OG card), shared.css (logos)
 docs/                   audit.md, brand-audit.md, next-order-research.md, film-storyboard.md
 ```
 

@@ -16,6 +16,7 @@ import { GccEvolution } from "./GccEvolution";
 import { Theme } from "./Theme";
 import { Evening } from "./Evening";
 import { HeroV2 } from "./HeroV2";
+import { Organisations, Speakers } from "./Showcase";
 import { ChapterLabel, StoryNav, StoryStrip } from "./Story";
 
 /** The date, time and place, broken only between the parts. */
@@ -126,6 +127,11 @@ export function Site() {
             <InviteForm source="site" />
           </div>
         </section>
+
+        {/* ------------------------------------------------ AFTER THE FORM · who is on stage, and the organisations around the evening
+            Each stays off the page until content/speakers.ts or content/organisations.ts has entries. */}
+        <Speakers />
+        <Organisations />
       </main>
 
       <footer className="ftr" data-tone="dark">

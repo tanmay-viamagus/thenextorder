@@ -17,8 +17,7 @@ export type EventDetails = {
   venue: string | null;
   /** e.g. "Closed-door · 30 GCC leaders · Chatham House rule" */
   format: string | null;
-  /** Named hosts or speakers, e.g. [{ name: "…", role: "…" }] */
-  speakers: { name: string; role: string }[];
+  // speakers and panellists live in content/speakers.ts
   /** The confirmed RSVP destination. */
   registrationUrl: string | null;
 };
@@ -31,7 +30,6 @@ export const event: EventDetails = {
   city: "Hyderabad",
   venue: "T-Hub",
   format: "By invitation",
-  speakers: [],
   registrationUrl: null,
 };
 
