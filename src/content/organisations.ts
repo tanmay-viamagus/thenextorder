@@ -40,3 +40,9 @@ export const organisationsCopy = {
 };
 
 export const organisations: Organisation[] = [];
+
+/**
+ * Until the supplied logos arrive: blank tiles that hold the wall's shape.
+ * They show only while `organisations` is empty; 0 takes the wall off the page.
+ */
+export const placeholderTiles = 8;

@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { existsSync } from "node:fs";
 import { test } from "node:test";
 import { normalizeLinkedIn } from "../src/lib/linkedin.ts";
-import { organisations, organisationsCopy } from "../src/content/organisations.ts";
+import { organisations, organisationsCopy, placeholderTiles } from "../src/content/organisations.ts";
 import { speakerGroups, speakersCopy } from "../src/content/speakers.ts";
 
 /** a path under public/ that the page will ask for */
@@ -52,6 +52,7 @@ test("every organisation is listed once, with its supplied logo in public/organi
     if (o.treatment) assert.ok(["mono", "original", "solid"].includes(o.treatment), `${o.name}: unknown treatment`);
     if (o.scale !== undefined) assert.ok(o.scale >= 0.6 && o.scale <= 1.4, `${o.name}: scale runs 0.6–1.4`);
   }
+  assert.ok(Number.isInteger(placeholderTiles) && placeholderTiles >= 0 && placeholderTiles <= 20, "placeholderTiles runs 0–20");
 });
 
 test("the logo wall's words say nothing of invitations, attendance or sponsorship", () => {
