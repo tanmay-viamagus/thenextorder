@@ -1,0 +1,392 @@
+/* ==========================================================================
+   After the form: the people on stage (near-black) and the organisations
+   around the evening (cream). One head for both — the mono label, the
+   two-tone heading, a line beside it. Portraits are greyscale until you
+   reach them; logos are quiet until you do. Each rises in after the last.
+   ========================================================================== */
+.show {
+  position: relative;
+  padding: clamp(88px, 12vh, 140px) var(--gutter);
+}
+
+.show--dark {
+  background:
+    radial-gradient(36% 46% at 88% 0%, rgba(168, 85, 247, 0.18), transparent 72%),
+    radial-gradient(30% 40% at 0% 100%, rgba(124, 58, 237, 0.1), transparent 70%),
+    var(--ref-dark);
+  color: var(--white);
+}
+
+.show--light {
+  background: var(--ref-cream);
+  color: var(--ref-ink);
+}
+
+/* straight after the form, on the same cream: a line between them */
+.close + .show--light {
+  border-top: 1px solid var(--ref-line);
+}
+
+/* ---------------------------------------------------------------- the head */
+.show__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px clamp(32px, 6vw, 120px);
+  margin-bottom: clamp(40px, 6vh, 72px);
+}
+
+.show__k {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  font: 600 0.86rem/1.2 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ref-purple);
+}
+
+.show__k::before {
+  content: "";
+  width: 30px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.5;
+}
+
+.show--dark .show__k {
+  color: #e879f9;
+}
+
+.show__h {
+  max-width: 13em;
+  font: 700 clamp(2.3rem, 4vw, 3.6rem) / 0.96 var(--font);
+  letter-spacing: -0.05em;
+}
+
+.show__h span {
+  color: var(--ref-purple);
+}
+
+.show--dark .show__h span {
+  color: var(--ref-accent);
+}
+
+.show__intro {
+  max-width: 26rem;
+  padding-left: clamp(18px, 2vw, 32px);
+  border-left: 1px solid var(--ref-line);
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: var(--ref-ink-2);
+}
+
+.show--dark .show__intro {
+  border-left-color: rgba(252, 253, 255, 0.14);
+  color: rgba(252, 253, 255, 0.68);
+}
+
+/* ---------------------------------------------------------------- speakers: one group per category */
+.spk-group + .spk-group {
+  margin-top: clamp(56px, 8vh, 96px);
+}
+
+.spk-group__h {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 20px;
+  margin-bottom: clamp(20px, 3vh, 32px);
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(252, 253, 255, 0.14);
+}
+
+.spk-group__h h3 {
+  font: 600 0.8rem/1.2 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lilac);
+}
+
+.spk-group__h p {
+  font-size: 0.92rem;
+  line-height: 1.35;
+  color: rgba(252, 253, 255, 0.62);
+}
+
+.spk-grid {
+  --cols: 2;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  gap: clamp(28px, 4vh, 48px) clamp(12px, 1.6vw, 24px);
+}
+
+/* one card: the portrait, then the words; LinkedIn sits on the portrait's corner */
+.spk {
+  display: grid;
+  grid-template-areas: "photo" "body";
+  grid-template-rows: auto 1fr;
+  align-content: start;
+}
+
+.spk__photo {
+  grid-area: photo;
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 6px;
+  background:
+    radial-gradient(70% 60% at 50% 32%, rgba(168, 85, 247, 0.28), transparent 75%),
+    #15121c;
+}
+
+/* a hairline inside the frame, and a little shade at its foot for the LinkedIn mark */
+.spk__photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(252, 253, 255, 0.08);
+  background: linear-gradient(180deg, transparent 64%, rgba(11, 10, 14, 0.4));
+}
+
+.spk__photo img {
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.04);
+  transition: filter 0.6s var(--ease-out), transform 0.9s var(--ease-out);
+}
+
+.spk__initials {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font: 700 clamp(2.2rem, 4.4vw, 3.6rem) / 1 var(--font);
+  letter-spacing: -0.04em;
+  color: rgba(242, 208, 255, 0.78);
+}
+
+.spk__body {
+  grid-area: body;
+  padding-top: 16px;
+}
+
+.spk__name {
+  margin: 0;
+  font: 600 clamp(1.02rem, 1.2vw, 1.22rem) / 1.25 var(--font);
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.spk__role {
+  margin-top: 6px;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  color: rgba(252, 253, 255, 0.7);
+}
+
+.spk__co {
+  margin-top: 8px;
+  font: 600 0.75rem/1.35 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lilac);
+}
+
+.spk__in {
+  grid-area: photo;
+  align-self: end;
+  justify-self: end;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin: 10px;
+  border: 1px solid rgba(252, 253, 255, 0.26);
+  border-radius: 50%;
+  background: rgba(11, 10, 14, 0.55);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* a 44px target around the 40px mark */
+.spk__in::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+}
+
+.spk__in svg {
+  width: 15px;
+  height: 15px;
+}
+
+.spk:focus-within .spk__photo img {
+  filter: none;
+}
+
+@media (hover: hover) {
+  .spk:hover .spk__photo img {
+    filter: none;
+    transform: scale(1.03);
+  }
+  .spk__in:hover {
+    border-color: var(--ref-accent);
+    background: rgba(124, 58, 237, 0.6);
+  }
+}
+
+/* ---------------------------------------------------------------- organisations: a balanced wall */
+.org-wall {
+  --cols: 2;
+  --gap: clamp(10px, 1.2vw, 16px);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap);
+}
+
+/* equal tiles; a short last row sits in the middle */
+.org {
+  flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));
+  min-width: 0;
+}
+
+.org__tile {
+  display: grid;
+  place-items: center;
+  height: clamp(96px, 9vw, 136px);
+  padding: 0 clamp(14px, 2vw, 28px);
+  border: 1px solid var(--ref-line);
+  border-radius: 6px;
+  background: #fff;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s var(--ease-out);
+}
+
+/* the logo's box: wide marks meet its sides, tall ones its top and foot, so
+   every logo keeps its own proportions and carries about the same weight */
+.org__logo {
+  position: relative;
+  width: min(100%, calc(200px * var(--scale, 1)));
+  height: calc(46% * var(--scale, 1));
+}
+
+.org__logo img {
+  object-fit: contain;
+  transition: filter 0.45s ease, opacity 0.45s ease;
+}
+
+.org__tile--mono img {
+  filter: grayscale(1);
+  opacity: 0.72;
+}
+
+.org__tile--solid img {
+  filter: brightness(0);
+  opacity: 0.78;
+}
+
+.org__name {
+  font: 600 clamp(1rem, 1.2vw, 1.15rem) / 1.25 var(--font);
+  letter-spacing: -0.01em;
+  text-align: center;
+  text-wrap: balance;
+  color: var(--ref-ink-2);
+}
+
+@media (hover: hover) {
+  .org__tile:hover {
+    border-color: rgba(124, 58, 237, 0.35);
+    box-shadow: 0 14px 34px -22px rgba(76, 29, 149, 0.45);
+    transform: translateY(-2px);
+  }
+  .org__tile--mono:hover img {
+    filter: none;
+    opacity: 1;
+  }
+  .org__tile--solid:hover img {
+    opacity: 1;
+  }
+}
+
+/* ---------------------------------------------------------------- columns */
+@media (min-width: 760px) {
+  .spk-grid,
+  .org-wall {
+    --cols: 3;
+  }
+}
+
+@media (min-width: 1080px) {
+  .spk-grid,
+  .org-wall {
+    --cols: 4;
+  }
+}
+
+@media (min-width: 1500px) {
+  .org-wall {
+    --cols: 5;
+  }
+}
+
+@media (min-width: 1700px) {
+  .spk-grid {
+    --cols: 5;
+  }
+}
+
+/* phones: the head stacks, the cards tighten */
+@media (max-width: 759px) {
+  .show {
+    padding-top: 64px;
+    padding-bottom: 72px;
+  }
+  .show__head {
+    margin-bottom: 32px;
+  }
+  .show__k {
+    font-size: 0.75rem;
+  }
+  .spk__body {
+    padding-top: 12px;
+  }
+  .spk__role {
+    font-size: 0.86rem;
+  }
+  .spk__in {
+    width: 36px;
+    height: 36px;
+    margin: 8px;
+  }
+  .spk__in::before {
+    inset: -4px;
+  }
+}
+
+/* in they come, one after another (the rise itself is the site's [data-reveal]) */
+@media (prefers-reduced-motion: no-preference) {
+  .js .spk-grid[data-reveal] > li,
+  .js .org-wall[data-reveal] > li {
+    transition-delay: calc(min(var(--i, 0), 11) * 50ms);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spk__photo img,
+  .org__tile {
+    transition: none;
+  }
+  .spk:hover .spk__photo img,
+  .org__tile:hover {
+    transform: none;
+  }
+}
