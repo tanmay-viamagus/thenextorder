@@ -1,0 +1,134 @@
+/* ==========================================================================
+   Where one part of the page meets the next: no edge is left hard. Cream
+   falls off into the night the way light does, slowly at first, with a
+   little of the evening's lilac in the shadow; the night lifts back into
+   cream the same way, half in each section. The light in each room (the
+   meeting point's doorway, the conversation's installation, the footer's
+   door) fades in and out instead of stopping at a section's edge.
+
+   The ramps are cream and night mixed in OKLab on an ease-in-out curve, with
+   a faint lilac cast at the middle. Each sits in the padding at a section's
+   edge, clear of its words, and takes no clicks.
+   ========================================================================== */
+.hero2 + .evo::before,
+.evo + .sy::before,
+.show--dark:has(+ .show--light)::after,
+.show--dark + .show--light::before,
+.close::after,
+.ftr::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+/* the opening's lilac settles into the road so far's cream (over the pinned
+   stage, which starts at the very top of the section) */
+.hero2 + .evo::before {
+  top: 0;
+  z-index: 1;
+  height: 80px;
+  background: linear-gradient(180deg, #ede3f8, #eee5f7 20%, #f0e9f5 40%, #f4eff3 60%, #f6f3f1 80%, rgba(247, 245, 240, 0));
+}
+
+/* the road so far's cream falls off into the meeting point's night, under the doorway */
+.evo + .sy::before {
+  top: 0;
+  height: clamp(64px, 10vh, 104px);
+  background: linear-gradient(180deg, #f7f5f0, #f1eeec 10%, #ded9e0 20%, #c2bacc 30%, #9f94b1 40%, #796d8e 50%, #554a67 60%, #352e42 70%, #1e1a25 80%, #100e14 90%, rgba(11, 10, 14, 0));
+}
+
+/* on from the meeting point's night room: the doorway's floor light fades
+   into the speakers' dark rather than stopping at the section's edge (phones
+   already fade their band of it) */
+@media (min-width: 1081px) {
+  .sy:has(+ .show--dark) .sy-room {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 78%, transparent 100%), linear-gradient(180deg, transparent 0, #000 6%, #000 calc(100% - 260px), transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 78%, transparent 100%), linear-gradient(180deg, transparent 0, #000 6%, #000 calc(100% - 260px), transparent 100%);
+  }
+}
+
+/* the speakers' night lifts into the logo wall's cream: one ramp, half in
+   each, so both halves are the same height */
+.show--dark:has(+ .show--light)::after,
+.show--dark + .show--light::before {
+  height: clamp(56px, 8vh, 96px);
+}
+
+.show--dark:has(+ .show--light)::after {
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(11, 10, 14, 0), #100e14 20%, #1e1a25 40%, #352e42 60%, #554a67 80%, #796d8e);
+}
+
+.show--dark + .show--light::before {
+  top: 0;
+  background: linear-gradient(180deg, #796d8e, #9f94b1 20%, #c2bacc 40%, #ded9e0 60%, #f1eeec 80%, rgba(247, 245, 240, 0));
+}
+
+/* phones: the sections' padding is tighter, and so are the halves */
+@media (max-width: 759px) {
+  .show--dark:has(+ .show--light)::after,
+  .show--dark + .show--light::before {
+    height: 48px;
+  }
+}
+
+/* the conversation's installation rises out of the logo wall's cream, its
+   light coming up before the chapter label, and on wide screens settles
+   back into cream at its foot, above your place */
+@media (min-width: 1081px) {
+  .wa__side {
+    -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 56px), rgba(0, 0, 0, 0.62) calc(100% - 30px), rgba(0, 0, 0, 0.2) calc(100% - 10px), transparent);
+    mask-image: linear-gradient(180deg, #000 calc(100% - 56px), rgba(0, 0, 0, 0.62) calc(100% - 30px), rgba(0, 0, 0, 0.2) calc(100% - 10px), transparent);
+  }
+  .show--light + .wa .wa__side {
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, rgba(0, 0, 0, 0.08) 24px, rgba(0, 0, 0, 0.32) 48px, rgba(0, 0, 0, 0.7) 74px, #000 100px, #000 calc(100% - 56px), rgba(0, 0, 0, 0.62) calc(100% - 30px), rgba(0, 0, 0, 0.2) calc(100% - 10px), transparent);
+    mask-image: linear-gradient(180deg, transparent 0, rgba(0, 0, 0, 0.08) 24px, rgba(0, 0, 0, 0.32) 48px, rgba(0, 0, 0, 0.7) 74px, #000 100px, #000 calc(100% - 56px), rgba(0, 0, 0, 0.62) calc(100% - 30px), rgba(0, 0, 0, 0.2) calc(100% - 10px), transparent);
+  }
+}
+
+/* phones and tablets: the installation is a band at the top of the section.
+   It gains a little room under its label, so its foot can settle into the
+   cream without dimming the words. */
+@media (max-width: 1080px) {
+  .wa__side {
+    padding-bottom: 44px;
+    -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 30px), rgba(0, 0, 0, 0.55) calc(100% - 14px), transparent);
+    mask-image: linear-gradient(180deg, #000 calc(100% - 30px), rgba(0, 0, 0, 0.55) calc(100% - 14px), transparent);
+  }
+  .show--light + .wa .wa__side {
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, rgba(0, 0, 0, 0.3) 18px, #000 44px, #000 calc(100% - 30px), rgba(0, 0, 0, 0.55) calc(100% - 14px), transparent);
+    mask-image: linear-gradient(180deg, transparent 0, rgba(0, 0, 0, 0.3) 18px, #000 44px, #000 calc(100% - 30px), rgba(0, 0, 0, 0.55) calc(100% - 14px), transparent);
+  }
+}
+
+/* your place's cream falls off into the footer's night. The footer has less
+   room, so it takes the darker 5/12 of the ramp; the heights keep that
+   7 : 5 at every size. The footer's door comes up out of the dark rather
+   than meeting the edge. */
+.close::after {
+  bottom: 0;
+  height: min(clamp(56px, 7vw, 98px), 11.5vh);
+  background: linear-gradient(180deg, rgba(247, 245, 240, 0), #f1eeec 16.7%, #e0dbe2 33.3%, #c5bdd0 50%, #a499b7 66.7%, #807397 83.3%, #5c5172);
+}
+
+.ftr::before {
+  top: 0;
+  height: min(clamp(40px, 5vw, 70px), 8.2vh);
+  background: linear-gradient(180deg, #5c5172, #3b324c 25%, #211c2d 50%, #120f1a 75%, rgba(13, 11, 20, 0));
+}
+
+.ftr__light {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 45%), linear-gradient(180deg, transparent 0, #000 96px);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 45%), linear-gradient(180deg, transparent 0, #000 96px);
+  mask-composite: intersect;
+}
+
+@media (max-width: 1023px) {
+  .ftr__light {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 55%), linear-gradient(180deg, transparent 0, #000 64px, #000 60%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 55%), linear-gradient(180deg, transparent 0, #000 64px, #000 60%, transparent 100%);
+  }
+}

@@ -121,7 +121,7 @@ src/lib/                registrations.ts (Neon), guard.ts (token + rate limit), 
 src/instrumentation-client.ts  BotID client
 tests/                  linkedin.test.mts (npm test)
 src/proxy.ts            Basic auth for /register/response
-src/styles/             shift.css (site + register), showcase.css (speakers, logo wall), film-player.css (film), film.css (OG card), shared.css (logos)
+src/styles/             shift.css (site + register), showcase.css (speakers, logo wall), joins.css (where sections meet), film-player.css (film), film.css (OG card), shared.css (logos)
 docs/                   audit.md, brand-audit.md, next-order-research.md, film-storyboard.md
 ```
 

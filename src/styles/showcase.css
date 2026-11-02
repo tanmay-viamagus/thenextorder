@@ -23,29 +23,7 @@
   color: var(--ref-ink);
 }
 
-/* on from the meeting point's night room: the doorway's floor light fades
-   into the dark rather than stopping at the section's edge (phones already
-   fade their band of it) */
-@media (min-width: 1081px) {
-  .sy:has(+ .show--dark) .sy-room {
-    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 78%, transparent 100%), linear-gradient(180deg, transparent 0, #000 6%, #000 calc(100% - 260px), transparent 100%);
-    mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 78%, transparent 100%), linear-gradient(180deg, transparent 0, #000 6%, #000 calc(100% - 260px), transparent 100%);
-  }
-}
-
-/* into the conversation from the logo wall's cream: the installation rises
-   out of it, its light coming up before the chapter label */
-.show--light + .wa .wa__side {
-  -webkit-mask-image: linear-gradient(180deg, transparent 0, rgba(0, 0, 0, 0.08) 24px, rgba(0, 0, 0, 0.32) 48px, rgba(0, 0, 0, 0.7) 74px, #000 100px);
-  mask-image: linear-gradient(180deg, transparent 0, rgba(0, 0, 0, 0.08) 24px, rgba(0, 0, 0, 0.32) 48px, rgba(0, 0, 0, 0.7) 74px, #000 100px);
-}
-
-@media (max-width: 1080px) {
-  .show--light + .wa .wa__side {
-    -webkit-mask-image: linear-gradient(180deg, transparent 0, rgba(0, 0, 0, 0.3) 18px, #000 44px);
-    mask-image: linear-gradient(180deg, transparent 0, rgba(0, 0, 0, 0.3) 18px, #000 44px);
-  }
-}
+/* where these meet the sections either side: styles/joins.css */
 
 /* ---------------------------------------------------------------- the head */
 .show__head {
