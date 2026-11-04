@@ -120,7 +120,7 @@ Two sections follow 02 The meeting point: **The people shaping what’s next** (
 
 - **Order:** logos show in the order listed, and a short last row is centred.
 - **Fit:** each logo is fitted inside its tile at its own proportions, never stretched or cropped.
-- **Colour:** logos are greyscale by default and turn to full colour on hover. Set `treatment: "original"` to keep a logo's colours at all times, or `treatment: "solid"` for a logo supplied in white or too pale for the page.
+- **Colour:** logos show in their own colours, with no hover effect. Set `treatment: "mono"` for a quiet greyscale logo, or `treatment: "solid"` for a logo supplied in white or too pale for the page.
 - **Size:** `scale` (0.6–1.4) nudges a logo that looks heavier or slighter than the rest.
 - **No logo yet:** an organisation without a `logo` shows its name in type.
 - **Placeholders:** the blank tiles give way to the real logos as soon as `organisations` has an entry.

@@ -103,7 +103,7 @@ export function Speakers() {
 
 /** One logo, fitted inside its tile at its own proportions; the name, set in type, until a logo is supplied. */
 export function LogoTile({ org, index }: { org: Organisation; index: number }) {
-  const { name, logo, treatment = "mono", scale = 1 } = org;
+  const { name, logo, treatment = "original", scale = 1 } = org;
   return (
     <li className="org" style={{ "--i": index } as CSSProperties}>
       <div className={`org__tile org__tile--${treatment}`}>

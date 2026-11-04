@@ -10,7 +10,7 @@
  *
  * An entry, with every field:
  *
- *   { name: "Organisation", logo: "/organisations/organisation.svg", treatment: "mono", scale: 1 },
+ *   { name: "Organisation", logo: "/organisations/organisation.svg", treatment: "original", scale: 1 },
  */
 export type Organisation = {
   /** The organisation's name, read out in place of the logo */
@@ -23,8 +23,8 @@ export type Organisation = {
    */
   logo?: string;
   /**
-   * "mono" (the default): greyscale and quiet, its own colours on hover.
-   * "original": its own colours always, for a logo known by its colour.
+   * "original" (the default): its own colours. Nothing changes on hover.
+   * "mono": greyscale and quiet.
    * "solid": one flat ink colour, for a logo supplied in white or too pale for the page.
    */
   treatment?: "mono" | "original" | "solid";

@@ -322,7 +322,6 @@
   border: 1px solid var(--ref-line);
   border-radius: 6px;
   background: #fff;
-  transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s var(--ease-out);
 }
 
 /* the logo's box: wide marks meet its sides, tall ones its top and foot, so
@@ -333,9 +332,9 @@
   height: calc(46% * var(--scale, 1));
 }
 
+/* logos hold still: in their own colours, with nothing on hover */
 .org__logo img {
   object-fit: contain;
-  transition: filter 0.45s ease, opacity 0.45s ease;
 }
 
 .org__tile--mono img {
@@ -381,21 +380,6 @@
   text-align: center;
   text-wrap: balance;
   color: var(--ref-ink-2);
-}
-
-@media (hover: hover) {
-  .org__tile:not(.org__tile--empty):hover {
-    border-color: rgba(124, 58, 237, 0.35);
-    box-shadow: 0 14px 34px -22px rgba(76, 29, 149, 0.45);
-    transform: translateY(-2px);
-  }
-  .org__tile--mono:hover img {
-    filter: none;
-    opacity: 1;
-  }
-  .org__tile--solid:hover img {
-    opacity: 1;
-  }
 }
 
 /* ---------------------------------------------------------------- columns */
@@ -462,12 +446,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .spk__photo img,
-  .org__tile {
+  .spk__photo img {
     transition: none;
   }
-  .spk:hover .spk__photo img,
-  .org__tile:hover {
+  .spk:hover .spk__photo img {
     transform: none;
   }
 }
