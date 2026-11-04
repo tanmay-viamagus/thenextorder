@@ -1,11 +1,11 @@
-import { neon } from "@neondatabase/serverless";
 import { FOCUS, INTERESTS, SEATS } from "@/content/register";
+import { sql } from "@/lib/db";
 import { normalizeLinkedIn } from "@/lib/linkedin";
 
 /**
- * Registrations live in the Neon Postgres database provisioned through the
- * Vercel Marketplace (resource "thenextorder-registrations"; env DATABASE_URL).
- * One row per email: registering again updates the row instead of duplicating it.
+ * Registrations live in the event's Neon Postgres database (lib/db.ts), table
+ * "registrations". One row per email: registering again updates the row
+ * instead of duplicating it.
  */
 export type Registration = {
   id: number;
@@ -21,13 +21,6 @@ export type Registration = {
   next_mandate: string | null;
   source: string | null;
 };
-
-let _sql: ReturnType<typeof neon> | null = null;
-function sql() {
-  if (!process.env.DATABASE_URL) throw new Error("DATABASE_URL is not set");
-  if (!_sql) _sql = neon(process.env.DATABASE_URL);
-  return _sql;
-}
 
 let ready: Promise<unknown> | null = null;
 function ensureTable() {

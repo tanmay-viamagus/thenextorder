@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { Fragment } from "react";
 import { MavericksLogo, ViaMagusLogo } from "@/components/Brand";
 import { InviteForm } from "@/components/shift/InviteForm";
 import { agenda, agendaNote, knownFacts, statusLine } from "@/content/event";
 import { INTEREST_BY_KEY } from "@/content/register";
-import { invite } from "@/content/story";
+import { invite, shareImage } from "@/content/story";
 import { keep } from "@/lib/text";
 
 const title = "Register | The NEXT Order — Viamagus";
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/register" },
-  openGraph: { title, description, url: "/register" },
-  twitter: { title, description },
+  openGraph: { title, description, url: "/register", images: [shareImage] },
+  twitter: { card: "summary_large_image", title, description, images: [shareImage.url] },
 };
 
 export default async function Register({
@@ -62,11 +63,15 @@ export default async function Register({
           <p className="reg__k">
             {statusLine()
               .split(" · ")
-              .map((part, k) => (
-                <span key={part} className="reg__part">
-                  {k ? " · " : ""}
-                  {keep(part)}
-                </span>
+              .map((part, k, all) => (
+                <Fragment key={part}>
+                  {/* the space between parts is the line's only break */}
+                  {k ? " " : ""}
+                  <span className="reg__part">
+                    {keep(part)}
+                    {k < all.length - 1 ? " ·" : ""}
+                  </span>
+                </Fragment>
               ))}
           </p>
           <p className="reg__host">

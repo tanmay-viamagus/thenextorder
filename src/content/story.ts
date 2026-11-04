@@ -16,7 +16,18 @@ export type Evidence = { figure: string; finding: string; source: string; date: 
 export const description =
   "The NEXT Order: an invite-only symposium for Hyderabad’s GCC leaders and decision-makers on the next order of talent, technology and leadership. Thursday 3 December 2026, from 3:30 PM, at T-Hub, Hyderabad. Organised by Viamagus with Hyderabad Mavericks.";
 
-export const tagline = "Where was your centre, where is it now — and where could it go next?";
+/**
+ * The picture a shared link carries. A page that sets its own `openGraph`
+ * replaces the layout's whole block, so it passes this in again.
+ */
+export const shareImage = {
+  url: "/og-image.jpg",
+  width: 1200,
+  height: 630,
+  alt: "The NEXT Order — an invite-only symposium for Hyderabad’s GCC leaders, 3 December 2026 at T-Hub, Hyderabad",
+};
+
+export const tagline ="Where was your centre, where is it now — and where could it go next?";
 
 /** The three eras on the ring of years — one headline, one line a leader recognises, one sourced number. */
 export const shift: { n: string; years: string; era: string; headline: string; line: string; evidence?: Evidence }[] = [

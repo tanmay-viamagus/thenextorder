@@ -29,6 +29,7 @@ const jsonLd = {
       ...(s.role ? { jobTitle: s.role } : {}),
       ...(s.company ? { worksFor: { "@type": "Organization", name: s.company } } : {}),
       ...(s.linkedin ? { sameAs: s.linkedin } : {}),
+      ...(s.bio ? { description: s.bio } : {}),
     })),
   }),
   url: siteUrl(),

@@ -1,0 +1,588 @@
+/* ==========================================================================
+   /rsvp: the invitation and the reply. The invitation on the meeting point's
+   near-black (the event, then its details the way a calendar invite lists
+   them); the reply on cream, in the site's fine-lined form. Wide screens set
+   them side by side; phones stack them, the night lifting into the cream.
+   ========================================================================== */
+.rsvp {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: 100svh;
+  background: var(--ref-cream);
+}
+
+/* ---------------------------------------------------------------- the invitation */
+.rsvp__invite {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  align-content: start;
+  gap: clamp(28px, 5vh, 56px);
+  min-height: 100svh;
+  padding: 26px clamp(24px, 4vw, 64px) clamp(32px, 6vh, 56px);
+  background:
+    radial-gradient(48% 40% at 88% 6%, rgba(168, 85, 247, 0.2), transparent 72%),
+    radial-gradient(40% 36% at 0% 100%, rgba(124, 58, 237, 0.14), transparent 70%),
+    var(--ref-dark);
+  color: var(--white);
+}
+
+.rsvp__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rsvp__top .vm-logo {
+  font-size: 1.3rem;
+}
+
+.rsvp__site {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font: 500 0.74rem/1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(252, 253, 255, 0.75);
+}
+
+.rsvp__k,
+.rsvp__label {
+  font: 500 0.72rem/1.4 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #c4b5fd;
+}
+
+.rsvp__t {
+  margin-top: 10px;
+  font: 800 clamp(2.6rem, 5vw, 5.4rem) / 0.86 var(--font);
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+.rsvp__t span:last-child {
+  color: var(--ref-accent);
+}
+
+.rsvp__sum {
+  max-width: 30em;
+  margin-top: 18px;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: rgba(252, 253, 255, 0.72);
+}
+
+/* the details, one to a row: a tile, a label, the fact, and a line under it */
+.rsvp__facts {
+  align-self: start;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid rgba(252, 253, 255, 0.14);
+}
+
+.rsvp__facts li {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  padding: 18px 0;
+  border-top: 1px solid rgba(252, 253, 255, 0.14);
+}
+
+.rsvp__facts li > span:last-child {
+  display: grid;
+  justify-items: start;
+  gap: 4px;
+}
+
+.rsvp__tile {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(252, 253, 255, 0.18);
+  border-radius: 8px;
+  background: rgba(252, 253, 255, 0.04);
+  color: #c4b5fd;
+}
+
+.rsvp__tile svg {
+  width: 21px;
+  height: 21px;
+}
+
+.rsvp__facts b {
+  font: 600 1.14rem/1.3 var(--font);
+  letter-spacing: -0.01em;
+}
+
+.rsvp__more {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: rgba(252, 253, 255, 0.7);
+}
+
+.rsvp__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  color: #d8c8ff;
+  text-decoration: underline;
+  text-decoration-color: rgba(216, 200, 255, 0.4);
+  text-underline-offset: 4px;
+  transition: color 0.2s, text-decoration-color 0.2s;
+}
+
+@media (hover: hover) {
+  .rsvp__link:hover,
+  .rsvp__site:hover {
+    color: #fff;
+    text-decoration-color: currentColor;
+  }
+}
+
+/* the partner's line stays with its logo */
+.rsvp__with {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+}
+
+.rsvp__mav {
+  width: auto;
+  height: 18px;
+}
+
+/* phones only: straight to the reply */
+.rsvp__jump {
+  display: none;
+}
+
+/* ---------------------------------------------------------------- the reply */
+.rsvp__reply {
+  position: relative;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  padding: clamp(36px, 8vh, 96px) clamp(24px, 4vw, 72px) clamp(48px, 8vh, 96px);
+  color: var(--ref-ink);
+}
+
+.rsvp__inner {
+  width: 100%;
+  max-width: 600px;
+}
+
+.rsvp__k2 {
+  font: 600 0.78rem/1.3 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ref-purple);
+}
+
+.rsvp__h {
+  margin-top: 12px;
+  font: 800 clamp(2.5rem, 4.2vw, 4.4rem) / 0.92 var(--font);
+  letter-spacing: -0.05em;
+}
+
+.rsvp__lede {
+  max-width: 30em;
+  margin: 16px 0 30px;
+  font-size: 1.06rem;
+  line-height: 1.5;
+  color: var(--ref-ink-2);
+}
+
+/* the last reply from this browser */
+.rsvp-form__kept {
+  padding: 11px 14px;
+  border-left: 3px solid var(--ref-purple);
+  border-radius: 0 4px 4px 0;
+  background: #f4effd;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+/* Yes · Tentative · No: three equal choices, like a calendar invite's */
+.rsvp-pick__opts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.rsvp-opt {
+  position: relative;
+  display: grid;
+}
+
+.rsvp-opt input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.rsvp-opt__box {
+  display: grid;
+  justify-items: start;
+  align-content: start;
+  gap: 3px;
+  min-height: 104px;
+  padding: 14px 14px 13px;
+  border: 1px solid var(--ref-line);
+  border-radius: 6px;
+  background: #fff;
+  pointer-events: none;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+}
+
+.rsvp-opt__i {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 8px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  color: var(--ref-ink-2);
+  transition: color 0.2s;
+}
+
+.rsvp-opt__l {
+  font: 600 1.1rem/1.2 var(--font);
+  letter-spacing: -0.01em;
+}
+
+.rsvp-opt__h {
+  font-size: 0.84rem;
+  line-height: 1.3;
+  text-wrap: balance;
+  color: var(--ref-ink-2);
+  transition: color 0.2s;
+}
+
+@media (hover: hover) {
+  .rsvp-opt:hover .rsvp-opt__box {
+    border-color: var(--ref-ink);
+  }
+}
+
+.rsvp-opt input:focus-visible + .rsvp-opt__box {
+  outline: 2.5px solid var(--ref-purple);
+  outline-offset: 3px;
+}
+
+.rsvp-opt input:checked + .rsvp-opt__box {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px -20px rgba(76, 29, 149, 0.55);
+}
+
+/* yes: the purple; tentative: a pencilled outline; no: ink */
+.rsvp-opt--yes input:checked + .rsvp-opt__box {
+  border-color: var(--ref-purple);
+  background: var(--ref-purple);
+  color: #fff;
+}
+
+.rsvp-opt--tentative input:checked + .rsvp-opt__box {
+  border-color: var(--ref-purple);
+  background: #f1eafd;
+  color: var(--ref-purple);
+}
+
+.rsvp-opt--no input:checked + .rsvp-opt__box {
+  border-color: var(--ref-ink);
+  background: var(--ref-ink);
+  color: #fff;
+}
+
+.rsvp-opt input:checked + .rsvp-opt__box .rsvp-opt__i {
+  color: currentColor;
+}
+
+.rsvp-opt--yes input:checked + .rsvp-opt__box .rsvp-opt__h,
+.rsvp-opt--no input:checked + .rsvp-opt__box .rsvp-opt__h {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.rsvp-opt--tentative input:checked + .rsvp-opt__box .rsvp-opt__h {
+  color: var(--ref-purple);
+}
+
+.rsvp-pick[aria-describedby] .rsvp-opt__box {
+  border-color: var(--ref-purple);
+}
+
+/* ---------------------------------------------------------------- after the reply */
+.rsvp-done__was {
+  color: var(--ref-ink-2);
+  font-weight: 500;
+}
+
+.rsvp-cal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rsvp-cal a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid var(--ref-line);
+  border-radius: 999px;
+  background: #fff;
+  font: 600 0.95rem/1 var(--font);
+  text-decoration: none;
+  color: var(--ref-ink);
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.rsvp-cal__ext {
+  font: 500 0.7rem/1 var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--ref-ink-2);
+}
+
+@media (hover: hover) {
+  .rsvp-cal a:hover {
+    border-color: var(--ref-purple);
+    color: var(--ref-purple);
+  }
+}
+
+.rsvp-done__end {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  gap: 4px 24px;
+  margin-top: 12px;
+  padding-top: 14px;
+  border-top: 1px solid var(--ref-line);
+}
+
+.rsvp-done__end a,
+.rsvp-done__change {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: 600 0.95rem/1.2 var(--font);
+  color: var(--ref-purple);
+  text-decoration: underline;
+  text-decoration-color: rgba(124, 58, 237, 0.35);
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------------------- tablets and phones: stacked */
+@media (max-width: 1080px) {
+  .rsvp {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .rsvp__invite {
+    min-height: 0;
+    gap: 28px;
+  }
+  .rsvp__reply {
+    justify-items: start;
+  }
+  .rsvp__inner {
+    max-width: 640px;
+  }
+  /* the night lifts into the cream, half in each (the site's eased ramp: styles/joins.css) */
+  .rsvp__invite::after,
+  .rsvp__reply::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 48px;
+    pointer-events: none;
+  }
+  .rsvp__invite::after {
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(11, 10, 14, 0), #100e14 20%, #1e1a25 40%, #352e42 60%, #554a67 80%, #796d8e);
+  }
+  .rsvp__reply::before {
+    top: 0;
+    background: linear-gradient(180deg, #796d8e, #9f94b1 20%, #c2bacc 40%, #ded9e0 60%, #f1eeec 80%, rgba(247, 245, 240, 0));
+  }
+  .rsvp__invite {
+    padding-bottom: 72px;
+  }
+  .rsvp__reply {
+    padding-top: 64px;
+  }
+}
+
+@media (max-width: 759px) {
+  .rsvp__invite {
+    padding: 18px var(--gutter) 68px;
+    gap: 24px;
+  }
+  .rsvp__t {
+    font-size: clamp(2.5rem, 12vw, 3.4rem);
+  }
+  .rsvp__sum {
+    margin-top: 14px;
+    font-size: 0.98rem;
+  }
+  .rsvp__facts li {
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 14px;
+    padding: 14px 0;
+  }
+  .rsvp__tile {
+    width: 40px;
+    height: 40px;
+  }
+  .rsvp__facts b {
+    font-size: 1.04rem;
+  }
+  .rsvp__jump {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 52px;
+    padding: 0 20px;
+    border: 1px solid rgba(252, 253, 255, 0.3);
+    border-radius: 999px;
+    font: 600 1rem/1 var(--font);
+    text-decoration: none;
+    color: #fff;
+  }
+  .rsvp__reply {
+    padding: 56px var(--gutter) 64px;
+  }
+  .rsvp__h {
+    font-size: clamp(2.3rem, 10.5vw, 3rem);
+  }
+  .rsvp__lede {
+    margin: 12px 0 24px;
+    font-size: 0.98rem;
+  }
+  .rsvp-pick__opts {
+    gap: 8px;
+  }
+  .rsvp-opt__box {
+    min-height: 98px;
+    padding: 12px 10px 11px;
+  }
+  .rsvp-opt__l {
+    font-size: 1rem;
+  }
+  .rsvp-opt__h {
+    font-size: 0.78rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rsvp-opt__box {
+    transition: none;
+  }
+  .rsvp-opt input:checked + .rsvp-opt__box {
+    transform: none;
+  }
+}
+
+/* ---------------------------------------------------------------- the organisers' pages: registrations · RSVPs */
+.resp__nav {
+  display: flex;
+  gap: 4px;
+  margin-top: 18px;
+}
+
+.resp__nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1.5px solid var(--ink);
+  font: 500 0.74rem/1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.resp__nav a[aria-current="page"] {
+  background: var(--ink);
+  color: var(--white);
+}
+
+.resp__of {
+  font-size: 0.5em;
+  font-weight: 500;
+  color: var(--ink-2);
+}
+
+.resp__links {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 32px;
+  padding: 0;
+  list-style: none;
+}
+
+.resp__links li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+}
+
+.resp__links span {
+  min-width: 180px;
+  font-weight: 600;
+}
+
+.resp__links code {
+  font: 500 0.88rem/1.4 var(--mono);
+  user-select: all;
+  overflow-wrap: anywhere;
+}
+
+.resp__reply {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.resp__reply--yes {
+  background: var(--ref-purple);
+  color: #fff;
+}
+
+.resp__reply--tentative {
+  background: #f1eafd;
+  color: var(--ref-purple);
+}
+
+.resp__reply--no {
+  background: var(--ink);
+  color: #fff;
+}
