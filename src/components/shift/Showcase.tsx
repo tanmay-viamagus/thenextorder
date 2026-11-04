@@ -41,7 +41,7 @@ const initials = (name: string) => {
 
 /** One person: the portrait, name, designation and organisation; LinkedIn on the portrait's corner when given. */
 export function SpeakerCard({ person, index }: { person: Speaker; index: number }) {
-  const { name, role, company, photo, photoFocus, linkedin } = person;
+  const { name, role, company, photo, photoFocus, linkedin, bio } = person;
   return (
     <li className="spk" style={{ "--i": index } as CSSProperties}>
       <div className="spk__photo">
@@ -58,6 +58,15 @@ export function SpeakerCard({ person, index }: { person: Speaker; index: number 
         <h4 className="spk__name">{name}</h4>
         {role ? <p className="spk__role">{keep(role)}</p> : null}
         {company ? <p className="spk__co">{keep(company)}</p> : null}
+        {/* the bio waits behind a toggle, so the cards in a row stay level */}
+        {bio ? (
+          <details className="spk__bio">
+            <summary>
+              Profile<span className="sr-only">: {name}</span>
+            </summary>
+            <p>{keep(bio)}</p>
+          </details>
+        ) : null}
       </div>
       {linkedin ? (
         <a className="spk__in" href={linkedin} target="_blank" rel="noopener noreferrer">

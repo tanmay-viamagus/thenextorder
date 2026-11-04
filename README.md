@@ -32,7 +32,7 @@ vercel env pull .env.local --yes   # DATABASE_URL (Neon), RESPONSES_PASSWORD, FO
 npm run dev        # http://localhost:3000
 npm run build && npm start
 npm run lint
-npm test           # LinkedIn URL validation
+npm test           # LinkedIn links, speakers and logos, RSVP replies and calendar file
 ```
 
 | Route | What it is |
@@ -40,6 +40,9 @@ npm test           # LinkedIn URL validation
 | `/` | Live clock · the eras dial (pinned) · three hands, one clock · countdown + registration |
 | `/register` | The shareable registration page, with the same form |
 | `/register/response` | **Private.** Every registration, counts by seat, and a CSV download. Protected by HTTP Basic auth (user `viamagus`, password = `RESPONSES_PASSWORD`) |
+| `/rsvp` | The RSVP page sent with the invitation: the event's details, a link to the site, and a Yes / Tentative / No reply (noindex) |
+| `/rsvp/calendar.ics` | The evening as a calendar file, offered after a Yes or Tentative |
+| `/register/response/rsvp` | **Private.** Every RSVP, counts by reply and by list, the links to send, and a CSV download. Same password as `/register/response` |
 | `/film` | The 30 s event-screen film (1920×1080 stage, scales to any screen). `?t=17` pauses on a second. M toggles the synthesised score |
 | `/og-card` | Internal 1200×630 card, screenshotted to `public/og-image.jpg` (noindex) |
 | `/sitemap.xml`, `/robots.txt` | Generated. `robots.txt` blocks `/register/response`, `/api/` and `/og-card` |
@@ -59,6 +62,21 @@ npm test           # LinkedIn URL validation
 - **Where to read them:** `/register/response`, or download the CSV there. Cells are protected against spreadsheet-formula injection.
 - **Changing the password:** `vercel env rm RESPONSES_PASSWORD` and then `vercel env add RESPONSES_PASSWORD`, followed by a redeploy.
 - **Shared database:** development, preview and production all write to the same database. Delete test rows before launch.
+
+## RSVPs
+
+The RSVP page answers the invitation the way a calendar invite does: the guest chooses **Yes**, **Tentative** or **No** and gives their name, work email and organisation. After a Yes or Tentative it offers the evening for Google Calendar, Outlook and Apple Calendar (`.ics`); after a No, a prompt to pass the invitation to a colleague. No email is sent.
+
+- **The links to send** (also listed on `/register/response/rsvp`):
+  - Rahul's guest list: `https://thenextorder.events/rsvp?ref=guest-list`
+  - The Viamagus invitee list: `https://thenextorder.events/rsvp?ref=invitee-list`
+- **A reply button in an email:** add `&reply=yes`, `&reply=tentative` or `&reply=no` and the page opens with that reply chosen. The guest still fills in their details and sends it.
+- **Another list:** add `"ref": "Its name"` to `rsvpLists` in `src/content/rsvp.ts` and send `/rsvp?ref=ref`. An unknown `ref` is still stored and shown as it is; no `ref` shows as "Direct link".
+- **Storage:** `POST /api/rsvp` stores the reply in the `rsvps` table in the same Neon database as registrations (created on the first reply). There is one row per email: a changed reply updates the row and keeps the one before (`previous_reply`), and the list the first reply came from is kept.
+- **Changing a reply:** the guest opens the same link again. Their browser remembers their last reply and offers it to change.
+- **Protection:** the same as registration: BotID, honeypot, signed form token and per-IP rate limit. As with registration, anyone with the link can reply in any email's name; the organisers' page shows each row's email to check against the list.
+- **Where to read them:** `/register/response/rsvp`, or download the CSV there.
+- **Words:** the page's copy is in `src/content/rsvp.ts`; the event's facts come from `src/content/event.ts`.
 
 ## Event facts (confirmed)
 
@@ -88,6 +106,7 @@ Two sections follow 02 The meeting point: **The people shaping what’s next** (
   photo: "/speakers/full-name.jpg",           // optional: their initials stand in until it arrives
   photoFocus: "50% 20%",                      // optional: where the face sits, if the centre crop cuts it
   linkedin: "https://www.linkedin.com/in/handle", // optional
+  bio: "A few lines about them.",            // optional: shown behind the card's Profile toggle
 },
 ```
 
@@ -115,13 +134,14 @@ Two sections follow 02 The meeting point: **The people shaping what’s next** (
 src/content/            story.ts (all copy + sources), event.ts (verified facts only), film.ts (film timeline),
                         speakers.ts + organisations.ts (the two sections after 02)
 src/components/clock/   ShiftRing (hero), YearCycle (the year), Clock (HandsClock, FilmDial)
-src/components/shift/   Site (the page), Mechanisms (the three practice diagrams), Interactive (cut title, reveals, header), InviteForm, Showcase (speakers, logo wall)
+                        rsvp.ts (the RSVP page's words and lists)
+src/components/shift/   Site (the page), Mechanisms (the three practice diagrams), Interactive (cut title, reveals, header), InviteForm, Showcase (speakers, logo wall), RsvpForm
 src/components/film/    FilmPlayer (the 30 s film), FilmOverlay, score.ts (Web Audio)
-src/lib/                registrations.ts (Neon), guard.ts (token + rate limit), linkedin.ts, site-url.ts
+src/lib/                db.ts (Neon client), registrations.ts, rsvp.ts (replies + calendar), rsvp-store.ts (the rsvps table), guard.ts (token + rate limit), linkedin.ts, site-url.ts
 src/instrumentation-client.ts  BotID client
-tests/                  linkedin.test.mts (npm test)
-src/proxy.ts            Basic auth for /register/response
-src/styles/             shift.css (site + register), showcase.css (speakers, logo wall), joins.css (where sections meet), film-player.css (film), film.css (OG card), shared.css (logos)
+tests/                  linkedin, showcase, rsvp, confirmation-email (npm test)
+src/proxy.ts            Basic auth for /register/response (and its RSVPs page)
+src/styles/             shift.css (site + register), showcase.css (speakers, logo wall), joins.css (where sections meet), rsvp.css (RSVP page + organisers' tabs), film-player.css (film), film.css (OG card), shared.css (logos)
 docs/                   audit.md, brand-audit.md, next-order-research.md, film-storyboard.md
 ```
 

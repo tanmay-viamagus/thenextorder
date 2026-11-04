@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Geist_Mono, Josefin_Sans, Outfit } from "next/font/google";
-import { description } from "@/content/story";
+import { description, shareImage } from "@/content/story";
 import { siteUrl } from "@/lib/site-url";
 import { JsFlag } from "@/components/JsFlag";
 import "./globals.css";
@@ -33,9 +33,9 @@ export const metadata: Metadata = {
     url: "/",
     siteName: "The NEXT Order · Viamagus",
     locale: "en_IN",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "The NEXT Order — an invite-only symposium for Hyderabad’s GCC leaders, 3 December 2026 at T-Hub, Hyderabad" }],
+    images: [shareImage],
   },
-  twitter: { card: "summary_large_image", title, description, images: ["/og-image.jpg"] },
+  twitter: { card: "summary_large_image", title, description, images: [shareImage.url] },
 };
 
 export const viewport: Viewport = {

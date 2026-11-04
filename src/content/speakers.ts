@@ -15,6 +15,7 @@
  *     company: "Organisation",
  *     photo: "/speakers/full-name.jpg",
  *     linkedin: "https://www.linkedin.com/in/handle",
+ *     bio: "A few lines about them.",
  *   },
  */
 export type Speaker = {
@@ -34,6 +35,8 @@ export type Speaker = {
   photoFocus?: string;
   /** Their profile, e.g. "https://www.linkedin.com/in/handle" */
   linkedin?: string;
+  /** A few lines about them, as supplied: shown behind the card's "Profile" toggle */
+  bio?: string;
 };
 
 export type SpeakerGroup = {
@@ -51,7 +54,11 @@ export const speakersCopy = {
   intro: "Who you’ll hear on 3 December, on how GCCs hire, build and lead as AI reshapes them.",
 };
 
-// from the speaker sheet and photos supplied on 2 Nov 2026; Sayantan Bose's designation is from his LinkedIn profile
+// From the speaker sheet and photos supplied on 2 Nov 2026, as updated on 4 Nov (Emmanuel and Anurag Asthana
+// no longer listed; Sayantan Bose's and Saurabh Bali's bios and designations, and Saurabh Bali's photo, supplied).
+// Rashi Srivastava's and Anurag Garg's designations are from their LinkedIn profiles. Photos the speakers didn't
+// send: Anurag Garg's from his LinkedIn, Rashi Srivastava's (not public on LinkedIn) from her Women Entrepreneurs
+// Review interview. Both are small originals; a larger photo from them would sharpen their cards.
 export const speakerGroups: SpeakerGroup[] = [
   {
     title: "Speakers",
@@ -67,12 +74,27 @@ export const speakerGroups: SpeakerGroup[] = [
   {
     title: "Panellists",
     people: [
-      // company yet to be revealed
-      { name: "Emmanuel", linkedin: "https://www.linkedin.com/in/emmanuelgosula" },
-      { name: "Rashi Srivastava", company: "Quentelli" },
-      { name: "Anurag Asthana", company: "Olympus" },
-      { name: "Anurag Garg", company: "Ryan" },
-      { name: "Saurabh Bali", company: "Ensemble" },
+      {
+        name: "Rashi Srivastava",
+        role: "Chief Digital Officer",
+        company: "Qentelli",
+        photo: "/speakers/rashi-srivastava.jpg",
+        linkedin: "https://www.linkedin.com/in/rashi-srivastava-954633",
+      },
+      {
+        name: "Anurag Garg",
+        role: "SVP & GCC/Regional Technology Leader",
+        company: "Ryan",
+        photo: "/speakers/anurag-garg.jpg",
+        linkedin: "https://www.linkedin.com/in/agarg01",
+      },
+      {
+        name: "Saurabh Bali",
+        role: "India Leader and Vice President of Global Strategy",
+        company: "Ensemble Health Partners",
+        photo: "/speakers/saurabh-bali.jpg",
+        bio: "Saurabh Bali is India Leader and Vice President of Global Strategy at Ensemble Health Partners, where he heads the company’s India GCC. With over 25 years in healthcare operations, he has built, scaled and led Global Capability Centres in India. Earlier, he spent over six years at R1 RCM, rising from Hyderabad Site Head to Vice President, India Operations.",
+      },
       // not on the sheet: group and company to confirm
       { name: "Sheetal Srikanth", photo: "/speakers/sheetal-srikanth.jpg", linkedin: "https://www.linkedin.com/in/sheetal-srikanth" },
     ],
@@ -82,10 +104,11 @@ export const speakerGroups: SpeakerGroup[] = [
     people: [
       {
         name: "Sayantan Bose",
-        role: "Managing Director, Clients & Markets",
-        company: "Protiviti",
+        role: "Managing Director – Clients & Markets",
+        company: "Protiviti India",
         photo: "/speakers/sayantan-bose.jpg",
         linkedin: "https://www.linkedin.com/in/sayantan-bose-8967b817",
+        bio: "Sayantan Bose is Managing Director – Clients & Markets at Protiviti India, where he leads the firm’s GCC business across India. A consulting and advisory leader with over 26 years’ experience, including nine at EY, he sits on the CII Telangana GCC Advisory Forum and FTCCI’s ICT Committee, and co-founded Hyderabad Mavericks, ecosystem partner for The NEXT Order.",
       },
     ],
   },

@@ -30,6 +30,12 @@ export default async function Responses() {
         <ViaMagusLogo />
         <p className="resp__k">The NEXT Order · Registrations · private</p>
       </header>
+      <nav className="resp__nav" aria-label="Responses">
+        <a href="/register/response" aria-current="page">
+          Registrations
+        </a>
+        <a href="/register/response/rsvp">RSVPs</a>
+      </nav>
       <div className="resp__top">
         <h1>
           <span className="resp__n">{rows.length}</span> {rows.length === 1 ? "registration" : "registrations"}

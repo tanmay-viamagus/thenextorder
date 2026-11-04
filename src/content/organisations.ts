@@ -39,7 +39,18 @@ export const organisationsCopy = {
   intro: null as string | null,
 };
 
-export const organisations: Organisation[] = [];
+/**
+ * For now, the confirmed speakers' companies, in the order of the line-up
+ * (content/speakers.ts). Each logo is the company's own file, from its own
+ * site or brand library, with only the empty margin around it trimmed.
+ */
+export const organisations: Organisation[] = [
+  { name: "ModuleXero", logo: "/organisations/modulexero.png", scale: 1.05 },
+  { name: "Qentelli", logo: "/organisations/qentelli.svg", scale: 0.8 },
+  { name: "Ryan", logo: "/organisations/ryan.png", scale: 0.82 },
+  { name: "Ensemble Health Partners", logo: "/organisations/ensemble-health-partners.png" },
+  { name: "Protiviti", logo: "/organisations/protiviti.svg", scale: 1.1 },
+];
 
 /**
  * Until the supplied logos arrive: blank tiles that hold the wall's shape.

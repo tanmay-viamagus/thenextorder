@@ -7056,6 +7056,8 @@ html[data-hdr="dark"] .hdr .btn--shift {
 /* /register: the left panel's content runs from the top in one even rhythm,
    however long the form beside it */
 .reg__show {
+  /* one column that never grows past the panel, so nothing is cut at its edge */
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto;
   align-content: start;
   gap: clamp(28px, 5vh, 56px);
