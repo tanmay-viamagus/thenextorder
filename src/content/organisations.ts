@@ -37,6 +37,12 @@ export const organisationsCopy = {
   label: "Across the industry",
   title: ["Organisations shaping", "the next order."],
   intro: null as string | null,
+  /**
+   * Over the same logos on the invitation pages (/rsvp, /register). It must
+   * stay true of every logo listed: reword it if the list grows past the
+   * companies of the people on stage.
+   */
+  strip: "On stage, leaders from",
 };
 
 /**

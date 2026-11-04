@@ -130,6 +130,27 @@ function PlaceholderTile({ index }: { index: number }) {
   );
 }
 
+/**
+ * The same logos as the wall, as a band on the invitation pages (/rsvp,
+ * /register): white tiles on the night panel, rising in one after another.
+ * Off the page while the list is empty.
+ */
+export function OrgStrip() {
+  if (!organisations.length) return null;
+  return (
+    <div className="org-strip">
+      <p className="org-strip__k" id="org-strip-k">
+        {organisationsCopy.strip}
+      </p>
+      <ul className="org-wall org-wall--strip" aria-labelledby="org-strip-k">
+        {organisations.map((o, k) => (
+          <LogoTile key={o.name} org={o} index={k} />
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export function Organisations() {
   const blanks = organisations.length ? 0 : placeholderTiles;
   if (!organisations.length && !blanks) return null;

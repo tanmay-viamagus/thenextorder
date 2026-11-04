@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { MavericksLogo, ViaMagusLogo } from "@/components/Brand";
 import { Icon } from "@/components/shift/Icons";
 import { RsvpForm } from "@/components/shift/RsvpForm";
+import { OrgStrip } from "@/components/shift/Showcase";
 import { event, knownFacts, siteAddress } from "@/content/event";
 import { directionsUrl, rsvpCopy } from "@/content/rsvp";
 import { shareImage } from "@/content/story";
@@ -51,6 +52,7 @@ export default async function Rsvp({ searchParams }: { searchParams: Promise<{ r
           </h1>
           <p className="rsvp__sum">{keep(rsvpCopy.summary)}</p>
         </div>
+        <OrgStrip />
 
         <ul className="rsvp__facts">
           <li>
