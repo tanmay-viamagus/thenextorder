@@ -322,7 +322,6 @@
   border: 1px solid var(--ref-line);
   border-radius: 6px;
   background: #fff;
-  transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s var(--ease-out);
 }
 
 /* the logo's box: wide marks meet its sides, tall ones its top and foot, so
@@ -333,9 +332,9 @@
   height: calc(46% * var(--scale, 1));
 }
 
+/* logos hold still: in their own colours, with nothing on hover */
 .org__logo img {
   object-fit: contain;
-  transition: filter 0.45s ease, opacity 0.45s ease;
 }
 
 .org__tile--mono img {
@@ -381,21 +380,6 @@
   text-align: center;
   text-wrap: balance;
   color: var(--ref-ink-2);
-}
-
-@media (hover: hover) {
-  .org__tile:not(.org__tile--empty):hover {
-    border-color: rgba(124, 58, 237, 0.35);
-    box-shadow: 0 14px 34px -22px rgba(76, 29, 149, 0.45);
-    transform: translateY(-2px);
-  }
-  .org__tile--mono:hover img {
-    filter: none;
-    opacity: 1;
-  }
-  .org__tile--solid:hover img {
-    opacity: 1;
-  }
 }
 
 /* ---------------------------------------------------------------- columns */
@@ -462,12 +446,93 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .spk__photo img,
-  .org__tile {
+  .spk__photo img {
     transition: none;
   }
-  .spk:hover .spk__photo img,
-  .org__tile:hover {
+  .spk:hover .spk__photo img {
     transform: none;
+  }
+}
+
+/* ---------------------------------------------------------------- the same logos on the invitation pages (/rsvp, /register) */
+/* white tiles on the night panel, so every logo keeps its own colours; three
+   to a row in the half-width panel, five once it spans the page, two on phones */
+.org-strip {
+  container-type: inline-size;
+  display: grid;
+  gap: 14px;
+}
+
+.org-strip__k {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font: 500 0.72rem/1.4 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #c4b5fd;
+}
+
+/* a hairline running on from the words, into the panel's edge */
+.org-strip__k::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(196, 181, 253, 0.45), rgba(196, 181, 253, 0));
+}
+
+/* equal tiles, a short last row in the middle, as on the wall */
+.org-wall.org-wall--strip {
+  --cols: 2;
+  --gap: 8px;
+}
+
+.org-wall--strip .org__tile {
+  height: 58px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.5),
+    0 14px 32px -20px rgba(168, 85, 247, 0.7);
+}
+
+.org-wall--strip .org__logo {
+  width: min(100%, calc(140px * var(--scale, 1)));
+  height: calc(50% * var(--scale, 1));
+}
+
+@container (min-width: 480px) {
+  .org-wall.org-wall--strip {
+    --cols: 3;
+    --gap: 10px;
+  }
+  .org-wall--strip .org__tile {
+    height: 78px;
+    padding: 0 18px;
+  }
+  .org-wall--strip .org__logo {
+    width: min(100%, calc(160px * var(--scale, 1)));
+  }
+}
+
+@container (min-width: 760px) {
+  .org-wall.org-wall--strip {
+    --cols: 5;
+  }
+}
+
+/* in they come, one after another, as the page opens */
+@media (prefers-reduced-motion: no-preference) {
+  .org-wall--strip > li {
+    animation: org-strip-in 0.8s var(--ease-out) both;
+    animation-delay: calc(0.2s + var(--i, 0) * 80ms);
+  }
+}
+
+@keyframes org-strip-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
 }

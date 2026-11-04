@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Fragment } from "react";
 import { MavericksLogo, ViaMagusLogo } from "@/components/Brand";
 import { InviteForm } from "@/components/shift/InviteForm";
+import { OrgStrip } from "@/components/shift/Showcase";
 import { agenda, agendaNote, knownFacts, statusLine } from "@/content/event";
 import { INTEREST_BY_KEY } from "@/content/register";
 import { invite, shareImage } from "@/content/story";
@@ -43,6 +44,7 @@ export default async function Register({
             <span>The NEXT</span> <span>Order.</span>
           </p>
         </div>
+        <OrgStrip />
         {/* the agenda, as the final brochure gives it — compact on phones */}
         <div className="reg__agenda">
           <p className="reg__k">Tentative agenda</p>

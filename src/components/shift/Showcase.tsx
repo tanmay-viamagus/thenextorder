@@ -103,7 +103,7 @@ export function Speakers() {
 
 /** One logo, fitted inside its tile at its own proportions; the name, set in type, until a logo is supplied. */
 export function LogoTile({ org, index }: { org: Organisation; index: number }) {
-  const { name, logo, treatment = "mono", scale = 1 } = org;
+  const { name, logo, treatment = "original", scale = 1 } = org;
   return (
     <li className="org" style={{ "--i": index } as CSSProperties}>
       <div className={`org__tile org__tile--${treatment}`}>
@@ -127,6 +127,27 @@ function PlaceholderTile({ index }: { index: number }) {
         <span className="org__ph" />
       </div>
     </li>
+  );
+}
+
+/**
+ * The same logos as the wall, as a band on the invitation pages (/rsvp,
+ * /register): white tiles on the night panel, rising in one after another.
+ * Off the page while the list is empty.
+ */
+export function OrgStrip() {
+  if (!organisations.length) return null;
+  return (
+    <div className="org-strip">
+      <p className="org-strip__k" id="org-strip-k">
+        {organisationsCopy.strip}
+      </p>
+      <ul className="org-wall org-wall--strip" aria-labelledby="org-strip-k">
+        {organisations.map((o, k) => (
+          <LogoTile key={o.name} org={o} index={k} />
+        ))}
+      </ul>
+    </div>
   );
 }
 

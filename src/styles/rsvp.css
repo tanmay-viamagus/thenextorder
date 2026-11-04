@@ -15,7 +15,7 @@
 .rsvp__invite {
   position: relative;
   display: grid;
-  grid-template-rows: auto auto 1fr;
+  grid-template-rows: auto auto auto 1fr;
   align-content: start;
   gap: clamp(28px, 5vh, 56px);
   min-height: 100svh;

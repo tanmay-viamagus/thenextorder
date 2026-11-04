@@ -57,8 +57,8 @@ test("every organisation is listed once, with its supplied logo in public/organi
 });
 
 test("the logo wall's words say nothing of invitations, attendance or sponsorship", () => {
-  const { label, title, intro } = organisationsCopy;
-  assert.doesNotMatch([label, ...title, intro ?? ""].join(" "), /\b(guest|invit|confirm|regist|attend|sponsor|endors|partner)/i);
+  const { label, title, intro, strip } = organisationsCopy;
+  assert.doesNotMatch([label, ...title, intro ?? "", strip].join(" "), /\b(guest|invit|confirm|regist|attend|sponsor|endors|partner)/i);
 });
 
 test("each section has its label and two-part heading", () => {

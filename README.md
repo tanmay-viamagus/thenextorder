@@ -120,11 +120,12 @@ Two sections follow 02 The meeting point: **The people shaping what’s next** (
 
 - **Order:** logos show in the order listed, and a short last row is centred.
 - **Fit:** each logo is fitted inside its tile at its own proportions, never stretched or cropped.
-- **Colour:** logos are greyscale by default and turn to full colour on hover. Set `treatment: "original"` to keep a logo's colours at all times, or `treatment: "solid"` for a logo supplied in white or too pale for the page.
+- **Colour:** logos show in their own colours, with no hover effect. Set `treatment: "mono"` for a quiet greyscale logo, or `treatment: "solid"` for a logo supplied in white or too pale for the page.
 - **Size:** `scale` (0.6–1.4) nudges a logo that looks heavier or slighter than the rest.
 - **No logo yet:** an organisation without a `logo` shows its name in type.
 - **Placeholders:** the blank tiles give way to the real logos as soon as `organisations` has an entry.
 - **Wording:** the wall carries no invitation, attendance or sponsorship wording.
+- **On the invitation pages:** the same logos show on `/rsvp` and `/register`, under the title, as a band headed “On stage, leaders from” (`organisationsCopy.strip`). That line has to stay true of every logo listed: reword it if the list grows past the companies of the people on stage.
 
 `npm test` checks both files: every photo and logo exists in `public/`, every LinkedIn link is a canonical profile link, nobody is listed twice, and the logo wall's wording stays clear of "invited", "confirmed", "sponsor" and the like. The section design is in `src/components/shift/Showcase.tsx` and `src/styles/showcase.css`.
 
