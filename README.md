@@ -107,12 +107,13 @@ Two sections follow 02 The meeting point: **The people shaping what’s next** (
   photoFocus: "50% 20%",                      // optional: where the face sits, if the centre crop cuts it
   linkedin: "https://www.linkedin.com/in/handle", // optional
   bio: "A few lines about them.",            // optional: shown behind the card's Profile toggle
+  part: "Moderator",                          // optional: their part in the group, tagged on the portrait
 },
 ```
 
 - **Order:** people show in the order listed, and groups in the order of `speakerGroups`.
 - **Moving or removing someone:** move or delete the entry.
-- **Groups:** a new category (for example one per panel, with the panel's theme as `note`) is another `{ title, note, people }` in `speakerGroups`. Empty groups don't show.
+- **Groups:** a new category (for example one per panel, with the panel's theme as `note`) is another `{ title, note, people }` in `speakerGroups`. Empty groups don't show. Each panel's moderator sits in the panel's group with `part: "Moderator"`.
 - **Wording:** the section's own label, heading and intro are in `speakersCopy`.
 - **Structured data:** the speakers are also listed in the page's event data for search engines.
 

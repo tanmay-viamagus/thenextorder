@@ -48,17 +48,21 @@ export const organisationsCopy = {
 /**
  * The companies of the people on stage, in the order of the line-up
  * (content/speakers.ts), then TG MATH. Each logo is the organisation's own
- * file, from its own site or brand library or as supplied, with only the
- * empty margin around it trimmed. Still to come: Aikam Global's, which has
- * no public logo file to take.
+ * file, from its own site or as supplied, with only the empty margin around
+ * it trimmed: Aikam's taken out of the lockup on its site, WS Audiology's in
+ * the purple of its own site icon. Not here: the Government of Telangana
+ * (its state emblem isn't ours to use) and Viamagus, the host.
  */
 export const organisations: Organisation[] = [
+  { name: "Aikam", logo: "/organisations/aikam.svg", scale: 1.35 },
   { name: "ModuleXero", logo: "/organisations/modulexero.png", scale: 1.05 },
   { name: "Qentelli", logo: "/organisations/qentelli.svg", scale: 0.8 },
   { name: "Ryan", logo: "/organisations/ryan.png", scale: 0.82 },
   { name: "Ensemble Health Partners", logo: "/organisations/ensemble-health-partners.png" },
-  { name: "NationsBenefits", logo: "/organisations/nationsbenefits.svg" },
+  { name: "WS Audiology", logo: "/organisations/ws-audiology.svg", scale: 0.7 },
   { name: "Protiviti", logo: "/organisations/protiviti.svg", scale: 1.1 },
+  { name: "NationsBenefits", logo: "/organisations/nationsbenefits.svg" },
+  { name: "Adaps", logo: "/organisations/adaps.png", scale: 0.9 },
   { name: "TG MATH, AI Centre of Excellence", logo: "/organisations/tg-math.png" },
 ];
 
