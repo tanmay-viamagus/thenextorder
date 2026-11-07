@@ -39,23 +39,27 @@ export const organisationsCopy = {
   intro: null as string | null,
   /**
    * Over the same logos on the invitation pages (/rsvp, /register). It must
-   * stay true of every logo listed: reword it if the list grows past the
-   * companies of the people on stage.
+   * stay true of every logo listed: not every organisation here has someone
+   * on stage, so it doesn't say "on stage".
    */
-  strip: "On stage, leaders from",
+  strip: "With leaders from",
 };
 
 /**
- * For now, the confirmed speakers' companies, in the order of the line-up
- * (content/speakers.ts). Each logo is the company's own file, from its own
- * site or brand library, with only the empty margin around it trimmed.
+ * The companies of the people on stage, in the order of the line-up
+ * (content/speakers.ts), then TG MATH. Each logo is the organisation's own
+ * file, from its own site or brand library or as supplied, with only the
+ * empty margin around it trimmed. Still to come: Aikam Global's, which has
+ * no public logo file to take.
  */
 export const organisations: Organisation[] = [
   { name: "ModuleXero", logo: "/organisations/modulexero.png", scale: 1.05 },
   { name: "Qentelli", logo: "/organisations/qentelli.svg", scale: 0.8 },
   { name: "Ryan", logo: "/organisations/ryan.png", scale: 0.82 },
   { name: "Ensemble Health Partners", logo: "/organisations/ensemble-health-partners.png" },
+  { name: "NationsBenefits", logo: "/organisations/nationsbenefits.svg" },
   { name: "Protiviti", logo: "/organisations/protiviti.svg", scale: 1.1 },
+  { name: "TG MATH, AI Centre of Excellence", logo: "/organisations/tg-math.png" },
 ];
 
 /**

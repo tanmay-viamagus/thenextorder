@@ -54,20 +54,24 @@ export const speakersCopy = {
   intro: "Who you’ll hear on 3 December, on how GCCs hire, build and lead as AI reshapes them.",
 };
 
-// From the speaker sheet and photos supplied on 2 Nov 2026, as updated on 4 Nov (Emmanuel and Anurag Asthana
-// no longer listed; Sayantan Bose's and Saurabh Bali's bios and designations, and Saurabh Bali's photo, supplied).
-// Rashi Srivastava's and Anurag Garg's designations are from their LinkedIn profiles. Photos the speakers didn't
-// send: Anurag Garg's from his LinkedIn, Rashi Srivastava's (not public on LinkedIn) from her Women Entrepreneurs
-// Review interview. Both are small originals; a larger photo from them would sharpen their cards.
+// From the speaker sheet and photos supplied on 2 Nov 2026, as updated since (Emmanuel and Anurag Asthana not
+// listed until their details arrive; Srinivas "Sunny" Dasari on the sheet without an invitation yet). Bios,
+// designations and photos as supplied in bios/ on 7 Nov, except: Sheena Bhalla's bio, condensed from her own
+// speaker profile; Saurabh Bali's and Sayantan Bose's photos, the same pictures kept at the larger size already
+// here; Srinidhi Reddy Kongari's, cropped closer from her full-length photo. No photo yet for Vijayashree
+// Pathikonda. Where a bio names two roles, the card gives the first. Sheetal Srikanth, Vijayashree Pathikonda and
+// Srinidhi Reddy Kongari aren't on the sheet: their panel or part in the evening is to confirm.
 export const speakerGroups: SpeakerGroup[] = [
   {
     title: "Speakers",
     people: [
       {
         name: "Sheena Bhalla",
+        role: "Founder",
         company: "ModuleXero",
         photo: "/speakers/sheena-bhalla.jpg",
         linkedin: "https://www.linkedin.com/in/sheenabhalla",
+        bio: "Sheena Bhalla is Founder of ModuleXero, a think tank and learning venture exploring what responsible leadership looks like in the age of AI, where she runs the Responsible Leadership Initiative. She spent over eight years at Google leading APAC-wide Google News Initiative programmes, including the GNI Data Labs, Subscription Lab and Design Accelerator. She is a Global Council Member of She Shapes AI and an advisor to AI for Good Asia.",
       },
     ],
   },
@@ -76,17 +80,19 @@ export const speakerGroups: SpeakerGroup[] = [
     people: [
       {
         name: "Rashi Srivastava",
-        role: "Chief Digital Officer",
+        role: "Global Chief Digital Officer",
         company: "Qentelli",
         photo: "/speakers/rashi-srivastava.jpg",
         linkedin: "https://www.linkedin.com/in/rashi-srivastava-954633",
+        bio: "Rashi Srivastava is Global Chief Digital Officer at Qentelli, which she joined as its first employee in 2015 and helped scale into a global digital transformation company of 1,500+ people. With over two decades in technology across Kyocera, Wipro and Cigniti, she sits on the NASSCOM Regional Council, co-chairs the FTCCI Women’s Wing and mentors startups.",
       },
       {
         name: "Anurag Garg",
-        role: "SVP & GCC/Regional Technology Leader",
+        role: "Senior Vice President, GCC and Regional Technology Leader",
         company: "Ryan",
         photo: "/speakers/anurag-garg.jpg",
         linkedin: "https://www.linkedin.com/in/agarg01",
+        bio: "Anurag Garg is Senior Vice President, GCC and Regional Technology Leader at Ryan. An engineering executive with over 25 years of global leadership, he has built and scaled three Global Capability Centres from zero to 1,500+ engineers. At Experian, he established the Hyderabad Global Innovation Center and directed engineering for Ascend, its cloud-native credit analytics platform.",
       },
       {
         name: "Saurabh Bali",
@@ -95,8 +101,27 @@ export const speakerGroups: SpeakerGroup[] = [
         photo: "/speakers/saurabh-bali.jpg",
         bio: "Saurabh Bali is India Leader and Vice President of Global Strategy at Ensemble Health Partners, where he heads the company’s India GCC. With over 25 years in healthcare operations, he has built, scaled and led Global Capability Centres in India. Earlier, he spent over six years at R1 RCM, rising from Hyderabad Site Head to Vice President, India Operations.",
       },
-      // not on the sheet: group and company to confirm
-      { name: "Sheetal Srikanth", photo: "/speakers/sheetal-srikanth.jpg", linkedin: "https://www.linkedin.com/in/sheetal-srikanth" },
+      {
+        name: "Sheetal Srikanth",
+        role: "Vice President – Research & Co-Innovation",
+        company: "Aikam Global",
+        photo: "/speakers/sheetal-srikanth.jpg",
+        linkedin: "https://www.linkedin.com/in/sheetal-srikanth",
+        bio: "Sheetal Srikanth is Vice President – Research & Co-Innovation at Aikam Global and Head of Strategy at Smartail. A go-to-market and growth leader with over 20 years’ experience across corporate, international and startup environments, she was previously Founding Member, Growth at BharathCloud. She mentors founders at T-Hub, sits on FTCCI’s ICT Committee, and is an alumna of Macquarie Graduate School of Management.",
+      },
+      {
+        name: "Vijayashree Pathikonda",
+        role: "Global Head of Human Resources – Senior Vice President",
+        company: "NationsBenefits",
+        bio: "Vijayashree Pathikonda is Global Head of Human Resources – Senior Vice President at NationsBenefits, where she leads HR strategy and operations across the US, India and LATAM. An HR leader with over 20 years’ experience across technology, manufacturing and consulting, she has held senior HR roles at Eastman, FICOSA, Verisk and Polycom, and co-founded Valeur Consulting. She has built HR functions from the ground up, cut attrition at NationsBenefits from 45% to 9%, and led digital HR transformation and post-merger integration.",
+      },
+      {
+        name: "Srinidhi Reddy Kongari",
+        role: "Founder",
+        company: "Aarambh App",
+        photo: "/speakers/srinidhi-reddy-kongari.jpg",
+        bio: "Srinidhi Reddy Kongari is Founder of Aarambh App, a women-first strength training platform, and Client Partner – GCC Accounts (Fractional) at Viamagus, where she partners with Hyderabad GCC leaders on becoming AI-native. She previously led strategy and partnerships at MATH, the AI/ML Centre of Excellence at T-Hub, and has mentored candidates for global Master in Management programmes. She is an alumna of ESSEC Business School and NIT Warangal.",
+      },
     ],
   },
   {
