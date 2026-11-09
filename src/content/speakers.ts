@@ -16,6 +16,7 @@
  *     photo: "/speakers/full-name.jpg",
  *     linkedin: "https://www.linkedin.com/in/handle",
  *     bio: "A few lines about them.",
+ *     part: "Moderator",
  *   },
  */
 export type Speaker = {
@@ -37,6 +38,8 @@ export type Speaker = {
   linkedin?: string;
   /** A few lines about them, as supplied: shown behind the card's "Profile" toggle */
   bio?: string;
+  /** Their part in the group, when it differs from the rest, e.g. "Moderator": a tag on the portrait's corner */
+  part?: string;
 };
 
 export type SpeakerGroup = {
@@ -54,14 +57,32 @@ export const speakersCopy = {
   intro: "Who you’ll hear on 3 December, on how GCCs hire, build and lead as AI reshapes them.",
 };
 
-// From the speaker sheet and photos supplied on 2 Nov 2026, as updated since (Emmanuel and Anurag Asthana not
-// listed until their details arrive; Srinivas "Sunny" Dasari on the sheet without an invitation yet). Bios,
-// designations and photos as supplied in bios/ on 7 Nov, except: Sheena Bhalla's bio, condensed from her own
-// speaker profile; Saurabh Bali's and Sayantan Bose's photos, the same pictures kept at the larger size already
-// here; Srinidhi Reddy Kongari's, cropped closer from her full-length photo. No photo yet for Vijayashree
-// Pathikonda. Where a bio names two roles, the card gives the first. Sheetal Srikanth, Vijayashree Pathikonda and
-// Srinidhi Reddy Kongari aren't on the sheet: their panel or part in the evening is to confirm.
+// From the organisers' sheet of 7 Nov 2026: the keynote, the speaker, and each panel with its moderator,
+// in the sheet's order. Left off until the sheet says more: Emmanuel Gosula (his company is named after
+// 11 Nov), Anurag Asthana (tentative), and anyone still in discussion. Sheetal Srikanth is on the sheet for
+// Aikam's logo, not on stage. The panels' themes are the agenda's (content/event.ts): technology for the
+// first, HR for the second.
+// Bios, designations and photos as supplied in bios/, except: Sheena Bhalla's bio, condensed from her own
+// speaker profile; Srinidhi Reddy Kongari's photo, cropped closer from her full-length one; and, where
+// nothing was supplied, the designation from the sheet. Photos not supplied are from public pages that name
+// them with their company: Phani Nagarjuna's from an Elets summit page, Srinivas Dasari's his LinkedIn photo
+// (via TheOrg, at a larger size), Venugopal Rao Sankineni's from the Global Pharma Partnering Summit (small),
+// and Sravanti Chekragari's and Vijayashree Pathikonda's cropped from awards-jury posters. Supplied
+// headshots would be better for all five. Sravanti's surname is spelt as on her LinkedIn and Adaps pages
+// (the sheet has "Chekragiri").
 export const speakerGroups: SpeakerGroup[] = [
+  {
+    title: "Keynote",
+    people: [
+      {
+        name: "Phani Nagarjuna",
+        role: "Chief Advisor",
+        company: "Aikam",
+        photo: "/speakers/phani-nagarjuna.jpg",
+        linkedin: "https://www.linkedin.com/in/phaninagarjuna",
+      },
+    ],
+  },
   {
     title: "Speakers",
     people: [
@@ -76,7 +97,8 @@ export const speakerGroups: SpeakerGroup[] = [
     ],
   },
   {
-    title: "Panellists",
+    title: "Technology panel",
+    note: "Rethinking GCC strategy in an AI-first world",
     people: [
       {
         name: "Rashi Srivastava",
@@ -102,31 +124,12 @@ export const speakerGroups: SpeakerGroup[] = [
         bio: "Saurabh Bali is India Leader and Vice President of Global Strategy at Ensemble Health Partners, where he heads the company’s India GCC. With over 25 years in healthcare operations, he has built, scaled and led Global Capability Centres in India. Earlier, he spent over six years at R1 RCM, rising from Hyderabad Site Head to Vice President, India Operations.",
       },
       {
-        name: "Sheetal Srikanth",
-        role: "Vice President – Research & Co-Innovation",
-        company: "Aikam Global",
-        photo: "/speakers/sheetal-srikanth.jpg",
-        linkedin: "https://www.linkedin.com/in/sheetal-srikanth",
-        bio: "Sheetal Srikanth is Vice President – Research & Co-Innovation at Aikam Global and Head of Strategy at Smartail. A go-to-market and growth leader with over 20 years’ experience across corporate, international and startup environments, she was previously Founding Member, Growth at BharathCloud. She mentors founders at T-Hub, sits on FTCCI’s ICT Committee, and is an alumna of Macquarie Graduate School of Management.",
+        name: "Srinivas “Sunny” Dasari",
+        role: "VP R&D, Site Leader",
+        company: "WS Audiology",
+        photo: "/speakers/srinivas-dasari.jpg",
+        linkedin: "https://www.linkedin.com/in/dasari22",
       },
-      {
-        name: "Vijayashree Pathikonda",
-        role: "Global Head of Human Resources – Senior Vice President",
-        company: "NationsBenefits",
-        bio: "Vijayashree Pathikonda is Global Head of Human Resources – Senior Vice President at NationsBenefits, where she leads HR strategy and operations across the US, India and LATAM. An HR leader with over 20 years’ experience across technology, manufacturing and consulting, she has held senior HR roles at Eastman, FICOSA, Verisk and Polycom, and co-founded Valeur Consulting. She has built HR functions from the ground up, cut attrition at NationsBenefits from 45% to 9%, and led digital HR transformation and post-merger integration.",
-      },
-      {
-        name: "Srinidhi Reddy Kongari",
-        role: "Founder",
-        company: "Aarambh App",
-        photo: "/speakers/srinidhi-reddy-kongari.jpg",
-        bio: "Srinidhi Reddy Kongari is Founder of Aarambh App, a women-first strength training platform, and Client Partner – GCC Accounts (Fractional) at Viamagus, where she partners with Hyderabad GCC leaders on becoming AI-native. She previously led strategy and partnerships at MATH, the AI/ML Centre of Excellence at T-Hub, and has mentored candidates for global Master in Management programmes. She is an alumna of ESSEC Business School and NIT Warangal.",
-      },
-    ],
-  },
-  {
-    title: "Moderator",
-    people: [
       {
         name: "Sayantan Bose",
         role: "Managing Director – Clients & Markets",
@@ -134,6 +137,42 @@ export const speakerGroups: SpeakerGroup[] = [
         photo: "/speakers/sayantan-bose.jpg",
         linkedin: "https://www.linkedin.com/in/sayantan-bose-8967b817",
         bio: "Sayantan Bose is Managing Director – Clients & Markets at Protiviti India, where he leads the firm’s GCC business across India. A consulting and advisory leader with over 26 years’ experience, including nine at EY, he sits on the CII Telangana GCC Advisory Forum and FTCCI’s ICT Committee, and co-founded Hyderabad Mavericks, ecosystem partner for The NEXT Order.",
+        part: "Moderator",
+      },
+    ],
+  },
+  {
+    title: "HR panel",
+    note: "Hiring and people leadership in the age of the agentic workforce",
+    people: [
+      {
+        name: "Vijayashree Pathikonda",
+        role: "Global Head of Human Resources – Senior Vice President",
+        company: "NationsBenefits",
+        photo: "/speakers/vijayashree-pathikonda.jpg",
+        bio: "Vijayashree Pathikonda is Global Head of Human Resources – Senior Vice President at NationsBenefits, where she leads HR strategy and operations across the US, India and LATAM. An HR leader with over 20 years’ experience across technology, manufacturing and consulting, she has held senior HR roles at Eastman, FICOSA, Verisk and Polycom, and co-founded Valeur Consulting. She has built HR functions from the ground up, cut attrition at NationsBenefits from 45% to 9%, and led digital HR transformation and post-merger integration.",
+      },
+      {
+        name: "Venugopal Rao Sankineni",
+        role: "Head of GCC Relationships, Life Sciences",
+        company: "Government of Telangana",
+        photo: "/speakers/venugopal-rao-sankineni.jpg",
+        linkedin: "https://www.linkedin.com/in/venugopal-rao-sankineni-ba520519",
+      },
+      {
+        name: "Sravanti Chekragari",
+        role: "Chief Operating Officer",
+        company: "Adaps",
+        photo: "/speakers/sravanti-chekragari.jpg",
+        linkedin: "https://www.linkedin.com/in/sravanti-chekragari-98642310",
+      },
+      {
+        name: "Srinidhi Reddy Kongari",
+        role: "Client Partner – GCC Accounts",
+        company: "Viamagus",
+        photo: "/speakers/srinidhi-reddy-kongari.jpg",
+        bio: "Srinidhi Reddy Kongari is Founder of Aarambh App, a women-first strength training platform, and Client Partner – GCC Accounts (Fractional) at Viamagus, where she partners with Hyderabad GCC leaders on becoming AI-native. She previously led strategy and partnerships at MATH, the AI/ML Centre of Excellence at T-Hub, and has mentored candidates for global Master in Management programmes. She is an alumna of ESSEC Business School and NIT Warangal.",
+        part: "Moderator",
       },
     ],
   },

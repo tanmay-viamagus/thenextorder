@@ -283,6 +283,26 @@
   height: 15px;
 }
 
+/* their part on the panel, e.g. its moderator: a tag on the portrait's top corner */
+.spk__part {
+  grid-area: photo;
+  align-self: start;
+  justify-self: start;
+  position: relative;
+  z-index: 1;
+  margin: 10px;
+  padding: 6px 10px;
+  border: 1px solid rgba(196, 181, 253, 0.5);
+  border-radius: 999px;
+  background: rgba(11, 10, 14, 0.62);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  font: 600 0.66rem/1 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lilac);
+}
+
 .spk:focus-within .spk__photo img {
   filter: none;
 }

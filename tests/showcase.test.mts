@@ -23,6 +23,7 @@ test("every speaker has a name, and is listed once", () => {
       assert.ok(p.name.trim(), `a speaker in ${g.title} has no name`);
       if (p.role !== undefined) assert.ok(p.role.trim(), `${p.name}: leave role out rather than empty`);
       if (p.bio !== undefined) assert.ok(p.bio.trim(), `${p.name}: leave bio out rather than empty`);
+      if (p.part !== undefined) assert.ok(p.part.trim(), `${p.name}: leave part out rather than empty`);
     }
   }
   unique(speakerGroups.flatMap((g) => g.people.map((p) => p.name)), "speaker");
