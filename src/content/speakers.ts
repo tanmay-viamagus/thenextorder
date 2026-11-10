@@ -73,15 +73,11 @@ export const speakersCopy = {
 export const speakerGroups: SpeakerGroup[] = [
   {
     title: "Keynote",
-    people: [
-      {
-        name: "Phani Nagarjuna",
-        role: "Chief Advisor",
-        company: "Aikam",
-        photo: "/speakers/phani-nagarjuna.jpg",
-        linkedin: "https://www.linkedin.com/in/phaninagarjuna",
-      },
-    ],
+    // Hidden (an empty group is left off the page) until his availability is confirmed: Reynold, who
+    // coordinates for him, is checking (10 Nov). To show him, put this back in `people`:
+    //   { name: "Phani Nagarjuna", role: "Chief Advisor", company: "Aikam",
+    //     photo: "/speakers/phani-nagarjuna.jpg", linkedin: "https://www.linkedin.com/in/phaninagarjuna" },
+    people: [],
   },
   {
     title: "Speakers",
