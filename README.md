@@ -143,7 +143,7 @@ src/lib/                db.ts (Neon client), registrations.ts, rsvp.ts (replies 
 src/instrumentation-client.ts  BotID client
 tests/                  linkedin, showcase, rsvp, confirmation-email (npm test)
 src/proxy.ts            Basic auth for /register/response (and its RSVPs page)
-src/styles/             shift.css (site + register), showcase.css (speakers, logo wall), joins.css (where sections meet), rsvp.css (RSVP page + organisers' tabs), film-player.css (film), film.css (OG card), shared.css (logos)
+src/styles/             shift.css (site, register form), showcase.css (speakers, logo wall), joins.css (where sections meet), rsvp.css (RSVP and register layout, the shared invitation panel, organisers' tabs), film-player.css (film), film.css (OG card), shared.css (logos)
 docs/                   audit.md, brand-audit.md, next-order-research.md, film-storyboard.md
 ```
 

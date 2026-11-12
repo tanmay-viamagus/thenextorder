@@ -1,12 +1,8 @@
 import type { Metadata } from "next";
-import { Fragment } from "react";
-import { MavericksLogo, ViaMagusLogo } from "@/components/Brand";
 import { InviteForm } from "@/components/shift/InviteForm";
-import { AgendaTitle } from "@/components/shift/Evening";
-import { OrgStrip } from "@/components/shift/Showcase";
-import { agenda, agendaNote, knownFacts, statusLine } from "@/content/event";
+import { InvitePanel } from "@/components/shift/InvitePanel";
 import { INTEREST_BY_KEY } from "@/content/register";
-import { invite, shareImage } from "@/content/story";
+import { cta, invite, shareImage } from "@/content/story";
 import { keep } from "@/lib/text";
 
 const title = "Register | The NEXT Order — Viamagus";
@@ -29,70 +25,21 @@ export default async function Register({
   const { interest } = await searchParams;
   const preset = interest ? INTEREST_BY_KEY[interest] : undefined;
   return (
-    <div className="reg">
-      <aside className="reg__show" aria-label="The NEXT Order">
-        <div className="reg__top">
-          <ViaMagusLogo />
-          {/* a full navigation to the top of the microsite — client-side routing restored the form's scroll position */}
-          {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-          <a className="reg__back" href="/#top">
-            ← The site
-          </a>
-        </div>
-        <div className="reg__id">
-          <p className="reg__k">An invitation for Hyderabad’s GCC leaders</p>
-          <p className="reg__t" aria-hidden="true">
-            <span>The NEXT</span> <span>Order.</span>
-          </p>
-        </div>
-        <OrgStrip />
-        {/* the agenda (content/event.ts) — compact on phones */}
-        <div className="reg__agenda">
-          <p className="reg__k">Tentative agenda</p>
-          <ol>
-            {agenda.map((a) => (
-              <li key={a.k}>
-                <span className="reg__at">{a.time ?? ""}</span>
-                <span>
-                  {a.kind ? <span className="reg__kind">{a.kind}</span> : null}
-                  <AgendaTitle item={a} />
-                </span>
-              </li>
-            ))}
-          </ol>
-          <p className="reg__note">{agendaNote.replace(/^Tentative\. /, "")}</p>
-        </div>
-        <div className="reg__when">
-          <p className="reg__k">
-            {statusLine()
-              .split(" · ")
-              .map((part, k, all) => (
-                <Fragment key={part}>
-                  {/* the space between parts is the line's only break */}
-                  {k ? " " : ""}
-                  <span className="reg__part">
-                    {keep(part)}
-                    {k < all.length - 1 ? " ·" : ""}
-                  </span>
-                </Fragment>
-              ))}
-          </p>
-          <p className="reg__host">
-            <span>Organised by {knownFacts.host}</span>
-            <span aria-hidden="true">·</span>
-            <span className="reg__with">
-              In collaboration with
-              <MavericksLogo className="reg__mav" height={18} />
-            </span>
-          </p>
-        </div>
-      </aside>
+    <main className="rsvp">
+      {/* the same invitation as /rsvp */}
+      <InvitePanel jump={{ href: "#request", label: cta.primary }} />
+
       {/* links from the site land here (/register#request); the brochure's QR opens the whole page */}
-      <main id="request" className="reg__main">
-        <h1 className="reg__h">Find your place in the conversation.</h1>
-        <p className="reg__lede">{keep(invite.summary)}</p>
-        <InviteForm source="register" preset={preset} />
-      </main>
-    </div>
+      <section id="request" className="rsvp__reply" aria-labelledby="reg-h">
+        <div className="rsvp__inner">
+          <p className="rsvp__k2">Register</p>
+          <h1 id="reg-h" className="rsvp__h">
+            Find your place in the conversation.
+          </h1>
+          <p className="rsvp__lede">{keep(invite.outcomes)}</p>
+          <InviteForm source="register" preset={preset} />
+        </div>
+      </section>
+    </main>
   );
 }
