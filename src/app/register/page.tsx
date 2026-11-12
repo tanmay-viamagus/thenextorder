@@ -45,7 +45,7 @@ export default async function Register({
           </p>
         </div>
         <OrgStrip />
-        {/* the agenda, as the final brochure gives it — compact on phones */}
+        {/* the agenda (content/event.ts) — compact on phones */}
         <div className="reg__agenda">
           <p className="reg__k">Tentative agenda</p>
           <ol>

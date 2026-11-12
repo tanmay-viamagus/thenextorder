@@ -61,7 +61,7 @@ export const speakersCopy = {
 // in the sheet's order. Left off until the sheet says more: Emmanuel Gosula (his company is named after
 // 11 Nov), Anurag Asthana (tentative), and anyone still in discussion. Sheetal Srikanth is on the sheet for
 // Aikam's logo, not on stage. The panels' themes are the agenda's (content/event.ts): technology for the
-// first, HR for the second.
+// first, hiring for the second.
 // Bios, designations and photos as supplied in bios/, except: Sheena Bhalla's bio, condensed from her own
 // speaker profile; Srinidhi Reddy Kongari's photo, cropped closer from her full-length one; and, where
 // nothing was supplied, the designation from the sheet. Photos not supplied are from public pages that name
@@ -80,7 +80,8 @@ export const speakerGroups: SpeakerGroup[] = [
     people: [],
   },
   {
-    title: "Speakers",
+    title: "Expert talk",
+    note: "Adopting responsible AI",
     people: [
       {
         name: "Sheena Bhalla",
@@ -138,7 +139,7 @@ export const speakerGroups: SpeakerGroup[] = [
     ],
   },
   {
-    title: "HR panel",
+    title: "Hiring panel",
     note: "Hiring and people leadership in the age of the agentic workforce",
     people: [
       {
