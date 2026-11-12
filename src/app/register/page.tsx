@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Fragment } from "react";
 import { MavericksLogo, ViaMagusLogo } from "@/components/Brand";
 import { InviteForm } from "@/components/shift/InviteForm";
+import { AgendaTitle } from "@/components/shift/Evening";
 import { OrgStrip } from "@/components/shift/Showcase";
 import { agenda, agendaNote, knownFacts, statusLine } from "@/content/event";
 import { INTEREST_BY_KEY } from "@/content/register";
@@ -54,7 +55,7 @@ export default async function Register({
                 <span className="reg__at">{a.time ?? ""}</span>
                 <span>
                   {a.kind ? <span className="reg__kind">{a.kind}</span> : null}
-                  {keep(a.t)}
+                  <AgendaTitle item={a} />
                 </span>
               </li>
             ))}

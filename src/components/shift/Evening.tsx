@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { agenda, agendaNote, event, organisers } from "@/content/event";
 import { MavericksLogo, ViaMagusMark } from "@/components/Brand";
 import { FilmButton } from "@/components/film/FilmOverlay";
@@ -21,6 +22,16 @@ const AGENDA_ICON: Record<string, IconName> = {
   closing: "users",
   dinner: "cocktail",
 };
+
+/** An agenda item's title, or its organisation's logo on a white plate (the logo's own colours need a light ground). */
+export function AgendaTitle({ item }: { item: (typeof agenda)[number] }) {
+  if (!item.logo) return <>{keep(item.t)}</>;
+  return (
+    <span className="ag-logo">
+      <Image src={item.logo.src} alt={item.t} width={item.logo.width} height={item.logo.height} sizes="200px" />
+    </span>
+  );
+}
 
 /**
  * The brochure's cover, as a room — drawn so every edge meets: the walls run
@@ -222,7 +233,9 @@ export function Evening() {
                       </span>
                     ) : null}
                     {a.kind ? <span className="sy__kind">{a.kind}</span> : null}
-                    <span className="sy__t">{keep(a.t)}</span>
+                    <span className="sy__t">
+                      <AgendaTitle item={a} />
+                    </span>
                   </span>
                   {a.tag ? <em className="sy__tag">{a.tag}</em> : <span />}
                 </li>
