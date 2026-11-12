@@ -70,6 +70,8 @@ export const speakersCopy = {
 // and Sravanti Chekragari's and Vijayashree Pathikonda's cropped from awards-jury posters. Supplied
 // headshots would be better for all five. Sravanti's surname is spelt as on her LinkedIn and Adaps pages
 // (the sheet has "Chekragiri").
+// LinkedIn: every profile as the team recorded it when inviting them (Corner, Event, invitees; checked 12 Nov).
+// Rashi Srivastava's is the one the team used (two profiles carry her name and Qentelli).
 export const speakerGroups: SpeakerGroup[] = [
   {
     title: "Keynote",
@@ -102,7 +104,7 @@ export const speakerGroups: SpeakerGroup[] = [
         role: "Global Chief Digital Officer",
         company: "Qentelli",
         photo: "/speakers/rashi-srivastava.jpg",
-        linkedin: "https://www.linkedin.com/in/rashi-srivastava-954633",
+        linkedin: "https://www.linkedin.com/in/rashisrivastava1",
         bio: "Rashi Srivastava is Global Chief Digital Officer at Qentelli, which she joined as its first employee in 2015 and helped scale into a global digital transformation company of 1,500+ people. With over two decades in technology across Kyocera, Wipro and Cigniti, she sits on the NASSCOM Regional Council, co-chairs the FTCCI Women’s Wing and mentors startups.",
       },
       {
@@ -118,6 +120,7 @@ export const speakerGroups: SpeakerGroup[] = [
         role: "India Leader and Vice President of Global Strategy",
         company: "Ensemble Health Partners",
         photo: "/speakers/saurabh-bali.jpg",
+        linkedin: "https://www.linkedin.com/in/saurabhbali5",
         bio: "Saurabh Bali is India Leader and Vice President of Global Strategy at Ensemble Health Partners, where he heads the company’s India GCC. With over 25 years in healthcare operations, he has built, scaled and led Global Capability Centres in India. Earlier, he spent over six years at R1 RCM, rising from Hyderabad Site Head to Vice President, India Operations.",
       },
       {
@@ -147,6 +150,7 @@ export const speakerGroups: SpeakerGroup[] = [
         role: "Global Head of Human Resources – Senior Vice President",
         company: "NationsBenefits",
         photo: "/speakers/vijayashree-pathikonda.jpg",
+        linkedin: "https://www.linkedin.com/in/vspathikonda",
         bio: "Vijayashree Pathikonda is Global Head of Human Resources – Senior Vice President at NationsBenefits, where she leads HR strategy and operations across the US, India and LATAM. An HR leader with over 20 years’ experience across technology, manufacturing and consulting, she has held senior HR roles at Eastman, FICOSA, Verisk and Polycom, and co-founded Valeur Consulting. She has built HR functions from the ground up, cut attrition at NationsBenefits from 45% to 9%, and led digital HR transformation and post-merger integration.",
       },
       {
@@ -168,6 +172,7 @@ export const speakerGroups: SpeakerGroup[] = [
         role: "Client Partner – GCC Accounts",
         company: "Viamagus",
         photo: "/speakers/srinidhi-reddy-kongari.jpg",
+        linkedin: "https://www.linkedin.com/in/srinidhireddyk",
         bio: "Srinidhi Reddy Kongari is Founder of Aarambh App, a women-first strength training platform, and Client Partner – GCC Accounts (Fractional) at Viamagus, where she partners with Hyderabad GCC leaders on becoming AI-native. She previously led strategy and partnerships at MATH, the AI/ML Centre of Excellence at T-Hub, and has mentored candidates for global Master in Management programmes. She is an alumna of ESSEC Business School and NIT Warangal.",
         part: "Moderator",
       },
