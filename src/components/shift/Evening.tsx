@@ -12,10 +12,13 @@ const filmLength = `${Math.floor(FILM_DURATION / 60)}:${String(FILM_DURATION % 6
 const AGENDA_ICON: Record<string, IconName> = {
   arrive: "users",
   welcome: "users",
+  keynote: "pen",
   "panel-1": "chat",
   talk: "bulb",
+  founders: "sparkle",
   "panel-2": "chart",
-  demo: "sparkle",
+  math: "chip",
+  closing: "users",
   dinner: "cocktail",
 };
 

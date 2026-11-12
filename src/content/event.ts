@@ -84,15 +84,24 @@ export const organisers: { role: string; name: string; line: string; logo?: "mav
   },
 ];
 
-/** The tentative agenda, from the final brochure. Only the start is timed; the rest is announced later. */
+/**
+ * The tentative agenda, from the organisers' storyline of 12 Nov 2026 (the panel and talk titles are the
+ * brochure's). Only the start is timed; the rest is announced later. Guests see what happens, not who
+ * runs it behind the scenes: follow-ups and reminders stay off the site.
+ */
 export const agenda: { k: string; t: string; time?: string; kind?: string; tag?: string }[] = [
-  { k: "arrive", time: "3:30 PM IST", t: "Arrival and registration" },
+  { k: "arrive", time: "3:30 PM IST", t: "Arrival, registration and high tea" },
   { k: "welcome", t: "Welcome address" },
+  // Phani Nagarjuna's keynote (Aikam) goes here once Reynold confirms his availability:
+  //   { k: "keynote", kind: "Keynote", t: "Keynote address" },
+  // and his card back in content/speakers.ts
   { k: "panel-1", kind: "Panel discussion", t: "Rethinking GCC strategy in an AI-first world" },
+  // the topic is still to be confirmed with Sheena Bhalla; this is the brochure's
   { k: "talk", kind: "Expert talk", t: "Adopting responsible AI" },
+  { k: "founders", kind: "Founders’ talk", t: "Viamagus and its three verticals" },
   { k: "panel-2", kind: "Panel discussion", t: "Hiring and people leadership in the age of the agentic workforce" },
-  // the one product on the evening, said plainly
-  { k: "demo", kind: "A Viamagus product", t: "Synthia AI, live demo", tag: "Live" },
+  { k: "math", kind: "Address", t: "TG MATH, AI Centre of Excellence" },
+  { k: "closing", t: "Closing address" },
   { k: "dinner", t: "Cocktail dinner" },
 ];
 export const agendaNote = "Tentative. Timings, speakers and final panel themes to be announced.";
