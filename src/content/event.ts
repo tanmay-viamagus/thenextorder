@@ -89,7 +89,15 @@ export const organisers: { role: string; name: string; line: string; logo?: "mav
  * brochure's). Only the start is timed; the rest is announced later. Guests see what happens, not who
  * runs it behind the scenes: follow-ups and reminders stay off the site.
  */
-export const agenda: { k: string; t: string; time?: string; kind?: string; tag?: string }[] = [
+export const agenda: {
+  k: string;
+  t: string;
+  time?: string;
+  kind?: string;
+  tag?: string;
+  /** shown in place of the title on the site, which stays its alt text; the email keeps the words */
+  logo?: { src: string; width: number; height: number };
+}[] = [
   { k: "arrive", time: "3:30 PM IST", t: "Arrival, registration and high tea" },
   { k: "welcome", t: "Welcome address" },
   // Phani Nagarjuna's keynote (Aikam) goes here once Reynold confirms his availability:
@@ -100,7 +108,12 @@ export const agenda: { k: string; t: string; time?: string; kind?: string; tag?:
   { k: "talk", kind: "Expert talk", t: "Adopting responsible AI" },
   { k: "founders", kind: "Founders’ talk", t: "Viamagus and its three verticals" },
   { k: "panel-2", kind: "Panel discussion", t: "Hiring and people leadership in the age of the agentic workforce" },
-  { k: "math", kind: "Address", t: "TG MATH, AI Centre of Excellence" },
+  {
+    k: "math",
+    kind: "Address",
+    t: "TG MATH, AI Centre of Excellence",
+    logo: { src: "/organisations/tg-math.png", width: 1200, height: 339 },
+  },
   { k: "closing", t: "Closing address" },
   { k: "dinner", t: "Cocktail dinner" },
 ];
