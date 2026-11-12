@@ -72,7 +72,7 @@ export const speakersCopy = {
 // (the sheet has "Chekragiri").
 // LinkedIn: every profile as the team recorded it when inviting them (Corner, Event, invitees; checked 12 Nov).
 // Rashi Srivastava's is the one the team used (two profiles carry her name and Qentelli).
-export const speakerGroups: SpeakerGroup[] = [
+const lineUp: SpeakerGroup[] = [
   {
     title: "Keynote",
     // Hidden (an empty group is left off the page) until his availability is confirmed: Reynold, who
@@ -179,6 +179,16 @@ export const speakerGroups: SpeakerGroup[] = [
     ],
   },
 ];
+
+/**
+ * Bios stay off the site, cards and search data alike, until the speakers have approved them (organisers,
+ * 12 Nov 2026). The texts are kept above; set this to true to show them again.
+ */
+export const showBios = false;
+
+export const speakerGroups: SpeakerGroup[] = showBios
+  ? lineUp
+  : lineUp.map((g) => ({ ...g, people: g.people.map((p) => ({ ...p, bio: undefined })) }));
 
 /** Everyone, in page order: for the section's own check and the event's structured data. */
 export const allSpeakers = speakerGroups.flatMap((g) => g.people);
