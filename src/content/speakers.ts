@@ -62,8 +62,9 @@ export const speakersCopy = {
 // 11 Nov), Anurag Asthana (tentative), and anyone still in discussion. Sheetal Srikanth is on the sheet for
 // Aikam's logo, not on stage. The panels' themes are the agenda's (content/event.ts): technology for the
 // first, hiring for the second.
-// Bios, designations and photos as supplied in bios/ or by the organisers (12 Nov: Venugopal, Sunny, Sravanti), except: Sheena Bhalla's bio, condensed from her own
-// speaker profile; Srinidhi Reddy Kongari's photo, cropped closer from her full-length one; and, where
+// Bios, designations and photos as supplied in bios/ or by the organisers (12 Nov: Venugopal, Sunny, Sravanti;
+// 19 Nov: Srinidhi Reddy Kongari's designation, bio and photo, the photo cropped to a portrait from her doc's), except:
+// Sheena Bhalla's bio, condensed from her own speaker profile; and, where
 // nothing was supplied, the designation from the sheet. Photos not supplied are from public pages that name
 // them with their company: Phani Nagarjuna's from an Elets summit page, Srinivas Dasari's his LinkedIn photo
 // (via TheOrg, at a larger size), Venugopal Rao Sankineni's from the Global Pharma Partnering Summit (small),
@@ -172,11 +173,11 @@ const lineUp: SpeakerGroup[] = [
       },
       {
         name: "Srinidhi Reddy Kongari",
-        role: "Client Partner – GCC Accounts",
+        role: "Fractional Client Partner – GCC Accounts",
         company: "Viamagus",
-        photo: "/speakers/srinidhi-reddy-kongari.jpg",
+        photo: "/speakers/srinidhi-reddy-kongari-2026.jpg",
         linkedin: "https://www.linkedin.com/in/srinidhireddyk",
-        bio: "Srinidhi Reddy Kongari is Founder of Aarambh App, a women-first strength training platform, and Client Partner – GCC Accounts (Fractional) at Viamagus, where she partners with Hyderabad GCC leaders on becoming AI-native. She previously led strategy and partnerships at MATH, the AI/ML Centre of Excellence at T-Hub, and has mentored candidates for global Master in Management programmes. She is an alumna of ESSEC Business School and NIT Warangal.",
+        bio: "Srinidhi Reddy Kongari is a Fractional Client Partner – GCC Accounts at Viamagus, where she works with Global Capability Centres (GCCs) in advancing their AI-native transformation journeys. Previously, she led Strategy & Partnerships and Corporate Programs at MATH, the AI/ML Centre of Excellence at T-Hub, where she worked closely with corporates and GCCs to identify AI-driven business opportunities, translate them into actionable use cases, and facilitate their implementation through partnerships with AI startups. Her work focused on bridging enterprise AI ambitions with India’s emerging AI innovation ecosystem. She is an alumna of ESSEC Business School and NIT Warangal.",
         part: "Moderator",
       },
     ],
