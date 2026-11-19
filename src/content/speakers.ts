@@ -62,7 +62,7 @@ export const speakersCopy = {
 // 11 Nov), Anurag Asthana (tentative), and anyone still in discussion. Sheetal Srikanth is on the sheet for
 // Aikam's logo, not on stage. The panels' themes are the agenda's (content/event.ts): technology for the
 // first, hiring for the second.
-// Bios, designations and photos as supplied in bios/, except: Sheena Bhalla's bio, condensed from her own
+// Bios, designations and photos as supplied in bios/ or by the organisers (12 Nov: Venugopal, Sunny, Sravanti), except: Sheena Bhalla's bio, condensed from her own
 // speaker profile; Srinidhi Reddy Kongari's photo, cropped closer from her full-length one; and, where
 // nothing was supplied, the designation from the sheet. Photos not supplied are from public pages that name
 // them with their company: Phani Nagarjuna's from an Elets summit page, Srinivas Dasari's his LinkedIn photo
@@ -72,7 +72,7 @@ export const speakersCopy = {
 // (the sheet has "Chekragiri").
 // LinkedIn: every profile as the team recorded it when inviting them (Corner, Event, invitees; checked 12 Nov).
 // Rashi Srivastava's is the one the team used (two profiles carry her name and Qentelli).
-export const speakerGroups: SpeakerGroup[] = [
+const lineUp: SpeakerGroup[] = [
   {
     title: "Keynote",
     // Hidden (an empty group is left off the page) until his availability is confirmed: Reynold, who
@@ -125,10 +125,11 @@ export const speakerGroups: SpeakerGroup[] = [
       },
       {
         name: "Srinivas “Sunny” Dasari",
-        role: "VP R&D, Site Leader",
+        role: "Vice President R&D and Site Leader",
         company: "WS Audiology",
         photo: "/speakers/srinivas-dasari.jpg",
         linkedin: "https://www.linkedin.com/in/dasari22",
+        bio: "Srinivas “Sunny” Dasari is Vice President R&D and Site Leader at WS Audiology in Hyderabad. A technology executive with over 15 years in customer-facing digital products, he previously served as Senior Director R&D at WS Audiology in Copenhagen. At Cigna, he led 110 engineers across mobile, web and API teams, building 25 digital applications serving 14 million customers in 30 countries, including Coach by Cigna with Samsung.",
       },
       {
         name: "Sayantan Bose",
@@ -155,17 +156,19 @@ export const speakerGroups: SpeakerGroup[] = [
       },
       {
         name: "Venugopal Rao Sankineni",
-        role: "Head of GCC Relationships, Life Sciences",
+        role: "Vice President – Pharma, Life Sciences & Medical Devices",
         company: "Government of Telangana",
         photo: "/speakers/venugopal-rao-sankineni.jpg",
         linkedin: "https://www.linkedin.com/in/venugopal-rao-sankineni-ba520519",
+        bio: "Venugopal Rao Sankineni is Vice President – Pharma, Life Sciences & Medical Devices (Policy & Investments) at the Government of Telangana, where he leads investment promotion, policy development and ecosystem building. He has helped develop the state’s 300+ acre Medical Devices Park, which has drawn over $400 million in committed investments. A technology executive with over 25 years’ experience, he earlier held leadership and consulting roles with Merck, Sanofi, Genzyme, Stryker, AstraZeneca, Dow and PVH across North America and India.",
       },
       {
         name: "Sravanti Chekragari",
         role: "Chief Operating Officer",
-        company: "Adaps",
+        company: "ADAPS",
         photo: "/speakers/sravanti-chekragari.jpg",
         linkedin: "https://www.linkedin.com/in/sravanti-chekragari-98642310",
+        bio: "Sravanti Chekragari is Chief Operating Officer at ADAPS, where she drives enterprise-wide operations, strategic growth and multi-stakeholder alignment. A specialist in organisational design and change leadership, she previously headed the Skills Academy at Biocon Biologics and led leadership and talent development at Cadila Pharmaceuticals, Daimler’s Corporate Academy for APAC and Cigniti Technologies. She also champions education and community CSR initiatives.",
       },
       {
         name: "Srinidhi Reddy Kongari",
@@ -179,6 +182,16 @@ export const speakerGroups: SpeakerGroup[] = [
     ],
   },
 ];
+
+/**
+ * Bios stay off the site, cards and search data alike, until the speakers have approved them (organisers,
+ * 12 Nov 2026). The texts are kept above; set this to true to show them again.
+ */
+export const showBios = false;
+
+export const speakerGroups: SpeakerGroup[] = showBios
+  ? lineUp
+  : lineUp.map((g) => ({ ...g, people: g.people.map((p) => ({ ...p, bio: undefined })) }));
 
 /** Everyone, in page order: for the section's own check and the event's structured data. */
 export const allSpeakers = speakerGroups.flatMap((g) => g.people);
