@@ -15,6 +15,9 @@ import { listRsvps } from "@/lib/rsvp-store";
  * Keys: "rsvp:<rsvps.id>", "speaker:<slug of the name>", "walkin:<uuid>".
  * Checking someone in inserts their row; undoing it deletes the row (for a
  * walk-in, that removes them from the list too).
+ *
+ * Table "welcome_emails": one row per address the check-in welcome email went
+ * to, so a guest gets it once even if the desk undoes and redoes a check-in.
  */
 export type GuestKind = "rsvp" | "speaker" | "walkin";
 
@@ -24,6 +27,10 @@ export type Guest = {
   name: string;
   organisation: string;
   email: string;
+  /** phone number, for walk-ins who gave one */
+  phone: string;
+  /** whether the check-in welcome email has gone to their address */
+  welcomed: boolean;
   /** the RSVP reply, for guests who replied */
   reply: Reply | null;
   /** the list the RSVP came from, or "On stage" / "Walk-in" */
@@ -34,7 +41,7 @@ export type Guest = {
   arrivedAt: string | null;
 };
 
-type Row = { key: string; kind: GuestKind; name: string; organisation: string; email: string; arrived_at: string };
+type Row = { key: string; kind: GuestKind; name: string; organisation: string; email: string; phone: string | null; arrived_at: string };
 
 let ready: Promise<unknown> | null = null;
 function ensureTable() {
@@ -47,6 +54,13 @@ function ensureTable() {
       organisation text NOT NULL DEFAULT '',
       email text NOT NULL DEFAULT '',
       arrived_at timestamptz NOT NULL DEFAULT now()
+    )`;
+    await q`ALTER TABLE attendance ADD COLUMN IF NOT EXISTS phone text NOT NULL DEFAULT ''`;
+    await q`CREATE TABLE IF NOT EXISTS welcome_emails (
+      email text PRIMARY KEY,
+      name text NOT NULL,
+      sent_at timestamptz NOT NULL DEFAULT now(),
+      resend_id text
     )`;
   })().catch((e) => {
     // try again on the next request rather than keep the failure
@@ -68,8 +82,14 @@ export const speakerKey = (name: string) =>
 /** Every guest the desk can check in, with whether they have arrived. */
 export async function listGuests(): Promise<Guest[]> {
   await ensureTable();
-  const [rsvps, rows] = await Promise.all([listRsvps(), sql()`SELECT * FROM attendance` as unknown as Promise<Row[]>]);
+  const [rsvps, rows, welcomes] = await Promise.all([
+    listRsvps(),
+    sql()`SELECT * FROM attendance` as unknown as Promise<Row[]>,
+    sql()`SELECT email FROM welcome_emails` as unknown as Promise<{ email: string }[]>,
+  ]);
   const arrived = new Map(rows.map((r) => [r.key, r]));
+  const welcomed = new Set(welcomes.map((w) => w.email));
+  const sent = (email: string) => !!email && welcomed.has(email.trim().toLowerCase());
   const at = (k: string) => {
     const r = arrived.get(k);
     return r ? new Date(r.arrived_at).toISOString() : null;
@@ -86,6 +106,8 @@ export async function listGuests(): Promise<Guest[]> {
         name: p.name,
         organisation: p.company ?? "",
         email: "",
+        phone: "",
+        welcomed: false,
         reply: null,
         list: "On stage",
         part: [p.part, g.title].filter(Boolean).join(" · "),
@@ -103,6 +125,8 @@ export async function listGuests(): Promise<Guest[]> {
       name: r.name,
       organisation: r.organisation,
       email: r.email,
+      phone: "",
+      welcomed: sent(r.email),
       reply: r.reply,
       list: listName(r.source),
       part: null,
@@ -117,6 +141,8 @@ export async function listGuests(): Promise<Guest[]> {
         name: r.name,
         organisation: r.organisation,
         email: r.email,
+        phone: r.phone ?? "",
+        welcomed: sent(r.email),
         reply: null,
         list: "Walk-in",
         part: null,
@@ -126,16 +152,16 @@ export async function listGuests(): Promise<Guest[]> {
 }
 
 /** Marks a listed guest as arrived (a second tap keeps the first time). */
-export async function checkIn(key: string): Promise<{ ok: boolean; error?: string }> {
+export async function checkIn(key: string): Promise<{ ok: true; guest: Guest } | { ok: false; error: string }> {
   await ensureTable();
   const guest = (await listGuests()).find((g) => g.key === key);
   if (!guest) return { ok: false, error: "That guest isn’t on the list any more. Refresh the page." };
-  if (guest.kind === "walkin") return { ok: true };
+  if (guest.kind === "walkin") return { ok: true, guest };
   await sql()`
     INSERT INTO attendance (key, kind, name, organisation, email)
     VALUES (${guest.key}, ${guest.kind}, ${guest.name}, ${guest.organisation}, ${guest.email})
     ON CONFLICT (key) DO NOTHING`;
-  return { ok: true };
+  return { ok: true, guest };
 }
 
 /** Undoes a check-in. A walk-in is removed from the list. */
@@ -145,9 +171,42 @@ export async function undoCheckIn(key: string) {
 }
 
 /** Adds someone who wasn't on the list, already arrived. */
-export async function addWalkIn(d: { name: string; organisation: string; email: string }): Promise<string> {
+export async function addWalkIn(d: { name: string; organisation: string; email: string; phone: string }): Promise<string> {
   await ensureTable();
   const key = `walkin:${randomUUID()}`;
-  await sql()`INSERT INTO attendance (key, kind, name, organisation, email) VALUES (${key}, 'walkin', ${d.name}, ${d.organisation}, ${d.email})`;
+  await sql()`INSERT INTO attendance (key, kind, name, organisation, email, phone) VALUES (${key}, 'walkin', ${d.name}, ${d.organisation}, ${d.email}, ${d.phone})`;
   return key;
+}
+
+export type WelcomeStatus = "sent" | "already" | "no-email" | "failed";
+
+/**
+ * Sends the check-in welcome email once per address. The address is claimed
+ * in welcome_emails before sending, so two desks tapping the same guest send
+ * one email; if the send fails the claim is released and the next check-in
+ * tries again.
+ */
+export async function welcome(
+  g: { name: string; email: string },
+  send: (to: string, name: string) => Promise<{ sent: true; id: string } | { sent: false; reason: string }>,
+): Promise<WelcomeStatus> {
+  const email = g.email.trim().toLowerCase();
+  if (!email) return "no-email";
+  await ensureTable();
+  const claimed = (await sql()`
+    INSERT INTO welcome_emails (email, name) VALUES (${email}, ${g.name})
+    ON CONFLICT (email) DO NOTHING RETURNING email`) as { email: string }[];
+  if (!claimed.length) return "already";
+  try {
+    const r = await send(email, g.name);
+    if (r.sent) {
+      await sql()`UPDATE welcome_emails SET resend_id = ${r.id} WHERE email = ${email}`;
+      return "sent";
+    }
+    console.error("welcome email not sent", r.reason);
+  } catch (e) {
+    console.error("welcome email failed", e instanceof Error ? e.message : e);
+  }
+  await sql()`DELETE FROM welcome_emails WHERE email = ${email}`;
+  return "failed";
 }
