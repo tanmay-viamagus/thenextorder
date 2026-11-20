@@ -184,7 +184,7 @@ export function Site() {
             </a>
             <a className="ftr__in" href={officialLinks.linkedin} target="_blank" rel="noopener noreferrer">
               <LinkedInMark />
-              <span className="sr-only">Viamagus Select on LinkedIn (opens in a new tab)</span>
+              <span className="sr-only">Viamagus on LinkedIn (opens in a new tab)</span>
             </a>
           </nav>
         </div>
