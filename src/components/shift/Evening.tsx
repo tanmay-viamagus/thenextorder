@@ -18,7 +18,6 @@ const AGENDA_ICON: Record<string, IconName> = {
   talk: "bulb",
   founders: "sparkle",
   "panel-2": "chart",
-  math: "chip",
   closing: "users",
   dinner: "cocktail",
 };

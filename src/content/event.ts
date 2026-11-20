@@ -22,13 +22,13 @@ export type EventDetails = {
   registrationUrl: string | null;
 };
 
-// confirmed in the event brochure (Oct 2026)
+// confirmed in the event brochure (Oct 2026); the hall, The Marvel, as the event's printed pieces name it (Nov 2026)
 export const event: EventDetails = {
   date: "Thursday 3 December 2026",
   time: "From 3:30 PM IST",
   start: "2026-12-03T15:30:00+05:30",
   city: "Hyderabad",
-  venue: "T-Hub",
+  venue: "The Marvel, T-Hub",
   format: "By invitation",
   registrationUrl: null,
 };
@@ -108,12 +108,7 @@ export const agenda: {
   { k: "talk", kind: "Expert talk", t: "Adopting responsible AI" },
   { k: "founders", kind: "Founders’ talk", t: "Viamagus and its three verticals" },
   { k: "panel-2", kind: "Panel discussion", t: "Hiring and people leadership in the age of the agentic workforce" },
-  {
-    k: "math",
-    kind: "Address",
-    t: "TG MATH, AI Centre of Excellence",
-    logo: { src: "/organisations/tg-math.png", width: 1200, height: 339 },
-  },
+  // TG MATH's address came off on 20 Nov: TG MATH is no longer part of the event (it has separated from T-Hub)
   { k: "closing", t: "Closing address" },
   { k: "dinner", t: "Cocktail dinner" },
 ];
@@ -140,7 +135,7 @@ export const officialLinks = {
   velocity: "https://viamagus.com/velocity-ai",
   synthia: "https://viamagus.com/synthia-ai",
   select: "https://www.viamagusselect.ai/",
-  linkedin: "https://www.linkedin.com/company/viamagusselect/?viewAsMember=true",
+  linkedin: "https://www.linkedin.com/company/viamagus",
   privacy: "https://viamagus.com/privacy-policy",
 } as const;
 

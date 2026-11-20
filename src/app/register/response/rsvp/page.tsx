@@ -42,6 +42,7 @@ export default async function Replies() {
         <a href="/register/response/rsvp" aria-current="page">
           RSVPs
         </a>
+        <a href="/checkin">Check-in desk</a>
       </nav>
       <div className="resp__top">
         <h1>
@@ -49,6 +50,9 @@ export default async function Replies() {
         </h1>
         <a className="btn btn--shift" href="/register/response/rsvp/csv" download>
           Download CSV
+        </a>
+        <a className="btn btn--shift" href="/register/response/attendance/csv" download>
+          Attendance CSV
         </a>
       </div>
       <p className="resp__sub">By reply</p>

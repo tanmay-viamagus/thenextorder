@@ -47,7 +47,7 @@ export const organisationsCopy = {
 
 /**
  * The companies of the people on stage, in the order of the line-up
- * (content/speakers.ts), then TG MATH. Each logo is the organisation's own
+ * (content/speakers.ts). TG MATH came off on 20 Nov (no longer part of the event). Each logo is the organisation's own
  * file, from its own site or as supplied, with only the empty margin around
  * it trimmed: Aikam's taken out of the lockup on its site, WS Audiology's in
  * the purple of its own site icon. Not here: the Government of Telangana
@@ -63,7 +63,6 @@ export const organisations: Organisation[] = [
   { name: "Protiviti", logo: "/organisations/protiviti.svg", scale: 1.1 },
   { name: "NationsBenefits", logo: "/organisations/nationsbenefits.svg" },
   { name: "Adaps", logo: "/organisations/adaps.png", scale: 0.9 },
-  { name: "TG MATH, AI Centre of Excellence", logo: "/organisations/tg-math.png" },
 ];
 
 /**

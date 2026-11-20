@@ -72,7 +72,8 @@ export const speakersCopy = {
 // headshots would be better for all five. Sravanti's surname is spelt as on her LinkedIn and Adaps pages
 // (the sheet has "Chekragiri").
 // LinkedIn: every profile as the team recorded it when inviting them (Corner, Event, invitees; checked 12 Nov).
-// Rashi Srivastava's is the one the team used (two profiles carry her name and Qentelli).
+// Rashi Srivastava's is the one the team used (two profiles carry her name and Qentelli). Saurabh Bali's recorded
+// link (linkedin.com/in/saurabhbali5) returned "not found" on 20 Nov, so his card has none until the right one is supplied.
 const lineUp: SpeakerGroup[] = [
   {
     title: "Keynote",
@@ -121,7 +122,6 @@ const lineUp: SpeakerGroup[] = [
         role: "India Leader and Vice President of Global Strategy",
         company: "Ensemble Health Partners",
         photo: "/speakers/saurabh-bali.jpg",
-        linkedin: "https://www.linkedin.com/in/saurabhbali5",
         bio: "Saurabh Bali is India Leader and Vice President of Global Strategy at Ensemble Health Partners, where he heads the company’s India GCC. With over 25 years in healthcare operations, he has built, scaled and led Global Capability Centres in India. Earlier, he spent over six years at R1 RCM, rising from Hyderabad Site Head to Vice President, India Operations.",
       },
       {

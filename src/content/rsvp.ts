@@ -62,7 +62,7 @@ export const rsvpCopy = {
 };
 
 /** Directions to the venue, as a map search: the brochure names the venue, not an address. */
-export const directionsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place)}`;
+export const directionsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(["T-Hub", event.city].filter(Boolean).join(", "))}`;
 
 /** The event in a guest's calendar (Google, Outlook, or the .ics file at /rsvp/calendar.ics). */
 export const rsvpCalendar: CalendarEvent = {

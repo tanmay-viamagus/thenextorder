@@ -35,6 +35,7 @@ export default async function Responses() {
           Registrations
         </a>
         <a href="/register/response/rsvp">RSVPs</a>
+        <a href="/checkin">Check-in desk</a>
       </nav>
       <div className="resp__top">
         <h1>
