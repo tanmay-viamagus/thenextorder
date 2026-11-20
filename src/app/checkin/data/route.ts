@@ -1,10 +1,13 @@
-import { addWalkIn, checkIn, listGuests, undoCheckIn } from "@/lib/attendance";
+import { addWalkIn, checkIn, listGuests, undoCheckIn, welcome } from "@/lib/attendance";
+import { sendWelcome } from "@/lib/send-welcome";
 
 /**
  * /checkin/data — the registration desk's list and its actions. Behind the
  * desk password (src/proxy.ts), like the page.
  *   GET  → { guests }
- *   POST { action: "in" | "undo", key }  or  { action: "walkin", name, organisation, email }
+ *   POST { action: "in" | "undo", key }  or  { action: "walkin", name, organisation, email, phone }
+ * Checking someone in (or adding a walk-in with an email) sends them the
+ * welcome email, once per address; the reply says how that went (welcome).
  */
 const noStore = { "Cache-Control": "no-store" };
 
@@ -40,13 +43,16 @@ export async function POST(req: Request) {
         return Response.json({ ok: true });
       }
       const r = await checkIn(key);
-      return Response.json(r, { status: r.ok ? 200 : 404 });
+      if (!r.ok) return Response.json(r, { status: 404 });
+      return Response.json({ ok: true, welcome: await welcome(r.guest, sendWelcome) });
     }
     if (action === "walkin") {
-      const d = { name: s("name", 120), organisation: s("organisation", 160), email: s("email", 200).toLowerCase() };
+      const d = { name: s("name", 120), organisation: s("organisation", 160), email: s("email", 200).toLowerCase(), phone: s("phone", 40) };
       if (!d.name) return Response.json({ ok: false, error: "Add their name." }, { status: 400 });
       if (d.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) return Response.json({ ok: false, error: "That email doesn’t look right. Leave it blank if unsure." }, { status: 400 });
-      return Response.json({ ok: true, key: await addWalkIn(d) });
+      if (d.phone && !/^\+?[\d\s().-]{6,}$/.test(d.phone)) return Response.json({ ok: false, error: "That phone number doesn’t look right. Leave it blank if unsure." }, { status: 400 });
+      const newKey = await addWalkIn(d);
+      return Response.json({ ok: true, key: newKey, welcome: await welcome(d, sendWelcome) });
     }
     return Response.json({ ok: false, error: "Unknown action." }, { status: 400 });
   } catch (e) {

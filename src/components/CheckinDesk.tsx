@@ -8,6 +8,7 @@ import type { Guest } from "@/lib/attendance";
  * The registration desk (/checkin). Search, tap a guest in, undo a mistake,
  * add walk-ins. The list refreshes every few seconds so several devices at
  * the desk stay in step; a tap shows at once and is saved in the background.
+ * Checking a guest in sends them the welcome email (once per address).
  */
 type Filter = "all" | "yes" | "tentative" | "no" | "stage" | "walkin" | "here" | "waiting";
 
@@ -35,10 +36,28 @@ const match = (g: Guest, f: Filter) =>
   g.reply === f;
 
 const fold = (s: string) => s.normalize("NFKD").replace(/[̀-ͯ]/g, "").toLowerCase();
+const digits = (s: string) => s.replace(/\D/g, "");
+
+/** Every word must match somewhere: name, company, email, phone, list or role. Numbers match phone digits too. */
+function found(g: Guest, words: string[]) {
+  const hay = fold(`${g.name} ${g.organisation} ${g.email} ${g.phone} ${g.list} ${g.part ?? ""}`);
+  const phone = digits(g.phone);
+  return words.every((w) => hay.includes(w) || (/^\+?[\d-]{3,}$/.test(w) && !!phone && phone.includes(digits(w))));
+}
+
+/** What the search box held, put in the right walk-in field. */
+function prefill(q: string) {
+  const v = q.trim();
+  if (v.includes("@")) return { email: v };
+  if (/^\+?[\d\s().-]{6,}$/.test(v)) return { phone: v };
+  return { name: v };
+}
+
+type Welcome = "sent" | "already" | "no-email" | "failed";
 
 async function post(body: Record<string, string>) {
   const r = await fetch("/checkin/data", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
-  const j = (await r.json().catch(() => ({}))) as { ok?: boolean; error?: string; key?: string };
+  const j = (await r.json().catch(() => ({}))) as { ok?: boolean; error?: string; key?: string; welcome?: Welcome };
   if (!r.ok || !j.ok) throw new Error(j.error || "Couldn’t save that. Check the connection and try again.");
   return j;
 }
@@ -51,6 +70,7 @@ export function CheckinDesk({ initial, failed }: { initial: Guest[]; failed: boo
   const [synced, setSynced] = useState<Date | null>(failed ? null : new Date());
   const [adding, setAdding] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [notice, setNotice] = useState("");
   // keys whose change hasn't been saved yet: a refresh mustn't undo what the desk just tapped
   const pending = useRef(new Map<string, string | null>());
   const search = useRef<HTMLInputElement>(null);
@@ -80,13 +100,30 @@ export function CheckinDesk({ initial, failed }: { initial: Guest[]; failed: boo
     };
   }, [refresh]);
 
+  // a short line under the search bar, e.g. "Welcome email sent to Asha"
+  useEffect(() => {
+    if (!notice) return;
+    const id = setTimeout(() => setNotice(""), 5000);
+    return () => clearTimeout(id);
+  }, [notice]);
+
+  const welcomed = (g: { key: string; name: string }, w: Welcome | undefined) => {
+    if (w === "sent" || w === "already") setGuests((all) => all.map((x) => (x.key === g.key ? { ...x, welcomed: true } : x)));
+    if (w === "sent") setNotice(`Welcome email sent to ${g.name}`);
+    if (w === "failed")
+      setError(
+        `${g.name} is checked in, but the welcome email didn’t send.${g.key.startsWith("walkin:") ? "" : " Undo and check them in again to retry it."}`,
+      );
+  };
+
   const setArrived = async (g: Guest, arrived: boolean) => {
     const at = arrived ? new Date().toISOString() : null;
     pending.current.set(g.key, at);
     setGuests((all) => (!arrived && g.kind === "walkin" ? all.filter((x) => x.key !== g.key) : all.map((x) => (x.key === g.key ? { ...x, arrivedAt: at } : x))));
     try {
-      await post({ action: arrived ? "in" : "undo", key: g.key });
+      const j = await post({ action: arrived ? "in" : "undo", key: g.key });
       setError("");
+      if (arrived) welcomed(g, j.welcome);
     } catch (e) {
       // put it back as it was
       setGuests((all) => (all.some((x) => x.key === g.key) ? all.map((x) => (x.key === g.key ? { ...x, arrivedAt: g.arrivedAt } : x)) : [...all, g]));
@@ -100,15 +137,27 @@ export function CheckinDesk({ initial, failed }: { initial: Guest[]; failed: boo
     const d = Object.fromEntries(new FormData(form)) as Record<string, string>;
     setBusy(true);
     try {
-      const j = await post({ action: "walkin", name: d.name ?? "", organisation: d.organisation ?? "", email: d.email ?? "" });
-      setGuests((all) => [
-        ...all,
-        { key: j.key!, kind: "walkin", name: d.name.trim(), organisation: (d.organisation ?? "").trim(), email: (d.email ?? "").trim(), reply: null, list: "Walk-in", part: null, arrivedAt: new Date().toISOString() },
-      ]);
+      const j = await post({ action: "walkin", name: d.name ?? "", organisation: d.organisation ?? "", email: d.email ?? "", phone: d.phone ?? "" });
+      const g: Guest = {
+        key: j.key!,
+        kind: "walkin",
+        name: (d.name ?? "").trim(),
+        organisation: (d.organisation ?? "").trim(),
+        email: (d.email ?? "").trim(),
+        phone: (d.phone ?? "").trim(),
+        welcomed: false,
+        reply: null,
+        list: "Walk-in",
+        part: null,
+        arrivedAt: new Date().toISOString(),
+      };
+      setGuests((all) => [...all, g]);
       form.reset();
       setAdding(false);
       setQ("");
       setError("");
+      setNotice(`${g.name} added and checked in`);
+      welcomed(g, j.welcome);
       search.current?.focus();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Couldn’t add the walk-in.");
@@ -128,10 +177,7 @@ export function CheckinDesk({ initial, failed }: { initial: Guest[]; failed: boo
     const words = fold(q).split(/\s+/).filter(Boolean);
     return guests
       .filter((g) => match(g, filter))
-      .filter((g) => {
-        const hay = fold(`${g.name} ${g.organisation} ${g.email}`);
-        return words.every((w) => hay.includes(w));
-      })
+      .filter((g) => found(g, words))
       .sort((a, b) => a.name.localeCompare(b.name, "en", { sensitivity: "base" }));
   }, [guests, q, filter]);
 
@@ -160,12 +206,21 @@ export function CheckinDesk({ initial, failed }: { initial: Guest[]; failed: boo
         </div>
       </section>
 
-      <div className="ci__bar">
+      <form
+        className="ci__bar"
+        role="search"
+        onSubmit={(e) => {
+          e.preventDefault();
+          // put the keyboard away so the results show
+          search.current?.blur();
+        }}
+      >
         <input
           ref={search}
           className="ci__search"
           type="search"
-          placeholder="Search name or company"
+          enterKeyHint="search"
+          placeholder="Name, company, email or phone"
           value={q}
           onChange={(e) => setQ(e.target.value)}
           autoComplete="off"
@@ -173,10 +228,17 @@ export function CheckinDesk({ initial, failed }: { initial: Guest[]; failed: boo
           spellCheck={false}
           aria-label="Search guests"
         />
-        <button type="button" className="ci__add" onClick={() => setAdding((v) => !v)} aria-expanded={adding}>
-          + Walk-in
+        <button type="submit" className="ci__go" aria-label="Search">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2.4" />
+            <path d="M15.5 15.5 21 21" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
+          </svg>
+          <span>Search</span>
         </button>
-      </div>
+        <button type="button" className="ci__add" onClick={() => setAdding((v) => !v)} aria-expanded={adding} aria-label="Add a walk-in guest" title="Add a walk-in guest">
+          +
+        </button>
+      </form>
 
       {adding ? (
         <form
@@ -186,18 +248,24 @@ export function CheckinDesk({ initial, failed }: { initial: Guest[]; failed: boo
             void addWalkIn(e.currentTarget);
           }}
         >
-          <p className="ci__wk">Someone who isn’t on the list. They’re marked as arrived.</p>
+          <p className="ci__wk">
+            <b>Walk-in guest.</b> Someone who isn’t on the list: they’re saved and marked as arrived. With an email, they get the welcome email too.
+          </p>
           <label>
             <span>Name</span>
-            <input name="name" required defaultValue={q} autoComplete="off" />
+            <input name="name" required defaultValue={prefill(q).name ?? ""} autoComplete="off" autoFocus />
           </label>
           <label>
             <span>Organisation</span>
             <input name="organisation" autoComplete="off" />
           </label>
           <label>
+            <span>Phone (optional)</span>
+            <input name="phone" type="tel" inputMode="tel" defaultValue={prefill(q).phone ?? ""} autoComplete="off" />
+          </label>
+          <label>
             <span>Work email (optional)</span>
-            <input name="email" type="email" inputMode="email" autoComplete="off" />
+            <input name="email" type="email" inputMode="email" defaultValue={prefill(q).email ?? ""} autoComplete="off" />
           </label>
           <div className="ci__wa">
             <button type="submit" className="ci__btn ci__btn--in" disabled={busy}>
@@ -218,6 +286,12 @@ export function CheckinDesk({ initial, failed }: { initial: Guest[]; failed: boo
         ))}
       </nav>
 
+      {notice ? (
+        <p className="ci__ok" role="status">
+          {notice}
+        </p>
+      ) : null}
+
       {error ? (
         <p className="ci__err" role="alert">
           {error}
@@ -227,9 +301,9 @@ export function CheckinDesk({ initial, failed }: { initial: Guest[]; failed: boo
       {shown.length === 0 ? (
         <div className="ci__none">
           <p>{q ? `No one matches “${q}”.` : "No one here yet."}</p>
-          {q ? (
-            <button type="button" className="ci__btn ci__btn--in" onClick={() => setAdding(true)}>
-              Add “{q}” as a walk-in
+          {q && !adding ? (
+            <button type="button" className="ci__btn ci__btn--in ci__btn--big" onClick={() => setAdding(true)}>
+              + Add as walk-in guest
             </button>
           ) : null}
         </div>
@@ -239,11 +313,12 @@ export function CheckinDesk({ initial, failed }: { initial: Guest[]; failed: boo
             <li key={g.key} className={g.arrivedAt ? "is-here" : g.reply === "no" ? "is-no" : ""}>
               <div className="ci__who">
                 <p className="ci__n">{g.name}</p>
-                <p className="ci__o">{[g.organisation, g.email].filter(Boolean).join(" · ") || "No details"}</p>
+                <p className="ci__o">{[g.organisation, g.email, g.phone].filter(Boolean).join(" · ") || "No details"}</p>
                 <p className="ci__tags">
                   {g.kind === "speaker" ? <span className="ci__tag ci__tag--stage">{g.part || "On stage"}</span> : null}
                   {g.reply ? <span className={`ci__tag ci__tag--${g.reply}`}>RSVP {REPLY[g.reply]}</span> : null}
                   {g.kind === "walkin" ? <span className="ci__tag">Walk-in</span> : null}
+                  {g.welcomed ? <span className="ci__tag ci__tag--mail">✉ Welcome sent</span> : null}
                   {g.kind === "rsvp" ? <span className="ci__list-name">{g.list}</span> : null}
                 </p>
               </div>
