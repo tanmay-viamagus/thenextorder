@@ -105,7 +105,8 @@ export const agenda: {
   { k: "panel-1", kind: "Panel discussion", t: "Rethinking GCC strategy in an AI-first world" },
   // the topic is still to be confirmed with Sheena Bhalla; this is the brochure's
   { k: "talk", kind: "Expert talk", t: "Adopting responsible AI" },
-  { k: "founders", kind: "Founders’ talk", t: "Viamagus and its three verticals" },
+  // 21 Nov: the founders' talk became a partner presentation by Shreenath Rao, set like the keynote (organisers)
+  { k: "founders", kind: "Partner presentation", t: "Partner presentation by Shreenath Rao" },
   { k: "panel-2", kind: "Panel discussion", t: "Hiring and people leadership in the age of the agentic workforce" },
   // TG MATH's address came off on 20 Nov: TG MATH is no longer part of the event (it has separated from T-Hub)
   { k: "closing", t: "Closing address" },
