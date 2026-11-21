@@ -38,16 +38,16 @@ svg{display:block}
 .pn-A{padding:12mm 8mm 9mm 9mm}
 .fl-h{font-size:27pt;margin-top:4mm}
 .fl-l{font-family:Outfit,sans-serif;font-weight:500;font-size:10pt;line-height:1.3;color:#3A3644;margin-top:4mm;max-width:70mm}
-.fl-rows{margin-top:10mm;display:flex;flex-direction:column}
-.fl-rows li{display:grid;grid-template-columns:15mm 1fr;gap:3mm;padding:7.6mm 0;border-top:.25mm solid #E4E0EA}
+.fl-rows{margin-top:14mm;display:flex;flex-direction:column}
+.fl-rows li{display:grid;grid-template-columns:15mm 1fr;gap:3mm;padding:11mm 0;border-top:.25mm solid #E4E0EA}
 .fl-rows li:last-child{border-bottom:.25mm solid #E4E0EA}
 .fl-ic{display:flex;justify-content:center;padding-top:1mm}
 .fl-v{font-family:Outfit,sans-serif;font-weight:800;font-size:17pt;letter-spacing:-.035em;line-height:1}
 .fl-p{font-family:"Geist Mono",monospace;font-size:6pt;letter-spacing:.12em;text-transform:uppercase;color:#6608A9;margin-top:1.4mm}
 .fl-t{font-size:8pt;color:#3A3644;margin-top:1.2mm;line-height:1.35}
-.fl-x{display:flex;align-items:baseline;gap:2mm;margin-top:2.6mm}
-.fl-x b{font-family:Outfit,sans-serif;font-weight:800;font-size:13pt;letter-spacing:-.035em;line-height:1}
-.fl-x span{font-size:6.8pt;color:#55515F}
+.fl-x{display:flex;align-items:baseline;gap:2.4mm;margin-top:3.6mm}
+.fl-x b{font-family:Outfit,sans-serif;font-weight:800;font-size:17pt;white-space:nowrap;letter-spacing:-.035em;line-height:1}
+.fl-x span{font-size:7.8pt;color:#55515F}
 .open{margin-top:auto;font-family:"Geist Mono",monospace;font-size:6pt;letter-spacing:.12em;text-transform:uppercase;text-align:right}
 .open i{color:#BE65FF}
 
@@ -58,9 +58,9 @@ svg{display:block}
 .logos li:nth-child(3n+1),.logos li:nth-child(3n+2){border-right:.25mm solid #E4E0EA}
 .logos li:nth-child(-n+3){border-bottom:.25mm solid #E4E0EA}
 .logos img{height:auto;display:block}
-.big{margin-top:13mm}
+.big{margin-top:20mm}
 .big b{display:block;font-family:Outfit,sans-serif;font-weight:800;font-size:38pt;letter-spacing:-.045em;line-height:.9;color:#0B0A0E}
-.big span{display:block;font-size:8.4pt;color:#3A3644;margin-top:2mm}
+.big span{display:block;font-size:9pt;color:#3A3644;margin-top:2mm}
 .nums{display:grid;grid-template-columns:repeat(3,1fr);margin-top:8mm;border-top:.25mm solid #E4E0EA;border-bottom:.25mm solid #E4E0EA}
 .nums div{padding:4mm 0}
 .nums div+div{padding-left:3mm;border-left:.25mm solid #E4E0EA}
@@ -92,13 +92,14 @@ svg{display:block}
 .wm{height:8mm;display:flex;align-items:center;margin-top:1mm}
 .wm-synthia{height:6.2mm;width:auto}
 .wm-velocity{height:6.4mm;width:auto}
-.wm-select{font-family:Outfit,sans-serif;font-weight:500;font-size:22pt;letter-spacing:-.03em;color:#6608A9;line-height:1}
+.wm-select{height:5.58mm;width:auto}  /* Viamagus Select logo: 0.872 x the Velocity AI file height, so the letters match */
 .tag{font-family:Outfit,sans-serif;font-weight:600;font-size:11.5pt;letter-spacing:-.015em;line-height:1.18;margin-top:3mm;min-height:10mm;max-width:80mm}
 .viz{margin-top:5mm;height:46mm}
 .pn-Ap .viz svg{width:79mm;height:44.3mm}
-.stat{display:flex;gap:3mm;align-items:flex-start;margin-top:4mm}
-.stat b{font-family:Outfit,sans-serif;font-weight:800;font-size:23pt;letter-spacing:-.045em;line-height:.85;white-space:nowrap}
-.stat span{font-size:6.8pt;color:#3A3644;line-height:1.32;padding-top:.2mm}
+.stat{display:flex;flex-direction:column;gap:2.6mm;margin-top:8mm;padding:.6mm 0 .8mm 4mm;border-left:.7mm solid #BE65FF}
+.stat.c{border-color:#00C7CE}.stat.a{border-color:#F5B83D}
+.stat b{font-family:Outfit,sans-serif;font-weight:800;font-size:30pt;letter-spacing:-.02em;line-height:.85;white-space:nowrap}
+.stat span{font-family:"Geist Mono",monospace;font-size:6.4pt;letter-spacing:.1em;text-transform:uppercase;color:#55515F;line-height:1.3}
 .std{font-size:6.8pt;color:#55515F;line-height:1.32;margin-top:3mm;padding-left:2.4mm;border-left:.5mm solid currentColor}
 .pn-Cp .std{border-color:#BE65FF}.pn-Bp .std{border-color:#00C7CE}.pn-Ap .std{border-color:#F5B83D}
 .score .std{margin-top:2.6mm}

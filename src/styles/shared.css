@@ -37,20 +37,7 @@
 }
 
 .wm-select {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.28em;
-  font-family: var(--font-archivo), sans-serif;
-  font-size: 1.45rem;
-  letter-spacing: -0.02em;
-}
-
-.wm-select b {
-  font-weight: 700;
-}
-
-.wm-select span {
-  font-weight: 400;
-  opacity: 0.62;
+  display: block;
+  width: auto;
 }
 
