@@ -193,13 +193,16 @@ const lineUp: SpeakerGroup[] = [
 
 /**
  * Bios stay off the site, cards and search data alike, until the speakers have approved them (organisers,
- * 12 Nov 2026). The texts are kept above; set this to true to show them again.
+ * 12 Nov 2026). The texts are kept above; set this to true to show them all again.
  */
 export const showBios = false;
 
+/** Bios approved for the site one by one, by name: Phani Nagarjuna's on 21 Nov 2026. */
+export const approvedBios: ReadonlySet<string> = new Set(["Phani Nagarjuna"]);
+
 export const speakerGroups: SpeakerGroup[] = showBios
   ? lineUp
-  : lineUp.map((g) => ({ ...g, people: g.people.map((p) => ({ ...p, bio: undefined })) }));
+  : lineUp.map((g) => ({ ...g, people: g.people.map((p) => (approvedBios.has(p.name) ? p : { ...p, bio: undefined })) }));
 
 /** Everyone, in page order: for the section's own check and the event's structured data. */
 export const allSpeakers = speakerGroups.flatMap((g) => g.people);
