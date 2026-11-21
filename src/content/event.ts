@@ -112,7 +112,8 @@ export const agenda: {
   { k: "closing", t: "Closing address" },
   { k: "dinner", t: "Cocktail dinner" },
 ];
-export const agendaNote = "Tentative. Timings, speakers and final panel themes to be announced.";
+// 21 Nov: no longer tentative; the same words as the brochure's agenda page
+export const agendaNote = "Doors open at 3:30 PM. The evening runs in this order.";
 
 export function whenWhere(e: EventDetails = event): string | null {
   const parts = [e.date, [e.venue, e.city].filter(Boolean).join(", ")].filter(Boolean);

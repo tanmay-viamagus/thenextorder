@@ -55,7 +55,7 @@ export const organisationsCopy = {
  * (its state emblem isn't ours to use) and Viamagus, the host.
  */
 export const organisations: Organisation[] = [
-  { name: "Aikam", logo: "/organisations/aikam.svg", scale: 1.35 },
+  { name: "AIKAM Global", logo: "/organisations/aikam.svg", scale: 1.35 },
   { name: "ModuleXero", logo: "/organisations/modulexero.png", scale: 1.05 },
   { name: "Qentelli", logo: "/organisations/qentelli.svg", scale: 0.8 },
   { name: "Ryan", logo: "/organisations/ryan.png", scale: 0.82 },
@@ -64,8 +64,8 @@ export const organisations: Organisation[] = [
   { name: "Protiviti", logo: "/organisations/protiviti.svg", scale: 1.1 },
   { name: "NationsBenefits", logo: "/organisations/nationsbenefits.svg" },
   { name: "Adaps", logo: "/organisations/adaps.png", scale: 0.9 },
-  // EPAM's own logo (Wikimedia Commons "EPAM LOGO.jpg"; epam.com refuses automated downloads), white made transparent.
-  { name: "EPAM Systems", logo: "/organisations/epam.png", scale: 0.85 },
+  // Fresche Solutions' own wordmark from freschesolutions.com (its site serves it in white, hence "solid")
+  { name: "Fresche Solutions", logo: "/organisations/fresche-solutions.svg", treatment: "solid", scale: 0.8 },
   { name: "TG MATH, AI Centre of Excellence", logo: "/organisations/tg-math.png" },
 ];
 

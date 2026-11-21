@@ -31,7 +31,7 @@ export async function sendConfirmation(to: string, p: { name: string; updated: b
     venue: [event.venue, event.city].filter(Boolean).join(", "),
     format: event.format ?? "",
     agenda,
-    agendaNote: agendaNote.replace(/^Tentative\.\s*/, ""),
+    agendaNote,
     // the event's own domain, whichever deployment sends it
     siteUrl: siteAddress,
   });

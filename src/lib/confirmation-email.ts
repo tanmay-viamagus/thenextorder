@@ -1,6 +1,6 @@
 /**
  * The email a guest receives after requesting a place: a thank-you from
- * Shreenath Rao, the event's details, the tentative agenda and the brochure
+ * Shreenath Rao, the event's details, the agenda and the brochure
  * (attached by the sender). It confirms the request, not a seat — places are
  * confirmed by invitation, as the site says.
  *
@@ -117,7 +117,7 @@ export function confirmationEmail(p: ConfirmationInput, f: ConfirmationFacts) {
       <p style="margin:0 0 28px;font:16px/1.65 ${SANS};color:${C.ink};">${esc(brochure)}</p>
       <p style="margin:0 0 6px;${LABEL}">The evening</p>
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 30px;">${rows}</table>
-      <p style="margin:0 0 6px;${LABEL}">Tentative agenda</p>
+      <p style="margin:0 0 6px;${LABEL}">Agenda</p>
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">${agendaRows}</table>
       <p style="margin:10px 0 30px;font:13px/1.5 ${SANS};color:${C.ink2};">${esc(f.agendaNote)}</p>
       <p style="margin:0 0 26px;font:16px/1.65 ${SANS};color:${C.ink};">${esc(close)}</p>

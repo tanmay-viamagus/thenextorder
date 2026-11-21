@@ -58,8 +58,8 @@ export const speakersCopy = {
 };
 
 // From the organisers' sheet of 7 Nov 2026: the keynote, the speaker, and each panel with its moderator,
-// in the sheet's order. Emmanuel Gosula joined the hiring panel on 21 Nov, once his company (EPAM Systems) was
-// named. Left off until the sheet says more: Anurag Asthana (tentative), and anyone still in discussion. Sheetal Srikanth is on the sheet for
+// in the sheet's order. Emmanuel Gosula joined the hiring panel on 21 Nov, once his new company (Fresche Solutions)
+// was named. Left off until the sheet says more: Anurag Asthana (tentative), and anyone still in discussion. Sheetal Srikanth is on the sheet for
 // Aikam's logo, not on stage. The panels' themes are the agenda's (content/event.ts): technology for the
 // first, hiring for the second.
 // Bios, designations and photos as supplied in bios/ or by the organisers (12 Nov: Venugopal, Sunny, Sravanti;
@@ -82,8 +82,9 @@ const lineUp: SpeakerGroup[] = [
     people: [
       {
         name: "Phani Nagarjuna",
-        role: "Founding Global CEO",
-        company: "Aikam",
+        // 21 Nov: designation as the organisers now want it printed (was "Founding Global CEO, Aikam")
+        role: "Chief Advisor",
+        company: "AIKAM Global",
         photo: "/speakers/phani-nagarjuna-2026.jpg",
         linkedin: "https://www.linkedin.com/in/phaninagarjuna",
         bio: "Phani Nagarjuna is Founding Global CEO of Aikam, the state-backed entity building a first-of-its-kind sovereign AI ecosystem in India, and founder of a stealth AI startup. A multi-time founder and C-suite executive with 30 years’ experience across Silicon Valley, enterprise and sovereign technology, he led a turnaround at Caritor and the exit of Nuevora to TPG/Sutherland. He is a World Economic Forum Expert in AI, Cybersecurity and Entrepreneurship, a strategic advisor to Kwaai, and an alumnus of Harvard Business School.",
@@ -153,15 +154,8 @@ const lineUp: SpeakerGroup[] = [
   {
     title: "Hiring panel",
     note: "Hiring and people leadership in the age of the agentic workforce",
+    // 21 Nov: Venugopal Rao Sankineni (Government of Telangana) first, as in the event brochure; the moderator last
     people: [
-      {
-        name: "Vijayashree Pathikonda",
-        role: "Global Head of Human Resources – Senior Vice President",
-        company: "NationsBenefits",
-        photo: "/speakers/vijayashree-pathikonda.jpg",
-        linkedin: "https://www.linkedin.com/in/vspathikonda",
-        bio: "Vijayashree Pathikonda is Global Head of Human Resources – Senior Vice President at NationsBenefits, where she leads HR strategy and operations across the US, India and LATAM. An HR leader with over 20 years’ experience across technology, manufacturing and consulting, she has held senior HR roles at Eastman, FICOSA, Verisk and Polycom, and co-founded Valeur Consulting. She has built HR functions from the ground up, cut attrition at NationsBenefits from 45% to 9%, and led digital HR transformation and post-merger integration.",
-      },
       {
         name: "Venugopal Rao Sankineni",
         role: "Vice President – Pharma, Life Sciences & Medical Devices",
@@ -169,6 +163,14 @@ const lineUp: SpeakerGroup[] = [
         photo: "/speakers/venugopal-rao-sankineni.jpg",
         linkedin: "https://www.linkedin.com/in/venugopal-rao-sankineni-ba520519",
         bio: "Venugopal Rao Sankineni is Vice President – Pharma, Life Sciences & Medical Devices (Policy & Investments) at the Government of Telangana, where he leads investment promotion, policy development and ecosystem building. He has helped develop the state’s 300+ acre Medical Devices Park, which has drawn over $400 million in committed investments. A technology executive with over 25 years’ experience, he earlier held leadership and consulting roles with Merck, Sanofi, Genzyme, Stryker, AstraZeneca, Dow and PVH across North America and India.",
+      },
+      {
+        name: "Vijayashree Pathikonda",
+        role: "Global Head of Human Resources – Senior Vice President",
+        company: "NationsBenefits",
+        photo: "/speakers/vijayashree-pathikonda.jpg",
+        linkedin: "https://www.linkedin.com/in/vspathikonda",
+        bio: "Vijayashree Pathikonda is Global Head of Human Resources – Senior Vice President at NationsBenefits, where she leads HR strategy and operations across the US, India and LATAM. An HR leader with over 20 years’ experience across technology, manufacturing and consulting, she has held senior HR roles at Eastman, FICOSA, Verisk and Polycom, and co-founded Valeur Consulting. She has built HR functions from the ground up, cut attrition at NationsBenefits from 45% to 9%, and led digital HR transformation and post-merger integration.",
       },
       {
         name: "Sravanti Chekragari",
@@ -182,8 +184,9 @@ const lineUp: SpeakerGroup[] = [
         // 21 Nov 2026: name, designation, company, bio and photo as supplied in the team’s "Emmanuel Gosula" doc,
         // the photo cropped closer to a portrait.
         name: "Emmanuel Gosula, PhD",
-        role: "Senior Manager and Head of People Programs",
-        company: "EPAM Systems",
+        // 21 Nov: his new GCC, as the organisers sent it (his doc gave his previous role at EPAM Systems)
+        role: "Director – India GCC",
+        company: "Fresche Solutions",
         photo: "/speakers/emmanuel-gosula.jpg",
         linkedin: "https://www.linkedin.com/in/emmanuelgosula",
         bio: "Emmanuel Gosula is Senior Manager and Head of People Programs at EPAM Systems, where he leads initiatives to engage, retain and develop software engineers across India and APAC. An HR leader with over 20 years’ experience, he has spent most of his career at EPAM and its predecessor, Alliance Global Services, with a stint as Regional Head – People & Culture at NTT DATA. He holds a PhD in Business Administration from Chitkara University and is pursuing XLRI Jamshedpur’s PGDM for Emerging CHROs.",
@@ -207,8 +210,12 @@ const lineUp: SpeakerGroup[] = [
  */
 export const showBios = false;
 
-/** Bios approved for the site one by one, by name: Phani Nagarjuna's and Emmanuel Gosula's on 21 Nov 2026. */
-export const approvedBios: ReadonlySet<string> = new Set(["Phani Nagarjuna", "Emmanuel Gosula, PhD"]);
+/**
+ * Bios approved for the site one by one, by name. Phani Nagarjuna's and Emmanuel Gosula's were approved on 21 Nov 2026,
+ * then taken off the same day: their designations changed (Chief Advisor, AIKAM Global; Director – India GCC, Fresche
+ * Solutions) and the supplied bios still describe their previous roles. Add a name back once its bio is updated.
+ */
+export const approvedBios: ReadonlySet<string> = new Set<string>([]);
 
 export const speakerGroups: SpeakerGroup[] = showBios
   ? lineUp

@@ -215,7 +215,7 @@ export function Evening() {
 
           <div className="sy__agenda-col" data-reveal>
             <p className="sy__lab">
-              Tentative agenda <span>{agendaNote.replace(/^Tentative\. /, "")}</span>
+              Agenda <span>{agendaNote}</span>
             </p>
             <ol className="sy__agenda">
               {agenda.map((a) => (
