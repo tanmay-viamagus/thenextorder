@@ -100,9 +100,8 @@ export const agenda: {
 }[] = [
   { k: "arrive", time: "3:30 PM IST", t: "Arrival, registration and high tea" },
   { k: "welcome", t: "Welcome address" },
-  // Phani Nagarjuna's keynote (Aikam) goes here once Reynold confirms his availability:
-  //   { k: "keynote", kind: "Keynote", t: "Keynote address" },
-  // and his card back in content/speakers.ts
+  // confirmed 21 Nov; his card is in content/speakers.ts
+  { k: "keynote", kind: "Keynote", t: "Keynote address by Phani Nagarjuna" },
   { k: "panel-1", kind: "Panel discussion", t: "Rethinking GCC strategy in an AI-first world" },
   // the topic is still to be confirmed with Sheena Bhalla; this is the brochure's
   { k: "talk", kind: "Expert talk", t: "Adopting responsible AI" },
