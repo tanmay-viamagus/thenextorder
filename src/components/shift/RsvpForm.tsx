@@ -69,8 +69,10 @@ export function RsvpForm({ refKey, preset }: { refKey: string; preset?: Reply })
   const [errors, setErrors] = useState<Record<string, string>>({});
   // a guest who has replied before finds their details, and their reply unless the link chose one
   const [sent, setSent] = useState<Kept | null>(null);
+  // "Not you?": someone else replying on a shared phone or laptop starts from a blank form
+  const [forgot, setForgot] = useState(false);
   const stored = useSyncExternalStore(onStorage, readStored, () => null);
-  const kept = sent ?? parseKept(stored);
+  const kept = sent ?? (forgot ? null : parseKept(stored));
   const [picked, setPicked] = useState<Reply | null>(null);
   const reply = picked ?? preset ?? kept?.reply ?? null;
   const [edits, setEdits] = useState<Partial<Fields>>({});
@@ -94,6 +96,19 @@ export function RsvpForm({ refKey, preset }: { refKey: string; preset?: Reply })
   useEffect(() => {
     void fetchToken();
   }, []);
+
+  const forget = () => {
+    try {
+      localStorage.removeItem(KEPT);
+    } catch {}
+    setForgot(true);
+    setSent(null);
+    setPicked(null);
+    setEdits({});
+    setErrors({});
+    setState({ kind: "idle" });
+    requestAnimationFrame(() => formRef.current?.querySelector<HTMLElement>('input[name="reply"]')?.focus());
+  };
 
   const clear = (k: string) =>
     setErrors((e) => {
@@ -218,6 +233,9 @@ export function RsvpForm({ refKey, preset }: { refKey: string; preset?: Reply })
           <button type="button" className="rsvp-done__change" onClick={() => setState({ kind: "idle" })}>
             Change my reply
           </button>
+          <button type="button" className="rsvp-done__change" onClick={forget}>
+            Reply for someone else
+          </button>
           <Link href="/">
             {rsvpCopy.site} <span aria-hidden="true">→</span>
           </Link>
@@ -236,7 +254,10 @@ export function RsvpForm({ refKey, preset }: { refKey: string; preset?: Reply })
       </noscript>
       {kept ? (
         <p className="rsvp-form__kept">
-          You replied <b>{replyWords[kept.reply].label}</b> on {dayFmt.format(kept.at)}. Change it below if your plans have changed.
+          {greetingName(kept.name) ? <>{greetingName(kept.name)}, you</> : "You"} replied <b>{replyWords[kept.reply].label}</b> on {dayFmt.format(kept.at)}. Change it below if your plans have changed.{" "}
+          <button type="button" className="rsvp-form__notme" onClick={forget}>
+            Not {greetingName(kept.name) || "you"}? Reply for someone else
+          </button>
         </p>
       ) : null}
 

@@ -211,6 +211,19 @@
   line-height: 1.45;
 }
 
+.rsvp-form__notme {
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: 600 0.92rem/1.45 var(--font);
+  color: var(--ref-purple);
+  text-decoration: underline;
+  text-decoration-color: rgba(124, 58, 237, 0.4);
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
 /* Yes · Tentative · No: three equal choices, like a calendar invite's */
 .rsvp-pick__opts {
   display: grid;
