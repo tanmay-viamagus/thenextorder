@@ -180,18 +180,17 @@ def cover():
     seals = "".join(f'<li><img src="{b64("certs/badge-" + f + ".svg", "image/svg+xml")}" alt="{n}"></li>' for f, n in SEALS)
     cl = f'<img class="cv-claude" src="{b64("certs/badge-" + CLAUDE[0] + ".svg", "image/svg+xml")}" alt="{CLAUDE[1]}">'
     return f'''
-<div class="cv-mark">{mark(46, gap=.9)}</div>
+<div class="cv-mark">{mark(112, gap=1.1)}</div>
 <div class="cv-body">
   <img class="cv-logo" src="{LOGO}" alt="viamagus">
-  <h1 class="cv-h">Become<br>AI‑native<i class="d v"></i></h1>
+  <h1 class="cv-h">Become<br><span class="cv-g">AI‑native</span><i class="d v"></i></h1>
   <p class="cv-l">Everything an enterprise needs to get there, from one partner.</p>
 </div>
 <div class="cv-cert">
   <p class="k">Certified and trusted</p>
   <ul class="seals">{seals}</ul>
   {cl}
-</div>
-<div class="tri"><i class="c"></i><i class="v"></i><i class="a"></i></div>'''
+</div>'''
 
 
 def flap():
