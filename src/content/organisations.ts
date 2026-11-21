@@ -64,6 +64,8 @@ export const organisations: Organisation[] = [
   { name: "Protiviti", logo: "/organisations/protiviti.svg", scale: 1.1 },
   { name: "NationsBenefits", logo: "/organisations/nationsbenefits.svg" },
   { name: "Adaps", logo: "/organisations/adaps.png", scale: 0.9 },
+  // EPAM's own logo (Wikimedia Commons "EPAM LOGO.jpg"; epam.com refuses automated downloads), white made transparent.
+  { name: "EPAM Systems", logo: "/organisations/epam.png", scale: 0.85 },
   { name: "TG MATH, AI Centre of Excellence", logo: "/organisations/tg-math.png" },
 ];
 

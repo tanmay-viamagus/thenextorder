@@ -58,8 +58,8 @@ export const speakersCopy = {
 };
 
 // From the organisers' sheet of 7 Nov 2026: the keynote, the speaker, and each panel with its moderator,
-// in the sheet's order. Left off until the sheet says more: Emmanuel Gosula (his company is named after
-// 11 Nov), Anurag Asthana (tentative), and anyone still in discussion. Sheetal Srikanth is on the sheet for
+// in the sheet's order. Emmanuel Gosula joined the hiring panel on 21 Nov, once his company (EPAM Systems) was
+// named. Left off until the sheet says more: Anurag Asthana (tentative), and anyone still in discussion. Sheetal Srikanth is on the sheet for
 // Aikam's logo, not on stage. The panels' themes are the agenda's (content/event.ts): technology for the
 // first, hiring for the second.
 // Bios, designations and photos as supplied in bios/ or by the organisers (12 Nov: Venugopal, Sunny, Sravanti;
@@ -179,6 +179,16 @@ const lineUp: SpeakerGroup[] = [
         bio: "Sravanti Chekragari is Chief Operating Officer at ADAPS, where she drives enterprise-wide operations, strategic growth and multi-stakeholder alignment. A specialist in organisational design and change leadership, she previously headed the Skills Academy at Biocon Biologics and led leadership and talent development at Cadila Pharmaceuticals, Daimler’s Corporate Academy for APAC and Cigniti Technologies. She also champions education and community CSR initiatives.",
       },
       {
+        // 21 Nov 2026: name, designation, company, bio and photo as supplied in the team’s "Emmanuel Gosula" doc,
+        // the photo cropped closer to a portrait.
+        name: "Emmanuel Gosula, PhD",
+        role: "Senior Manager and Head of People Programs",
+        company: "EPAM Systems",
+        photo: "/speakers/emmanuel-gosula.jpg",
+        linkedin: "https://www.linkedin.com/in/emmanuelgosula",
+        bio: "Emmanuel Gosula is Senior Manager and Head of People Programs at EPAM Systems, where he leads initiatives to engage, retain and develop software engineers across India and APAC. An HR leader with over 20 years’ experience, he has spent most of his career at EPAM and its predecessor, Alliance Global Services, with a stint as Regional Head – People & Culture at NTT DATA. He holds a PhD in Business Administration from Chitkara University and is pursuing XLRI Jamshedpur’s PGDM for Emerging CHROs.",
+      },
+      {
         name: "Srinidhi Reddy Kongari",
         role: "Fractional Client Partner – GCC Accounts",
         company: "Viamagus",
@@ -197,8 +207,8 @@ const lineUp: SpeakerGroup[] = [
  */
 export const showBios = false;
 
-/** Bios approved for the site one by one, by name: Phani Nagarjuna's on 21 Nov 2026. */
-export const approvedBios: ReadonlySet<string> = new Set(["Phani Nagarjuna"]);
+/** Bios approved for the site one by one, by name: Phani Nagarjuna's and Emmanuel Gosula's on 21 Nov 2026. */
+export const approvedBios: ReadonlySet<string> = new Set(["Phani Nagarjuna", "Emmanuel Gosula, PhD"]);
 
 export const speakerGroups: SpeakerGroup[] = showBios
   ? lineUp
