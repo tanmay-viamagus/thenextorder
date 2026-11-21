@@ -66,7 +66,7 @@ export const speakersCopy = {
 // 19 Nov: Srinidhi Reddy Kongari's designation, bio and photo, the photo cropped to a portrait from her doc's), except:
 // Sheena Bhalla's bio, condensed from her own speaker profile; and, where
 // nothing was supplied, the designation from the sheet. Photos not supplied are from public pages that name
-// them with their company: Phani Nagarjuna's from an Elets summit page, Srinivas Dasari's his LinkedIn photo
+// them with their company: Srinivas Dasari's his LinkedIn photo
 // (via TheOrg, at a larger size), Venugopal Rao Sankineni's from the Global Pharma Partnering Summit (small),
 // and Sravanti Chekragari's and Vijayashree Pathikonda's cropped from awards-jury posters. Supplied
 // headshots would be better for all five. Sravanti's surname is spelt as on her LinkedIn and Adaps pages
@@ -77,11 +77,18 @@ export const speakersCopy = {
 const lineUp: SpeakerGroup[] = [
   {
     title: "Keynote",
-    // Hidden (an empty group is left off the page) until his availability is confirmed: Reynold, who
-    // coordinates for him, is checking (10 Nov). To show him, put this back in `people`:
-    //   { name: "Phani Nagarjuna", role: "Chief Advisor", company: "Aikam",
-    //     photo: "/speakers/phani-nagarjuna.jpg", linkedin: "https://www.linkedin.com/in/phaninagarjuna" },
-    people: [],
+    // Confirmed 21 Nov: the keynote after the welcome address (content/event.ts). Designation, bio and portrait
+    // as supplied in the team's "Phani Nagarjuna Bio and Photo (Portrait)" doc (6 Nov), the portrait cropped to 4:5.
+    people: [
+      {
+        name: "Phani Nagarjuna",
+        role: "Founding Global CEO",
+        company: "Aikam",
+        photo: "/speakers/phani-nagarjuna-2026.jpg",
+        linkedin: "https://www.linkedin.com/in/phaninagarjuna",
+        bio: "Phani Nagarjuna is Founding Global CEO of Aikam, the state-backed entity building a first-of-its-kind sovereign AI ecosystem in India, and founder of a stealth AI startup. A multi-time founder and C-suite executive with 30 years’ experience across Silicon Valley, enterprise and sovereign technology, he led a turnaround at Caritor and the exit of Nuevora to TPG/Sutherland. He is a World Economic Forum Expert in AI, Cybersecurity and Entrepreneurship, a strategic advisor to Kwaai, and an alumnus of Harvard Business School.",
+      },
+    ],
   },
   {
     title: "Expert talk",
