@@ -21,11 +21,12 @@ svg{display:block}
 /* ======================= OUTSIDE ======================= */
 /* cover */
 .pn-C{padding:0 9mm 0 9mm;clip-path:inset(-4mm -4mm -4mm 0)}
-.cv-mark{position:absolute;left:9mm;top:14mm}
-.cv-body{margin-top:62mm}
-.cv-logo{width:42mm;height:auto;display:block}
-.cv-h{font-size:44pt;margin-top:9mm;line-height:.9}
-.cv-l{font-family:Outfit,sans-serif;font-weight:500;font-size:11.5pt;line-height:1.25;letter-spacing:-.01em;color:#3A3644;margin-top:6mm;max-width:66mm}
+.cv-mark{position:absolute;left:-6mm;top:-3mm;line-height:0}
+.cv-body{margin-top:71mm}
+.cv-logo{width:38mm;height:auto;display:block}
+.cv-h{font-size:51pt;margin-top:8mm;line-height:.88;letter-spacing:-.05em}
+.cv-g{background:linear-gradient(90deg,#6608A9,#BE65FF);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.04em}
+.cv-l{font-family:Outfit,sans-serif;font-weight:500;font-size:12pt;line-height:1.25;letter-spacing:-.01em;color:#3A3644;margin-top:6mm;max-width:66mm}
 .cv-cert{margin-top:auto;margin-bottom:12mm}
 .seals{display:flex;gap:2.6mm;margin-top:3.4mm}
 .seals img{width:13.4mm;height:13.4mm;display:block}

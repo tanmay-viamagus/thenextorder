@@ -17,7 +17,7 @@ WHAT IS WHERE
   Outside, left to right:  Flap (97 mm): "Start with one. Grow into all three." Build / Operate / Hire, each with its
                            headline number (3 to 4x, >97%, 48 h)
                            Back (100 mm): client logos, numbers, offices, contact
-                           Cover (100 mm): the mark, Viamagus logo, "Become AI-native.", the certification seals
+                           Cover (100 mm): the mark as a full-width crown, Viamagus logo, "Become AI-native." (gradient), the certification seals
   Inside, left to right:   Synthia AI (100) | Velocity AI (100) | Select (97)
                            Each panel: a thin colour line along the top edge (violet | cyan | amber), what it does
                            shown as a diagram, the headline number, the offerings, a QR code.
