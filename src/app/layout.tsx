@@ -14,7 +14,7 @@ const josefin = Josefin_Sans({
   variable: "--font-josefin",
   display: "swap",
 });
-// Viamagus Select's own face, used only for its wordmark and panel.
+// Archivo: the film's Hire scene (its verb and the counter); the Select name itself is the logo file.
 const archivo = Archivo({ subsets: ["latin"], variable: "--font-archivo", display: "swap", preload: false });
 
 const title = "The NEXT Order — 3 December 2026, T-Hub Hyderabad | Viamagus";

@@ -60,12 +60,22 @@ export function SynthiaLogo({ height = 40 }: { height?: number }) {
   );
 }
 
-/** Viamagus Select wordmark, following .wordmark on viamagusselect.ai (Archivo 700 + "select" 400 @ 62%). */
-export function SelectWordmark() {
+/**
+ * The Viamagus Select logo (chosen 21 Nov 2026): a candidate being selected, then "Select" set from the
+ * Velocity AI and Synthia AI logos' own letters. Purple by default (the film's Hire scene is light); white for dark grounds. The default height puts
+ * its letters at the same cap height as SynthiaLogo at 46px. Files: public/brand/viamagus-select-logo_*.svg
+ */
+export function SelectWordmark({ height = 40, tone = "purple" }: { height?: number; tone?: "purple" | "white" }) {
   return (
-    <span className="wm-select" role="img" aria-label="Viamagus Select">
-      <b>Viamagus</b> <span>select</span>
-    </span>
+    <Image
+      className="wm-select"
+      src={`/brand/viamagus-select-logo_${tone}.svg`}
+      alt="Viamagus Select"
+      width={Math.round((336.67 / 82.01) * height)}
+      height={height}
+      style={{ height, width: "auto" }}
+      unoptimized
+    />
   );
 }
 

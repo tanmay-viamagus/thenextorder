@@ -72,7 +72,8 @@ def mark(w_mm, gap=0):
             f'viewBox="{-gap} 0 {vb_w} {h}">{parts}</svg>')
 
 
-SELECT = '<span class="wm-select">select</span>'
+SEL_LOGO = b64("viamagus-select-logo_purple.svg", "image/svg+xml")
+SELECT = f'<img class="wm-select" src="{SEL_LOGO}" alt="Viamagus Select">'
 
 # --------------------------------------------------------------------------- the "show" diagrams
 # Each is an SVG in mm (82 x 46), drawn in the panel's colour.
@@ -196,21 +197,20 @@ def cover():
 def flap():
     rows = [
         ("v", "Build", "c", "Velocity AI", "Products and platforms, engineered with AI from day one.",
-         "3 to 4×", "faster than traditional engineering"),
+         "3 to 4×", "faster engineering"),
         ("s", "Operate", "v", "Synthia AI", "The work behind the business, run by AI and signed off by people.",
-         "&gt;97%", "document extraction accuracy"),
-        ("x", "Hire", "a", "select", "Engineer‑vetted talent, inside your GCC in days.",
-         "48 h", "from open role to vetted dossiers"),
+         "&gt;97%", "extraction accuracy"),
+        ("x", "Hire", "a", "Select", "Engineer‑vetted talent, inside your GCC in days.",
+         "48 h", "to vetted dossiers"),
     ]
     r = "".join(
         f'''<li><div class="fl-ic">{piece(p, 13 if p == "v" else 9.8)}</div>
-<div><p class="fl-v">{v}<i class="d {c}"></i></p><p class="fl-p">{prod}</p><p class="fl-t">{t}</p>
+<div><p class="fl-v">{v}<i class="d {c}"></i></p><p class="fl-p">{prod}</p>
 <p class="fl-x {c}"><b>{n}</b><span>{nt}</span></p></div></li>'''
         for p, v, c, prod, t, n, nt in rows)
     return f'''
 <p class="k">Three ways to work with us</p>
 <h2 class="fl-h">Start with one.<br>Grow into all three.</h2>
-<p class="fl-l">Each stands on its own, and all three are built to work together.</p>
 <ol class="fl-rows">{r}</ol>
 <p class="open">Open the flap <i>→</i></p>'''
 
@@ -222,20 +222,14 @@ def back():
 <p class="k">Trusted by teams at</p>
 <ul class="logos">{logos}</ul>
 <div class="big"><b>350,000+</b><span>engineering hours since 2014</span></div>
-<dl class="nums">
-  <div><dt>100+</dt><dd>engineers</dd></div>
-  <div><dt>150,000+</dt><dd>design hours</dd></div>
-  <div><dt>10+</dt><dd>years</dd></div>
-</dl>
 <p class="offices"><span>Bengaluru</span><span>New York</span><span>Zug</span></p>
-<blockquote class="bk-q"><p>AI does the heavy lifting.<br><em>Your people make the call.</em></p><span>How we work</span></blockquote>
+<blockquote class="bk-q"><p>AI does the heavy lifting.<br><em>Your people make the call.</em></p></blockquote>
 <div class="contact">
   <div class="qr-t">{qr("home", 21)}</div>
   <div>
     <p class="k">Let’s talk</p>
     <p class="c-m">hi@viamagus.com</p>
     <p class="c-w">viamagus.com</p>
-    <p class="c-s">Find us at the booth: Build, Operate and Hire.</p>
   </div>
 </div>
 <p class="legal">Viamagus Technologies Pvt. Ltd.</p>'''
@@ -243,7 +237,7 @@ def back():
 
 # --------------------------------------------------------------------------- inside
 def offers(items, cols=1):
-    lis = "".join(f"<li><b>{n}</b><span>{d}</span></li>" for n, d in items)
+    lis = "".join(f"<li><b>{n}</b></li>" for n, _ in items)
     return f'<ul class="of of{cols}">{lis}</ul>'
 
 
@@ -254,7 +248,7 @@ def product(*, label, pc, color, logo, tag, viz, stat, stat_t, extra, items, col
   <div class="wm">{logo}</div>
   <p class="tag">{tag}</p>
   <div class="viz">{viz}</div>
-  <div class="stat"><b>{stat}</b><span>{stat_t}</span></div>
+  <div class="stat {color}"><b>{stat}</b><span>{stat_t}</span></div>
   {extra}
 </div>
 <i class="acc {color}"></i>
@@ -270,8 +264,8 @@ def synthia():
         label="Operate", pc=piece("s", 9), color="v",
         logo=f'<img class="wm-synthia" src="{SYN}" alt="Synthia AI">',
         tag="The platform for AI‑native business operations.",
-        viz=viz_synthia(), stat="&gt;97%", stat_t="document extraction accuracy. AI does the heavy lifting; your people make the call.",
-        extra='<p class="std">Every AI output is a draft until a named officer signs it.</p>',
+        viz=viz_synthia(), stat="&gt;97%", stat_t="document extraction accuracy",
+        extra="",
         items=[("AI Analytics", "Every answer. One source."), ("Back‑Office Processing", "Documents into decision‑ready data."),
                ("Physical Forms", "Handwriting into validated data."), ("Contract Analysis", "Dense contracts, audit‑ready."),
                ("Audio Analysis", "Conversations into verified insight."), ("Voice and Video Agents", "High‑volume calls, live co‑pilots.")],
@@ -283,8 +277,8 @@ def velocity():
         label="Build", pc=piece("v", 11.6), color="c",
         logo=f'<img class="wm-velocity" src="{VEL}" alt="Velocity AI">',
         tag="AI‑native product engineering.",
-        viz=viz_velocity(), stat="3 to 4×", stat_t="faster than traditional engineering, with a shippable submodule every Friday.",
-        extra='<p class="std">Shippable means shippable: to production, not just to a reviewer’s browser.</p>',
+        viz=viz_velocity(), stat="3 to 4×", stat_t="faster than traditional engineering",
+        extra="",
         items=[("Legacy Modernization", "Legacy code onto a modern stack."), ("Agentic AI Kits", "Our playbook, in your team’s hands."),
                ("Technical Due Diligence", "AI‑augmented audit: architecture, security, DevOps."), ("0‑1 Builds", "Idea to production‑grade v1, fast.")],
         cols=2, q="build", qlabel="See Velocity AI at work", qurl="viamagus.com/velocity-ai")
@@ -295,8 +289,8 @@ def select():
         label="Hire", pc=piece("x", 9), color="a",
         logo=SELECT,
         tag="Engineer‑vetted technology talent for GCCs in India.",
-        viz=viz_select(), stat="48 h", stat_t="working hours from one open role to 3 to 5 vetted dossiers. Agencies send CVs. We send verdicts.",
-        extra=f'<div class="score"><p class="std">Below 75 is out. A senior engineer signs off every dossier.</p>{score_bar()}</div>',
+        viz=viz_select(), stat="48 h", stat_t="from open role to vetted dossiers",
+        extra="",
         items=[("Resource augmentation", "Vetted engineers on your roadmap."), ("Fractional AI leadership", "Senior AI leaders, as long as you need."),
                ("AI services", "Modernisation, guardrails, AI CoE set‑up."), ("Build, then own", "From month 13, the team is yours.")],
         cols=2, q="hire", qlabel="Meet Select", qurl="viamagusselect.ai")

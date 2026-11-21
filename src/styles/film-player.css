@@ -579,8 +579,7 @@
   letter-spacing: -0.02em;
 }
 
-.fs__sign .wm-velocity,
-.fs__sign .wm-select {
+.fs__sign .wm-velocity {
   font-size: 48px;
 }
 

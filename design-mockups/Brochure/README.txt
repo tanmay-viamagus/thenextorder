@@ -1,4 +1,5 @@
-Viamagus guest brochure, v2 (21 Nov 2026)
+Viamagus guest brochure, v2 (21 Nov 2026; trimmed to fewer words the same day: no description lines,
+offers by name only, one short line per number)
 Tri-fold, same look as the physical branding: white paper throughout, the three brand colours used only as accents
 (a thin edge line, the mark, the diagrams), one colour per product. No colour blocks or gradients.
 
@@ -12,11 +13,12 @@ FILES
   Viamagus-brochure_artboard.pdf     One board with both printed sides, the six panels and the opening sequence (true size).
   Brochure_artboard.png              The same board as an image, for sharing.
   previous-v1/                       The earlier "one piece at a time" version, kept for reference.
+  previous-v3-more-text/             This version before it was trimmed to fewer words.
 
 WHAT IS WHERE
   Outside, left to right:  Flap (97 mm): "Start with one. Grow into all three." Build / Operate / Hire, each with its
                            headline number (3 to 4x, >97%, 48 h)
-                           Back (100 mm): client logos, numbers, offices, contact
+                           Back (100 mm): client logos, 350,000+ engineering hours, offices, contact
                            Cover (100 mm): the mark as a full-width crown, Viamagus logo, "Become AI-native." (gradient), the certification seals
   Inside, left to right:   Synthia AI (100) | Velocity AI (100) | Select (97)
                            Each panel: a thin colour line along the top edge (violet | cyan | amber), what it does
@@ -38,8 +40,8 @@ QR CODES (same as the booth)
   Back        https://viamagus.com/
 
 CONTENT
-  No date anywhere. Certification seals are the official badges used on the select site (public/v3/assets/badge-*.svg):
+  No date anywhere. Certification seals are the official badges used on the Select site (public/v3/assets/badge-*.svg):
   ISO 27001, ISO 9001, SOC 2 Type 2, HIPAA, NASSCOM, Claude Partner Network (Select Services Partner). Client logos (Nestlé, Coca-Cola, HDFC Life, Titan, ADNOC, Hitachi), certifications and figures
-  are the ones confirmed for the select site (26 Oct 2026) and used in v1.
+  are the ones confirmed for the Select site (26 Oct 2026) and used in v1.
   Source: design-mockups/_build-tools/brochure-v2 (python3 gen.py, then render.mjs; review.py and shot.mjs for the review
   PDF and artboard; stages.py for how-it-opens).
