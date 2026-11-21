@@ -17,7 +17,7 @@
   padding: 20px 16px 96px;
 }
 .ci__hd { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.ci__hd .vm-logo { color: var(--ci-ink); font-size: 1.15rem; }
+.ci__hd .vm-logo { color: #6608a9; font-size: 1.15rem; } /* the Viamagus purple logo, as on the printed pieces */
 .ci__k { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #6608a9; }
 
 .ci__stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 18px; }
