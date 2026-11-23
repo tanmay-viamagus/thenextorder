@@ -305,7 +305,7 @@ def select():
         stats=[("48", "working hours to 3–5 written verdicts"), ("75", "pass mark on five skills")],
         items=[("Resource augmentation", "Vetted engineers on your roadmap."),
                ("Fractional AI leadership", "Senior AI leaders, as long as you need."),
-               ("AI services", "Modernisation, guardrails, AI CoE set‑up."),
+               ("AI services", "Modernization, guardrails, AI CoE set‑up."),
                ("Build, then own", "From month 13, the team is yours.")],
         why_k="Why Select",
         why=["Engineers from Viamagus scope every role", "Every candidate assessed on five skills", "A written verdict on each one"],
