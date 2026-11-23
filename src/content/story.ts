@@ -14,7 +14,7 @@
 export type Evidence = { figure: string; finding: string; source: string; date: string; url: string };
 
 export const description =
-  "The NEXT Order: an invite-only symposium for Hyderabad’s GCC leaders and decision-makers on the next order of talent, technology and leadership. Thursday 3 December 2026, from 3:30 PM, at T-Hub, Hyderabad. Organised by Viamagus with Hyderabad Mavericks.";
+  "The NEXT Order: an invite-only symposium for Hyderabad’s GCC leaders and decision-makers on the next order of talent, technology and leadership. Thursday 3 December 2026, from 3:30 PM, at T-Hub, Hyderabad. Organised by Viamagus with AIKAM Global, TG MATH and Hyderabad Mavericks.";
 
 /**
  * The picture a shared link carries. A page that sets its own `openGraph`

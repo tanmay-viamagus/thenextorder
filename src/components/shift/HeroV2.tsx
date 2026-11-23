@@ -1,4 +1,4 @@
-import { MavericksLogo } from "@/components/Brand";
+import { PartnerLogos } from "@/components/Brand";
 import { FilmButton } from "@/components/film/FilmOverlay";
 import { event } from "@/content/event";
 import { cta, invite } from "@/content/story";
@@ -16,7 +16,7 @@ const FACTS: { k: string; icon: IconName; v: ReactNode }[] = [
   { k: "Date", icon: "calendar", v: event.date },
   { k: "Time", icon: "clock", v: event.time },
   { k: "Venue", icon: "pin", v: keep([event.venue, event.city].filter(Boolean).join(", ")) },
-  { k: "In collaboration with", icon: "users", v: <MavericksLogo className="hero2__mav" height={24} tone="ink" /> },
+  { k: "In collaboration with", icon: "users", v: <PartnerLogos className="hero2__partners" height={18} tone="ink" /> },
 ];
 
 /** glass panels and light at the sides of the room */

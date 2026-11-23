@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { LinkedInMark, MavericksLogo, ViaMagusLogo } from "@/components/Brand";
+import { LinkedInMark, PartnerLogos, ViaMagusLogo } from "@/components/Brand";
 import {
   contactEmail,
   event,
@@ -171,7 +171,7 @@ export function Site() {
                 Organised by <b>{knownFacts.host}</b>
               </p>
               <p>
-                Ecosystem partner <MavericksLogo className="ftr__mavlogo" height={22} />
+                Ecosystem partners <PartnerLogos className="ftr__partners" height={18} />
               </p>
             </div>
           </div>
