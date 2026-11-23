@@ -28,7 +28,7 @@ def b64(p, mime):
 
 VEL = b64("velocity-purple.svg", "image/svg+xml")
 SYN = b64("synthia-purple.svg", "image/svg+xml")
-LOGO = b64("viamagus-logo-purple.png", "image/png")
+LOGO = b64("viamagus-logo-stacked_purple.svg", "image/svg+xml")   # the stacked logo (23 Nov feedback)
 CLIENTS = [("nestle", "Nestlé"), ("cocacola", "Coca-Cola"), ("hdfc", "HDFC Life"),
            ("titan", "Titan"), ("adnoc", "ADNOC"), ("hitachi", "Hitachi")]
 
@@ -197,11 +197,11 @@ def cover():
 def flap():
     rows = [
         ("v", "Build", "c", "Velocity AI", "Products and platforms, engineered with AI from day one.",
-         "3 to 4×", "faster engineering"),
+         "3–4×", "faster to production"),
         ("s", "Operate", "v", "Synthia AI", "The work behind the business, run by AI and signed off by people.",
-         "&gt;97%", "extraction accuracy"),
+         "4×", "the output. Half the OpEx."),
         ("x", "Hire", "a", "Select", "Engineer‑vetted talent, inside your GCC in days.",
-         "48 h", "to vetted dossiers"),
+         "48 h", "to 3–5 written verdicts"),
     ]
     r = "".join(
         f'''<li><div class="fl-ic">{piece(p, 13 if p == "v" else 9.8)}</div>
@@ -222,7 +222,7 @@ def back():
 <p class="k">Trusted by teams at</p>
 <ul class="logos">{logos}</ul>
 <div class="big"><b>350,000+</b><span>engineering hours since 2014</span></div>
-<p class="offices"><span>Bengaluru</span><span>New York</span><span>Zug</span></p>
+<p class="offices"><span>Bengaluru</span><span>New York</span></p>
 <blockquote class="bk-q"><p>AI does the heavy lifting.<br><em>Your people make the call.</em></p></blockquote>
 <div class="contact">
   <div class="qr-t">{qr("home", 21)}</div>
@@ -236,26 +236,28 @@ def back():
 
 
 # --------------------------------------------------------------------------- inside
-def offers(items, cols=1):
-    lis = "".join(f"<li><b>{n}</b></li>" for n, _ in items)
-    return f'<ul class="of of{cols}">{lis}</ul>'
+def offers(items):
+    lis = "".join(f"<li><b>{n}</b><span>{d}</span></li>" for n, d in items)
+    return f'<ul class="of">{lis}</ul>'
 
 
-def product(*, label, pc, color, logo, tag, viz, stat, stat_t, extra, items, cols, q, qlabel, qurl):
+def product(*, label, pc, color, logo, tag, sub, stats, items, why_k, why, q, qurl):
+    st = "".join(f'<div class="stat {color}"><b>{n}</b><span>{t}</span></div>' for n, t in stats)
+    wy = "".join(f"<li>{w}</li>" for w in why)
     return f'''
 <div class="top">
   <div class="hd"><p class="k">{label}</p>{pc}</div>
   <div class="wm">{logo}</div>
   <p class="tag">{tag}</p>
-  <div class="viz">{viz}</div>
-  <div class="stat {color}"><b>{stat}</b><span>{stat_t}</span></div>
-  {extra}
+  <p class="sub {color}">{sub}</p>
+  <div class="stats">{st}</div>
 </div>
 <i class="acc {color}"></i>
 <div class="band {color}">
   <p class="k of-k">What we offer</p>
-  {offers(items, cols)}
-  <div class="ft"><div class="qr-t">{qr(q, 16)}</div><div><b>{qlabel}</b><span>{qurl}</span></div></div>
+  {offers(items)}
+  <div class="why {color}"><p class="k">{why_k}</p><ul>{wy}</ul></div>
+  <div class="ft"><div class="qr-t">{qr(q, 16)}</div><div><p class="k">Scan code</p><b>{qurl}</b></div></div>
 </div>'''
 
 
@@ -264,12 +266,17 @@ def synthia():
         label="Operate", pc=piece("s", 9), color="v",
         logo=f'<img class="wm-synthia" src="{SYN}" alt="Synthia AI">',
         tag="The platform for AI‑native business operations.",
-        viz=viz_synthia(), stat="&gt;97%", stat_t="document extraction accuracy",
-        extra="",
-        items=[("AI Analytics", "Every answer. One source."), ("Back‑Office Processing", "Documents into decision‑ready data."),
-               ("Physical Forms", "Handwriting into validated data."), ("Contract Analysis", "Dense contracts, audit‑ready."),
-               ("Audio Analysis", "Conversations into verified insight."), ("Voice and Video Agents", "High‑volume calls, live co‑pilots.")],
-        cols=2, q="operate", qlabel="See Synthia AI at work", qurl="viamagus.com/synthia-ai")
+        sub="Your people. Your business. Turbocharged.",
+        stats=[("4×", "the output"), ("Half", "the OpEx")],
+        items=[("AI analytics", "Ask your data anything in plain English."),
+               ("Back‑office processing", "Turn thousands of documents into decision‑ready data."),
+               ("Physical forms", "Turn handwritten forms into clean, validated data."),
+               ("Contract analysis", "Turn dense contracts into audit‑ready data."),
+               ("Audio analysis", "Turn calls into structured, verified insights."),
+               ("Voice and video agents", "AI agents for high‑volume calls.")],
+        why_k="Why Synthia AI",
+        why=["Runs on your SOPs", "A person signs off every key step", "You pay for results, not licences"],
+        q="operate", qurl="viamagus.com/synthia-ai")
 
 
 def velocity():
@@ -277,23 +284,32 @@ def velocity():
         label="Build", pc=piece("v", 11.6), color="c",
         logo=f'<img class="wm-velocity" src="{VEL}" alt="Velocity AI">',
         tag="AI‑native product engineering.",
-        viz=viz_velocity(), stat="3 to 4×", stat_t="faster than traditional engineering",
-        extra="",
-        items=[("Legacy Modernization", "Legacy code onto a modern stack."), ("Agentic AI Kits", "Our playbook, in your team’s hands."),
-               ("Technical Due Diligence", "AI‑augmented audit: architecture, security, DevOps."), ("0‑1 Builds", "Idea to production‑grade v1, fast.")],
-        cols=2, q="build", qlabel="See Velocity AI at work", qurl="viamagus.com/velocity-ai")
+        sub="Working software, shipped every week.",
+        stats=[("3–4×", "faster to production"), ("60–80%", "pre‑built on day one")],
+        items=[("Legacy modernization", "Rewrite legacy code onto a modern stack, screen by screen."),
+               ("Agentic AI kits", "Our AI kits, tailored to your stack, so your engineers ship faster."),
+               ("Technical due diligence", "No surprises before you invest, acquire or scale."),
+               ("0–1 builds", "From idea to production‑grade v1 in 6–8 weeks.")],
+        why_k="Why Velocity AI",
+        why=["One pod with the output of a ~10‑person team", "Every change tested before a human reviews it", "Knowledge stays in your codebase"],
+        q="build", qurl="viamagus.com/velocity-ai")
 
 
 def select():
+    # no Select copy came with the 23 Nov feedback: lines from viamagusselect.ai and the booth pieces
     return product(
         label="Hire", pc=piece("x", 9), color="a",
         logo=SELECT,
         tag="Engineer‑vetted technology talent for GCCs in India.",
-        viz=viz_select(), stat="48 h", stat_t="from open role to vetted dossiers",
-        extra="",
-        items=[("Resource augmentation", "Vetted engineers on your roadmap."), ("Fractional AI leadership", "Senior AI leaders, as long as you need."),
-               ("AI services", "Modernisation, guardrails, AI CoE set‑up."), ("Build, then own", "From month 13, the team is yours.")],
-        cols=2, q="hire", qlabel="Meet Select", qurl="viamagusselect.ai")
+        sub="Agencies send CVs. We send verdicts.",
+        stats=[("48", "working hours to 3–5 written verdicts"), ("75", "pass mark on five skills")],
+        items=[("Resource augmentation", "Vetted engineers on your roadmap."),
+               ("Fractional AI leadership", "Senior AI leaders, as long as you need."),
+               ("AI services", "Modernisation, guardrails, AI CoE set‑up."),
+               ("Build, then own", "From month 13, the team is yours.")],
+        why_k="Why Select",
+        why=["Engineers from Viamagus scope every role", "Every candidate assessed on five skills", "A written verdict on each one"],
+        q="hire", qurl="viamagusselect.ai")
 
 
 OUT = [("A", 0, 97, flap), ("B", 97, 100, back), ("C", 197, 100, cover)]

@@ -23,7 +23,7 @@ svg{display:block}
 .pn-C{padding:0 9mm 0 9mm;clip-path:inset(-4mm -4mm -4mm 0)}
 .cv-mark{position:absolute;left:-6mm;top:-3mm;line-height:0}
 .cv-body{margin-top:71mm}
-.cv-logo{width:38mm;height:auto;display:block}
+.cv-logo{height:17mm;width:auto;display:block}
 .cv-h{font-size:51pt;margin-top:8mm;line-height:.88;letter-spacing:-.05em}
 .cv-g{background:linear-gradient(90deg,#6608A9,#BE65FF);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.04em}
 .cv-l{font-family:Outfit,sans-serif;font-weight:500;font-size:12pt;line-height:1.25;letter-spacing:-.01em;color:#3A3644;margin-top:6mm;max-width:66mm}
@@ -86,39 +86,41 @@ svg{display:block}
 .acc{position:absolute;top:-3mm;left:0;right:0;height:5.4mm}
 .pn-Ap .acc{right:-3mm}.pn-Cp .acc{left:-3mm}
 .acc.v{background:#BE65FF}.acc.c{background:#00C7CE}.acc.a{background:#F5B83D}
-.top{height:120mm;padding:12mm 9mm 0;display:flex;flex-direction:column}
+.top{padding:12mm 9mm 0;display:flex;flex-direction:column}
 .pn-Ap .top{padding-right:8mm}
 .hd{display:flex;justify-content:space-between;align-items:flex-start;height:9mm}
 .wm{height:8mm;display:flex;align-items:center;margin-top:1mm}
 .wm-synthia{height:6.2mm;width:auto}
 .wm-velocity{height:6.4mm;width:auto}
 .wm-select{height:5.58mm;width:auto}  /* Viamagus Select logo: 0.872 x the Velocity AI file height, so the letters match */
-.tag{font-family:Outfit,sans-serif;font-weight:600;font-size:11.5pt;letter-spacing:-.015em;line-height:1.18;margin-top:3mm;min-height:10mm;max-width:80mm}
-.viz{margin-top:5mm;height:46mm}
-.pn-Ap .viz svg{width:79mm;height:44.3mm}
-.stat{display:flex;flex-direction:column;gap:2.6mm;margin-top:8mm;padding:.6mm 0 .8mm 4mm;border-left:.7mm solid #BE65FF}
+.tag{font-family:Outfit,sans-serif;font-weight:600;font-size:12pt;letter-spacing:-.015em;line-height:1.16;margin-top:3.4mm;min-height:11mm;max-width:80mm}
+.sub{font-family:Outfit,sans-serif;font-weight:500;font-size:9.4pt;letter-spacing:-.01em;line-height:1.25;margin-top:2mm;color:#6608A9}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:4mm;margin-top:7mm}
+.stat{display:flex;flex-direction:column;gap:2mm;padding:.4mm 0 .6mm 3.4mm;border-left:.7mm solid #BE65FF}
 .stat.c{border-color:#00C7CE}.stat.a{border-color:#F5B83D}
-.stat b{font-family:Outfit,sans-serif;font-weight:800;font-size:30pt;letter-spacing:-.02em;line-height:.85;white-space:nowrap}
-.stat span{font-family:"Geist Mono",monospace;font-size:6.4pt;letter-spacing:.1em;text-transform:uppercase;color:#55515F;line-height:1.3}
-.std{font-size:6.8pt;color:#55515F;line-height:1.32;margin-top:3mm;padding-left:2.4mm;border-left:.5mm solid currentColor}
-.pn-Cp .std{border-color:#BE65FF}.pn-Bp .std{border-color:#00C7CE}.pn-Ap .std{border-color:#F5B83D}
-.score .std{margin-top:2.6mm}
-.score .sb{margin-top:1.6mm}
-.pn-Ap .score .sb{width:79mm}
-.band{height:90mm;margin-top:auto;padding:7mm 9mm 10mm;display:flex;flex-direction:column}
+.stat b{font-family:Outfit,sans-serif;font-weight:800;font-size:24pt;letter-spacing:-.025em;line-height:.85;white-space:nowrap}
+.stat span{font-family:"Geist Mono",monospace;font-size:6pt;letter-spacing:.08em;text-transform:uppercase;color:#55515F;line-height:1.3;min-height:2.6em}
+.band{flex:1;margin-top:7mm;padding:0 9mm 10mm;display:flex;flex-direction:column}
 .pn-Ap .band{padding-right:8mm}
-.of{display:grid;gap:5.2mm 4.4mm}
-.of2{grid-template-columns:1fr 1fr}
-.of-k{color:#55515F;margin-bottom:3.2mm}
-.of li{border-top:.25mm solid #DCD7E4;padding-top:2.4mm;position:relative}
+.of-k{color:#55515F;margin-bottom:1.6mm}
+.of{display:flex;flex-direction:column}
+.of li{display:grid;grid-template-columns:31mm 1fr;gap:3mm;padding:2.2mm 0;border-top:.25mm solid #E4E0EA;position:relative}
+.of li:last-child{border-bottom:.25mm solid #E4E0EA}
 .band .of li::before{content:"";position:absolute;left:0;top:-.3mm;width:6mm;height:.6mm}
 .band.v .of li::before{background:#BE65FF}.band.c .of li::before{background:#00C7CE}.band.a .of li::before{background:#F5B83D}
-.of b{display:block;font-family:Outfit,sans-serif;font-weight:600;font-size:9.4pt;letter-spacing:-.015em;line-height:1.12}
-.of span{display:block;font-size:7pt;line-height:1.32;margin-top:1mm;color:#55515F}
-.pn-Cp .of{gap:3.6mm 4.4mm}
+.of b{display:block;font-family:Outfit,sans-serif;font-weight:600;font-size:8.6pt;letter-spacing:-.01em;line-height:1.2}
+.of span{display:block;font-size:7.2pt;line-height:1.34;color:#3A3644}
+.why{margin-top:5mm;padding:3.6mm 4mm;border-radius:1.6mm;background:#F6F3FA}
+.why.c{background:#EEF9FA}.why.a{background:#FDF6E8}
+.why .k{color:#55515F}
+.why ul{margin-top:2mm;display:flex;flex-direction:column;gap:1.4mm}
+.why li{font-family:Outfit,sans-serif;font-weight:600;font-size:8.6pt;letter-spacing:-.01em;line-height:1.2;padding-left:3.4mm;position:relative}
+.why li::before{content:"";position:absolute;left:0;top:.42em;width:1.4mm;height:1.4mm;border-radius:50%;background:#BE65FF}
+.why.c li::before{background:#00C7CE}.why.a li::before{background:#F5B83D}
 .ft{margin-top:auto;padding-top:4mm;border-top:.25mm solid #ECE9F0;display:flex;gap:3mm;align-items:center}
-.ft b{display:block;font-family:Outfit,sans-serif;font-weight:700;font-size:9.4pt;letter-spacing:-.015em}
-.ft span{display:block;font-family:"Geist Mono",monospace;font-size:5.8pt;letter-spacing:.06em;margin-top:.8mm}
+.ft .k{color:#55515F}
+.ft b{display:block;font-family:Outfit,sans-serif;font-weight:700;font-size:9.4pt;letter-spacing:-.015em;margin-top:.8mm}
+.pn-Cp,.pn-Bp,.pn-Ap{display:flex;flex-direction:column}
 
 /* guides */
 .fold{position:absolute;top:0;bottom:0;border-left:.3mm dashed #E0004D}

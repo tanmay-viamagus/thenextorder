@@ -3,7 +3,7 @@ import { chromium } from "/Users/apple/Documents/outreachtracker/node_modules/pl
 const [, , html, pdf, png, dsf] = process.argv;
 const b = await chromium.launch({ executablePath: process.env.HOME + "/Library/Caches/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-mac-arm64/chrome-headless-shell" });
 const p = await b.newPage({ viewport: { width: 1600, height: 1100 }, deviceScaleFactor: +(dsf || 1) });
-await p.goto("file://" + html, { waitUntil: "networkidle" });
+await p.goto("file://" + html, { waitUntil: "networkidle", timeout: 180000 });
 await p.evaluate(() => document.fonts.ready);
 await p.waitForTimeout(500);
 await p.pdf({ path: pdf, printBackground: true, preferCSSPageSize: true });
