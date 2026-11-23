@@ -1,4 +1,4 @@
-import { MavericksLogo, ViaMagusLogo } from "@/components/Brand";
+import { PartnerLogos, ViaMagusLogo } from "@/components/Brand";
 import { Icon } from "@/components/shift/Icons";
 import { OrgStrip } from "@/components/shift/Showcase";
 import { event, knownFacts, siteAddress } from "@/content/event";
@@ -70,7 +70,7 @@ export function InvitePanel({
             <span className="rsvp__label">{event.format ?? "Hosted by"}</span>
             <b>Organised by {knownFacts.host}</b>
             <span className="rsvp__more rsvp__with">
-              In collaboration with <MavericksLogo className="rsvp__mav" height={18} />
+              In collaboration with <PartnerLogos className="rsvp__partners" height={15} />
             </span>
           </span>
         </li>

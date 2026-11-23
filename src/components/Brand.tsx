@@ -100,3 +100,46 @@ export function MavericksLogo({
     />
   );
 }
+
+/**
+ * The ecosystem partners, as the event brochure credits them (cover and page 4) and as on the printed
+ * pieces: Aikam, TG MATH, Hyderabad Mavericks, in that order. Heights follow the brochure's cover row so the
+ * three read at one optical size. `tone` as for MavericksLogo: "light" for dark grounds (Aikam and TG MATH in
+ * white, as on the brochure), "ink" for light ones (their own colours).
+ */
+export function PartnerLogos({
+  className = "",
+  height = 22,
+  tone = "light",
+}: {
+  className?: string;
+  /** height of the Hyderabad Mavericks logo; the other two are sized from it */
+  height?: number;
+  tone?: "light" | "ink";
+}) {
+  const aik = Math.round((height * 44) / 30);
+  const tgm = Math.round((height * 34) / 30);
+  const white = tone === "light" ? { filter: "brightness(0) invert(1)" } : {};
+  return (
+    <span className={`partners ${className}`}>
+      <Image
+        src="/organisations/aikam.svg"
+        alt="AIKAM Global"
+        width={Math.round(aik * 1.618)}
+        height={aik}
+        style={{ height: aik, width: "auto", ...white }}
+        unoptimized
+      />
+      <i aria-hidden="true" />
+      <Image
+        src="/organisations/tg-math.png"
+        alt="TG MATH, AI Centre of Excellence"
+        width={Math.round((tgm * 1200) / 339)}
+        height={tgm}
+        style={{ height: tgm, width: "auto", ...white }}
+      />
+      <i aria-hidden="true" />
+      <MavericksLogo height={height} tone={tone} />
+    </span>
+  );
+}

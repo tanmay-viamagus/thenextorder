@@ -7553,3 +7553,38 @@ html[data-hdr="dark"] .hdr .btn--shift {
   width: auto;
   height: clamp(16px, 1.3vw, 20px);
 }
+
+/* the three ecosystem partners (23 Nov), as on the brochure: one row, hairline dividers */
+.partners {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
+}
+.partners img {
+  display: block;
+  flex: none;
+}
+.partners i {
+  flex: none;
+  width: 1px;
+  height: 1.4em;
+  background: currentColor;
+  opacity: 0.28;
+}
+.sy__partners {
+  flex-wrap: wrap;
+  gap: 14px 16px;
+}
+/* the footer's partner row may drop the logos to a second line where the row runs out of width (phones, tablets) */
+.ftr__by p:has(.ftr__partners) {
+  flex-wrap: wrap;
+  row-gap: 10px;
+}
+/* mid widths: the hero's four facts get tight, so the partner row steps down a size to stay inside the row */
+@media (min-width: 760px) and (max-width: 1180px) {
+  .hero2__partners {
+    zoom: 0.84;
+    gap: 9px;
+  }
+}

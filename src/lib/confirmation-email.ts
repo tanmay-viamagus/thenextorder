@@ -134,7 +134,7 @@ export function confirmationEmail(p: ConfirmationInput, f: ConfirmationFacts) {
       <p style="margin:16px 0 0;font:14px/1.5 ${SANS};color:${C.ink2};"><a href="${esc(hold)}" style="color:${C.purple};">Hold the date</a>: adds 3 December to your calendar, all day.</p>
     </td></tr>
     <tr><td style="background:${C.dark};padding:22px 40px;border-radius:0 0 14px 14px;">
-      <p style="margin:0;font:12px/1.6 ${SANS};color:#B9B4C4;">Organised by Viamagus · Ecosystem partner Hyderabad Mavericks</p>
+      <p style="margin:0;font:12px/1.6 ${SANS};color:#B9B4C4;">Organised by Viamagus · Ecosystem partners AIKAM Global, TG MATH and Hyderabad Mavericks</p>
       <p style="margin:4px 0 0;font:12px/1.6 ${SANS};color:#B9B4C4;">Questions? Just reply to this email.</p>
     </td></tr>
   </table>

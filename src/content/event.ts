@@ -62,25 +62,25 @@ export const pending = "To be announced";
 export const knownFacts = {
   audience: "Hyderabad’s GCC leaders",
   host: "Viamagus",
-  /** ecosystem partner — local visibility and credibility in Hyderabad’s GCC community */
-  partner: "Hyderabad Mavericks",
+  /** ecosystem partners, as the brochure credits them (23 Nov: TG MATH stays, as agreed with the organisers) */
+  partner: "AIKAM Global, TG MATH and Hyderabad Mavericks",
   /** the brochure’s line on the partner */
   partnerLine:
     "Hyderabad Mavericks is a group of leaders supporting Hyderabad as a thriving ecosystem for GCC growth, innovation and start-ups.",
 };
 
 /** Organised by — the final brochure's lines, verbatim. Sits with the agenda. */
-export const organisers: { role: string; name: string; line: string; logo?: "mavericks" }[] = [
+export const organisers: { role: string; name: string; line?: string; logo?: "partners" }[] = [
   {
     role: "Organised by",
     name: "Viamagus",
     line: "Viamagus is a technology company that builds platforms and solutions for large MNCs and GCCs, and the AI talent to run them.",
   },
   {
-    role: "Ecosystem partner",
-    name: "Hyderabad Mavericks",
-    line: "Hyderabad Mavericks is a group of leaders supporting Hyderabad as a thriving ecosystem for GCC growth, innovation and start-ups.",
-    logo: "mavericks",
+    // the brochure's page 4: "Ecosystem partners", the three logos, no line
+    role: "Ecosystem partners",
+    name: "AIKAM Global, TG MATH and Hyderabad Mavericks",
+    logo: "partners",
   },
 ];
 

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { agenda, agendaNote, event, organisers } from "@/content/event";
-import { MavericksLogo, ViaMagusMark } from "@/components/Brand";
+import { PartnerLogos, ViaMagusMark } from "@/components/Brand";
 import { FilmButton } from "@/components/film/FilmOverlay";
 import { FILM_DURATION } from "@/content/film";
 import { keep } from "@/lib/text";
@@ -264,8 +264,8 @@ export function Evening() {
               <div key={o.name} className="sy__org">
                 <p className="sy__role">{o.role}</p>
                 <p className="sy__oname">
-                  {o.logo === "mavericks" ? (
-                    <MavericksLogo className="sy__logo" height={26} />
+                  {o.logo === "partners" ? (
+                    <PartnerLogos className="sy__partners" height={22} />
                   ) : (
                     <>
                       {k === 0 ? <ViaMagusMark className="sy__mark" /> : null}
@@ -273,7 +273,7 @@ export function Evening() {
                     </>
                   )}
                 </p>
-                <p className="sy__oline">{o.line}</p>
+                {o.line ? <p className="sy__oline">{o.line}</p> : null}
               </div>
             ))}
           </aside>
