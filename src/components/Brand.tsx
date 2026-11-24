@@ -113,12 +113,14 @@ export function PartnerLogos({
   tone = "light",
 }: {
   className?: string;
-  /** height of the Hyderabad Mavericks logo; the other two are sized from it */
+  /** the row's base size: Aikam and TG MATH are sized from it, and Hyderabad Mavericks is set smaller so it is no
+   *  wider than Aikam (24 Nov, as on the print pieces: partners in the order Aikam, TG MATH, Hyderabad Mavericks) */
   height?: number;
   tone?: "light" | "ink";
 }) {
   const aik = Math.round((height * 44) / 30);
   const tgm = Math.round((height * 34) / 30);
+  const mav = Math.round(height * 0.6);
   const white = tone === "light" ? { filter: "brightness(0) invert(1)" } : {};
   return (
     <span className={`partners ${className}`}>
@@ -139,7 +141,7 @@ export function PartnerLogos({
         style={{ height: tgm, width: "auto", ...white }}
       />
       <i aria-hidden="true" />
-      <MavericksLogo height={height} tone={tone} />
+      <MavericksLogo height={mav} tone={tone} />
     </span>
   );
 }
