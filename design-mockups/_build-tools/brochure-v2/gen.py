@@ -205,8 +205,7 @@ def flap():
     ]
     r = "".join(
         f'''<li><div class="fl-ic">{piece(p, 13 if p == "v" else 9.8)}</div>
-<div><p class="fl-v">{v}<i class="d {c}"></i></p><p class="fl-p">{prod}</p>
-<p class="fl-x {c}"><b>{n}</b><span>{nt}</span></p></div></li>'''
+<div><p class="fl-v">{v}<i class="d {c}"></i></p><p class="fl-p">{prod}</p></div></li>'''
         for p, v, c, prod, t, n, nt in rows)
     return f'''
 <p class="k">Three ways to work with us</p>

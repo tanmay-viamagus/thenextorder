@@ -1,10 +1,12 @@
 Viamagus guest brochure, v2 (updated 23 Nov 2026 from the review: one combined brochure with the full detail for each
-product, in the copy supplied; the stacked Viamagus logo on the cover; ">97%" on the flap replaced; Zug removed)
+product, in the copy supplied; the stacked Viamagus logo on the cover; ">97%" on the flap replaced; Zug removed).
+25 Nov: the numbers appear once, inside (taken off the flap); the stat figures set lighter (SemiBold); purple C71 M84 Y0 K0.
 Tri-fold, same look as the physical branding: white paper throughout, the three brand colours used only as accents,
 one colour per product.
 
 FILES
-  Viamagus-brochure_print_CMYK.pdf   Send this to the printer. CMYK (Coated FOGRA39), 600 dpi, black type on the black plate only.
+  Viamagus-brochure_print_CMYK.pdf   Send this to the printer. CMYK (Coated FOGRA39), 600 dpi, black type on the black plate only,
+                                     purple C71 M84 Y0 K0.
                                      2 pages: page 1 outside, page 2 inside.
                                      303 x 216 mm = A4 landscape (297 x 210 mm) + 3 mm bleed all round. No crop marks.
   Viamagus-brochure_print.pdf        The same in RGB with vector type, for a printer who would rather convert it on their own RIP.
@@ -20,7 +22,7 @@ FILES
 
 WHAT IS WHERE
   Outside, left to right:  Flap (97 mm): "Start with one. Grow into all three." Build / Operate / Hire, each with its
-                           headline number (3 to 4x faster to production; 4x the output, half the OpEx; 48 h)
+                           product name (the numbers are inside, once)
                            Back (100 mm): client logos, 350,000+ engineering hours, offices (Bengaluru, New York), contact
                            Cover (100 mm): the mark as a full-width crown, the stacked Viamagus logo, "Become AI-native.", the certification seals
   Inside, left to right:   Synthia AI (100) | Velocity AI (100) | Select (97)
@@ -35,8 +37,9 @@ FORMAT: letter (roll) fold
 
 PRINT
   Stock: 300 gsm uncoated, or 350 gsm with a soft-touch matt laminate. Score before folding; grain parallel to the folds.
-  Colours: white paper, CMYK. Purple #6608A9, cyan #00C7CE, violet #BE65FF, amber #F5B83D. The violet cannot be reached
-  in CMYK and prints duller; ask for a hard proof and check it against the booth backdrops.
+  Colours: white paper, CMYK. Purple = C71 M84 Y0 K0 (the Viamagus print purple, used on every printed piece; keep it
+  exactly). Cyan #00C7CE, violet #BE65FF, amber #F5B83D converted to FOGRA39. The violet cannot be reached in CMYK and
+  prints duller; ask for a hard proof and check it against the booth backdrops.
 
 QR CODES (same as the booth)
   Synthia AI  https://viamagus.com/synthia-ai
