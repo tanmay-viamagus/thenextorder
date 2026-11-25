@@ -202,6 +202,28 @@ const lineUp: SpeakerGroup[] = [
       },
     ],
   },
+  {
+    // 25 Nov: Viamagus's founders, the hosts. Designations, bios and photos as supplied in the team's "Amith Krishnan
+    // Bio and Photo" and "Sachin Talwar Bio and Photo" docs (6 Nov), the photos cropped to 4:5. No LinkedIn supplied.
+    // Listed after the panels, as on the event brochure (where they sit under "Organised by").
+    title: "Hosts",
+    people: [
+      {
+        name: "Amith Krishnan",
+        role: "Chief Experience Officer",
+        company: "Viamagus",
+        photo: "/speakers/amith-krishnan.jpg",
+        bio: "Amith Krishnan is Chief Experience Officer at Viamagus, the specialist consultancy in user research, UX design and interface engineering for digital financial products that he founded in 2012. A product leader with over 18 years’ experience across BFSI and fintech, he was previously Head of Product Management at Kuliza and Product Manager & Consultant at Commodities Engineering. He began his career at Eka Software Solutions, rising from software engineer to Principal Consultant in Luxembourg.",
+      },
+      {
+        name: "Sachin Talwar",
+        role: "Founder",
+        company: "Viamagus",
+        photo: "/speakers/sachin-talwar.jpg",
+        bio: "Sachin Talwar is Founder of Viamagus Technologies in Bengaluru, where since 2013 he has led the end-to-end design and development of the Viamagus cloud platform for building websites, e-commerce stores, landing pages and social walls. A technologist with over 18 years’ experience in SaaS and enterprise products, he previously spent nearly five years at Eka Software Solutions, rising from software engineer to Technical Lead on its CTRM product. He is an alumnus of RV College of Engineering.",
+      },
+    ],
+  },
 ];
 
 /**
