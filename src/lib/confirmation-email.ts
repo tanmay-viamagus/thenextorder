@@ -20,7 +20,7 @@ export type ConfirmationFacts = {
 
 export type ConfirmationInput = { name: string; updated: boolean };
 
-export const SIGNATORY = { name: "Shreenath Rao", title: "CEO, Viamagus" } as const;
+export const SIGNATORY = { name: "Shreenath Rao", title: "Founder and CEO, Viamagus" } as const;
 
 /** Honorifics that keep the whole name in a greeting: "Dear Dr. Rao", never "Dear Dr.". */
 const TITLE = /^(?:dr|prof|professor|mr|mrs|ms|mx|miss|sir|dame|shri|smt|capt|col|gen|lt|maj)\.?$/i;
