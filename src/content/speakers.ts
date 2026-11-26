@@ -170,7 +170,7 @@ const lineUp: SpeakerGroup[] = [
         company: "NationsBenefits",
         photo: "/speakers/vijayashree-pathikonda.jpg",
         linkedin: "https://www.linkedin.com/in/vspathikonda",
-        bio: "Vijayashree Pathikonda is Global Head of Human Resources – Senior Vice President at NationsBenefits, where she leads HR strategy and operations across the US, India and LATAM. An HR leader with over 20 years’ experience across technology, manufacturing and consulting, she has held senior HR roles at Eastman, FICOSA, Verisk and Polycom, and co-founded Valeur Consulting. She has built HR functions from the ground up, cut attrition at NationsBenefits from 45% to 9%, and led digital HR transformation and post-merger integration.",
+        bio: "Vijayashree Pathikonda is Global Head of Human Resources – Senior Vice President at NationsBenefits, where she leads HR strategy and operations across the US, India and LATAM. An HR leader with over 20 years’ experience across technology, manufacturing and consulting, she has held senior HR roles at Eastman, FICOSA, Verisk and Polycom, and co-founded Valeur Consulting. She has built HR functions from the ground up, improved engagement, cut attrition, and led digital HR transformation and post-merger integration.",
       },
       {
         name: "Sravanti Chekragari",
@@ -217,26 +217,22 @@ const lineUp: SpeakerGroup[] = [
       },
       {
         name: "Sachin Talwar",
-        role: "Founder",
+        role: "Founder and CTO",
         company: "Viamagus",
         photo: "/speakers/sachin-talwar.jpg",
-        bio: "Sachin Talwar is Founder of Viamagus Technologies in Bengaluru, where since 2013 he has led the end-to-end design and development of the Viamagus cloud platform for building websites, e-commerce stores, landing pages and social walls. A technologist with over 18 years’ experience in SaaS and enterprise products, he previously spent nearly five years at Eka Software Solutions, rising from software engineer to Technical Lead on its CTRM product. He is an alumnus of RV College of Engineering.",
+        bio: "Sachin Talwar is Founder and CTO of Viamagus Technologies in Bengaluru, where since 2013 he has led the end-to-end design and development of the Viamagus cloud platform for building websites, e-commerce stores, landing pages and social walls. A technologist with over 18 years’ experience in SaaS and enterprise products, he previously spent nearly five years at Eka Software Solutions, rising from software engineer to Technical Lead on its CTRM product. He is an alumnus of RV College of Engineering.",
       },
     ],
   },
 ];
 
 /**
- * Bios stay off the site, cards and search data alike, until the speakers have approved them (organisers,
- * 12 Nov 2026). The texts are kept above; set this to true to show them all again.
+ * Bios were kept off the site from 12 Nov 2026 until the speakers approved them. 26 Nov 2026: all bios on, as supplied
+ * (Vijayashree Pathikonda's in the copy she sent that day). Set this to false to hide them all again.
  */
-export const showBios = false;
+export const showBios = true;
 
-/**
- * Bios approved for the site one by one, by name. Phani Nagarjuna's and Emmanuel Gosula's were approved on 21 Nov 2026,
- * then taken off the same day: their designations changed (Chief Advisor, AIKAM Global; Director – India GCC, Fresche
- * Solutions) and the supplied bios still describe their previous roles. Add a name back once its bio is updated.
- */
+/** Used only when showBios is false: bios shown one by one, by name. */
 export const approvedBios: ReadonlySet<string> = new Set<string>([]);
 
 export const speakerGroups: SpeakerGroup[] = showBios
