@@ -100,6 +100,12 @@ export async function listGuests(): Promise<Guest[]> {
   for (const g of speakerGroups)
     for (const p of g.people) {
       const key = speakerKey(p.name);
+      // someone on two parts of the programme (Amith hosts and is on the technology panel) is listed once
+      const already = guests.find((x) => x.key === key);
+      if (already) {
+        already.part = [already.part, [p.part, g.title].filter(Boolean).join(" · ")].filter(Boolean).join("; ");
+        continue;
+      }
       guests.push({
         key,
         kind: "speaker",

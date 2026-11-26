@@ -141,6 +141,14 @@ const lineUp: SpeakerGroup[] = [
         bio: "Srinivas “Sunny” Dasari is Vice President R&D and Site Leader at WS Audiology in Hyderabad. A technology executive with over 15 years in customer-facing digital products, he previously served as Senior Director R&D at WS Audiology in Copenhagen. At Cigna, he led 110 engineers across mobile, web and API teams, building 25 digital applications serving 14 million customers in 30 countries, including Coach by Cigna with Samsung.",
       },
       {
+        // 26 Nov (organisers): Amith is on the technology panel as well as a host
+        name: "Amith Krishnan",
+        role: "Chief Experience Officer",
+        company: "Viamagus",
+        photo: "/speakers/amith-krishnan.jpg",
+        bio: "Amith Krishnan is Chief Experience Officer at Viamagus, the specialist consultancy in user research, UX design and interface engineering for digital financial products that he founded in 2012. A product leader with over 18 years’ experience across BFSI and fintech, he was previously Head of Product Management at Kuliza and Product Manager & Consultant at Commodities Engineering. He began his career at Eka Software Solutions, rising from software engineer to Principal Consultant in Luxembourg.",
+      },
+      {
         name: "Sayantan Bose",
         role: "Managing Director – Clients & Markets",
         company: "Protiviti India",
@@ -209,6 +217,13 @@ const lineUp: SpeakerGroup[] = [
     title: "Hosts",
     people: [
       {
+        // 26 Nov (organisers): the hosts are Shreenath, Amith and Sachin. Designation as on the confirmation email;
+        // no photo or bio supplied yet, so the card shows his initials.
+        name: "Shreenath Rao",
+        role: "CEO",
+        company: "Viamagus",
+      },
+      {
         name: "Amith Krishnan",
         role: "Chief Experience Officer",
         company: "Viamagus",
@@ -235,9 +250,14 @@ export const showBios = true;
 /** Used only when showBios is false: bios shown one by one, by name. */
 export const approvedBios: ReadonlySet<string> = new Set<string>([]);
 
-export const speakerGroups: SpeakerGroup[] = showBios
-  ? lineUp
-  : lineUp.map((g) => ({ ...g, people: g.people.map((p) => (approvedBios.has(p.name) ? p : { ...p, bio: undefined })) }));
+/** Bios held back even when showBios is on, by name: Emmanuel Gosula's still describes his EPAM role (he is now at
+ * Fresche Solutions); the organisers are getting an updated one (26 Nov 2026). */
+export const heldBios: ReadonlySet<string> = new Set<string>(["Emmanuel Gosula, PhD"]);
+
+const shown = (p: Speaker) =>
+  (showBios || approvedBios.has(p.name)) && !heldBios.has(p.name) ? p : { ...p, bio: undefined };
+
+export const speakerGroups: SpeakerGroup[] = lineUp.map((g) => ({ ...g, people: g.people.map(shown) }));
 
 /** Everyone, in page order: for the section's own check and the event's structured data. */
-export const allSpeakers = speakerGroups.flatMap((g) => g.people);
+export const allSpeakers = speakerGroups.flatMap((g) => g.people).filter((p, i, all) => all.findIndex((q) => q.name === p.name) === i);
