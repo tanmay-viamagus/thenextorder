@@ -217,11 +217,12 @@ const lineUp: SpeakerGroup[] = [
     title: "Hosts",
     people: [
       {
-        // 26 Nov (organisers): the hosts are Shreenath, Amith and Sachin, all three founders. No photo or bio
-        // supplied yet, so the card shows his initials.
+        // 26 Nov (organisers): the hosts are Shreenath, Amith and Sachin, all three founders. Photo supplied 26 Nov;
+        // no bio yet.
         name: "Shreenath Rao",
         role: "Founder and CEO",
         company: "Viamagus",
+        photo: "/speakers/shreenath-rao.jpg",
       },
       {
         name: "Amith Krishnan",
