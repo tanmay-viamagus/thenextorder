@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import { LinkedInMark } from "@/components/Brand";
+import { BioDialog } from "@/components/shift/BioDialog";
 import { organisations, organisationsCopy, placeholderTiles, type Organisation } from "@/content/organisations";
 import { speakerGroups, speakersCopy, type Speaker } from "@/content/speakers";
 import { keep } from "@/lib/text";
@@ -33,6 +34,14 @@ function Head({ id, copy }: { id: string; copy: Copy }) {
   );
 }
 
+/** "Srinivas “Sunny” Dasari" → "srinivas-sunny-dasari": an id for the person's profile panel. */
+const slug = (name: string) =>
+  name
+    .normalize("NFKD")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
 /** "Priya Raman" → "PR": what stands in until a photo is supplied. */
 const initials = (name: string) => {
   const w = name.split(/\s+/).filter(Boolean);
@@ -59,14 +68,36 @@ export function SpeakerCard({ person, index }: { person: Speaker; index: number 
         <h4 className="spk__name">{name}</h4>
         {role ? <p className="spk__role">{keep(role)}</p> : null}
         {company ? <p className="spk__co">{keep(company)}</p> : null}
-        {/* the bio waits behind a toggle, so the cards in a row stay level */}
+        {/* the bio opens in a panel of its own, so the cards in a row stay level */}
         {bio ? (
-          <details className="spk__bio">
-            <summary>
-              Profile<span className="sr-only">: {name}</span>
-            </summary>
-            <p>{keep(bio)}</p>
-          </details>
+          <BioDialog name={name} id={`bio-${slug(name)}`}>
+            <div className="bio__head">
+              <div className="bio__photo">
+                {photo ? (
+                  <Image src={photo} alt="" fill sizes="(max-width: 759px) 88px, 260px" style={photoFocus ? { objectPosition: photoFocus } : undefined} />
+                ) : (
+                  <span className="spk__initials" aria-hidden="true">
+                    {initials(name)}
+                  </span>
+                )}
+              </div>
+              <div className="bio__who">
+                <h3 id={`bio-${slug(name)}-name`} className="bio__name">
+                  {name}
+                </h3>
+                {role ? <p className="bio__role">{keep(role)}</p> : null}
+                {company ? <p className="bio__co">{keep(company)}</p> : null}
+                {linkedin ? (
+                  <a className="bio__in" href={linkedin} target="_blank" rel="noopener noreferrer">
+                    <LinkedInMark />
+                    <span>LinkedIn</span>
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                ) : null}
+              </div>
+            </div>
+            <p className="bio__text">{keep(bio)}</p>
+          </BioDialog>
         ) : null}
       </div>
       {linkedin ? (
