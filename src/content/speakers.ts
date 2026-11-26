@@ -143,7 +143,7 @@ const lineUp: SpeakerGroup[] = [
       {
         // 26 Nov (organisers): Amith is on the technology panel as well as a host
         name: "Amith Krishnan",
-        role: "Founder and Chief Experience Officer",
+        role: "Founder and CXO",
         company: "Viamagus",
         photo: "/speakers/amith-krishnan.jpg",
         bio: "Amith Krishnan is Founder and Chief Experience Officer of Viamagus, which he set up in 2012 as a specialist consultancy in user research, UX design and interface engineering for digital financial products. A product leader with over 18 years’ experience across BFSI and fintech, he was previously Head of Product Management at Kuliza and Product Manager & Consultant at Commodities Engineering. He began his career at Eka Software Solutions, rising from software engineer to Principal Consultant in Luxembourg.",
@@ -225,7 +225,7 @@ const lineUp: SpeakerGroup[] = [
       },
       {
         name: "Amith Krishnan",
-        role: "Founder and Chief Experience Officer",
+        role: "Founder and CXO",
         company: "Viamagus",
         photo: "/speakers/amith-krishnan.jpg",
         bio: "Amith Krishnan is Founder and Chief Experience Officer of Viamagus, which he set up in 2012 as a specialist consultancy in user research, UX design and interface engineering for digital financial products. A product leader with over 18 years’ experience across BFSI and fintech, he was previously Head of Product Management at Kuliza and Product Manager & Consultant at Commodities Engineering. He began his career at Eka Software Solutions, rising from software engineer to Principal Consultant in Luxembourg.",
