@@ -126,11 +126,13 @@ const lineUp: SpeakerGroup[] = [
         bio: "Anurag Garg is Senior Vice President, GCC and Regional Technology Leader at Ryan. An engineering executive with over 25 years of global leadership, he has built and scaled three Global Capability Centres from zero to 1,500+ engineers. At Experian, he established the Hyderabad Global Innovation Center and directed engineering for Ascend, its cloud-native credit analytics platform.",
       },
       {
+        // 27 Nov 2026: designation, company, bio and photo as in his doc (bios/saurabh-bali/2026-11-27_bio-photo.docx),
+        // the photo cropped to 4:5. "Ensemble Global" is his wording; the logo wall keeps Ensemble's logo.
         name: "Saurabh Bali",
-        role: "India Leader and Vice President of Global Strategy",
-        company: "Ensemble Health Partners",
+        role: "India Leader and VP, Global Strategy",
+        company: "Ensemble Global",
         photo: "/speakers/saurabh-bali.jpg",
-        bio: "Saurabh Bali is India Leader and Vice President of Global Strategy at Ensemble Health Partners, where he heads the company’s India GCC. With over 25 years in healthcare operations, he has built, scaled and led Global Capability Centres in India. Earlier, he spent over six years at R1 RCM, rising from Hyderabad Site Head to Vice President, India Operations.",
+        bio: "Saurabh Bali is India Leader and Vice President of Global Strategy at Ensemble Global, where he heads the company’s India GCC. With over 25 years in healthcare operations, he has built, scaled and led Global Capability Centres in India. Earlier, he spent over six years at R1 RCM, rising from Hyderabad Site Head to Vice President, India Operations.",
       },
       {
         name: "Srinivas “Sunny” Dasari",
@@ -189,15 +191,14 @@ const lineUp: SpeakerGroup[] = [
         bio: "Sravanti Chekragari is Chief Operating Officer at ADAPS, where she drives enterprise-wide operations, strategic growth and multi-stakeholder alignment. A specialist in organisational design and change leadership, she previously headed the Skills Academy at Biocon Biologics and led leadership and talent development at Cadila Pharmaceuticals, Daimler’s Corporate Academy for APAC and Cigniti Technologies. She also champions education and community CSR initiatives.",
       },
       {
-        // 21 Nov 2026: name, designation, company, bio and photo as supplied in the team’s "Emmanuel Gosula" doc,
-        // the photo cropped closer to a portrait.
+        // 27 Nov 2026: name, designation, company and bio as in his updated doc (bios/emmanuel-gosula/
+        // 2026-11-27_bio-photo.docx), now at Fresche Solutions. Photo from his 21 Nov doc (the same shot), cropped to a portrait.
         name: "Emmanuel Gosula, PhD",
-        // 21 Nov: his new GCC, as the organisers sent it (his doc gave his previous role at EPAM Systems)
-        role: "Director – India GCC",
+        role: "Director, GCC",
         company: "Fresche Solutions",
         photo: "/speakers/emmanuel-gosula.jpg",
         linkedin: "https://www.linkedin.com/in/emmanuelgosula",
-        bio: "Emmanuel Gosula is Senior Manager and Head of People Programs at EPAM Systems, where he leads initiatives to engage, retain and develop software engineers across India and APAC. An HR leader with over 20 years’ experience, he has spent most of his career at EPAM and its predecessor, Alliance Global Services, with a stint as Regional Head – People & Culture at NTT DATA. He holds a PhD in Business Administration from Chitkara University and is pursuing XLRI Jamshedpur’s PGDM for Emerging CHROs.",
+        bio: "Emmanuel Gosula is Director, GCC at Fresche Solutions, where he is building and scaling the company’s India Global Capability Centre in Hyderabad, including its Data & AI consulting capabilities, with P&L responsibility. A people and business leader with over 20 years’ experience, he spent nearly two decades at EPAM Systems and its predecessor, Alliance Global Services, most recently as Senior Manager and Head of People Programs, with a stint as Regional Head – People & Culture at NTT DATA. He holds a PhD in Business Administration from Chitkara University and is pursuing XLRI Jamshedpur’s PGDM for Emerging CHROs.",
       },
       {
         name: "Srinidhi Reddy Kongari",
@@ -217,12 +218,13 @@ const lineUp: SpeakerGroup[] = [
     title: "Hosts",
     people: [
       {
-        // 26 Nov (organisers): the hosts are Shreenath, Amith and Sachin, all three founders. Photo supplied 26 Nov;
-        // no bio yet.
+        // 26 Nov (organisers): the hosts are Shreenath, Amith and Sachin, all three founders. 27 Nov: bio and photo as
+        // supplied in his "Bio and Photo" doc (bios/shreenath-rao/2026-11-27_bio-photo.docx), the photo cropped to 4:5.
         name: "Shreenath Rao",
         role: "Founder and CEO",
         company: "Viamagus",
         photo: "/speakers/shreenath-rao.jpg",
+        bio: "Shreenath Rao is CEO of Viamagus, a technology services company helping enterprises modernise through product engineering, workflow automation and resource augmentation, and Founder of Viamagus Select, which places pre-vetted AI, data and engineering talent in Global Capability Centres. A technology leader with 25 years' experience building tech teams, he previously managed large-scale delivery programmes at Hewlett-Packard and Eka Software Solutions. He is a member of BNI Mavericks and an alumnus of the University of Mysore.",
       },
       {
         name: "Amith Krishnan",
@@ -251,9 +253,9 @@ export const showBios = true;
 /** Used only when showBios is false: bios shown one by one, by name. */
 export const approvedBios: ReadonlySet<string> = new Set<string>([]);
 
-/** Bios held back even when showBios is on, by name: Emmanuel Gosula's still describes his EPAM role (he is now at
- * Fresche Solutions); the organisers are getting an updated one (26 Nov 2026). */
-export const heldBios: ReadonlySet<string> = new Set<string>(["Emmanuel Gosula, PhD"]);
+/** Bios held back even when showBios is on, by name. Empty since 27 Nov 2026, when Emmanuel Gosula's updated
+ * (Fresche Solutions) bio arrived. */
+export const heldBios: ReadonlySet<string> = new Set<string>([]);
 
 const shown = (p: Speaker) =>
   (showBios || approvedBios.has(p.name)) && !heldBios.has(p.name) ? p : { ...p, bio: undefined };
